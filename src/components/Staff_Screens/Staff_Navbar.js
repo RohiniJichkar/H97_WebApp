@@ -181,6 +181,7 @@ export default function DoctorNavbar() {
   const [ClinicDetails, setClinicDetails] = useState([]);
   const [authProfile, setAuthProfile] = React.useState(true);
   const [anchorElProfile, setAnchorElProfile] = React.useState(false);
+  const [Subscriptiondata, setSubscriptiondata] = React.useState('');
   // const openprofile = Boolean(anchorElProfile);
   const navigate = useNavigate();
 

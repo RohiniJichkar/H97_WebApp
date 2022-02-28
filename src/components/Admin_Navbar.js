@@ -181,6 +181,7 @@ export default function AdminNavbar() {
     const [fname, setfname] = React.useState('');
     const [lname, setlname] = React.useState('');
     const [userid, setuserid] = React.useState('');
+    const [authProfile, setAuthProfile] = React.useState(true);
 
     // const openprofile = Boolean(anchorElProfile);
     const navigate = useNavigate();

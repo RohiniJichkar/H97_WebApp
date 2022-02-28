@@ -178,7 +178,7 @@ export default function DoctorHomeVisitHistory() {
                 console.log(request.Report)
             }
             else {
-                alert(parse.message);
+                alert(request.message);
             }
         }catch(e){
             console.log(e);

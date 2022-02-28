@@ -186,6 +186,7 @@ export default function DoctorNavbar() {
   const [hvreq, sethvreq] = useState([]);
   const [appointcount, setappointcount] = useState([]);
   const [openmodal, setopenmodal] = React.useState(false);
+  const [Subscriptiondata, setSubscriptiondata] = React.useState('');
 
   // const openprofile = Boolean(anchorElProfile);
   const navigate = useNavigate();

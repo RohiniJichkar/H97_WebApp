@@ -88,7 +88,7 @@ const Home_Visitor_reports = () => {
                 alert(request.message);
             }
         }
-        catch {
+        catch(e) {
             console.log(e);
         }
     }

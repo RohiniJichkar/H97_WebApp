@@ -95,7 +95,7 @@ const Staff_Analysis_reports = () => {
                 alert(request.message);
             }
         }
-        catch {
+        catch(e) {
             console.log(e);
         }
     }

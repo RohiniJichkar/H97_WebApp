@@ -1,12 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import { makeStyles, useTheme, alpha } from '@material-ui/core/styles';
 import { useNavigate } from 'react-router-dom';
-import { Dialog, DialogContent, DialogContentText, DialogActions, DialogTitle, Slide, Button, Grid, } from "@material-ui/core";
+import { Dialog, DialogContent, DialogContentText, DialogActions, DialogTitle, Slide, Button, Grid, Avatar } from "@material-ui/core";
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import IconButton from '@material-ui/core/IconButton';
 import Typography from '@material-ui/core/Typography';
 import CloseIcon from '@material-ui/icons/Close';
+import { Delete_home_visitor_Details_by_id } from '../../../Apis/Home_Visitors';
 import {
     Document,
     Page,

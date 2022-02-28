@@ -143,10 +143,10 @@ const AppointmentReports = () => {
                 console.log(request.Report)
             }
             else {
-                alert(parse.message);
+                alert(request.message);
             }
         }
-        catch {
+        catch(e) {
             console.log(e);
         }
     }
