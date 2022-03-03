@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import clsx from 'clsx';
 import { makeStyles, useTheme, alpha } from '@material-ui/core/styles';
 import { useNavigate, useLocation } from 'react-router-dom';
-import { Select, InputLabel, FormControl, TextField, Typography, Button, Grid, Paper } from "@material-ui/core";
+import { Select, InputLabel, FormControl, TextField, Typography, Button, Grid, Paper, Avatar } from "@material-ui/core";
 import { Redirect } from 'react-router-dom';
 import DoctorNavbar from './Doctor_Navbar';
 import CreateIcon from '@material-ui/icons/Create';
@@ -160,9 +160,11 @@ export default function DoctorEditProfile() {
                                 {editmodal ? <EditImage show={editmodal} data={doctordata} handleCloseEditmodal={() => seteditmodal(false)} /> : null}
                                 <center>
                                     <div style={{ paddingBottom: 10 }}>
-                                        <img src={doctordata[0].ProfileImage} style={{ borderRadius: '50%', height: 80, width: 80 }}></img>
-                                        <div style={{ marginTop: '-15px', marginRight: '-50px' }}>
-                                            <CreateIcon size='small' onClick={handleclickOpenEditmodal} style={{ borderRadius: '50%', backgroundColor: '#707070', color: '#fff', padding: 2 }} />
+                                       {doctordata[0].ProfileImage ?  <Avatar src={doctordata[0].ProfileImage}  style={{ borderRadius: '50%', height: 80, width: 80 }} />  :
+                                       <Avatar style={{ borderRadius: '50%', height: 80, width: 80 }} />
+                                       }
+                                        <div style={{ marginTop: '-15px', marginRight: '-60px' }}>
+                                            <CreateIcon size='small' onClick={handleclickOpenEditmodal} style={{ borderRadius: '50%', backgroundColor: '#707070', color: '#fff', padding: 2, cursor: 'pointer' }} />
                                         </div>
                                     </div>
                                     <Typography variant="h6" noWrap={true} style={{
@@ -305,7 +307,7 @@ export default function DoctorEditProfile() {
                                     </div>
                                     <div>
                                         <FormControl variant="outlined" className={classes.formControlForm}  >
-                                            <TextField className={classes.textFieldForm} id="outlined-basic" label="DOB" value={DOB} onChange={(e) => setDOB(e.target.value)} type="date" variant="outlined" size="small" style={{ width: '150%' }} />
+                                            <TextField className={classes.textFieldForm} id="outlined-basic"  value={DOB} onChange={(e) => setDOB(e.target.value)} type="date" variant="outlined" size="small" style={{ width: '150%' }} />
                                         </FormControl>
 
                                     </div>
@@ -498,7 +500,7 @@ export default function DoctorEditProfile() {
                                 <Grid item xs={12} style={{ marginTop: 1 }}>
                                     <center>
                                         <FormControl variant="outlined" className={classes.formControl}  >
-                                            <TextField className={classes.textField} multiline rows={2.5} rowsMax={5} id="outlined-basic" size="small" label="Address" value={Address} onChange={(e) => setAddress(e.target.value)} variant="outlined" style={{ width: '180%' }} />
+                                            <TextField className={classes.textField} multiline rows={2.5} rowsMax={2.5} id="outlined-basic" size="small" label="Address" value={Address} onChange={(e) => setAddress(e.target.value)} variant="outlined" style={{ width: '182%'}} />
                                         </FormControl>
                                     </center>
                                 </Grid>

@@ -258,7 +258,7 @@ export default function EditHomeVisitors({ show, data, handleCloseEditmodal }) {
     const [Pincode, setPincode] = useState('');
     const [City, setCity] = useState('');
     const [Country, setCountry] = useState('');
-    const [Gender, setGender] = useState('');
+    const [Gender, setGender] = useState(data[0].Gender);
     const [DOB, setDOB] = useState('');
     const [Experience, setExperience] = useState('');
     const [times, setTimes] = useState([]);
@@ -309,6 +309,7 @@ export default function EditHomeVisitors({ show, data, handleCloseEditmodal }) {
             MobileNo: mobileno,
             Password: password,
             Email: email,
+            Gender: Gender,
             Address: address,
             Education: education,
             From_AvailabilityTime: From_AvailabilityTime,
@@ -440,6 +441,11 @@ export default function EditHomeVisitors({ show, data, handleCloseEditmodal }) {
                                     </FormControl>
                                 </div>
 
+                                <div>
+                                    <FormControl variant="outlined" className={classes.formControlForm} >
+                                        <TextField className={classes.textFieldForm} value={address} onChange={(e) => setaddress(e.target.value)} multiline rows={1} rowsMax={1} id="outlined-basic" type="text" label="Address" variant="outlined" size="small" style={{ width: '174%', top: 7 }} />
+                                    </FormControl>
+                                </div>
 
                             </Grid>
 
@@ -490,14 +496,32 @@ export default function EditHomeVisitors({ show, data, handleCloseEditmodal }) {
                                     </Select>
                                 </FormControl>
 
+                                <FormControl variant="outlined" size="small" className={classes.formControl} style={{ width: '102%', marginLeft: '64px', marginTop: 16 }}>
+
+                                    <Select
+                                        className={classes.textFieldForm}
+                                        size='large'
+                                        native
+                                        value={Gender}
+                                        onChange={(e) => setGender(e.target.value)}
+                                        label="Gender"
+                                        inputProps={{
+                                            name: 'gender',
+                                            id: 'outlined-gender-native-simple',
+                                        }}
+                                        style={{ width: '80%', height: 40, fontSize: 14, marginTop: '-7px', marginLeft: 34 }}
+                                    >
+
+                                        <option aria-label="None" value="" >Gender</option>
+                                        <option value='Male'>Male</option>
+                                        <option value='Female'>Female</option>
+                                    </Select>
+                                </FormControl>
                             </Grid>
                         </Grid>
 
 
-
-
-
-                        <Grid container>
+                        {/* <Grid container>
                             <Grid item xs={12}>
 
                                 <div>
@@ -506,7 +530,7 @@ export default function EditHomeVisitors({ show, data, handleCloseEditmodal }) {
                                     </FormControl>
                                 </div>
                             </Grid>
-                        </Grid>
+                        </Grid> */}
                         <Grid container>
                             <Grid item xs={6}>
                                 <Grid container style={{ marginTop: 10 }}>
@@ -532,7 +556,7 @@ export default function EditHomeVisitors({ show, data, handleCloseEditmodal }) {
                                                     name: 'fromtime',
                                                     id: 'outlined-from-time-native-simple',
                                                 }}
-                                                style={{ width: '90%', fontSize: 12, marginLeft: 117 }}
+                                                style={{ width: '90%', fontSize: 12, marginLeft: 120 }}
                                             >
                                                 <option aria-label="None" value='' >From</option>
 
@@ -571,7 +595,7 @@ export default function EditHomeVisitors({ show, data, handleCloseEditmodal }) {
                                                     name: 'totime',
                                                     id: 'outlined-to-time-native-simple',
                                                 }}
-                                                style={{ width: '90%', fontSize: 12, marginLeft: 385 }}
+                                                style={{ width: '90%', fontSize: 12, marginLeft: 379 }}
                                             >
                                                 <option aria-label="None" value='' >To</option>
                                                 {times.map((item) => {

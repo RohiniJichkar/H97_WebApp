@@ -45,6 +45,7 @@ export default function DoctorHomeVisitors() {
     const [address, setaddress] = useState('');
     const [password, setpassword] = useState('');
     const [education, seteducation] = useState('');
+    const [gender, setgender] = useState('');
     const [category, setcategory] = useState('');
     const [startTime, setstartTime] = useState('');
     const [endTime, setendTime] = useState('');
@@ -132,7 +133,7 @@ export default function DoctorHomeVisitors() {
         }
     }
 
- 
+
     const Register_HomeVisitor = async () => {
         var data = await localStorage.getItem("userdata");
         let parsed = JSON.parse(data);
@@ -144,6 +145,7 @@ export default function DoctorHomeVisitors() {
             Password: password,
             MobileNo: mobile,
             Email: email,
+            Gender: gender,
             Address: address,
             Category: category,
             Education: education,
@@ -183,16 +185,14 @@ export default function DoctorHomeVisitors() {
         }
     }
 
-    const handleContinue = async  () => {
+    const handleContinue = async () => {
 
         if (homevisitorDetails.length > 0) {
-            setOpendeletemodal(true) 
-         }
-            
-
-           else { 
-               alert('Please select Home visitors from list'); 
-            }
+            setOpendeletemodal(true)
+        }
+        else {
+            alert('Please select Home visitors from list');
+        }
 
     };
 
@@ -335,7 +335,7 @@ export default function DoctorHomeVisitors() {
                                     fontWeight: 400
                                 }}>
                                     {homevisitorDetails[0] ? homevisitorDetails[0].Education : "NA"}
-                                  <span> ({homevisitorDetails[0] ? homevisitorDetails[0].Category : "NA"})</span>
+                                    <span> ({homevisitorDetails[0] ? homevisitorDetails[0].Category : "NA"})</span>
                                 </Typography>
                                 <Grid container xs={12} style={{ paddingTop: 15 }}>
                                     <Grid item xs={3} style={{ border: '1px solid #F0F0F0', paddingBottom: 20 }}>
@@ -541,6 +541,11 @@ export default function DoctorHomeVisitors() {
                                                 </FormControl>
                                             </div>
 
+                                            <div>
+                                                <FormControl variant="outlined" className={classes.formControlForm} >
+                                                    <TextField className={classes.textFieldForm} value={address} onChange={(e) => setaddress(e.target.value)} multiline rows={1} rowsMax={1} id="outlined-basic" type="text" label="Address" variant="outlined" size="small" style={{ width: '167%', top: 30 }} />
+                                                </FormControl>
+                                            </div>
                                         </Grid>
                                         <div>
                                             <Grid item xs={6} >
@@ -552,7 +557,7 @@ export default function DoctorHomeVisitors() {
                                                             if (e.target.value === '' || re.test(e.target.value)) {
                                                                 setmobile(e.target.value)
                                                             }
-                                                        }} id="outlined-basic" type='number' label="Mobile No" variant="outlined" size="small" style={{ width: '248%', marginLeft: 45, position: 'relative', top: 38 }}
+                                                        }} id="outlined-basic" type='number' label="Mobile No" variant="outlined" size="small" style={{ width: '185%', marginLeft: 45, position: 'relative', top: 38 }}
                                                         onInput={(e) => {
                                                             e.target.value = Math.max(0, parseInt(e.target.value)).toString().slice(0, 10)
 
@@ -562,7 +567,7 @@ export default function DoctorHomeVisitors() {
 
                                                 <div>
                                                     <FormControl variant="outlined" className={classes.formControlForm}  >
-                                                        <TextField className={classes.textFieldForm} onChange={(e) => setemail(e.target.value)} id="outlined-basic" type='email' label="Email ID" variant="outlined" size="small" style={{ width: '250%', marginTop: 51, marginLeft: 43 }} />
+                                                        <TextField className={classes.textFieldForm} onChange={(e) => setemail(e.target.value)} id="outlined-basic" type='email' label="Email ID" variant="outlined" size="small" style={{ width: '185%', marginTop: 51, marginLeft: 43 }} />
                                                     </FormControl>
                                                 </div>
 
@@ -590,19 +595,48 @@ export default function DoctorHomeVisitors() {
                                                         })}
                                                     </Select>
                                                 </FormControl>
+
+                                                <FormControl variant="outlined" size="small" className={classes.formControl} style={{ width: '55%', marginLeft: '-25px' }} >
+
+                                                    <Select
+                                                        className={classes.textFieldForm}
+                                                        size='large'
+                                                        native
+                                                        value={gender}
+                                                        onChange={(e) => setgender(e.target.value)}
+                                                        label="Gender"
+                                                        inputProps={{
+                                                            name: 'gender',
+                                                            id: 'outlined-gender-native-simple',
+                                                        }}
+                                                        style={{ width: '188%', fontSize: 14, marginTop: '5px', marginLeft: 67 }}
+                                                    >
+
+                                                        <option aria-label="None" value="" >Gender</option>
+                                                        <option value='Male'>Male</option>
+                                                        <option value='Female'>Female</option>
+                                                    </Select>
+                                                </FormControl>
                                             </Grid>
                                         </div>
 
                                     </Grid>
-                                    <Grid container>
-                                        <Grid item xs={12}>
+                                    {/* <Grid container>
+                                        <Grid item xs={6}>
                                             <div>
                                                 <FormControl variant="outlined" className={classes.formControlForm}  >
-                                                    <TextField className={classes.textFieldForm} onChange={(e) => setaddress(e.target.value)} multiline rows={2} rowsMax={4} id="outlined-basic" type='text' label="Address" variant="outlined" size="small" style={{ width: '405%', position: 'relative', top: 15, left: 10 }} />
+                                                    <TextField className={classes.textFieldForm} onChange={(e) => setaddress(e.target.value)} multiline rows={2} rowsMax={4} id="outlined-basic" type='text' label="Address" variant="outlined" size="small" style={{ width: '100%', top: 15, left: 10 }} />
                                                 </FormControl>
                                             </div>
                                         </Grid>
-                                    </Grid>
+                                        <Grid item xs={6}>
+                                            <div>
+                                                <FormControl variant="outlined" className={classes.formControlForm}  >
+                                                    <TextField className={classes.textFieldForm} onChange={(e) => setaddress(e.target.value)} multiline rows={2} rowsMax={4} id="outlined-basic" type='text' label="Address" variant="outlined" size="small" style={{ width: '100%', top: 15, left: 10 }} />
+                                                </FormControl>
+                                            </div>
+                                        </Grid>
+                                    </Grid> */}
                                     <Grid container style={{ marginTop: 0 }}>
                                         <Grid item xs={6}>
 
@@ -611,75 +645,77 @@ export default function DoctorHomeVisitors() {
                                                     fontSize: 14, color: '#707070', fontFamily: 'Poppins',
                                                     fontStyle: 'normal',
                                                     fontWeight: 600,
-                                                    position:'relative',
-                                                    top:35,
-                                                    left:5
+                                                    position: 'relative',
+                                                    top: 35,
+                                                    left: 5
                                                 }}>
                                                     From
-                                                    </Typography>
+                                                </Typography>
 
-                                                    <FormControl variant="outlined" size="small" className={classes.formControl} style={{ width: '55%' }} >
-                                                        <Select
-                                                            className={classes.textFieldForm}
-                                                            size='medium'
-                                                            native
-                                                            value={startTime}
-                                                            onChange={(e) => setstartTime(e.target.value)}
-                                                            inputProps={{
-                                                                name: 'fromtime',
-                                                                id: 'outlined-from-time-native-simple',
-                                                            }}
-                                                            style={{ width: '50%', fontSize: 12, marginLeft: 26, marginBottom: 14, position:'relative',
-                                                            left:23 }}
-                                                        >
-                                                            <option aria-label="None" value='' >From</option>
+                                                <FormControl variant="outlined" size="small" className={classes.formControl} style={{ width: '55%' }} >
+                                                    <Select
+                                                        className={classes.textFieldForm}
+                                                        size='medium'
+                                                        native
+                                                        value={startTime}
+                                                        onChange={(e) => setstartTime(e.target.value)}
+                                                        inputProps={{
+                                                            name: 'fromtime',
+                                                            id: 'outlined-from-time-native-simple',
+                                                        }}
+                                                        style={{
+                                                            width: '50%', fontSize: 12, marginLeft: 26, marginBottom: 14, position: 'relative',
+                                                            left: 23
+                                                        }}
+                                                    >
+                                                        <option aria-label="None" value='' >From</option>
 
-                                                            {times.map((item) => {
-                                                                return (
-                                                                    <option value={item.ActualTime}>{item.DisplayTime}</option>
-                                                                )
-                                                            })}
+                                                        {times.map((item) => {
+                                                            return (
+                                                                <option value={item.ActualTime}>{item.DisplayTime}</option>
+                                                            )
+                                                        })}
 
-                                                        </Select>
-                                                    </FormControl>
+                                                    </Select>
+                                                </FormControl>
 
-                                                    <Typography variant="h6" noWrap={true} style={{
-                                                        fontSize: 14, color: '#707070', fontFamily: 'Poppins',
-                                                        fontStyle: 'normal',
-                                                        textAlign: 'center',
-                                                        justifyContent: 'center',
-                                                        fontWeight: 600,
-                                                        position: 'relative',
-                                                        bottom:53,
-                                                        right:22
-                                                    }}>
-                                                        To
-                                                    </Typography>
+                                                <Typography variant="h6" noWrap={true} style={{
+                                                    fontSize: 14, color: '#707070', fontFamily: 'Poppins',
+                                                    fontStyle: 'normal',
+                                                    textAlign: 'center',
+                                                    justifyContent: 'center',
+                                                    fontWeight: 600,
+                                                    position: 'relative',
+                                                    bottom: 53,
+                                                    right: 22
+                                                }}>
+                                                    To
+                                                </Typography>
 
-                                                    <FormControl variant="outlined" size="small" className={classes.formControl} style={{ width: '55%' }} >
-                                                        <Select
-                                                            className={classes.textFieldForm}
-                                                            size='medium'
-                                                            native
-                                                            value={endTime}
-                                                            onChange={(e) => setendTime(e.target.value)}
-                                                            inputProps={{
-                                                                name: 'totime',
-                                                                id: 'outlined-to-time-native-simple',
-                                                            }}
-                                                            style={{ width: '50%', fontSize: 12, position: 'relative', left: 220, bottom: 88 }}
-                                                        >
-                                                            <option aria-label="None" value='' >To</option>
+                                                <FormControl variant="outlined" size="small" className={classes.formControl} style={{ width: '55%' }} >
+                                                    <Select
+                                                        className={classes.textFieldForm}
+                                                        size='medium'
+                                                        native
+                                                        value={endTime}
+                                                        onChange={(e) => setendTime(e.target.value)}
+                                                        inputProps={{
+                                                            name: 'totime',
+                                                            id: 'outlined-to-time-native-simple',
+                                                        }}
+                                                        style={{ width: '50%', fontSize: 12, position: 'relative', left: 220, bottom: 88 }}
+                                                    >
+                                                        <option aria-label="None" value='' >To</option>
 
-                                                            {times.map((item) => {
-                                                                return (
-                                                                    <option value={item.ActualTime}>{item.DisplayTime}</option>
-                                                                )
-                                                            })}
+                                                        {times.map((item) => {
+                                                            return (
+                                                                <option value={item.ActualTime}>{item.DisplayTime}</option>
+                                                            )
+                                                        })}
 
-                                                        </Select>
-                                                    </FormControl>
-                                                
+                                                    </Select>
+                                                </FormControl>
+
                                             </div>
                                         </Grid>
                                         <Grid item xs={6}>
@@ -784,7 +820,7 @@ export default function DoctorHomeVisitors() {
                                                     textAlign: 'center',
                                                     justifyContent: 'center',
                                                     fontWeight: 600,
-                                                    marginRight: -185
+                                                    marginRight: -175
                                                 }}>
                                                     Wednesday
                                                 </Typography>
@@ -831,7 +867,7 @@ export default function DoctorHomeVisitors() {
                                                     fontWeight: 600,
                                                     position: 'relative',
                                                     bottom: 90,
-                                                    left: 82
+                                                    left: 78
                                                 }}>
                                                     Thursday
                                                 </Typography>
@@ -897,7 +933,7 @@ export default function DoctorHomeVisitors() {
                                                             style={{ color: '#2C7FB2', float: 'right' }}
                                                         />
                                                     }
-                                                    style={{ color: '#2C7FB2', float: 'right', paddingRight: 20, position: 'relative', bottom: 134, right: 68 }}
+                                                    style={{ color: '#2C7FB2', float: 'right', paddingRight: 20, position: 'relative', bottom: 134, right: 65 }}
                                                 />
                                             </Grid>
                                             <Grid item xs={4}>
@@ -910,7 +946,7 @@ export default function DoctorHomeVisitors() {
                                                             style={{ color: '#2C7FB2', float: 'right' }}
                                                         />
                                                     }
-                                                    style={{ color: '#2C7FB2', float: 'right', paddingRight: 20, position: 'relative', bottom: 94, right: 372 }}
+                                                    style={{ color: '#2C7FB2', float: 'right', paddingRight: 20, position: 'relative', bottom: 94, right: 364 }}
                                                 />
                                             </Grid>
                                             <Grid item xs={4}>
@@ -945,7 +981,7 @@ export default function DoctorHomeVisitors() {
                                                         style={{ color: '#2C7FB2', float: 'right' }}
                                                     />
                                                 }
-                                                style={{ color: '#2C7FB2', float: 'right', paddingRight: 20, position: 'relative', bottom: 172, left: 238 }}
+                                                style={{ color: '#2C7FB2', float: 'right', paddingRight: 20, position: 'relative', bottom: 172, left: 228 }}
                                             />
                                         </Grid>
                                         <Grid item xs={4}>
@@ -959,7 +995,7 @@ export default function DoctorHomeVisitors() {
                                                         style={{ color: '#2C7FB2', float: 'right' }}
                                                     />
                                                 }
-                                                style={{ color: '#2C7FB2', float: 'right', paddingRight: 20, position: 'relative', bottom: 132, right: 64 }}
+                                                style={{ color: '#2C7FB2', float: 'right', paddingRight: 20, position: 'relative', bottom: 132, right: 70 }}
                                             />
                                         </Grid>
                                         <Grid item xs={4}>
@@ -995,7 +1031,7 @@ export default function DoctorHomeVisitors() {
                                                             }}
                                                         />
                                                     }
-                                                    style={{ color: '#2C7FB2', float: 'center', marginLeft: 10, position: 'relative', bottom: 215, left: 312 }}
+                                                    style={{ color: '#2C7FB2', float: 'center', marginLeft: 10, position: 'relative', bottom: 215, left: 305 }}
                                                 />
                                             </center>
                                         </Grid>
@@ -1004,7 +1040,7 @@ export default function DoctorHomeVisitors() {
 
                                     <Grid container style={{ marginTop: -155, paddingBottom: 0, marginBottom: 0 }}>
                                         <Grid item sm={6} >
-                                            <Button className={classes.btnregister} onClick={()=> setOpenmodal(false)} style={{ float: 'right', marginRight: 20 }}>Cancel</Button>
+                                            <Button className={classes.btnregister} onClick={() => setOpenmodal(false)} style={{ float: 'right', marginRight: 20 }}>Cancel</Button>
                                         </Grid>
                                         <Grid item sm={6} >
                                             <Button className={classes.btnregister} onClick={Register_HomeVisitor} style={{ float: 'left', marginLeft: 20 }}>Register</Button>

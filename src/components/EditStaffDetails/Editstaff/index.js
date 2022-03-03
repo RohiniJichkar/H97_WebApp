@@ -642,9 +642,9 @@ export default function Edit_staff({ show, data, handleCloseEditmodal }) {
     
     const [maxWidth, setMaxWidth] = React.useState('md');
     const [firstnm, setfirstnm] = useState(parse[0].FirstName);
-    const [lastnm, setlastnm] = useState(obj ? obj.LastName : '');
-    const [mobile, setmobile] = useState(obj ? obj.MobileNo : '');
-    const [email, setemail] = useState(obj ? obj.Email : '');
+    const [lastnm, setlastnm] = useState(parse[0] ? parse[0].LastName : '');
+    const [mobile, setmobile] = useState(parse[0] ? parse[0].MobileNo : '');
+    const [email, setemail] = useState(parse[0] ? parse[0].Email : '');
 
     // const [gender, setgender] = useState(obj ? obj?.Gender : '');
     // const [address, setaddress] = useState(obj ? obj?.Address : '');

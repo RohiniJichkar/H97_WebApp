@@ -300,13 +300,8 @@ export default function DoctorHomeVisitRequest() {
         setrequestorDetails(id);
     }
 
-    useEffect(() => {
-        const interval = setInterval(() => {
-            fetchRequestData()
-        }, 10000);
+    useEffect(() => {       
         fetchRequestData();
-
-        return () => clearInterval(interval);
     }, []);
 
 

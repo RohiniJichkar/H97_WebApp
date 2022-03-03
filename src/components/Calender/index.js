@@ -437,7 +437,7 @@ export default function Appointments_On_Calender() {
 
     // example implementation of a wrapper
     const ColoredDateCellWrapper = ({ children, value }) =>
-        React.cloneElement(Children.only(children), {
+        React.cloneElement(children.only(children), {
             style: {
                 ...children.style,
                 backgroundColor: value < CURRENT_DATE ? 'lightgreen' : 'lightblue',

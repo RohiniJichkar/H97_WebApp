@@ -10,8 +10,7 @@ export const AddHomeVisitorRequest = async (RequesterId, HomeVisitorId, ClinicId
         RequestStatus: RequestStatus,
         MobileNo: MobileNo,
         Address: Address,
-        PreferedTime: PreferedTime,
-        PreferedDate: PreferedDate + " " + PreferedTime,
+        PreferedTime: PreferedDate + " " + PreferedTime,
         HomeVisitReason: HomeVisitReason,
     }
     try {

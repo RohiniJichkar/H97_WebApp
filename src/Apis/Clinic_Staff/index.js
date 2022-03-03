@@ -18,7 +18,7 @@ export const Add_Staff = async (obj) => {
         const registerStaff = await axios.post(ip + 'Web_AddStaff', obj);
         return JSON.stringify(registerStaff?.data);
     } catch (error) {
-        return (error.response.data.message);
+        return JSON.stringify(error.response.data);
     }
 }
 

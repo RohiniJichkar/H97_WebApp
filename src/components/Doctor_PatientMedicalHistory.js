@@ -213,6 +213,8 @@ export default function DoctorPatientMedicalHistory() {
     const [counterbtn, setCounterBtn] = React.useState(0);
     const [details, setdetails] = useState([location.state.Details]);
     const [medicalhistory, setmedicalhistory] = useState([]);
+    const [fromdt, setfromdt] = useState('');
+    const [todt, settodt] = useState('');
 
     const fetchMedicalHistory = async () => {
         var data = await localStorage.getItem("userdata");
@@ -221,6 +223,17 @@ export default function DoctorPatientMedicalHistory() {
         const medicalhistoryInfo = await axios.post(ip + 'Web_PatientMedicalHistory', { ClinicId: clinicid, UserId: details[0].UserId });
         setmedicalhistory(medicalhistoryInfo?.data?.Appointment);
     }
+
+
+    const handleView = async () => {
+        var data = await localStorage.getItem("userdata");
+        let parsed = JSON.parse(data);
+        let clinicid = parsed.ClinicId;
+        const medicalhistoryInfo = await axios.post(ip + 'Web_MedicalHistoryforDoctor', { ClinicId: clinicid, UserId: details[0].UserId, StartDate: fromdt, EndDate: todt });
+        // setmedicalhistory(medicalhistoryInfo?.data?.Appointment);
+    }
+
+
     const columns = [
         {
             field: 'Title',
@@ -279,7 +292,7 @@ export default function DoctorPatientMedicalHistory() {
             ),
         },
     ];
-    console.log(medicalhistory)
+
 
     useEffect(() => {
         fetchMedicalHistory();
@@ -352,7 +365,7 @@ export default function DoctorPatientMedicalHistory() {
                         <Grid item sm={12} >
                             <center>
                                 <div style={{ paddingBottom: 10 }}>
-                                    <Typography variant="h6" noWrap={true} style={{ fontSize: 14, color: '#00318B', fontFamily: 'Poppins' }}>
+                                    <Typography variant="h6" noWrap={true} style={{ fontSize: 14, color: '#2C7FB2', fontFamily: 'Poppins', fontWeight: 600 }}>
                                         Profile
                                     </Typography>
                                     {details[0].ProfileImage ?
@@ -449,7 +462,11 @@ export default function DoctorPatientMedicalHistory() {
                     <Paper elevation={6} className={classes.paper} style={{ padding: theme.spacing(2), paddingRight: 0, marginRight: 20 }}>
                         <Grid container xs spacing={3}>
                             <Grid item xs={12}>
-                                <Typography variant="h6" noWrap={true} style={{ fontSize: 16, color: '#00318B', fontFamily: 'Poppins' }}>
+                                <Typography variant="h6" noWrap={true} style={{
+                                    fontSize: 16, color: '#2C7FB2', fontWeight: 600,
+                                    textDecorationLine: 'underline', textUnderlineOffset: '1px', textDecorationThickness: '1px',
+                                    fontFamily: 'Poppins'
+                                }}>
                                     Details
                                 </Typography>
                             </Grid>
@@ -462,7 +479,7 @@ export default function DoctorPatientMedicalHistory() {
 
                             </Grid>
                             <Grid item xs={3} style={{ float: 'left' }}>
-                                <input id="fromdate" type="date" style={{ border: '1px solid #F0F0F0', height: 35, fontFamily: 'Poppins', color: '#707070' }} />
+                                <input id="fromdate" value={fromdt} onChange={(e) => setfromdt(e.target.value)} type="date" style={{ border: '1px solid #F0F0F0', height: 35, fontFamily: 'Poppins', color: '#707070' }} />
                             </Grid>
                             <Grid item xs={1.5}>
                                 <Typography variant="h6" noWrap={true} style={{ fontSize: 14, color: '#707070', fontFamily: 'Poppins' }}>
@@ -470,10 +487,10 @@ export default function DoctorPatientMedicalHistory() {
                                 </Typography>
                             </Grid>
                             <Grid item xs={3}>
-                                <input id="todate" type="date" style={{ border: '1px solid #F0F0F0', height: 35, color: '#707070' }} />
+                                <input id="todate" value={todt} onChange={(e) => settodt(e.target.value)} type="date" style={{ border: '1px solid #F0F0F0', height: 35, color: '#707070' }} />
                             </Grid>
                             <Grid item xs={4}>
-                                <Button className={classes.btnview}>View</Button>
+                                <Button onClick={() => handleView(fromdt, todt)} className={classes.btnview}>View</Button>
                             </Grid>
 
                             <Grid item sm={12} style={{ marginTop: '-10px' }}>

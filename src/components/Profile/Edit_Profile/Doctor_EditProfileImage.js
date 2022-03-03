@@ -51,7 +51,7 @@ export default function EditImage({ show,  handleCloseEditmodal }) {
                 <DialogContent>
                     <DialogContentText id="alert-dialog-description">
                         <Grid container>
-                            <Grid item xs={6} style={{ borderRight: '1px solid #F0F0F0' }}>
+                            <Grid item xs={6} >
                                 <Typography variant="h6" noWrap={true} style={{
                                     fontSize: 16,
                                     fontFamily: 'Poppins',
@@ -71,7 +71,7 @@ export default function EditImage({ show,  handleCloseEditmodal }) {
 
                                      <FormControl variant="outlined"   >
 
-                                        <TextField id="outlined-basic" enctype="multipart/form-data" onChange={(e)=>{const file= e.target.files[0];setFile(file); }} type="file" size="small" label=""   variant="outlined" style={{ width: '100%', position: 'relative', marginLeft: '200px', marginTop: '-30px', border: '1px solid #F0F0F0' }} />
+                                        <TextField id="outlined-basic" enctype="multipart/form-data" onChange={(e)=>{const file= e.target.files[0];setFile(file); }} type="file" size="small" label=""   variant="outlined" style={{ width: '100%', position: 'relative', marginLeft: '200px', marginTop: '-30px' }} />
                                         {/* const file = event.target.files[0];
                                         setfile (file);  */}
                                     </FormControl> 

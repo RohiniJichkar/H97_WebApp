@@ -10,6 +10,7 @@ import MenuIcon from '@material-ui/icons/Menu';
 import TV_Slider_Component from './components/TV_Slider/SliderComponent';
 import Patient_In_Queue_TV_Component from './components/TV_Slider/Patient_In_Queue_Component';
 import { get_patientinqueue } from '../../Apis/Staff/TV_Advertisements/index';
+import { Show_Send_In_Details } from './components/TV_Slider/Show_Send_In_Details/index';
 
 const drawerWidth = 240;
 
@@ -171,15 +172,39 @@ export default function Staff_TV_TodaysAppointments() {
     const [anchorElProfile, setAnchorElProfile] = React.useState(false);
     const [patientIn, setpatientIn] = useState([]);
     const [ClinicDetails, setClinicDetails] = useState([]);
+    const [SendIn, setSendIn] = useState([]);
+    const [SendInModal, setSendInModal] = useState(false);
+
+
+    const FetchSend_In = async () => {
+        var data = await localStorage.getItem("userdata");
+        let parsed = JSON.parse(data);
+        let ClinicId = parsed.ClinicId;
+        try {
+            const request = await axios.post(ip + 'Web_ShowSendInQueueForTV', { ClinicId: ClinicId });
+            if (request) {
+                let dato = request?.data?.Appointment;
+                setSendIn(dato);
+            }
+        } catch (error) {
+            console.log(error)
+        }
+    }
 
     useEffect(() => {
         const interval = setInterval(() => {
             fetchClinicDetails();
             fetchPatientIn();
+            FetchSend_In();
+            setSendInModal(true);
         }, 10000);
+        const secondinterval = setInterval(() => {
+            setSendInModal(false);
+        }, 20000);
+        FetchSend_In();
         fetchClinicDetails();
         fetchPatientIn();
-        return () => clearInterval(interval);
+        return () => clearInterval(interval, secondinterval);
 
     }, [])
 
@@ -305,8 +330,8 @@ export default function Staff_TV_TodaysAppointments() {
 
                             >
                                 {ClinicDetails.Logo ?
-                                   <img style={{ borderRadius: 50, height: 60, width: 140 }} src={ClinicDetails.Logo} /> :
-                                   <img style={{ borderRadius: 50, height: 60, width: 140 }} src='default-image.png' />}
+                                    <img style={{ borderRadius: 50, height: 60, width: 140 }} src={ClinicDetails.Logo} /> :
+                                    <img style={{ borderRadius: 50, height: 60, width: 140 }} src='default-image.png' />}
 
                             </IconButton>
                             <Menu
@@ -359,7 +384,7 @@ export default function Staff_TV_TodaysAppointments() {
                         }
                     </Grid>
                 </Container>
-
+                {SendInModal ? <Show_Send_In_Details show={SendInModal} data={SendIn} /> : null}
                 {/* <Container>
                     <Grid container spacing={2} direction="row" wrap="nowrap">
                         <Grid item xs={2} style={{ marginLeft: '-90px', paddingRight: 0 }}>

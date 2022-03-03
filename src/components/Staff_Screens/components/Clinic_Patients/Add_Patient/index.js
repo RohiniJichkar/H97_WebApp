@@ -5,6 +5,9 @@ import { useNavigate } from 'react-router-dom';
 import { Container, Avatar, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, TextField, Slide, Select, FormControl, InputLabel, Typography, Button, Table, TableContainer, TableBody, TableCell, TableHead, InputBase, TableRow, TablePagination, Drawer, Divider, MenuItem, Menu, ListItem, ListItemIcon, ListItemText, List, IconButton, Grid, Paper, Link } from "@material-ui/core";
 import { Redirect } from 'react-router-dom';
 import CloseIcon from '@material-ui/icons/Close';
+import Visibility from '@material-ui/icons/Visibility';
+import VisibilityOff from '@material-ui/icons/VisibilityOff';
+import InputAdornment from '@material-ui/core/InputAdornment';
 import { Register_Patient } from '../../../../../Apis/Staff/Clinic_Patients/Patient_Registration';
 
 const drawerWidth = 240;
@@ -29,6 +32,7 @@ const Add_Patinet = ({ show, handleclose }) => {
     const [country, setcountry] = useState('');
     const [height, setheight] = useState('');
     const [weight, setweight] = useState('');
+    const [showPassword, setshowPassword] = useState(false);
 
     const PatientRegistration = async (firstnm, lastnm, mobile, password, email, dob, gender, address, city, pincode, state, country, height, weight) => {
         var data = await localStorage.getItem("userdata");
@@ -52,6 +56,14 @@ const Add_Patinet = ({ show, handleclose }) => {
         }
 
     }
+
+    const handleClickShowPassword = () => {
+        setshowPassword(!showPassword);
+    };
+
+    const handleMouseDownPassword = (event) => {
+        event.preventDefault();
+    };
 
     return (
         <>
@@ -114,7 +126,22 @@ const Add_Patinet = ({ show, handleclose }) => {
                                                 e.target.value = Math.max(0, parseInt(e.target.value)).toString().slice(0, 10)
                                             }}
                                         />
-                                        <TextField className={classes.inputFields} value={password} onChange={(e) => setpassword(e.target.value)} id="outlined-basic" type="password" size="small" placeholder="Password*" variant="outlined" />
+                                        <TextField className={classes.inputFields} value={password} onChange={(e) => setpassword(e.target.value)} id="outlined-basic"
+                                            type={showPassword ? 'text' : 'password'}
+                                            size="small" placeholder="Password*" variant="outlined"
+                                            InputProps={{
+                                                endAdornment: (
+                                                    <InputAdornment position="end">
+                                                        <IconButton
+                                                            aria-label="toggle password visibility"
+                                                            onClick={handleClickShowPassword}
+                                                            onMouseDown={handleMouseDownPassword}
+                                                        >
+                                                            {showPassword ? <Visibility /> : <VisibilityOff />}
+                                                        </IconButton>
+                                                    </InputAdornment>
+                                                ),
+                                            }} />
                                         <TextField className={classes.inputFields} value={email} onChange={(e) => setemail(e.target.value)} id="outlined-basic" type="email" size="small" placeholder="Email Id" variant="outlined" />
                                         <TextField className={classes.inputFields} value={dob} onChange={(e) => setdob(e.target.value)} id="outlined-basic" type="date" size="small" placeholder="DOB*" variant="outlined" />
                                         <FormControl variant="outlined" size='small' className={classes.formControl}  >

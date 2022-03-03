@@ -158,14 +158,6 @@ export default function DoctorBookAppointment() {
             alert("Please select Doctor")
             return;
         }
-        else if (doctor.trim() == '') {
-            alert("Please select Doctor")
-            return;
-        }
-        else if (appchannelselected.trim() == '') {
-            alert("Please select appointment Channel")
-            return;
-        }
         else if (title.trim() == '') {
             alert("Please enter title")
             return;
@@ -174,7 +166,7 @@ export default function DoctorBookAppointment() {
             alert("You cannot set appointment for previous date");
             return
         }
-        else if (appDate <= tdate) {
+        else if (appDate < tdate) {
             if (timeselected < systemTime) {
                 alert(`You can't not set Appointment at ${timeselected}`);
                 return
@@ -191,6 +183,12 @@ export default function DoctorBookAppointment() {
         let doctorid = parsed.userid;
         const now = new Date();
         const date = now.toISOString().split('T')[0];
+        const time = now.toLocaleTimeString();
+
+        if (!walkIn) {
+            setappChannel('Walk-In')
+            setTimeSelected(time)
+        }
 
         const obj = {
             Title: title,
@@ -517,8 +515,8 @@ export default function DoctorBookAppointment() {
                                                 <Select
                                                     className={classes.textField}
                                                     native
-                                                    value={appchannelselected}
-                                                    onChange={(e) => setappchannelSelected(e.target.value)}
+                                                    value='Walk-In'
+                                                    onChange={() => setappchannelSelected('Walk-In')}
                                                     label="appointment"
                                                     inputProps={{
                                                         name: 'appointmentchannel',

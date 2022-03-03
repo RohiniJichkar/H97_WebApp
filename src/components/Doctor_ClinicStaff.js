@@ -2,13 +2,15 @@ import React, { useEffect, useState } from 'react';
 import clsx from 'clsx';
 import { makeStyles, useTheme, alpha } from '@material-ui/core/styles';
 import { useNavigate } from 'react-router-dom';
-import { Container, Switch, Avatar, Select, FormControl, InputLabel, Radio, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, TextField, Typography, Button, Table, TableContainer, TableBody, TableCell, TableHead, InputBase, TableRow, TablePagination, Grid, Paper, Link, Slide } from "@material-ui/core";
+import { Avatar, Select, FormControl, InputLabel, Radio, Dialog, IconButton, DialogContent, DialogContentText, DialogTitle, TextField, Typography, Button, InputBase, Grid, Paper, Slide } from "@material-ui/core";
 import DoctorNavbar from './Doctor_Navbar';
 import SearchIcon from '@material-ui/icons/Search';
 import ArrowBackIcon from '@material-ui/icons/ArrowBack';
 import CloseIcon from '@material-ui/icons/Close';
-import IconButton from '@material-ui/core/IconButton';
 import axios from 'axios';
+import Visibility from '@material-ui/icons/Visibility';
+import VisibilityOff from '@material-ui/icons/VisibilityOff';
+import InputAdornment from '@material-ui/core/InputAdornment';
 import { DataGrid, gridColumnLookupSelector } from '@material-ui/data-grid';
 import { Add_Staff, Doctor_Category, Times, EditStaffdata } from '../Apis/Clinic_Staff/index';
 import ip from '../ipaddress/ip';
@@ -78,7 +80,7 @@ export default function DoctorClinicStaff() {
     const [editmodal, seteditmodal] = useState(false);
     const [editrole, seteditrole] = useState();
     const [staffsearch, setstaffsearch] = useState([]);
-
+    const [showPassword, setshowPassword] = useState(false);
 
     const fetchStaffData = async () => {
         var data = await localStorage.getItem("userdata");
@@ -130,12 +132,19 @@ export default function DoctorClinicStaff() {
             CodeValueCategory: category,
             Gender: gender
         }
-        const registration = await Add_Staff(obj);
-        let parse = JSON.parse(registration);
-        if (parse.success === "200") {
-            alert(parse.message);
-            setOpenmodal(false);
-            window.location.reload()
+        try {
+            const registration = await Add_Staff(obj);
+            let parse = JSON.parse(registration);
+            if (parse.success === "200") {
+                alert(parse.message);
+                setOpenmodal(false);
+                window.location.reload()
+            }
+            else {
+                alert(parse.message);
+            }
+        } catch (e) {
+            console.log(e);
         }
     }
 
@@ -210,6 +219,14 @@ export default function DoctorClinicStaff() {
         navigate("/DoctorHome");
     };
 
+
+    const handleClickShowPassword = () => {
+        setshowPassword(!showPassword);
+    };
+
+    const handleMouseDownPassword = (event) => {
+        event.preventDefault();
+    };
 
 
     return (
@@ -293,7 +310,7 @@ export default function DoctorClinicStaff() {
                             Profile
                         </Typography>
                         <center>
-                            <div style={{paddingBottom:0,height:84,position:'relative',bottom:15 }}>
+                            <div style={{ paddingBottom: 0, height: 84, position: 'relative', bottom: 15 }}>
                                 {staffDetails[0] ? staffDetails[0].ProfileImage ?
                                     <Avatar style={{ borderRadius: 50, height: 100, width: 100 }} src={staffDetails[0].ProfileImage} /> :
                                     <Avatar style={{ borderRadius: 50, height: 100, width: 100 }} /> : <Avatar style={{ borderRadius: 50, height: 100, width: 100 }} />}
@@ -315,9 +332,9 @@ export default function DoctorClinicStaff() {
                                 color: '#707070',
                                 fontWeight: 400
                             }}>
-                                UID- {staffDetails[0] ? staffDetails[0].UserId : null}
+                                UID- {staffDetails[0] ? staffDetails[0].UserId : ''}
                                 <div>
-                                {staffDetails[0] ? staffDetails[0].Role : null}
+                                    {staffDetails[0] ? staffDetails[0].Role : 'NA'}
                                 </div>
                             </Typography>
                             <Grid container xs={12} style={{ paddingTop: 15 }}>
@@ -457,7 +474,21 @@ export default function DoctorClinicStaff() {
                                                 id="outlined-basic" type="email" size="small" label="Email Id" variant="outlined" />
                                             <TextField className={classes.inputFields}
                                                 onChange={(e) => setpassword(e.target.value)}
-                                                type="password" id="outlined-basic" size="small" label="Password" variant="outlined" />
+                                                type={showPassword ? 'text' : 'password'} id="outlined-basic" size="small" label="Password" variant="outlined"
+                                                InputProps={{
+                                                    endAdornment: (
+                                                        <InputAdornment position="end">
+                                                            <IconButton
+                                                                aria-label="toggle password visibility"
+                                                                onClick={handleClickShowPassword}
+                                                                onMouseDown={handleMouseDownPassword}
+                                                            >
+                                                                {showPassword ? <Visibility /> : <VisibilityOff />}
+                                                            </IconButton>
+                                                        </InputAdornment>
+                                                    ),
+                                                }}
+                                            />
                                             <TextField className={classes.inputFields} multiline
                                                 onChange={(e) => setaddress(e.target.value)}
                                                 rows={3}

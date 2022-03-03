@@ -21,7 +21,7 @@ export const Add_Services = async (formData) => {
         const addService = await axios.post(ip + 'Web_AddServices', formData, { headers: { "Content-Type": "multipart/form-data" } });
         return JSON.stringify(addService?.data);
     } catch (error) {
-        return (error.response.data.message);
+        return JSON.stringify(error.response.data);
     }
 }
 

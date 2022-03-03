@@ -424,7 +424,7 @@ export default function Staff_Home_Visit_Request() {
                             </Grid>
 
                             <DataGrid
-                                style={{ height: 350, marginTop: 20, fontSize: 13, fontFamily: 'Poppins', fontWeight: 600, color: '#2C7FB2', cursor: 'pointer' }}
+                                style={{ height: 364, marginTop: 20, fontSize: 13, fontFamily: 'Poppins', fontWeight: 600, color: '#2C7FB2', cursor: 'pointer' }}
                                 rows={requestData}
                                 rowHeight={30}
                                 columns={columns}
@@ -449,7 +449,7 @@ export default function Staff_Home_Visit_Request() {
                             </Typography>
                             <div><Button style={{ position: 'relative', marginTop: -55, left: 700, fontWeight: 'normal', color: '#707070' }} onClick={handlesContinue}><DeleteIcon /></Button> </div>
                             <center>
-                                <div style={{ paddingBottom: 5 }}>
+                                <div style={{ paddingBottom: 5, marginTop: '-20px' }}>
                                     {requestorDetails.ProfileImage ?
                                         <Avatar style={{ borderRadius: 50, height: 80, width: 80 }} src={requestorDetails.ProfileImage} /> :
                                         <Avatar style={{ borderRadius: 50, height: 80, width: 80 }} />}
@@ -472,6 +472,15 @@ export default function Staff_Home_Visit_Request() {
                                     fontWeight: 400
                                 }}>
                                     Requester Id: {requestorDetails.RequesterId ? requestorDetails.RequesterId : "NA"}
+                                </Typography>
+                                <Typography variant="h6" noWrap={true} style={{
+                                    fontSize: 14,
+                                    fontFamily: 'Poppins',
+                                    fontStyle: 'normal',
+                                    color: '#707070',
+                                    fontWeight: 400
+                                }}>
+                                    Requester For: Dr. {requestorDetails.HFName ? requestorDetails.HFName : 'NA'} {requestorDetails.HLName}
                                 </Typography>
                                 <Grid container xs={12} style={{ paddingTop: 15 }}>
                                     <Grid item xs={3} style={{ border: '1px solid #F0F0F0', paddingBottom: 20 }}>

@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import clsx from 'clsx';
 import { makeStyles, useTheme } from '@material-ui/core/styles';
 import { useNavigate } from 'react-router-dom';
-import { Container, Typography, Button, Grid, Paper, } from "@material-ui/core";
+import { Container, Typography, Button, Grid, Paper, Avatar } from "@material-ui/core";
 import { Redirect } from 'react-router-dom';
 import DoctorNavbar from './Staff_Navbar';
 import axios from 'axios';

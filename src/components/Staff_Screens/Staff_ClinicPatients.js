@@ -111,6 +111,7 @@ export default function Staff_ClinicPatients() {
     const [openeditmodal, setOpenEditmodal] = React.useState(false);
     const [opendeletemodal, setOpenDeletemodal] = React.useState(false);
     const [patientsearch, setpatientsearch] = useState([]);
+    const [showPassword, setshowPassword] = useState(false);
 
     const PatientRegistration = async () => {
         var data = await localStorage.getItem("userdata");
@@ -189,6 +190,7 @@ export default function Staff_ClinicPatients() {
     const handleGoBack = () => {
         navigate(-1);
     };
+
 
     return (
         <div className={classes.root} style={{ backgroundColor: '#ffffff' }}>

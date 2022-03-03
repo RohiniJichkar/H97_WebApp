@@ -286,7 +286,7 @@ export default function DoctorHomeVisitHistory() {
                             />
                         </Grid>
                         <Grid item xs={12} style={{ marginRight: 20 }} >
-                            <Button
+                            {/* <Button
                                 variant="contained"
                                 color="#2C7FB2"
                                 style={{
@@ -309,7 +309,7 @@ export default function DoctorHomeVisitHistory() {
                                 }
                             >
                                 Download as PDF
-                            </Button>
+                            </Button> */}
                             <Button
                                 variant="contained"
                                 color="#2C7FB2"

@@ -327,12 +327,19 @@ export default function DoctorAddServices() {
         formData.append('Discount', discount);
         formData.append('Description', description);
 
-        const add_service = await Add_Services(formData);
-
-        let parse = JSON.parse(add_service);
-        if (parse.success === "200") {
-            alert(parse.message);
-            window.location.reload()
+        try {
+            const add_service = await Add_Services(formData);
+           
+                let parse = JSON.parse(add_service);
+                if (parse.success === "200") {
+                    alert(parse.message);
+                    window.location.reload()
+                }else{
+                    alert(parse.message);
+                }
+         
+        } catch (e) {
+            console.log(e)
         }
     }
 
@@ -421,8 +428,6 @@ export default function DoctorAddServices() {
                                 <center>
                                     <TextField className={classes.textField} id="outlined-basic" value={serviceName} onChange={(e) => {
                                         const re = /^[A-Za-z]+$/;
-
-
                                         if (e.target.value === '' || re.test(e.target.value)) {
                                             setserviceName(e.target.value)
                                         }
