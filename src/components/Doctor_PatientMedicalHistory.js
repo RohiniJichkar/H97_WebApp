@@ -11,6 +11,7 @@ import Pdf from '../Prescription_VinayH7B8_38 (1).pdf';
 import { DataGrid } from '@material-ui/data-grid';
 import ip from '../ipaddress/ip';
 import axios from 'axios';
+import { Todays } from '../Apis/Todays_Appointments/index';
 
 const drawerWidth = 240;
 
@@ -202,6 +203,67 @@ const rows = [
     createData('Headache', '07/12/2021', 'Dr. Komal Mhetre'),
 ];
 
+
+const columns = [
+    {
+        field: 'Title',
+        headerName: 'Appointment Title',
+        width: 220,
+        editable: true,
+    },
+    {
+        field: 'AppointmentDate',
+        headerName: 'Date',
+        width: 150,
+        editable: true,
+        align: 'center'
+    },
+    {
+        field: "fullName",
+        headerName: 'Treated By',
+        width: 150,
+        editable: true,
+        valueGetter: (params) =>
+            `${params.getValue(params.id, 'DFName') || params.getValue(params.id, 'HFName')} ${params.getValue(params.id, 'DLName') || params.getValue(params.id, 'HLName')
+            }`,
+    },
+    {
+        field: 'PrescriptionURL',
+        headerName: 'View Prescription',
+        width: 200,
+        // valueGetter: (params) =>
+        // `${params.getValue(params.id, 'PrescriptionURL') || params.getValue(params.id, 'PdfPrescription')} 
+        // }`,
+        renderCell: (params) => (
+            params.row.PrescriptionURL ?
+                <>
+                    <Button
+                        onClick={() => {
+                            window.open(params.getValue(params.row.id, 'PrescriptionURL'), '_blank')
+                            console.log(params.row)
+                        }}
+                        size="small"
+                        style={{ color: '#2C7FB2', fontSize: '12px', fontFamily: 'Poppins', fontWeight: 600 }}
+                    >
+                        View Prescription
+                    </Button>
+                </>
+                :
+                <Button
+                    onClick={() => {
+                        window.open(params.getValue(params.id, 'PdfPrescription'), '_blank')
+                        console.log(params.row)
+                    }}
+                    size="small"
+                    style={{ color: '#2C7FB2', fontSize: '12px', fontFamily: 'Poppins', fontWeight: 600 }}
+                >
+                    View Prescription
+                </Button>
+        ),
+    },
+];
+
+
 export default function DoctorPatientMedicalHistory() {
     const classes = useStyles();
     const theme = useTheme();
@@ -215,6 +277,8 @@ export default function DoctorPatientMedicalHistory() {
     const [medicalhistory, setmedicalhistory] = useState([]);
     const [fromdt, setfromdt] = useState('');
     const [todt, settodt] = useState('');
+    const [StartDate, setStartDate] = useState();
+    const [EndDate, setEndDate] = useState();
 
     const fetchMedicalHistory = async () => {
         var data = await localStorage.getItem("userdata");
@@ -233,66 +297,18 @@ export default function DoctorPatientMedicalHistory() {
         // setmedicalhistory(medicalhistoryInfo?.data?.Appointment);
     }
 
+    const handlehistory = async (StartDate, EndDate) => {
+        var data = await localStorage.getItem("userdata");
+        let parsed = JSON.parse(data);
+        let Clinicid = parsed.ClinicId;
 
-    const columns = [
-        {
-            field: 'Title',
-            headerName: 'Appointment Title',
-            width: 220,
-            editable: true,
-        },
-        {
-            field: 'AppointmentDate',
-            headerName: 'Date',
-            width: 150,
-            editable: true,
-            align: 'center'
-        },
-        {
-            field: "fullName",
-            headerName: 'Treated By',
-            width: 150,
-            editable: true,
-            valueGetter: (params) =>
-                `${params.getValue(params.id, 'DFName') || params.getValue(params.id, 'HFName')} ${params.getValue(params.id, 'DLName') || params.getValue(params.id, 'HLName')
-                }`,
-        },
-        {
-            field: 'PrescriptionURL',
-            headerName: 'View Prescription',
-            width: 200,
-            // valueGetter: (params) =>
-            // `${params.getValue(params.id, 'PrescriptionURL') || params.getValue(params.id, 'PdfPrescription')} 
-            // }`,
-            renderCell: (params) => (
-                params.row.PrescriptionURL ?
-                    <>
-                        <Button
-                            onClick={() => {
-                                window.open(params.getValue(params.row.id, 'PrescriptionURL'), '_blank')
-                                console.log(params.row)
-                            }}
-                            size="small"
-                            style={{ color: '#2C7FB2', fontSize: '12px', fontFamily: 'Poppins', fontWeight: 600 }}
-                        >
-                            View Prescription
-                        </Button>
-                    </>
-                    :
-                    <Button
-                        onClick={() => {
-                            window.open(params.getValue(params.id, 'PdfPrescription'), '_blank')
-                            console.log(params.row)
-                        }}
-                        size="small"
-                        style={{ color: '#2C7FB2', fontSize: '12px', fontFamily: 'Poppins', fontWeight: 600 }}
-                    >
-                        View Prescription
-                    </Button>
-            ),
-        },
-    ];
-
+        try {
+            let request = await Todays(Clinicid, StartDate, EndDate, details[0].UserId)
+            setmedicalhistory(request)
+        } catch (e) {
+            console.log(e)
+        }
+    }
 
     useEffect(() => {
         fetchMedicalHistory();
@@ -479,7 +495,7 @@ export default function DoctorPatientMedicalHistory() {
 
                             </Grid>
                             <Grid item xs={3} style={{ float: 'left' }}>
-                                <input id="fromdate" value={fromdt} onChange={(e) => setfromdt(e.target.value)} type="date" style={{ border: '1px solid #F0F0F0', height: 35, fontFamily: 'Poppins', color: '#707070' }} />
+                                <input id="fromdate" value={StartDate} onChange={(e) => setStartDate(e.target.value)} type="date" style={{ border: '1px solid #F0F0F0', height: 35, fontFamily: 'Poppins', color: '#707070' }} />
                             </Grid>
                             <Grid item xs={1.5}>
                                 <Typography variant="h6" noWrap={true} style={{ fontSize: 14, color: '#707070', fontFamily: 'Poppins' }}>
@@ -487,15 +503,15 @@ export default function DoctorPatientMedicalHistory() {
                                 </Typography>
                             </Grid>
                             <Grid item xs={3}>
-                                <input id="todate" value={todt} onChange={(e) => settodt(e.target.value)} type="date" style={{ border: '1px solid #F0F0F0', height: 35, color: '#707070' }} />
+                                <input id="todate" value={EndDate} onChange={(e) => setEndDate(e.target.value)} type="date" style={{ border: '1px solid #F0F0F0', height: 35, color: '#707070' }} />
                             </Grid>
                             <Grid item xs={4}>
-                                <Button onClick={() => handleView(fromdt, todt)} className={classes.btnview}>View</Button>
+                                <Button onClick={() => handlehistory(StartDate, EndDate)} className={classes.btnview}>View</Button>
                             </Grid>
 
                             <Grid item sm={12} style={{ marginTop: '-10px' }}>
                                 <DataGrid
-                                    style={{ height: 250, fontSize: 12, fontFamily: 'Poppins', fontWeight: 600, color: '#2C7FB2' }}
+                                    style={{ height: 258, fontSize: 12, fontFamily: 'Poppins', fontWeight: 600, color: '#2C7FB2' }}
                                     rows={medicalhistory}
                                     rowHeight={40}
                                     columns={columns}

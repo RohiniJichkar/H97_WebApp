@@ -166,12 +166,6 @@ export default function DoctorBookAppointment() {
             alert("You cannot set appointment for previous date");
             return
         }
-        else if (appDate < tdate) {
-            if (timeselected < systemTime) {
-                alert(`You can't not set Appointment at ${timeselected}`);
-                return
-            }
-        }
         else if (apptypeselected.trim() == '') {
             alert("Please select appointment type");
             return
@@ -184,11 +178,6 @@ export default function DoctorBookAppointment() {
         const now = new Date();
         const date = now.toISOString().split('T')[0];
         const time = now.toLocaleTimeString();
-
-        if (!walkIn) {
-            setappChannel('Walk-In')
-            setTimeSelected(time)
-        }
 
         const obj = {
             Title: title,
@@ -214,12 +203,16 @@ export default function DoctorBookAppointment() {
             createdBy: doctorid,
             updatedBy: doctorid,
         }
-        const addAppointment = await Book_Appointment(obj);
+        try {
+            const addAppointment = await Book_Appointment(obj);
 
-        let parse = JSON.parse(addAppointment);
-        if (parse.success === "200") {
-            alert(parse.message);
-            window.location.reload()
+            let parse = JSON.parse(addAppointment);
+            if (parse.success === "200") {
+                alert(parse.message);
+                window.location.reload()
+            }
+        } catch (e) {
+            console.log(e);
         }
     }
 
@@ -515,8 +508,8 @@ export default function DoctorBookAppointment() {
                                                 <Select
                                                     className={classes.textField}
                                                     native
-                                                    value='Walk-In'
-                                                    onChange={() => setappchannelSelected('Walk-In')}
+                                                    value={appchannelselected}
+                                                    onChange={(e) => setappchannelSelected(e.target.value)}
                                                     label="appointment"
                                                     inputProps={{
                                                         name: 'appointmentchannel',

@@ -158,10 +158,6 @@ export default function Staff_Book_Appointment() {
             alert("Please select Doctor")
             return;
         }
-        else if (appchannelselected.trim() == '') {
-            alert("Please select appointment Channel")
-            return;
-        }
         else if (title.trim() == '') {
             alert("Please enter title")
             return;
@@ -169,12 +165,6 @@ export default function Staff_Book_Appointment() {
         else if (appDate < tdate) {
             alert("You cannot set appointment for previous date");
             return
-        }
-        else if (appDate <= tdate) {
-            if (timeselected < systemTime) {
-                alert(`You can't not set Appointment at ${timeselected}`);
-                return
-            }
         }
         else if (apptypeselected.trim() == '') {
             alert("Please select appointment type");

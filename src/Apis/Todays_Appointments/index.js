@@ -79,3 +79,14 @@ export const Todays_Appointment_By_Date = async (clinicid, startdate, enddate) =
         return error;
     }
 }
+
+
+export const Todays = async (clinicid, StartDate, EndDate, userid) => {
+    try {
+        const res = await axios.post(ip + 'Web_MedicalHistoryforDoctor', { ClinicId: clinicid, StartDate: StartDate, EndDate: EndDate, UserId: userid });
+        return res?.data?.Appointment;
+    }
+    catch (error) {
+        return error;
+    }
+}

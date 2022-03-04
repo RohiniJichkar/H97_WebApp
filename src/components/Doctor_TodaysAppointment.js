@@ -72,7 +72,7 @@ const columns = [
         width: 130,
         sortable: false,
 
-        RenderCell: (params) => {
+        renderCell: (params) => {
             const onClickDelete = async () => {
                 return alert("Are you Sure!! Do you want to delete medicine");
             };
