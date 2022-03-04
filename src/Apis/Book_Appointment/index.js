@@ -32,7 +32,7 @@ export const Book_Appointment = async (obj) => {
         const addAppointment = await axios.post(ip + 'Web_BookAppointment', obj);
         return JSON.stringify(addAppointment?.data);
     } catch (error) {
-        return (error.response.data.message);
+        return JSON.stringify(error.response.data);
     }
 }
 

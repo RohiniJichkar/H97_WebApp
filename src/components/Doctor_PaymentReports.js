@@ -85,8 +85,8 @@ const PaymentReports = () => {
                             <Tab label="Appointment Report" {...a11yProps(0)} />
                             <Tab label="Home Visitor Report" {...a11yProps(1)} />
                             <Tab label="Finance Report" {...a11yProps(2)} />
-                            <Tab label="Patient Visit Report" {...a11yProps(3)} />
-                            <Tab label="Staff Report" {...a11yProps(4)} />
+                            {/* <Tab label="Patient Visit Report" {...a11yProps(3)} /> */}
+                            <Tab label="Staff Report" {...a11yProps(3)} />
                         </Tabs>
                     </AppBar>
                     <TabPanel value={value} index={0}>
@@ -98,10 +98,10 @@ const PaymentReports = () => {
                     <TabPanel value={value} index={2}>
                         <Finance_Analysis_reports />
                     </TabPanel>
-                    <TabPanel value={value} index={3}>
+                    {/* <TabPanel value={value} index={3}>
                         Item Four
-                    </TabPanel>
-                    <TabPanel value={value} index={4}>
+                    </TabPanel> */}
+                    <TabPanel value={value} index={3}>
                        <Staff_Analysis_reports />
                     </TabPanel>
                 </div>

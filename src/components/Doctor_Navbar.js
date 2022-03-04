@@ -477,9 +477,9 @@ export default function DoctorNavbar() {
             </center>
             <DirectionsWalkIcon onClick={() => handleHVReq()} style={{ color: '#2C7FB2', cursor: 'pointer' }} />
           </div>
-          <div>
+          {/* <div>
             <SettingsIcon onClick={() => setopenmodal(true)} style={{ color: '#2C7FB2', cursor: 'pointer', marginLeft: 10 }} />
-          </div>
+          </div> */}
         </Toolbar>
       </AppBar>
       <Drawer

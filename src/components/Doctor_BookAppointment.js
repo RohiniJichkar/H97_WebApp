@@ -210,6 +210,8 @@ export default function DoctorBookAppointment() {
             if (parse.success === "200") {
                 alert(parse.message);
                 window.location.reload()
+            }else{
+                alert(parse.message);
             }
         } catch (e) {
             console.log(e);

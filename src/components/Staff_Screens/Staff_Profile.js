@@ -151,7 +151,7 @@ export default function Staff_Profile() {
                                                 fontSize: 14, color: '#707070', fontFamily: 'Poppins',
                                                 fontStyle: 'normal', fontWeight: 400, marginTop: 5
                                             }}>
-                                                {doctordata.Category}
+                                                {doctordata.Category ? doctordata.Category : 'NA'}
                                             </Typography>
                                         </Grid>
                                         <Grid item xs={6}>
@@ -159,7 +159,7 @@ export default function Staff_Profile() {
                                                 fontSize: 14, color: '#707070', fontFamily: 'Poppins',
                                                 fontStyle: 'normal', fontWeight: 400, marginTop: 5
                                             }}>
-                                                {doctordata.Education}
+                                                {doctordata.Education ? doctordata.Education : 'NA'}
                                             </Typography>
                                         </Grid>
 
@@ -184,7 +184,7 @@ export default function Staff_Profile() {
                                                 fontSize: 14, color: '#707070', fontFamily: 'Poppins',
                                                 fontStyle: 'normal', fontWeight: 400, marginTop: 5
                                             }}>
-                                                {doctordata.Email ? doctordata.Email : 'Not Provided'}
+                                                {doctordata.Email ? doctordata.Email : 'NA'}
                                             </Typography>
                                         </Grid>
                                         <Grid item xs={6}>
@@ -192,7 +192,7 @@ export default function Staff_Profile() {
                                                 fontSize: 14, color: '#707070', fontFamily: 'Poppins',
                                                 fontStyle: 'normal', fontWeight: 400, marginTop: 5
                                             }}>
-                                                {doctordata.DOB ? doctordata.DOB : 'Not Provided'}
+                                                {doctordata.DOB ? doctordata.DOB : 'NA'}
                                             </Typography>
                                         </Grid>
 
@@ -225,7 +225,7 @@ export default function Staff_Profile() {
                                                 fontSize: 14, color: '#707070', fontFamily: 'Poppins',
                                                 fontStyle: 'normal', fontWeight: 400, marginTop: 5, paddingBottom: 5
                                             }}>
-                                                {doctordata.Experience ? doctordata.Experience : 'Not Provided'} years
+                                                {doctordata.Experience ? doctordata.Experience : 'NA'} years
                                             </Typography>
                                         </Grid>
                                     </Grid>
@@ -284,7 +284,7 @@ export default function Staff_Profile() {
                                         fontWeight: 600
 
                                     }}>
-                                        GSTIN:- {Clinicdetails.ClinicGstNumber ? Clinicdetails.ClinicGstNumber : 'Not Provided'}
+                                        GSTIN:- {Clinicdetails.ClinicGstNumber ? Clinicdetails.ClinicGstNumber : 'NA'}
                                     </Typography>
 
                                     <Grid container>
@@ -321,7 +321,7 @@ export default function Staff_Profile() {
                                                 fontWeight: 400
 
                                             }}>
-                                                {Clinicdetails.ClinicEmail ? Clinicdetails.ClinicEmail : 'Not Provided'}
+                                                {Clinicdetails.ClinicEmail ? Clinicdetails.ClinicEmail : 'NA'}
                                             </Typography>
                                         </Grid>
                                         <Grid item xs={6}>
@@ -333,7 +333,7 @@ export default function Staff_Profile() {
                                                 fontWeight: 400
 
                                             }}>
-                                                {Clinicdetails.ClinicMobileNo ? Clinicdetails.ClinicMobileNo : 'Not Provided'}
+                                                {Clinicdetails.ClinicMobileNo ? Clinicdetails.ClinicMobileNo : 'NA'}
                                             </Typography>
                                         </Grid>
                                     </Grid>
@@ -349,7 +349,7 @@ export default function Staff_Profile() {
                                                 marginLeft: 20,
                                                 marginRight: 20
                                             }}>
-                                                {doctordata.ClinicAddress != '' ? doctordata.ClinicAddress : 'Not Provided'} <br /> {doctordata.ClinicCity != '' ? doctordata.ClinicCity : 'Not Provided'} {doctordata.ClinicState != '' ? doctordata.ClinicState : 'Not Provided'} {doctordata.ClinicCountry != '' ? doctordata.ClinicCountry : 'Not Provided'} {doctordata.ClinicPincode}
+                                                {doctordata.ClinicAddress != '' ? doctordata.ClinicAddress : 'NA'} <br /> {doctordata.ClinicCity != '' ? doctordata.ClinicCity : 'NA'} {doctordata.ClinicState != '' ? doctordata.ClinicState : 'NA'} {doctordata.ClinicCountry != '' ? doctordata.ClinicCountry : 'NA'} {doctordata.ClinicPincode}
                                             </Typography>
                                         </center>
                                     </Grid>
@@ -391,7 +391,7 @@ export default function Staff_Profile() {
                                                 color: '#707070',
                                                 fontWeight: 600
                                             }}>
-                                                {doctordata.MorningStartTime != null ? doctordata.MorningStartTime : 'Not Provided'} - {doctordata.MorningEndTime != null ? doctordata.MorningEndTime : 'Not Provided'}
+                                                {doctordata.MorningStartTime != null ? doctordata.MorningStartTime : 'NA'} - {doctordata.MorningEndTime != null ? doctordata.MorningEndTime : 'NA'}
                                             </Typography>
                                         </Grid>
                                         <Grid item xs={6} style={{ marginTop: 10 }}>
@@ -402,7 +402,7 @@ export default function Staff_Profile() {
                                                 color: '#707070',
                                                 fontWeight: 600
                                             }}>
-                                                {doctordata.EveningStartTime != null ? doctordata.EveningStartTime : 'Not Provided'} - {doctordata.EveningEndTime != null ? doctordata.EveningEndTime : 'Not Provided'}
+                                                {doctordata.EveningStartTime != null ? doctordata.EveningStartTime : 'NA'} - {doctordata.EveningEndTime != null ? doctordata.EveningEndTime : 'NA'}
                                             </Typography>
                                         </Grid>
                                     </Grid>

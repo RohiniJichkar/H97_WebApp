@@ -207,7 +207,9 @@ export default function Staff_Book_Appointment() {
             let parse = JSON.parse(addAppointment);
             if (parse.success === "200") {
                 alert(parse.message);
-                window.location.reload()
+                navigate('/Staff_Dashboard');
+            }else{
+                alert(parse.message);
             }
         } catch (error) {
             console.log(error)
