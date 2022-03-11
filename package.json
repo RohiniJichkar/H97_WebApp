@@ -15,6 +15,7 @@
     "@mui/icons-material": "^5.0.0",
     "@mui/material": "^5.0.0",
     "@mui/styled-engine-sc": "^5.0.0",
+    "@mui/x-data-grid-pro": "^5.6.0",
     "@react-pdf/renderer": "^2.1.1",
     "@testing-library/jest-dom": "^5.11.4",
     "@testing-library/react": "^11.1.0",
@@ -53,7 +54,7 @@
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
-    "server":"node --max-old-space-size=8192./index.js"
+    "server": "node --max-old-space-size=8192./index.js"
   },
   "eslintConfig": {
     "extends": [

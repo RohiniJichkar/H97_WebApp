@@ -290,7 +290,7 @@ export default function DoctorEditProfile() {
                                     </div>
                                     <div>
                                         <FormControl variant="outlined" className={classes.formControlForm}  >
-                                            <TextField className={classes.textFieldForm} id="outlined-basic" type='number' label="Mobile No" value={MobileNo} onChange={(e) => {
+                                            <TextField className={classes.textFieldForm} disabled id="outlined-basic" type='number' label="Mobile No" value={MobileNo} onChange={(e) => {
                                                 const re = /^[0-9\b]+$/;
                                                 if (e.target.value === '' || re.test(e.target.value)) {
                                                     setMobileNo(e.target.value)

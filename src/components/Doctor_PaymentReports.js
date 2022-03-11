@@ -69,7 +69,6 @@ const PaymentReports = () => {
                             value={value}
                             onChange={handleChange}
                             indicatorColor="primary"
-                            textColor="primary"
                             variant="scrollable"
                             scrollButtons="auto"
                             aria-label="scrollable auto tabs example"
@@ -80,13 +79,18 @@ const PaymentReports = () => {
                             }}
                             style={{
                                 backgroundColor: 'white',
+                                color: '#2C7FB2',
                             }}
                         >
-                            <Tab label="Appointment Report" {...a11yProps(0)} />
-                            <Tab label="Home Visitor Report" {...a11yProps(1)} />
-                            <Tab label="Finance Report" {...a11yProps(2)} />
+                            <Tab label="Appointment Report" {...a11yProps(0)} style={{ fontWeight: 600,
+                                fontFamily: 'Poppins'}}/>
+                            <Tab label="Home Visitor Report" {...a11yProps(1)} style={{ fontWeight: 600,
+                                fontFamily: 'Poppins'}} />
+                            <Tab label="Finance Report" {...a11yProps(2)} style={{ fontWeight: 600,
+                                fontFamily: 'Poppins'}}  />
                             {/* <Tab label="Patient Visit Report" {...a11yProps(3)} /> */}
-                            <Tab label="Staff Report" {...a11yProps(3)} />
+                            <Tab label="Staff Report" {...a11yProps(3)} style={{ fontWeight: 600,
+                                fontFamily: 'Poppins'}} />
                         </Tabs>
                     </AppBar>
                     <TabPanel value={value} index={0}>
@@ -102,7 +106,7 @@ const PaymentReports = () => {
                         Item Four
                     </TabPanel> */}
                     <TabPanel value={value} index={3}>
-                       <Staff_Analysis_reports />
+                        <Staff_Analysis_reports />
                     </TabPanel>
                 </div>
             </div>

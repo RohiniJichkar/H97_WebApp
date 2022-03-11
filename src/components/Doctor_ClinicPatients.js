@@ -325,10 +325,10 @@ export default function DoctorClinicPatients() {
                                 </Grid>
                                 <Grid item xs={3} style={{ border: '1px solid #F0F0F0', borderLeft: '0px', paddingBottom: 20 }}>
                                     <Typography variant="h6" noWrap={true} style={{ paddingTop: 10, fontSize: 14, color: '#707070', fontWeight: 600, fontFamily: 'Poppins', }}>
-                                        Age
+                                        Height/Weight
                                     </Typography>
                                     <Typography variant="h6" noWrap={true} style={{ paddingTop: 5, fontSize: 14, color: '#707070', fontFamily: 'Poppins', }}>
-                                        {patientDetails.Age ? patientDetails.Age : 'NA'}
+                                        {patientDetails.Height ? patientDetails.Height : ' '} ft / {patientDetails.Weight} Kg
                                     </Typography>
                                 </Grid>
                             </Grid>

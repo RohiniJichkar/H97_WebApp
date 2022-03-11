@@ -22,7 +22,7 @@ export const Register_Patient = async (clinicid, firstnm, lastnm, mobile, passwo
         createdDate:now
     }
     try {
-        const registerPatient = await axios.post(ip + 'Web_AddPatient',body)
+        const registerPatient = await axios.post(ip + 'Web_AddPatients',body)
         return JSON.stringify(registerPatient?.data);
     }
     catch (error) {

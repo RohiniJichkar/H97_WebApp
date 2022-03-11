@@ -40,60 +40,61 @@ const Add_Patinet = ({ show, handleclose }) => {
         let clinicid = parsed.ClinicId;
         const date = new Date();
         const now = date.toISOString().split('T')[0];
-    //     try {
-    //         const registration = await Register_Patient(clinicid, firstnm, lastnm, mobile, password, email, dob, gender, address, city, pincode, state, country, height, weight, now);
-    //         let parse = JSON.parse(registration);
-    //         if (parse.success === "200") {
-    //             alert(parse.message);
-    //             handleclose();
-    //             window.location.reload()
-    //         }
-    //         else {
-    //             alert(parse.message);
-    //         }
-    //     } catch (e) {
-    //         console.log(e)
-    //     }
+        //     try {
+        //         const registration = await Register_Patient(clinicid, firstnm, lastnm, mobile, password, email, dob, gender, address, city, pincode, state, country, height, weight, now);
+        //         let parse = JSON.parse(registration);
+        //         if (parse.success === "200") {
+        //             alert(parse.message);
+        //             handleclose();
+        //             window.location.reload()
+        //         }
+        //         else {
+        //             alert(parse.message);
+        //         }
+        //     } catch (e) {
+        //         console.log(e)
+        //     }
 
-    // }
-    if (firstnm.trim() == '' || lastnm.trim() == '' || mobile.trim() == '' || password.trim() == '' || dob.trim() == '' || gender.trim() == '') {
-               alert('Please Enter Mandatory fields')
-                return;
-            }
-            const obj = {
-                ClinicId: clinicid,
-                FirstName: firstnm,
-                LastName: lastnm,
-                MobileNo: mobile,
-                Password: password,
-                Email: email,
-                DOB: dob,
-                Gender: gender,
-                Address: address,
-                City: city,
-                Pincode: pincode,
-                State: state,
-                Country: country,
-                Height: height,
-                Weight: weight,
-                createdDate: now
-            }
-    
-            try {
-                const registration = await Register_Patient(obj);
-                let parse = JSON.parse(registration);
-                if (parse.success === "200") {
-                    alert(parse.message);
-                    // setOpenmodal(false);
-                    window.location.reload()
-                } else {
-                    alert(parse.message);
-                }
-            } catch (error) {
-                console.log(error);
-            }
+        // }
+        if (firstnm.trim() == '' || lastnm.trim() == '' || mobile.trim() == '' || password.trim() == '' || dob.trim() == '' || gender.trim() == '') {
+            alert('Please Enter Mandatory fields')
+            return;
         }
-    
+
+        const obj = {
+            ClinicId: clinicid,
+            FirstName: firstnm,
+            LastName: lastnm,
+            MobileNo: mobile,
+            Password: password,
+            Email: email,
+            DOB: dob,
+            Gender: gender,
+            Address: address,
+            City: city,
+            Pincode: pincode,
+            State: state,
+            Country: country,
+            Height: height,
+            Weight: weight,
+            createdDate: now
+        }
+
+        try {
+            const registration = await Register_Patient(obj);
+            let parse = JSON.parse(registration);
+            if (parse.success === "200") {
+                alert(parse.message);
+                // setOpenmodal(false);
+                window.location.reload()
+            } else {
+                alert(parse.message);
+            }
+        } catch (error) {
+            console.log(error);
+        }
+    }
+
 
 
     const handleClickShowPassword = () => {
@@ -125,25 +126,23 @@ const Add_Patinet = ({ show, handleclose }) => {
                                     <div>
                                         <TextField className={classes.inputFields} value={firstnm}
                                             onChange={(e) => {
-                                                const re = /^[A-Za-z]+$/;
-
+                                                const re = /^[a-z ,.'-]+$/i;
                                                 // if value is not blank, then test the regex
-
-                                                if (e.target.value === '' || re.test(e.target.value)) {
+                                                if (e.target.value == '' || re.test(e.target.value)) {
                                                     setfirstnm(e.target.value)
                                                 }
                                             }}
-                                            id="outlined-basic" size="small" placeholder="First Name*" variant="outlined" />
+                                            id="outlined-basic" size="small" placeholder="First Name*" variant="outlined" /> *
                                         <TextField className={classes.inputFields} value={lastnm}
                                             onChange={(e) => {
-                                                const re = /^[A-Za-z]+$/;
+                                                const re = /^[a-z ,.'-]+$/i;
 
                                                 // if value is not blank, then test the regex
 
-                                                if (e.target.value === '' || re.test(e.target.value)) {
+                                                if (e.target.value == '' || re.test(e.target.value)) {
                                                     setlastnm(e.target.value)
                                                 }
-                                            }} id="outlined-basic" size="small" placeholder="Last Name*" variant="outlined" />
+                                            }} id="outlined-basic" size="small" placeholder="Last Name*" variant="outlined" /> *
                                         <TextField
                                             className={classes.inputFields}
                                             value={mobile}
@@ -152,7 +151,7 @@ const Add_Patinet = ({ show, handleclose }) => {
 
                                                 // if value is not blank, then test the regex
 
-                                                if (e.target.value === '' || re.test(e.target.value)) {
+                                                if (e.target.value ==    '' || re.test(e.target.value)) {
                                                     setmobile(e.target.value)
                                                 }
                                             }}
@@ -164,7 +163,7 @@ const Add_Patinet = ({ show, handleclose }) => {
                                             onInput={(e) => {
                                                 e.target.value = Math.max(0, parseInt(e.target.value)).toString().slice(0, 10)
                                             }}
-                                        />
+                                        /> *
                                         <TextField className={classes.inputFields} value={password} onChange={(e) => setpassword(e.target.value)}
                                             id="outlined-basic" type={showPassword ? 'text' : 'password'} size="small" placeholder="Password*" variant="outlined"
                                             InputProps={{
@@ -179,9 +178,9 @@ const Add_Patinet = ({ show, handleclose }) => {
                                                         </IconButton>
                                                     </InputAdornment>
                                                 ),
-                                            }} />
-                                        <TextField className={classes.inputFields} value={email} onChange={(e) => setemail(e.target.value)} id="outlined-basic" type="email" size="small" placeholder="Email Id" variant="outlined" />
-                                        <TextField className={classes.inputFields} value={dob} onChange={(e) => setdob(e.target.value)} id="outlined-basic" type="date" size="small" placeholder="DOB*" variant="outlined" />
+                                            }} /> *
+                                        <TextField className={classes.inputFields} value={email} onChange={(e) => setemail(e.target.value)} id="outlined-basic" type="email" size="small" placeholder="Email Id" variant="outlined" style={{marginRight : 10}}/>
+                                        <TextField className={classes.inputFields} value={dob} onChange={(e) => setdob(e.target.value)} id="outlined-basic" type="date" size="small" placeholder="DOB*" variant="outlined" /> *
                                         <FormControl variant="outlined" size='small' className={classes.formControl}  >
                                             <Select
                                                 className={classes.inputFields}
@@ -194,12 +193,13 @@ const Add_Patinet = ({ show, handleclose }) => {
                                                     name: 'gender',
                                                     id: 'outlined-gender-native-simple',
                                                 }}
+                                                style={{marginRight: 5}}
                                             >
-                                                <option aria-label="None" value="" >Gender</option>
+                                                <option aria-label="None" value="" >Gender*</option>
                                                 <option value='Male'>Male</option>
                                                 <option value='Female'>Female</option>
                                             </Select>
-                                        </FormControl>
+                                        </FormControl>* 
                                     </div>
                                 </center>
                             </Grid>
@@ -439,8 +439,9 @@ const useStyles = makeStyles((theme) => ({
         marginBottom: 20
     },
     formControl: {
-        margin: theme.spacing(1),
-        minWidth: 180,
+        margin: theme.spacing(0.1),
+        marginTop: theme.spacing(1),
+        minWidth: 150,
     },
     btnAdd: {
         backgroundColor: '#2C7FB2 !important',

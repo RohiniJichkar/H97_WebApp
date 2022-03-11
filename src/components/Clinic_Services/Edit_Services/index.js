@@ -61,21 +61,22 @@ const Edit_Service_Details = ({ show, data, handleclose }) => {
                         <Grid container>
                             <Grid item xs={12}>
                                 <center>
-                                    <TextField value={ServiceName} onChange={(e) => setServiceName(e.target.value)} className={classes.textField} id="outlined-basic" size="small" variant="outlined" style={{ marginTop: 0 }} />
+                                    <TextField value={ServiceName} onChange={(e) => setServiceName(e.target.value)} label='Service Name' className={classes.textField} id="outlined-basic" size="small" variant="outlined" style={{ marginTop: 0 }} />
                                 </center>
                                 <center>
-                                    <TextField value={Category} onChange={(e) => setCategory(e.target.value)} className={classes.textField} id="outlined-basic" size="small" variant="outlined" />
+                                    <TextField value={Category} onChange={(e) => setCategory(e.target.value)} label='Category' className={classes.textField} id="outlined-basic" size="small" variant="outlined" />
                                 </center>
                                 <center>
-                                    <TextField value={cost} onChange={(e) => setcost(e.target.value)} className={classes.textField} id="outlined-basic" type="number" size="small" variant="outlined" />
+                                    <TextField value={cost} onChange={(e) => setcost(e.target.value)} label='Cost' className={classes.textField} id="outlined-basic" type="number" size="small" variant="outlined" />
                                 </center>
                                 <center>
-                                    <TextField value={Discount} onChange={(e) => setDiscount(e.target.value)} className={classes.textField} id="outlined-basic" type="number" size="small" variant="outlined" />
+                                    <TextField value={Discount} onChange={(e) => setDiscount(e.target.value)} label='Discount' className={classes.textField} id="outlined-basic" type="number" size="small" variant="outlined" />
                                 </center>
                                 <center>
                                     <TextField
                                         className={classes.textField}
                                         value={Description}
+                                        label='Description'
                                         onChange={(e) => setDescription(e.target.value)}
                                         multiline={true}
                                         rows={2}

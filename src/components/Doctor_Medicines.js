@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import clsx from 'clsx';
 import { makeStyles, useTheme, alpha } from '@material-ui/core/styles';
 import { useNavigate } from 'react-router-dom';
-import { Container, FormControl, InputLabel, TextField, Typography, Button, Slide, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, Table, TableContainer, TableBody, TableCell, TableHead, InputBase, TableRow, TablePagination, Drawer, Divider, MenuItem, Menu, ListItem, ListItemIcon, ListItemText, List, IconButton, Grid, Paper, Link } from "@material-ui/core";
+import { Container, FormControl, InputLabel, TextField, Typography, Button, Slide, Dialog, Select, DialogContent, DialogContentText, DialogTitle, Table, TableContainer, TableBody, TableCell, TableHead, InputBase, TableRow, TablePagination, Drawer, Divider, MenuItem, Menu, ListItem, ListItemIcon, ListItemText, List, IconButton, Grid, Paper, Link } from "@material-ui/core";
 import { Redirect } from 'react-router-dom';
 import DoctorNavbar from './Doctor_Navbar';
 import SearchIcon from '@material-ui/icons/Search';
@@ -14,8 +14,10 @@ import { DataGrid } from '@material-ui/data-grid';
 import { Services, Search_service } from '../Apis/Clinic_Services/index';
 import Edit_Service_Details from './Clinic_Services/Edit_Services/index'
 import Clinic_Service_Image from './Clinic_Services/Image_Upload/index';
-import Delete_Service from './Clinic_Services/Delete_Service/index';
 
+import { Add_Medicine, Search_Medicine } from '../Apis/Medicines/index';
+import Edit_Medicine from './Medicines/Edit_Medicine/index';
+import Delete_Medicine from './Medicines/Delete_Medicine/index';
 import ip from '../ipaddress/ip';
 
 
@@ -23,20 +25,20 @@ const drawerWidth = 240;
 
 const columns = [
     {
-        field: 'ServiceName',
-        headerName: 'Service Name',
-        width: 160,
+        field: 'MedicineId',
+        headerName: 'Id',
+        width: 100,
+        editable: false,
+    },
+    {
+        field: 'MedicineName',
+        headerName: 'Name',
+        width: 150,
         editable: true,
     },
     {
-        field: 'Price',
-        headerName: 'Price',
-        width: 120,
-        editable: true,
-    },
-    {
-        field: 'Discount',
-        headerName: 'Discount',
+        field: 'Strength',
+        headerName: 'Strength',
         width: 120,
         editable: true,
     },
@@ -188,10 +190,10 @@ const useStyles = makeStyles((theme) => ({
         textOverflow: 'ellipsis',
     },
     inputFields: {
-        [`& fieldset`]: {
-            borderRadius: 25,
-        },
-        width: 300,
+        // [`& fieldset`]: {
+        //     borderRadius: 25,
+        // },
+        width: 295,
         fontFamily: '"Poppins", san-serif;',
         fontStyle: 'normal',
         fontWeight: 200,
@@ -283,7 +285,7 @@ const useStyles = makeStyles((theme) => ({
         textAlign: 'center',
         borderRadius: 28,
         width: 120,
-
+        marginTop: 10,
         fontSize: '12px'
     },
 
@@ -293,11 +295,7 @@ const Transition = React.forwardRef(function Transition(props, ref) {
     return <Slide direction="up" ref={ref} {...props} />;
 });
 
-// const Transition = React.forwardRef(function Transition(props, ref) {
-//     return <Slide direction="up" ref={ref} {...props} />;
-// });
-
-export default function DoctorClinicServices() {
+export default function DoctorMedicines() {
     const classes = useStyles();
     const theme = useTheme();
     const navigate = useNavigate();
@@ -306,59 +304,92 @@ export default function DoctorClinicServices() {
     const [rowsPerPage, setRowsPerPage] = React.useState(8);
     const [selectedValue, setSelectedValue] = useState('');
     const [maxWidth, setMaxWidth] = React.useState('md');
-    const [serviceData, setserviceData] = useState([]);
+
+    const [medicines, setmedicines] = useState([]);
+    const [medicineDetails, setmedicineDetails] = useState('');
+    const [mName, setmName] = useState('');
+    const [mDescription, setmDescription] = useState('');
+    const [mSymptoms, setmSymptoms] = useState('');
+    const [mType, setmType] = useState('');
+    const [mStrength, setmStrength] = useState('');
+    const [mQuantity, setmQuantity] = useState('');
+    const [mStartDate, setmStartDate] = useState('');
+    const [mExpiryDate, setmExpiryDate] = useState('');
+    const [openAddModal, setopenAddModal] = React.useState(false);
+    const [openeditmodal, setopeneditmodal] = useState(false);
+    const [opendeletemodal, setOpenDeletemodal] = useState(false);
+
     const [serviceDetails, setserviceDetails] = useState('');
     const [searchterm, setsearchterm] = useState('');
-    const [clinicservices, setclinicservices] = useState('');
 
-    const fetchServiceData = async () => {
-        const services = await Services();
-        setserviceData(services);
+
+    const fetchmedicines = async () => {
+        var data = await localStorage.getItem("userdata");
+        let parsed = JSON.parse(data);
+        let clinicid = parsed.ClinicId;
+        const medicineInfo = await axios.post(ip + 'Web_GetAllMedicines', { ClinicId: clinicid });
+        setmedicines(medicineInfo?.data?.Medicine);
     }
 
     const handleCellClick = async (id) => {
-        const serviceDetailedInfo = await axios.post(ip + 'Web_GetServicesById', { id: id });
-        setserviceDetails(serviceDetailedInfo?.data?.Service);
+        const medicineDetailedInfo = await axios.post(ip + 'Web_GetMedicineById', { id: id });
+        setmedicineDetails(medicineDetailedInfo?.data?.Medicine);
     }
 
+    const SearchMedicine = async (searchterm) => {
+        try {
+            const request = await Search_Medicine(searchterm);
+            setmedicines(request)
+        } catch (e) {
+            console.log(e)
+        }
+    }
+
+
+    const addMedicine = async () => {
+        var data = await localStorage.getItem("userdata");
+        let parsed = JSON.parse(data);
+        let clinicid = parsed.ClinicId;
+        let doctorid = parsed.userid;
+        const obj = {
+            ClinicId: clinicid,
+            DoctorId: doctorid,
+            MedicineName: mName,
+            MedicineDiscription: mDescription,
+            Symptoms: mSymptoms,
+            Strength: mStrength,
+            MedicineType: mType,
+            Quantity: mQuantity,
+            StartDate: mStartDate,
+            ExpiryDate: mExpiryDate
+        }
+        const add = await Add_Medicine(obj);
+        let parse = JSON.parse(add);
+        if (parse.success === "200") {
+            alert(parse.message);
+            window.location.reload()
+        }
+    }
+
+
+    const handlereload = () => {
+        window.location.reload();
+    };
+
     useEffect(() => {
-        fetchServiceData();
+        fetchmedicines();
     }, []);
 
     const handleGoBack = () => {
         navigate("/DoctorHome");
     };
 
-    const handleAddServices = () => {
-        navigate("/DoctorAddServices");
-    };
 
-    const [openeditmodal, setOpenEditmodal] = React.useState(false);
-    const [opendeletemodal, setOpenDeletemodal] = React.useState(false);
-
-    const handleClickOpenEditmodal = () => {
-        setOpenEditmodal(true);
-    };
-
-    const handleCloseEditmodal = () => {
-        setOpenEditmodal(false);
-    };
-
-    const handleCloseDeletemodal = () => {
-        setOpenDeletemodal(false);
+    const handleCloseAddModal = () => {
+        setopenAddModal(false);
     };
 
 
-
-
-    const SearchService = async (searchterm) => {
-        try {
-            const request = await Search_service(searchterm);
-            setserviceData(request)
-        } catch (e) {
-            console.log(e)
-        }
-    }
 
     return (
         <div className={classes.root} style={{ backgroundColor: '#ffffff' }}>
@@ -384,8 +415,8 @@ export default function DoctorClinicServices() {
 
                         }}>
                         <Button style={{ marginLeft: '-20px', backgroundColor: 'white', color: '#2C7FB2', borderRadius: 105, fontSize: '12px' }}> <ArrowBackIcon onClick={handleGoBack} />  </Button>
-                        Clinic Services
-                        <Button className={classes.btnregister} onClick={handleAddServices} style={{ float: 'right', marginRight: 20, marginTop: 10, width: '150px', fontFamily: 'Poppins', fontSize: 12.5, fontWeight: 400 }}>Add Services</Button>
+                        Medicines
+                        <Button className={classes.btnregister} onClick={() => setopenAddModal(true)} style={{ float: 'right', marginRight: 20, width: '150px', fontFamily: 'Poppins', fontSize: 12.5, fontWeight: 400 }}>Add Medicines</Button>
                     </Typography>
                 </Grid>
 
@@ -396,7 +427,7 @@ export default function DoctorClinicServices() {
                                 <Grid item xs={6}>
                                     <center> <SearchIcon className={classes.searchIcon} />
                                         <InputBase
-                                            placeholder="Search by Service Name"
+                                            placeholder="Search by Medicine Name"
                                             value={searchterm}
                                             onChange={(e) => setsearchterm(e.target.value)}
                                             classes={{
@@ -410,14 +441,14 @@ export default function DoctorClinicServices() {
                                 </Grid>
 
                                 <Grid item xs={6} style={{ alignSelf: 'center' }}>
-                                    <Button className={classes.btnview} onClick={() => SearchService(searchterm)} size="small" style={{ float: 'right', fontSize: 11, textAlign: 'center' }}>View Service</Button>
+                                    <Button className={classes.btnview} onClick={() => SearchMedicine(searchterm)} size="small" style={{ float: 'right', fontSize: 11, textAlign: 'center' }}>View Medicine</Button>
                                 </Grid>
 
                             </Grid>
 
                             <DataGrid
                                 style={{ height: 325, marginTop: 20, fontSize: 12, fontFamily: 'Poppins', fontWeight: 600, color: '#2C7FB2', cursor: 'pointer' }}
-                                rows={serviceData}
+                                rows={medicines}
                                 rowHeight={40}
                                 columns={columns}
                                 columnWidth={10}
@@ -446,28 +477,28 @@ export default function DoctorClinicServices() {
                                         fontSize: 18,
                                         textDecoration: 'underline'
                                     }}>
-                                    Facility
-                                    <Button
+                                    Details
+                                    <Button size='small'
                                         onClick={() => {
-                                            if (serviceDetails === '') {
-                                                alert("Please select patient");
+                                            if (medicineDetails === '') {
+                                                alert("Please select medicine");
+                                                return;
+                                            }
+                                            setopeneditmodal(true)
+                                        }}
+                                        style={{ float: 'right', backgroundColor: '#2C7FB2', color: '#fff', marginLeft: 20, fontFamily: 'Poppins', fontSize: 13, fontWeight: 400, width: 100, borderRadius: 20 }}>
+                                        Edit
+                                    </Button>
+                                    <Button size='small'
+                                        onClick={() => {
+                                            if (medicineDetails === '') {
+                                                alert("Please select medicine");
                                                 return;
                                             }
                                             setOpenDeletemodal(true)
-                                        }} size="small"
+                                        }}
                                         style={{ float: 'right', backgroundColor: '#2C7FB2', color: '#fff', marginLeft: 20, fontFamily: 'Poppins', fontSize: 13, fontWeight: 400, width: 100, borderRadius: 20 }}>
                                         Delete
-                                    </Button>
-                                    <Button
-                                        onClick={() => {
-                                            if (serviceDetails === '') {
-                                                alert("Please select patient");
-                                                return;
-                                            }
-                                            setOpenEditmodal(true)
-                                        }} size="small"
-                                        style={{ float: 'right', backgroundColor: '#2C7FB2', color: '#fff', marginLeft: 20, fontFamily: 'Poppins', fontSize: 13, fontWeight: 400, width: 100, borderRadius: 20 }}>
-                                        Edit
                                     </Button>
                                 </Typography>
 
@@ -478,42 +509,32 @@ export default function DoctorClinicServices() {
                                     <Grid container>
                                         <Grid item xs={12} sm={4}>
                                             <Typography variant="h6" noWrap={true} className={classes.facilitiesTitle}>Name</Typography>
-                                            <Typography variant="h6" noWrap={true} className={classes.facilitiesTitle}>Discount</Typography>
-                                            <Typography variant="h6" noWrap={true} className={classes.facilitiesTitle}>Price</Typography>
-                                            <Typography variant="h6" noWrap={true} className={classes.facilitiesTitle}>Total Price</Typography>
+                                            <Typography variant="h6" noWrap={true} className={classes.facilitiesTitle}>Type</Typography>
+                                            <Typography variant="h6" noWrap={true} className={classes.facilitiesTitle}>Start Date</Typography>
+                                            <Typography variant="h6" noWrap={true} className={classes.facilitiesTitle}>End Date</Typography>
+                                            <Typography variant="h6" noWrap={true} className={classes.facilitiesTitle}>Strength</Typography>
+
                                         </Grid>
                                         <Grid item xs={12} sm={8} >
                                             <Typography variant="h6" noWrap={true} className={classes.facilitiesInput} >
-                                                {serviceDetails.ServiceName ? serviceDetails.ServiceName : 'NA'}
+                                                {medicineDetails.MedicineName ? medicineDetails.MedicineName : 'NA'}
                                             </Typography>
                                             <Typography variant="h6" noWrap={true} className={classes.facilitiesInput}>
-                                                {serviceDetails.Discount ? serviceDetails.Discount + '%' : '0 %'}
+                                                {medicineDetails.MedicineType ? medicineDetails.MedicineType : 'NA'}
                                             </Typography>
                                             <Typography variant="h6" noWrap={true} className={classes.facilitiesInput}>
-                                                {serviceDetails.Price != '' ? serviceDetails.Price : 'NA'}
+                                                {medicineDetails.StartDate ? medicineDetails.StartDate : 'NA'}
                                             </Typography>
                                             <Typography variant="h6" noWrap={true} className={classes.facilitiesInput}>
-                                                {serviceDetails.DiscountPrice != '' ? serviceDetails.DiscountPrice : 'NA'}
+                                                {medicineDetails.ExpiryDate ? medicineDetails.ExpiryDate : 'NA'}
+                                            </Typography>
+                                            <Typography variant="h6" noWrap={true} className={classes.facilitiesInput}>
+                                                {medicineDetails.Strength ? medicineDetails.Strength : 'NA'}
                                             </Typography>
                                         </Grid>
                                     </Grid>
                                 </Grid>
-                                <Grid item sm={6} style={{ marginTop: '-10px' }}>
-                                    <Paper elevation={3} className={classes.groupreports}>
 
-                                        <center>
-                                            {serviceDetails.ServiceImage ? <img src={serviceDetails.ServiceImage} style={{ height: '130px', width: '240px', marginTop: 5, borderRadius: 15 }} /> : <img src="default-image.png" style={{ height: '130px', width: '240px', marginTop: 5, borderRadius: 15 }} />
-                                            }
-                                            <IconButton onClick={() => setclinicservices(true)} edge="start" size='small' color="inherit" aria-label="close" style={{ marginTop: '-10px', float: 'right', color: '#2C7FB2', backgroundColor: '#F0F0F0', marginRight: 25 }}>
-                                                <EditIcon size='small' />
-                                            </IconButton>
-                                            {clinicservices ? <Clinic_Service_Image show={clinicservices} data={serviceDetails} handleCloseEditmodal={() => setclinicservices(false)} /> : null}
-
-                                        </center>
-
-                                    </Paper>
-
-                                </Grid>
 
                             </Grid>
 
@@ -536,8 +557,8 @@ export default function DoctorClinicServices() {
                                     </Typography>
                                 </Grid>
                                 <Grid item xs={12} >
-                                    <div className={classes.description} style={{ height: 140, width: 750, }}>
-                                        {serviceDetails.Description != '' ? serviceDetails.Description : 'Not Provided'}
+                                    <div className={classes.description} style={{ height: 125, width: 750, }}>
+                                        {medicineDetails.MedicineDiscription != '' ? medicineDetails.MedicineDiscription : 'Not Provided'}
                                     </div>
                                 </Grid>
                             </Grid>
@@ -545,34 +566,115 @@ export default function DoctorClinicServices() {
                     </Grid>
                 </Grid>
 
-                {/* Edit Details  */}
-                {openeditmodal ? <Edit_Service_Details show={openeditmodal} data={serviceDetails} handleclose={() => setOpenEditmodal(false)} /> : null}
-                {opendeletemodal ? <Delete_Service show={opendeletemodal} data={serviceDetails} handleclose={() => setOpenDeletemodal(false)} /> : null}
-                {/* <Dialog
-                    open={opendeletemodal}
-                    TransitionComponent={Transition}
-                    keepMounted
-                    onClose={handleCloseDeletemodal}
-                    aria-labelledby="alert-dialog-slide-title"
-                    aria-describedby="alert-dialog-slide-description"
+
+
+
+
+                {/* Add Medicine Details  */}
+
+                <Dialog
+                    open={openAddModal}
+                    onClose={handleCloseAddModal}
+                    maxWidth={maxWidth}
+                    aria-labelledby="alert-dialog-title"
+                    aria-describedby="alert-dialog-description"
                 >
-                    <DialogTitle id="alert-dialog-slide-title" style={{ fontFamily: 'Poppins', fontWeight: 600, color: '#00318B' }}>{"Are you sure ?"}</DialogTitle>
+                    <DialogTitle id="alert-dialog-title" style={{ fontFamily: 'Poppins', fontWeight: 600, fontSize: 20, color: '#2C7FB2' }}>{"Add Medicines"}
+                        <IconButton edge="start" color="inherit" onClick={handleCloseAddModal} aria-label="close" style={{ float: 'right', color: '#2C7FB2', backgroundColor: '#F0F0F0' }}>
+                            <CloseIcon />
+                        </IconButton>
+                    </DialogTitle>
                     <DialogContent>
-                        <DialogContentText id="alert-dialog-slide-description" style={{ fontFamily: 'Poppins', fontWeight: 400, color: '#707070' }}>
-                            Do you want to Delete Service?
+                        <DialogContentText id="alert-dialog-description">
+                            <Grid container>
+                                <div>
+                                    <center>
+                                        <FormControl variant="outlined" className={classes.formControl}  >
+                                            <TextField className={classes.inputFields} onChange={(e) => setmName(e.target.value)} id="outlined-basic" label="Medicine Name" variant="outlined" size="small" />
+                                        </FormControl>
+                                    </center>
+                                    <center>
+                                        <FormControl variant="outlined" className={classes.formControl}  >
+                                            <TextField className={classes.inputFields} onChange={(e) => setmDescription(e.target.value)} multiline rows={2} maxRows={4} id="outlined-basic" label="Description" variant="outlined" size="small" />
+                                        </FormControl>
+                                    </center>
+                                    <center>
+                                        <FormControl variant="outlined" size="small" className={classes.formControl} style={{ width: '65%', marginLeft: '-5px' }} >
+
+                                            <Select
+                                                className={classes.textFieldForm}
+                                                size='large'
+                                                native
+                                                value={mType}
+                                                onChange={(e) => setmType(e.target.value)}
+                                                label="Medicine Type"
+                                                inputProps={{
+                                                    name: 'medicine-type',
+                                                    id: 'outlined-medicine-type-native-simple',
+                                                }}
+                                                style={{ width: '105%', fontSize: 14 }}
+                                            >
+                                                <option aria-label="None" value="" >Medicine Type</option>
+                                                <option value='Tablet'>Tablet</option>
+                                                <option value='Syrup'>Syrup</option>
+                                            </Select>
+                                        </FormControl>
+                                    </center>
+                                    <Grid container style={{ marginTop: 10 }}>
+                                        <Grid item xs={6}>
+                                            <TextField className={classes.inputFields} onChange={(e) => setmStrength(e.target.value)} id="outlined-basic" label="Strength" variant="outlined" size="small" style={{ width: '130px', float: 'right', marginRight: 15 }} />
+                                        </Grid>
+                                        <Grid item xs={6}>
+                                            <TextField className={classes.inputFields} onChange={(e) => setmQuantity(e.target.value)} id="outlined-basic" label="Quantity" variant="outlined" size="small" style={{ width: '130px', marginLeft: 15 }} />
+                                        </Grid>
+                                    </Grid>
+
+                                    <Grid container style={{ marginTop: 2 }}>
+                                        <Grid item xs={6}>
+                                            <center>
+                                                <Typography variant="h6" noWrap={true} style={{ paddingTop: 10, fontSize: 14, color: '#707070', fontWeight: 600, fontFamily: 'Poppins', marginRight: '-5px' }}>
+                                                    Start Date
+                                                </Typography>
+                                            </center>
+                                        </Grid>
+                                        <Grid item xs={6}>
+                                            <center>
+                                                <Typography variant="h6" noWrap={true} style={{ paddingTop: 10, fontSize: 14, color: '#707070', fontWeight: 600, fontFamily: 'Poppins', marginLeft: '-7px' }}>
+                                                    Expiry Date
+                                                </Typography>
+                                            </center>
+                                        </Grid>
+                                        <Grid item xs={6} style={{ marginTop: 10 }}>
+                                            <TextField className={classes.inputFields} onChange={(e) => setmStartDate(e.target.value)} id="outlined-basic" type='date' variant="outlined" size="small" style={{ width: '130px', float: 'right', marginRight: 15 }} />
+                                        </Grid>
+                                        <Grid item xs={6} style={{ marginTop: 10 }}>
+                                            <TextField className={classes.inputFields} onChange={(e) => setmExpiryDate(e.target.value)} id="outlined-basic" type='date' variant="outlined" size="small" style={{ width: '130px', marginLeft: 15 }} />
+                                        </Grid>
+                                    </Grid>
+
+
+                                    <div>
+                                        <Grid container xs={12} style={{ marginTop: 15 }}>
+                                            <Grid item sm={6} >
+                                                <Button className={classes.btnregister} onClick={handlereload} style={{ float: 'right', marginRight: 20 }}>Cancel</Button>
+                                            </Grid>
+                                            <Grid item sm={6} >
+                                                <Button onClick={addMedicine} className={classes.btnregister} style={{ float: 'left', marginLeft: 20 }}>Add</Button>
+                                            </Grid>
+                                        </Grid>
+                                    </div>
+                                </div>
+                            </Grid>
                         </DialogContentText>
                     </DialogContent>
-                    <DialogActions style={{ marginTop: 20 }}>
-                        <Button className={classes.btnregister} onClick={handleCloseDeletemodal} style={{ width: 100 }} >
-                            No
-                        </Button>
-                        <Button className={classes.btnregister} onClick={handleCloseDeletemodal} style={{ width: 100 }}>
-                            Yes
-                        </Button>
-                    </DialogActions>
-                </Dialog> */}
 
-            </Grid> {/* main grid */}
+                </Dialog>
+
+                {openeditmodal ? <Edit_Medicine show={openeditmodal} data={medicineDetails} handleEditModal={() => setopeneditmodal(false)} /> : null}
+                {opendeletemodal ? <Delete_Medicine show={opendeletemodal} data={medicineDetails} handleclose={() => setOpenDeletemodal(false)} /> : null}
+
+
+            </Grid > {/* main grid */}
 
         </div >
     );

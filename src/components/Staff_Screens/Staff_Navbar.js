@@ -206,9 +206,9 @@ export default function DoctorNavbar() {
     var data = await localStorage.getItem("userdata");
     let parsed = JSON.parse(data);
     let ClinicId = parsed.ClinicId;
-    
+
     try {
-      const ClinicInfo = await axios.post(ip + 'ShowClinicDetailsUsingId', {  ClinicId: ClinicId });
+      const ClinicInfo = await axios.post(ip + 'ShowClinicDetailsUsingId', { ClinicId: ClinicId });
       console.log(ClinicInfo?.data?.NewUser);
       let dato = ClinicInfo?.data?.Doctor;
       setClinicDetails(dato);
@@ -273,6 +273,11 @@ export default function DoctorNavbar() {
     setAnchorElProfile(true);
     localStorage.removeItem('userdata');
     navigate("/");
+  };
+
+
+  const handleAppointment = () => {
+    navigate("/Staff_payment");
   };
 
   const handleDrawerOpen = () => {
@@ -393,7 +398,7 @@ export default function DoctorNavbar() {
           </div>
           <div className={classes.drname}>
             <Typography variant="h8" noWrap={true} style={{ color: '#2C7FB2' }}   >
-            {doctordata.FirstName} {doctordata.LastName}
+              {doctordata.FirstName} {doctordata.LastName}
             </Typography>
           </div>
           {auth && (
@@ -431,6 +436,9 @@ export default function DoctorNavbar() {
               </Menu>
             </div>
           )}
+          <IconButton onClick={handleAppointment} class="fa fa-inr" style={{ color: '#2C7FB2', backgroundColor: '#fff', cursor: 'pointer', border: '0px solid white', borderRadius: 25, fontSize: 14, fontWeight: 600 }} >
+            Fees
+          </IconButton>
         </Toolbar>
       </AppBar>
       <Drawer

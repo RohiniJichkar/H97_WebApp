@@ -209,7 +209,7 @@ export default function DoctorBookAppointment() {
             let parse = JSON.parse(addAppointment);
             if (parse.success === "200") {
                 alert(parse.message);
-                window.location.reload()
+                navigate('/DoctorDashboard');
             }else{
                 alert(parse.message);
             }

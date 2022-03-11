@@ -354,7 +354,7 @@ export default function DoctorNavbar() {
     {
       text: "Medicines",
       icon: LocalHospitalIcon,
-      onClick: () => navigate("/DoctorAddMedicine"),
+      onClick: () => navigate("/DoctorMedicines"),
     },
     {
       text: "Clinic Services",

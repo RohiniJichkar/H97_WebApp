@@ -87,8 +87,8 @@ export default function Edit_Medicine({ show, data, handleEditModal }) {
                                                     style={{ width: '75%', fontSize: 14, marginLeft: 50, marginBottom: 15 }}
                                                 >
                                                     <option aria-label="None" value="" >Medicine Type</option>
-                                                    <option value={"Male"}>Tablet</option>
-                                                    <option value={"Female"}>Syrup</option>
+                                                    <option value={"Tablet"}>Tablet</option>
+                                                    <option value={"Syrup"}>Syrup</option>
 
                                                 </Select>
                                             </FormControl>

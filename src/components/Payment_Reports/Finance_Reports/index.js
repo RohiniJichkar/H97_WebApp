@@ -164,7 +164,7 @@ const Finance_Analysis_reports = () => {
                         />
                     </div>
                     <div className='col-3'>
-                        <label style={{ fontFamily: 'Poppins', fontWeight: 600, color: '#707070' }}>To</label>
+                        <label style={{ fontFamily: 'Poppins', fontWeight: 600, color: '#707070',marginLeft:20 }}>To</label>
                         <input id="fromdate" type="date" value={endDate} onChange={(e) => {
                             setendDate(e.target.value)
                         }} style={{ border: '1px solid #F0F0F0', height: 30, fontFamily: 'Poppins', color: '#707070', paddingLeft: 15 }} />
@@ -176,23 +176,9 @@ const Finance_Analysis_reports = () => {
                             {appStatus.map(v => (<option value={v.DoctorId}>{v.FirstName} {v.LastName}</option>))}
                         </select>
                     </div>
-                    <div className='col-1'>
-                        <Button
-                            variant="contained"
-                            color="#2C7FB2"
-                            style={{
-                                backgroundColor: '#2C7FB2',
-                                color: '#fff',
-                                fontFamily: 'Poppins',
-                                height: 30
-                            }}
-                            onClick={() => Show_appointmentsbydate(startdate, endDate, status)}
-                        >
-                            Show
-                        </Button>
-                    </div>
-                    <div className='col-1'>
-                        <select id="dropdown" value={norecords} onChange={(e) => setnorecords(e.target.value)} style={{ width: 80, height: 30, border: '1px solid #F0F0F0', fontFamily: 'Poppins', paddingLeft: 15 }}>
+                    <div className='col-2'>
+                    <label style={{ fontFamily: 'Poppins', fontWeight: 600, color: '#707070'}}>Pages</label>
+                        <select id="dropdown" value={norecords} onChange={(e) => setnorecords(e.target.value)} style={{ width: 80, height: 30, border: '1px solid #F0F0F0', fontFamily: 'Poppins', paddingLeft: 15}}>
                             <option value="5">5</option>
                             <option value="10">10</option>
                             <option value="15">15</option>
@@ -203,6 +189,34 @@ const Finance_Analysis_reports = () => {
                             <option value="40">40</option>
                         </select>
                     </div>
+                    <div className='col-1'>
+                        <Button
+                            variant="contained"
+                            color="#2C7FB2"
+                            style={{
+                                backgroundColor: '#2C7FB2',
+                                color: '#fff',
+                                fontFamily: 'Poppins',
+                                height: 30,
+                                marginLeft:5
+                            }}
+                            onClick={() => Show_appointmentsbydate(startdate, endDate, status)}
+                        >
+                            Show
+                        </Button>
+                    </div>
+                    {/* <div className='col-1'>
+                        <select id="dropdown" value={norecords} onChange={(e) => setnorecords(e.target.value)} style={{ width: 80, height: 30, border: '1px solid #F0F0F0', fontFamily: 'Poppins', paddingLeft: 15,position:'relative', left:108 }}>
+                            <option value="5">5</option>
+                            <option value="10">10</option>
+                            <option value="15">15</option>
+                            <option value="20">20</option>
+                            <option value="25">25</option>
+                            <option value="30">30</option>
+                            <option value="35">35</option>
+                            <option value="40">40</option>
+                        </select>
+                    </div> */}
                 </div>
                 <Grid item xs={12} >
                     <DataGrid

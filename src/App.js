@@ -72,9 +72,11 @@ import Staff_Home_Visit_Request from './components/Staff_Screens/Staff_Home_Visi
 import Staff_Home_Visitors from './components/Staff_Screens/Staff_Home_Visitors';
 import Staff_Patient_Details_SendIn from './components/Staff_Screens/Staff_PatientDetails_SendIn';
 import Staff_Assign_Home_Visitor from './components/Staff_Screens/Staff_Assign_Home_Visitor';
+import Staff_payment from './components/Staff_Screens/Staff_payment';
 
 import { Provider } from 'react-redux';
 import store from './Redux/Store/index';
+import DoctorMedicines from './components/Doctor_Medicines';
 
 const App = () => {
   const navigate = useNavigate();
@@ -124,6 +126,7 @@ const App = () => {
             <Route exact path="/patientDetails_sendIn" element={<PatientDetails_SendIn />}></Route>
             <Route exact path="/SignUp" element={<SignUp />}></Route>
 
+            <Route exact path="/DoctorMedicines" element={<DoctorMedicines />}> </Route>
             <Route exact path="/DoctorAddMedicine" element={<DoctorAddMedicine />}> </Route>
             <Route exact path="/DoctorReports" element={<DoctorReports />}></Route>
             <Route exact path="/DoctorAddFacilities" element={<DoctorAddFacilities />}></Route>
@@ -178,7 +181,8 @@ const App = () => {
             <Route exact path="/Staff_Home_Visit_Request" element={<Staff_Home_Visit_Request />}></Route>
             <Route exact path="/Staff_Home_Visitors" element={<Staff_Home_Visitors />}></Route>
             <Route exact path="/Staff_Patient_Details_SendIn" element={<Staff_Patient_Details_SendIn />}></Route>
-
+            <Route exact path="/Staff_payment" element={<Staff_payment/>}></Route>
+            
           </Routes>
         </Fragment>
       </div>

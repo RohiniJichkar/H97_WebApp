@@ -94,7 +94,7 @@ const Add_Patinet = ({ show, handleclose }) => {
                                                     setfirstnm(e.target.value)
                                                 }
                                             }}
-                                            id="outlined-basic" size="small" placeholder="First Name*" variant="outlined" />
+                                            id="outlined-basic" size="small" placeholder="First Name*" variant="outlined" /> *
                                         <TextField className={classes.inputFields} value={lastnm}
                                             onChange={(e) => {
                                                 const re = /^[A-Za-z]+$/;
@@ -104,7 +104,7 @@ const Add_Patinet = ({ show, handleclose }) => {
                                                 if (e.target.value === '' || re.test(e.target.value)) {
                                                     setlastnm(e.target.value)
                                                 }
-                                            }} id="outlined-basic" size="small" placeholder="Last Name*" variant="outlined" />
+                                            }} id="outlined-basic" size="small" placeholder="Last Name*" variant="outlined" /> *
                                         <TextField
                                             className={classes.inputFields}
                                             value={mobile}
@@ -125,7 +125,7 @@ const Add_Patinet = ({ show, handleclose }) => {
                                             onInput={(e) => {
                                                 e.target.value = Math.max(0, parseInt(e.target.value)).toString().slice(0, 10)
                                             }}
-                                        />
+                                        /> *
                                         <TextField className={classes.inputFields} value={password} onChange={(e) => setpassword(e.target.value)} id="outlined-basic"
                                             type={showPassword ? 'text' : 'password'}
                                             size="small" placeholder="Password*" variant="outlined"
@@ -141,9 +141,9 @@ const Add_Patinet = ({ show, handleclose }) => {
                                                         </IconButton>
                                                     </InputAdornment>
                                                 ),
-                                            }} />
-                                        <TextField className={classes.inputFields} value={email} onChange={(e) => setemail(e.target.value)} id="outlined-basic" type="email" size="small" placeholder="Email Id" variant="outlined" />
-                                        <TextField className={classes.inputFields} value={dob} onChange={(e) => setdob(e.target.value)} id="outlined-basic" type="date" size="small" placeholder="DOB*" variant="outlined" />
+                                            }} /> *
+                                        <TextField className={classes.inputFields} value={email} onChange={(e) => setemail(e.target.value)} id="outlined-basic" type="email" size="small" placeholder="Email Id" variant="outlined" style={{marginRight: 10}}/>
+                                        <TextField className={classes.inputFields} value={dob} onChange={(e) => setdob(e.target.value)} id="outlined-basic" type="date" size="small" placeholder="DOB*" variant="outlined" /> *
                                         <FormControl variant="outlined" size='small' className={classes.formControl}  >
                                             <Select
                                                 className={classes.inputFields}
@@ -157,11 +157,11 @@ const Add_Patinet = ({ show, handleclose }) => {
                                                     id: 'outlined-gender-native-simple',
                                                 }}
                                             >
-                                                <option aria-label="None" value="" >Gender</option>
+                                                <option aria-label="None" value="" >Gender *</option>
                                                 <option value='Male'>Male</option>
                                                 <option value='Female'>Female</option>
                                             </Select>
-                                        </FormControl>
+                                        </FormControl> *
                                     </div>
                                 </center>
                             </Grid>
@@ -173,8 +173,8 @@ const Add_Patinet = ({ show, handleclose }) => {
                                             onChange={(e) => {
                                                 setaddress(e.target.value)
                                             }}
-                                            rows={2}
-                                            rowsMax={6} id="outlined-basic" size="small" label="Address" variant="outlined"
+                                            rows={1.5}
+                                            rowsMax={1} id="outlined-basic" size="small" label="Address" variant="outlined"
                                         />
                                         <TextField
                                             className={classes.inputFields}
@@ -401,8 +401,7 @@ const useStyles = makeStyles((theme) => ({
         marginBottom: 20
     },
     formControl: {
-        margin: theme.spacing(1),
-        minWidth: 180,
+        minWidth: 150,
     },
     btnAdd: {
         backgroundColor: '#2C7FB2 !important',

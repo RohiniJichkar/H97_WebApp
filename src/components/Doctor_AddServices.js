@@ -17,19 +17,19 @@ const columns = [
     {
         field: 'ServiceName',
         headerName: 'ServiceName',
-        width: 190,
+        width: 250,
         editable: true,
     },
     {
         field: 'Price',
         headerName: 'Price',
-        width: 140,
+        width: 150,
         editable: true,
     },
     {
         field: 'Discount',
         headerName: 'Discount',
-        width: 140,
+        width: 150,
         editable: true,
     },
     {
@@ -38,27 +38,27 @@ const columns = [
         width: 150,
         editable: true
     },
-    {
-        field: "Action",
-        width: 130,
-        sortable: false,
+    // {
+    //     field: "Action",
+    //     width: 130,
+    //     sortable: false,
 
-        RenderCell: (params) => {
-            const onClickDelete = async () => {
-                return alert("Are you Sure!! Do you want to delete service");
-            };
-            const [opendeletemodal, setopendeletemodal] = useState(false)
-            return (
-                <>
-                    {opendeletemodal ? <Delete_Service show={opendeletemodal} data={params.row} handleclose={() => setopendeletemodal(false)} /> : null}
-                    <IconButton color="secondary" onClick={() => setopendeletemodal(true)} style={{ color: '#707070' }}>
-                        <DeleteIcon />
-                    </IconButton>
+    //     renderCell: (params) => {
+    //         const onClickDelete = async () => {
+    //             return alert("Are you Sure!! Do you want to delete service");
+    //         };
+    //         const [opendeletemodal, setopendeletemodal] = useState(false)
+    //         return (
+    //             <>
+    //                 {opendeletemodal ? <Delete_Service show={opendeletemodal} data={params.row} handleclose={() => setopendeletemodal(false)} /> : null}
+    //                 <IconButton color="secondary" onClick={() => setopendeletemodal(true)} style={{ color: '#707070' }}>
+    //                     <DeleteIcon />
+    //                 </IconButton>
 
-                </>
-            );
-        }
-    },
+    //             </>
+    //         );
+    //     }
+    // },
 ];
 
 

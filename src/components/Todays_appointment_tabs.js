@@ -67,21 +67,24 @@ const Todays_appointment_Tabs = () => {
                             value={value}
                             onChange={handleChange}
                             indicatorColor="primary"
-                            textColor="primary"
                             variant="scrollable"
                             scrollButtons="auto"
                             aria-label="scrollable auto tabs example"
                             TabIndicatorProps={{
                                 style: {
-                                    backgroundColor: "#78B088"
+                                    backgroundColor: "#78B088",
+                                    
                                 }
                             }}
                             style={{
                                 backgroundColor: 'white',
+                                color:'#2C7FB2'
                             }}
                         >
-                            <Tab label="Todays Appointment" {...a11yProps(0)} />
-                            <Tab label="Calender" {...a11yProps(1)} />
+                            <Tab label="Todays Appointment" {...a11yProps(0)} style={{ fontWeight: 600,
+                                fontFamily: 'Poppins'}} />
+                            <Tab label="Calender" {...a11yProps(1)} style={{ fontWeight: 600,
+                                fontFamily: 'Poppins'}} />
                         </Tabs>
                     </AppBar>
                     <TabPanel value={value} index={0}>

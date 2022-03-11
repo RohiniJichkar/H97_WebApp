@@ -233,15 +233,13 @@ const AppointmentReports = () => {
                             onChange={(e) => {
                                 setstartdate(e.target.value)
                             }}
-                            style={
-                                {
-                                    border: '1px solid #F0F0F0',
-                                    height: 30,
-                                    fontFamily: 'Poppins',
-                                    paddingLeft: 15,
-                                    color: '#707070'
-                                }
-                            }
+                            style={{
+                                border: '1px solid #F0F0F0',
+                                height: 30,
+                                fontFamily: 'Poppins',
+                                paddingLeft: 15,
+                                color: '#707070',
+                            }}
                         />
                     </div>
                     <div className='col-3'>
@@ -307,16 +305,15 @@ const AppointmentReports = () => {
                             float: 'right',
                             marginTop: 15,
                         }}
-                        onClick={() => 
-                            {
-                                if (appointmentlist.length==0) {
-                                    alert('Please find some record first')
-                                    return;
-                                }
-                                else{
-                                    setview(true)
-                                }
+                        onClick={() => {
+                            if (appointmentlist.length == 0) {
+                                alert('Please find some record first')
+                                return;
                             }
+                            else {
+                                setview(true)
+                            }
+                        }
                         }
                     >
                         Download as PDF
@@ -332,17 +329,17 @@ const AppointmentReports = () => {
                             float: 'right',
                             marginTop: 15, marginRight: 15
                         }}
-                        onClick={()=>{
+                        onClick={() => {
                             setappointmentlist([]);
                             setstartdate('');
-                            setendDate(''); 
+                            setendDate('');
                             setstatus('');
                         }}
                     >
                         Reset
                     </Button>
                 </Grid>
-                {view ? <Show_pdf_data show={view} data={appointmentlist} column={columnsforpdf} handleclose={()=>setview(false)} /> : null}
+                {view ? <Show_pdf_data show={view} data={appointmentlist} column={columnsforpdf} handleclose={() => setview(false)} /> : null}
             </div>
         </>
     )

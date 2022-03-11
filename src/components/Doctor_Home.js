@@ -57,7 +57,7 @@ export default function DoctorHome() {
     };
 
     const handleAddMedicines = () => {
-        navigate("/DoctorAddMedicine");
+        navigate("/DoctorMedicines");
     };
 
     const handleHomeVisitor = () => {

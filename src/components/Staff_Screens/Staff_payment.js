@@ -2,112 +2,168 @@ import React, { useState, useEffect } from 'react';
 import clsx from 'clsx';
 import { makeStyles, useTheme, alpha } from '@material-ui/core/styles';
 import { useNavigate } from 'react-router-dom';
-import { Typography, Button, IconButton, Grid, Paper } from "@material-ui/core";
-import DoctorNavbar from './Doctor_Navbar';
+import { Typography, Button, IconButton, Grid, Paper, FormControl, Select, Box } from "@material-ui/core";
+import DoctorNavbar from './Staff_Navbar';
 import AccountCircle from '@material-ui/icons/AccountCircle';
 import SearchIcon from '@material-ui/icons/Search';
 import DeleteIcon from '@material-ui/icons/Delete';
 import EditIcon from '@material-ui/icons/Edit';
-import { GetMorningSlots, GetEveningSlots, Todays_Appointment, Todays_Appointment_By_Date } from '../Apis/Todays_Appointments/index';
-import { DataGrid, GridColDef, GridApi, GridCellValue, GridCellParams } from '@material-ui/data-grid';
-
-import { Edit_Appointment_From_TodaysApp } from './Todays_Appointments/Slots/Edit_Appointment/index';
-import Delete_Appointment from './Todays_Appointments/Slots/Delete_Appointment/index';
-
+import { GetMorningSlots, GetEveningSlots, Todays_Appointment, Todays_Appointment_By_Date } from '../../Apis/Staff/Todays_Appointments/index';
+import { DataGrid } from '@material-ui/data-grid';
+import ArrowBackIcon from '@material-ui/icons/ArrowBack';
+import ip from '../../ipaddress/ip';
+import axios from 'axios';
+import { handle_cashpayment } from '../../Apis/Payment_Details_Recp/index';
+import { Edit_Appointment_From_TodaysApp } from './components/Todays_Appointments/Slots/Edit_Appointment/index';
+import Delete_Appointment from './components/Todays_Appointments/Slots/Delete_Appointment/index';
+import { Time, App_Channels, App_Types, Doctors, Book_Appointment, Note_for_Doctor } from '../../Apis/Staff/Book_Appointment/index';
 const drawerWidth = 240;
 
 const columns = [
     {
+
+        field: 'UserId',
+        headerName: 'PatientID',
+        headerAlign: 'center',
+        align: "center",
+        // sortable: false,
+        width: 150,
+        fontSize: "20px",
+        headerClassName: 'super-app-theme--header',
+
+
+
+    }, {
         field: 'fullName',
-        headerName: 'Full name',
+        headerName: 'PatientName',
+        headerAlign: 'center',
         sortable: false,
         width: 200,
+        headerClassName: 'super-app-theme--header',
         valueGetter: (params) =>
-            `${params.getValue(params.id, 'FirstName') || ''} ${params.getValue(params.id, 'LastName') || ''
+            `${params.getValue(params.id, 'PFName') || ''} ${params.getValue(params.id, 'PLName') || ''
             }`,
     },
+    {
+        field: 'AppointmentDate',
+        headerName: 'AppointmentDate',
+        width: 240,
+        editable: true,
+        headerAlign: 'center',
+        marginLeft: "25px",
+        align: "center",
+        headerClassName: 'super-app-theme--header'
+    },
+
     // {
     //     field: 'MobileNo',
     //     headerName: 'Contact No',
     //     width: 160,
     //     editable: true,
     // },
+
     {
-        field: 'AppointmentReason',
-        headerName: 'Appointment Reason',
-        width: 220,
+        field: 'PaymentMode',
+        headerName: 'PaymentMode',
+        width: 180,
+        textAlign: "center",
+        headerAlign: 'center',
         editable: true,
+        align: "center",
+        headerClassName: 'super-app-theme--header',
     },
     {
-        field: 'AppointmentDate',
-        headerName: 'Date',
-        width: 160,
-        editable: true,
-    },
-    {
-        field: 'AppointmentTime',
-        headerName: 'Time',
-        width: 160,
-        editable: true,
-    },
-    {
-        field: 'AppointmentType',
-        headerName: 'Type',
-        width: 160,
-        editable: true,
-    },
-    {
-        field: 'AppointmentChannel',
-        headerName: 'Channel',
+        field: 'PaymentAmount',
+        headerName: 'Amount',
+        headerAlign: 'center',
         width: 180,
         editable: true,
+        align: "center",
+        headerClassName: 'super-app-theme--header',
+
     },
-    {
-        field: 'AppointmentTime',
-        headerName: 'Time',
-        width: 160,
-        editable: true,
-    },
+
     {
         field: "Action",
-        width: 130,
+        headerAlign: 'center',
+        headerName: "Action",
+        width: 310,
+        align: "center",
+        headerClassName: 'super-app-theme--header',
         sortable: false,
 
-        // renderCell: () => {
-        //     return (
-        //         <Button variant="contained" color="primary" startIcon={<EditIcon />}>
-        //             Edit
-        //         </Button>
-        //     );
-        // }
         renderCell: (params) => {
-            const onClickDelete = async () => {
-                return alert("Are you Sure!! Do you want to delete medicine");
-            };
-            const onClickEdit = async () => {
-                return alert(JSON.stringify(params.row, null, 4));
-            };
-
-            const [openeditmodal, setopeneditmodal] = useState(false);
-            const [opendeletemodal, setOpenDeletemodal] = useState(false);
+           
+           
             let currentDate = new Date();
             let t_date = currentDate.toISOString().split('T')[0];
+            let t_time = currentDate.toISOString().split('T')[1];
+
+            const handleCashPayment = async () => {
+                var obj = {
+                    PaymentMode: 'Cash',
+                    PaymentDate: t_date,
+                    PaymentTime: t_time,
+                    AppointmentId : params.row.id
+                }
+                try {
+                    var cash = await handle_cashpayment(obj);
+                    let parsed = JSON.parse(cash);
+                    if (parsed.success === "200") {
+                        alert(parsed.message);
+                        window.location.reload();
+                    } else {
+                        alert(parsed.message);
+                    }
+                } catch (e) {
+                    console.log(e)
+                }
+            }
+
+
+            const handleOnlinePayment = async () => {
+                var obj = {
+                    PaymentMode: 'Online',
+                    PaymentDate: t_date,
+                    PaymentTime: t_time,
+                    AppointmentId : params.row.id
+                }
+                try {
+                    var cash = await handle_cashpayment(obj);
+                    let parsed = JSON.parse(cash);
+                    if (parsed.success === "200") {
+                        alert(parsed.message);
+                        window.location.reload();
+                    } else {
+                        alert(parsed.message);
+                    }
+                } catch (e) {
+                    console.log(e)
+                }
+            }
             return (
                 <>
-                    {openeditmodal ? <Edit_Appointment_From_TodaysApp show={openeditmodal} data={params.row} handlemodal={() => setopeneditmodal(false)} /> : null}
-                    {params.row.AppointmentDate >= t_date ? <IconButton onClick={() => setopeneditmodal(true)} style={{ color: '#2C7FB2' }}>
-                        <EditIcon />
-                    </IconButton> : null}
-                    {opendeletemodal ? <Delete_Appointment show={opendeletemodal} data={params.row.id} handleclose={() => setOpenDeletemodal(false)} /> : null}
-                    {params.row.AppointmentDate >= t_date ? < IconButton color="secondary" onClick={() => setOpenDeletemodal(true)} style={{ color: '#707070' }}>
-                        <DeleteIcon />
-                    </IconButton> : null}
+
+                    {params.row.Action = <Button onClick={() => handleCashPayment()} style={{ color: '#2C7FB2',borderRadius:"26px" }}>
+                        Cash
+                    </Button>}
+                    {params.row.Action = <Button color="secondary" onClick={() => handleOnlinePayment()} style={{ color: '#BBB' }}>
+                        Online
+                    </Button>}
 
                 </>
             );
         }
+
     },
 ];
+
+// const rows = [
+//     {
+//         id: 1,PatientID:1, PatientName: "Shubham", PaymentMode: "Cash", Amount: "12000", AppointmentDateTime: "2/2/2022",
+//     }
+// ]
+
 
 
 const useStyles = makeStyles((theme) => ({
@@ -129,7 +185,7 @@ const useStyles = makeStyles((theme) => ({
     paper: {
         padding: theme.spacing(3),
         color: '#78B088',
-        fontFamily: 'Poppins',
+        fontFamily: '"Poppins", san-serif;',
         fontStyle: 'normal',
         fontWeight: 800,
         overflow: 'hidden',
@@ -140,6 +196,9 @@ const useStyles = makeStyles((theme) => ({
         overflow: 'hidden',
         whiteSpace: 'nowrap',
         textOverflow: 'ellipsis',
+        marginTop: 70,
+        marginLeft: 25,
+        marginRight: 1
     },
     gridShift: {
         marginLeft: drawerWidth,
@@ -258,8 +317,10 @@ const useStyles = makeStyles((theme) => ({
     },
     formControl: {
         margin: theme.spacing(1),
-        minWidth: 180,
+        minWidth: 220,
+
     },
+
     groupreports: {
         height: 120,
         width: 100,
@@ -275,13 +336,14 @@ const useStyles = makeStyles((theme) => ({
         // [`& fieldset`]: {
         //     borderRadius: 25,
         // },
-        padding: 8,
+        // padding: 8,
         fontFamily: '"Poppins", san-serif;',
         fontStyle: 'normal',
-        fontWeight: 400,
-        fontSize: 12,
+        fontWeight: 600,
+        fontSize: 11,
         textAlign: 'center',
-        width: '100%'
+        width: '100%',
+        height: 20
     },
     btn: {
         color: '#78B088',
@@ -292,13 +354,12 @@ const useStyles = makeStyles((theme) => ({
         fontSize: 14,
         textAlign: 'center',
 
-
     }
 
 }));
 
 
-export default function DoctorTodaysAppointment() {
+export default function Staff_payment() {
     const classes = useStyles();
     const theme = useTheme();
     const navigate = useNavigate();
@@ -313,96 +374,49 @@ export default function DoctorTodaysAppointment() {
     const [endDate, setendDate] = useState('');
     const [morningcount, setmorningcount] = useState([]);
     const [eveningcount, seteveningcount] = useState([]);
-    const [openeditmodal, setopeneditmodal] = useState(false);
-    const [opendeletemodal, setOpenDeletemodal] = useState(false);
+    const [paymenthistory, setpaymenthistory] = useState([]);
+    const [doctorData, setdoctorData] = useState([]);
+    const [doctor, setDoctor] = React.useState('');
 
-    let currentDate = new Date();
-    let t_date = currentDate.toISOString().split('T')[0];
+    useEffect(() => {
+        fetchpaymentHistory();
 
-    // function currentlySelected(params: GridCellParams) {
-    //     const value = params.colDef.field;
-    //     const api: GridApi = params.api;
-
-    //     { openeditmodal ? <Edit_Appointment_From_TodaysApp show={openeditmodal} data={params.getValue(params.row)} handlemodal={() => setopeneditmodal(false)} /> : null }
-    //     {
-    //         params.row.AppointmentDate >= t_date ? <IconButton onClick={() => setopeneditmodal(true)} style={{ color: '#2C7FB2' }}>
-    //             <EditIcon />
-    //         </IconButton> : null
-    //     }
-    //     { opendeletemodal ? <Delete_Appointment show={opendeletemodal} data={params.getValue(params.row.id)} handleclose={() => setOpenDeletemodal(false)} /> : null }
-    //     {
-    //         params.row.AppointmentDate >= t_date ? < IconButton color="secondary" onClick={() => setOpenDeletemodal(true)} style={{ color: '#707070' }}>
-    //             <DeleteIcon />
-    //         </IconButton> : null
-    //     }
-
-
-    //     // if (!(value === "edit" || value === "delete")) {
-    //     //     return;
-    //     // }
-    //     // const fields = api
-    //     //     .getAllColumns()
-    //     //     .map((c) => c.field)
-    //     //     .filter((c) => c !== "__check__" && !!c);
-    //     // const thisRow: Record<string, GridCellValue> = {};
-
-    //     // fields.forEach((f) => {
-    //     //     thisRow[f] = params.getValue(params.id, f);
-    //     // });
-
-    //     // setSelectedUser(user);
-    //     // setOpenDialog(true);
-    // }
-
-    const handleClose = () => {
-        setOpenDialog(false);
+    }, [])
+    const handleGoBack = () => {
+        navigate("/Staff_Home");
     };
 
-    const fetchAppointments = async () => {
-        const appointments = await Todays_Appointment();
+    const fetchpaymentHistory = async () => {
+        var data = await localStorage.getItem("userdata");
+        let parsed = JSON.parse(data);
+        let clinicid = parsed.ClinicId;
+        const medicalhistoryInfo = await axios.post(ip + 'Web_PaymentDetailsForRecp', { ClinicId: clinicid });
+        setpaymenthistory(medicalhistoryInfo?.data?.Appointment);
+
+    }
+
+
+    const fetchAppointments = async (doctorid,) => {
+        const appointments = await Todays_Appointment(doctorid);
         setappointmentlist(appointments);
     }
 
-    const fetchMorningCount = async () => {
-        const count = await GetMorningSlots();
-        setmorningcount(count);
-    }
 
-    const fetchEveningCount = async () => {
-        const count = await GetEveningSlots();
-        seteveningcount(count);
-    }
-
-    useEffect(() => {
-        const interval = setInterval(() => {
-            fetchMorningCount();
-            fetchEveningCount();
-        }, 10000);
-        fetchMorningCount();
-        fetchEveningCount();
-        fetchAppointments();
-        return () => clearInterval(interval);
-
-    }, []);
-
-    const handleChange = (event) => {
-        setSelectedValue(event.target.value);
-    };
-
-    const Appointmentbydate = async (startdate, endDate) => {
-        var data = localStorage.getItem("userdata");
-        let parsed = JSON.parse(data);
-        let Clinicid = parsed.ClinicId;
+    const fetchEveningCount = async (doctorid) => {
         try {
-            let request = await Todays_Appointment_By_Date(Clinicid, startdate, endDate)
-            setappointmentlist(request)
-        } catch (e) {
-            console.log(e)
+            const count = await GetEveningSlots(doctorid);
+            seteveningcount(count);
+        }
+        catch (e) {
+            console.log(e);
         }
     }
+    console.log(setpaymenthistory)
+
 
     return (
         <div className={classes.root} style={{ backgroundColor: '#ffffff' }}>
+            <DoctorNavbar />
 
             {/* main grid */}
             <Grid container spacing={2}
@@ -411,8 +425,31 @@ export default function DoctorTodaysAppointment() {
                 })}
                 direction="row"
             >
+                <Grid item xs={12} style={{ paddingTop: 15 }}>
+                    {/* <FormControl variant="outlined" size="small" className={classes.formControl} >
+                        <Select
+                            className={classes.textField}
+                            native
+                            value={doctor}
+                            onChange={(e) => setDoctor(e.target.value)}
+                            label="doctor"
+                            inputProps={{
+                                name: 'doctor',
+                                id: 'outlined-doctor-native-simple',
+                            }}
+                            style={{ width: '100%', position: 'relative', color: '#707070', fontSize: 14, fontWeight: 400, fontFamily: 'Poppins' }}
+                        >
+                            <option aria-label="None" value="" >Select Doctor</option>
+                            {doctorData.map(v => (<option value={v.DoctorId}>Dr. {v.FirstName} {v.LastName}</option>))}
+
+                        </Select>
+                    </FormControl> */}
+
+                    {/* <Button className={classes.btnview} onClick={() => callbackfunction(doctor)} >View</Button> */}
+
+                </Grid>
                 <Grid item xs={12} >
-                    <Typography variant="h5" noWrap={true}
+                    {/* <Typography variant="h5" noWrap={true}
                         style={{
                             fontFamily: '"Poppins", san-serif;',
                             fontStyle: 'normal',
@@ -424,7 +461,7 @@ export default function DoctorTodaysAppointment() {
 
                         }}>
                         Morning Slots
-                    </Typography>
+                    </Typography> */}
 
                     {morningcount.map((item) => {
                         return (<>
@@ -448,7 +485,7 @@ export default function DoctorTodaysAppointment() {
                 </Grid>
 
                 <Grid item xs={12} >
-                    <Typography variant="h5" noWrap={true}
+                    {/* <Typography variant="h5" noWrap={true}
                         style={{
                             fontFamily: '"Poppins", san-serif;',
                             fontStyle: 'normal',
@@ -460,7 +497,7 @@ export default function DoctorTodaysAppointment() {
                             paddingTop: 20
                         }}>
                         Evening Slots
-                    </Typography>
+                    </Typography> */}
 
                     {eveningcount.map((item) => {
                         return (<>
@@ -485,22 +522,8 @@ export default function DoctorTodaysAppointment() {
 
                     })}
                 </Grid>
-
                 <Grid item xs={12} style={{ paddingTop: 15 }}>
-                    {/* <SearchIcon className={classes.searchIcon} />
-                    <InputBase
-                        label="Search by Name/Email"
-                        classes={{
-                            root: classes.inputRoot,
-                            input: classes.inputInput,
-
-                        }}
-                        variant='outlined'
-                        inputProps={{ 'aria-label': 'search' }}
-                        style={{ borderRadius: 15 }}
-                    > </InputBase> */}
-
-                    <Typography variant="h8" noWrap={true} style={{ paddingLeft: 5, paddingRight: 20 }}>
+                    {/* <Typography variant="h8" noWrap={true} style={{ paddingLeft: 5, paddingRight: 20 }}>
                         From
                     </Typography>
 
@@ -515,22 +538,33 @@ export default function DoctorTodaysAppointment() {
                         setendDate(e.target.value)
                     }} style={{ border: '1px solid #F0F0F0', height: 35 }} />
 
-                    <Button className={classes.btnview} onClick={() => Appointmentbydate(startdate, endDate)} >View</Button>
-
+                  
+                  <Button className={classes.btnview} onClick={() => Appointmentbydate(startdate, endDate)} >View</Button> */}
+                    <Button style={{ marginLeft: '-20px', backgroundColor: 'white', color: '#2C7FB2', borderRadius: 105, fontSize: '12px', bottom: '60px' }}> <ArrowBackIcon onClick={handleGoBack} />  </Button>
+                    <h4 style={{ color: '#2C7FB2', position: "relative", bottom: 25, marginTop: -68, left: 45 }}>Payment Details</h4>
                 </Grid>
-
                 <Grid item xs={12} >
+                    <Box
+                        sx={{
 
-                    <DataGrid
-                        style={{ height: 300, fontSize: 13, fontFamily: 'Poppins', fontWeight: 600, color: '#2C7FB2' }}
-                        rows={appointmentlist}
-                        rowHeight={30}
-                        columns={columns}
-                        columnWidth={5}
-                        pageSize={10}
-                    // onCellClick={currentlySelected}
-                    />
+                            '& .super-app-theme--header': {
+                                backgroundColor: '#78B088',
+                                color: '#fff',
 
+                                fontSize: 14
+                            },
+                        }}
+                    >
+                        <DataGrid
+                            style={{ height: 400, fontSize: 13, fontFamily: 'Poppins', fontWeight: 600, color: '#2C7FB2', bottom: 39 }}
+                            rows={paymenthistory}
+                            rowHeight={40}
+                            columns={columns}
+                            columnWidth={5}
+                            pageSize={10}
+
+                        />
+                    </Box>
                 </Grid>
             </Grid> {/* main grid */}
 

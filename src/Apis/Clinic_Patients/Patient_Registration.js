@@ -4,7 +4,7 @@ import ip from '../../ipaddress/ip';
 
 export const Register_Patient = async (obj) => {
     try {
-        const registerPatient = await axios.post(ip + 'Web_AddPatient', obj)
+        const registerPatient = await axios.post(ip + 'Web_AddPatients', obj)
         return JSON.stringify(registerPatient?.data);
     }
     catch (error) {

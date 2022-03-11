@@ -676,25 +676,8 @@ export default function Staff_EditProfile() {
                                         {doctordata[0].FirstName} {doctordata[0].LastName}
                                     </Typography>
                                 </center>
-                                <Grid item xs={12} style={{ paddingTop: 5 }}>
-                                    <center>
-                                    <Typography variant="h6" noWrap={true} style={{
-                                            fontSize: 14,
-                                            fontFamily: 'Poppins',
-                                            fontStyle: 'normal',
-                                            color: '#707070',
-                                            fontWeight: 600,
-                                            margin: 5
-
-                                        }}>
-                                            Experience (in years)
-                                        </Typography>
-                                        <FormControl variant="outlined" className={classes.formControl}  >
-                                            <TextField className={classes.textField} id="outlined-basic" type='number' placeholder="Experience (Yrs)" onChange={(e) => setExperience(e.target.value)} value={Experience ? Experience : 'Not Provided'} variant="outlined" size="small" />
-                                        </FormControl>
-                                    </center>
-                                </Grid>
-                                <Grid item xs={12} style={{ paddingTop: 5 }}>
+                             
+                                <Grid item xs={12} style={{ paddingTop: 10}}>
                                     <center>
                                     <Typography variant="h6" noWrap={true} style={{
                                             fontSize: 14,
@@ -714,47 +697,6 @@ export default function Staff_EditProfile() {
                                     </center>
                                 </Grid>
 
-                                <Grid item xs={12} style={{ paddingTop: 5 }}>
-                                    <center>
-                                    <Typography variant="h6" noWrap={true} style={{
-                                            fontSize: 14,
-                                            fontFamily: 'Poppins',
-                                            fontStyle: 'normal',
-                                            color: '#707070',
-                                            fontWeight: 600,
-                                            marginTop:-6,
-                                            marginBottom:2
-
-                                        }}>
-                                            Category
-                                        </Typography>
-                                        <FormControl variant="outlined" size="small" className={classes.formControl} style={{ width: '60%' }} >
-                                            <InputLabel htmlFor="outlined-age-native-simple" value={Category ? Category : doctordata.Category} onChange={(e) => setCategory(e.target.value)} ></InputLabel>
-                                            <Select
-                                                className={classes.textFieldForm}
-                                                size='medium'
-                                                native
-                                                value={Category}
-                                                onChange={(e) => setCategory(e.target.value)}
-                                                placeholder="Category"
-                                                inputProps={{
-                                                    name: 'category',
-                                                    id: 'outlined-category-native-simple',
-                                                }}
-                                                style={{ width: '100%', fontSize: 14 }}
-                                            >
-                                                {doctorCategory.map((item) => {
-                                                    return (
-                                                        <option value={item.Category}>{item.Category}</option>
-                                                    )
-                                                })}
-
-                                                {/* <option aria-label="None" value="" /> */}
-
-                                            </Select>
-                                        </FormControl>
-                                    </center>
-                                </Grid>
                             </Grid>
 
 
@@ -782,8 +724,8 @@ export default function Staff_EditProfile() {
 
                                     </div>
                                     <div>
-                                        <FormControl variant="outlined" className={classes.formControlForm}  >
-                                            <TextField className={classes.textFieldForm} id="outlined-basic" type='number' label="Mobile No" value={MobileNo} onChange={(e) => {
+                                        <FormControl variant="outlined" className={classes.formControlForm} >
+                                            <TextField className={classes.textFieldForm} disabled id="outlined-basic" type='number' label="Mobile No" value={MobileNo} onChange={(e) => {
                                                 const re = /^[0-9\b]+$/;
                                                 if (e.target.value === '' || re.test(e.target.value)) {
                                                     setMobileNo(e.target.value)

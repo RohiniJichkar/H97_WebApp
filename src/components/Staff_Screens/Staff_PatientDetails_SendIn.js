@@ -219,13 +219,13 @@ export default function Staff_Patient_Details_SendIn() {
                                     </Grid>
                                     <Grid item sm={6} >
                                         <Typography variant="h6" noWrap={true} style={{ fontSize: 14, color: '#707070', marginBottom: 15 }}>
-                                            {details.Address} {details.City}
+                                            {details.Address ? details.Address : 'NA'} {details.City}
                                         </Typography>
                                         <Typography variant="h6" noWrap={true} style={{ fontSize: 14, color: '#707070', marginBottom: 15 }}>
-                                            {details.MobileNo}
+                                            {details.MobileNo ? details.MobileNo : 'NA'}
                                         </Typography>
                                         <Typography variant="h6" noWrap={true} style={{ fontSize: 14, color: '#707070', marginBottom: 15 }}>
-                                            {details.Email != null ? details.Email : 'Not Provided'}
+                                            {details.Email ? details.Email : 'NA'}
                                         </Typography>
                                     </Grid>
                                 </Grid>
