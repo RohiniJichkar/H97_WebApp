@@ -354,9 +354,9 @@ export default function DoctorTodaysAppointment() {
     //     // setOpenDialog(true);
     // }
 
-    const handleClose = () => {
-        setOpenDialog(false);
-    };
+    // const handleClose = () => {
+    //     setOpenDialog(false);
+    // };
 
     const fetchAppointments = async () => {
         const appointments = await Todays_Appointment();
