@@ -358,6 +358,7 @@ export default function DoctorTodaysAppointment() {
     //     setOpenDialog(false);
     // };
 
+    
     const fetchAppointments = async () => {
         const appointments = await Todays_Appointment();
         setappointmentlist(appointments);
