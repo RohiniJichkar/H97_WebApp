@@ -47,6 +47,9 @@ import DoctorHomeVisitHistory from './components/Doctor_HomeVisitorHistory';
 import DoctorPaymentDetails from './components/Doctor_PaymentDetails';
 import PaymentReports from './components/Doctor_PaymentReports';
 import Todays_appointment_Tabs from './components/Todays_appointment_tabs';
+import Calander_appointment_tabs from './components/Calander_appointment_tabs';
+import DoctorTodaysHVAppDiary from './components/Doctor_TodaysHVAppDiary';
+
 import SignUp from './components/SignUp';
 
 import AdminAddClinic from './components/Admin_AddClinic';
@@ -155,6 +158,9 @@ const App = () => {
             <Route exact path='/DoctorPaymentReports' element={<PaymentReports />}></Route>
             <Route exact path='/DoctorHomeVisitHistory' element={<DoctorHomeVisitHistory />}></Route>
             <Route exact path="/Todays_appointment_Tabs" element={<Todays_appointment_Tabs />}></Route>
+            <Route exact path="/Calander_appointment_tabs" element={<Calander_appointment_tabs />}></Route>
+
+            <Route exact path="/DoctorTodaysHVAppDiary" element={<DoctorTodaysHVAppDiary />}></Route>
 
 
 

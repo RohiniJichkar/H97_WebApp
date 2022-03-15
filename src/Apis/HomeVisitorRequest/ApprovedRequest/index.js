@@ -2,11 +2,11 @@ import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import ip from '../../../ipaddress/ip';
 
-export const ApprovedHomeVisitorRequest = async (object, hvobject) => {
+export const ApprovedHomeVisitorRequest = async (object, hvobject, time) => {
 
     const date = new Date();
     const now = date.toISOString().split('T')[0];
-    const time = date.getHours() + ":" + date.getMinutes() +":" + date.getSeconds();
+    // const time = date.getHours() + ":" + date.getMinutes();
     var data = localStorage.getItem("userdata");
     let parsed = JSON.parse(data);
     let clinicid = parsed.ClinicId;

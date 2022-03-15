@@ -60,7 +60,7 @@ export const BroadcastMessage = ({ show, handlemodal }) => {
                                 <center>
                                     <TextField className={classes.inputFields} onChange={(e) => settitle(e.target.value)} id="outlined-basic" label="Title" variant="outlined" />
                                     <TextField className={classes.inputFields} onChange={(e) => setdescription(e.target.value)} multiline rows={3} rowsMax={6} id="outlined-basic" label="Description" variant="outlined" />
-                                    <Alert severity="warning" style={{fontsize:15, position:'relative',bottom:14,width:400}}>Note : This message broadcasted to all the clinic patients</Alert>
+                                    <Alert severity="warning" style={{fontsize:15, position:'relative',bottom:14,width:400}}>Note : This message will be send to all the patients in your Clinic so carefully write the message.</Alert>
                                     <Grid container xs={12} style={{ marginTop: 5 }}>
                                         <Grid item sm={6} >
                                             <Button className={classes.btnregister} onClick={() => handlemodal(false)} style={{ float: 'right', marginRight: 20 }}>Cancel</Button>

@@ -68,7 +68,7 @@ const useStyles = makeStyles((theme) => ({
         textAlign: 'center',
         borderRadius: 28,
         width: 130,
-        marginTop: 160,
+        marginTop: 35,
         fontSize: '12px'
     },
     btnUpload: {
@@ -80,7 +80,7 @@ const useStyles = makeStyles((theme) => ({
         textAlign: 'center',
         borderRadius: 28,
         width: 130,
-        marginTop: 160,
+        marginTop: 35,
         fontSize: '12px'
 
     },
@@ -236,7 +236,7 @@ export default function DoctorTreatPatient() {
                                             {details.Address ? details.Address : 'NA'} {details.City}
                                         </Typography>
                                         <Typography variant="h6" noWrap={true} style={{ fontSize: 14, color: '#707070', marginBottom: 15 }}>
-                                            {details.MobileNo ? details.MobileNo : 'NA'}
+                                            {details.MobileNo}
                                         </Typography>
                                         <Typography variant="h6" noWrap={true} style={{ fontSize: 14, color: '#707070', marginBottom: 15 }}>
                                             {details.Email ? details.Email : 'NA'}
@@ -259,21 +259,30 @@ export default function DoctorTreatPatient() {
                             </Typography>
 
                             <Grid container xs={12} >
-                                <Grid item xs={12} sm={6}>
-                                    <TextField className={classes.textField} onChange={(e) => setfollowupDate(e.target.value)} id="outlined-basic" type="date" size="small" variant="outlined" />
-                                </Grid>
-                                <Grid item xs={12} sm={6} >
-                                    <TextField className={classes.textField} onChange={(e) => setcostcode(e.target.value)} id="outlined-basic" label="Cost Code" type='number' size="small" variant="outlined" style={{ float: 'right' }} />
-                                </Grid>
-
-                                <Grid item xs={12} sm={12}>
-                                    <TextField className={classes.textField} multiline
-                                        rows={5}
-                                        rowsMax={5} id="outlined-basic" onChange={(e) => setprescriptionnote(e.target.value)} label="Diagnosis/Prescription" variant="outlined"
-                                        style={{ width: 710, marginTop: 60 }}
+                                
+                            <Grid item xs={12}>
+                                    <TextField  multiline
+                                        rows={8}
+                                        rowsMax={8} id="outlined-basic" onChange={(e) => setprescriptionnote(e.target.value)} label="Diagnosis/Prescription" variant="outlined"
+                                        style={{ width: 750, height: 200 }}
                                     />
                                 </Grid>
-                            </Grid>
+                                
+                                </Grid>
+                                {/* <Grid item xs={12} sm={6} >
+                                    <TextField className={classes.textField} onChange={(e) => setcostcode(e.target.value)} id="outlined-basic" label="Cost Code" type='number' size="small" variant="outlined" style={{ float: 'right' }} />
+                                </Grid> */}
+                                <Grid container style={{marginTop: 15}}>
+                              <Grid item xs={2} >
+                                   <Typography style={{ fontSize: 17, color: '#2C7FB2', textDecoration: 'underline', fontWeight: 600, textUnderlineOffset: '1px' }} >Followup Date</Typography>
+                                </Grid>
+                                <Grid item xs={6}>
+                                    <TextField className={classes.textField} onChange={(e) => setfollowupDate(e.target.value)} 
+                                    id="outlined-basic" type="date" size="small" variant="outlined"
+                                    style={{  }} />
+                                </Grid>
+                                </Grid>
+                     
 
 
                             <Grid container>

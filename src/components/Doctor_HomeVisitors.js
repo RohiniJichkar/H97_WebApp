@@ -221,6 +221,10 @@ export default function DoctorHomeVisitors() {
         navigate("/DoctorHomeVisitHistory");
     };
 
+    const handleTodaysHomeVisitApp = () => {
+        navigate("/DoctorTodaysHVAppDiary");
+    };
+
     const [state, setState] = React.useState({
         checkedA: true,
         checkedB: true,
@@ -258,6 +262,7 @@ export default function DoctorHomeVisitors() {
                         <Button className={classes.btnregister} onClick={(e) => setOpenmodal(true)} style={{ float: 'right', marginRight: 20, fontFamily: 'Poppins', fontSize: 12, width: 160 }}>Add New Home Visitor</Button>
                         <Button className={classes.btnregister} onClick={handleHomeVisitRequest} style={{ float: 'right', marginRight: 20, fontFamily: 'Poppins', fontSize: 12, width: 160 }}>Home Visitor Requests</Button>
                         <Button className={classes.btnregister} onClick={handleHomeVisitHistory} style={{ float: 'right', marginRight: 20, fontFamily: 'Poppins', fontSize: 12, width: 160 }}>Home Visitor History</Button>
+                        <Button className={classes.btnregister} onClick={handleTodaysHomeVisitApp} style={{ float: 'right', marginRight: 20, fontFamily: 'Poppins', fontSize: 12, width: 190 }}>Today's Home Visitor Diary</Button>
                     </Typography>
                 </Grid>
 

@@ -61,14 +61,36 @@ const Add_Patinet = ({ show, handleclose }) => {
             return;
         }
 
+        var FirstNm = firstnm.split(/\s/).join('');
+
+        // var dobstr = dob;
+        // var birth_year = dobstr.substr(0, 4);
+        // var birth_month = dobstr.substr(5, 2);
+        // var birth_day = dobstr.substr(8, 2);
+
+        // var today_year = date.getFullYear();
+        // var today_month = date.getMonth();
+        // var today_day = date.getDate();
+        // var age = today_year - birth_year;
+
+        // if (today_month < (birth_month - 1)) {
+        //     age--;
+        //     return age;
+        // }
+        // if (((birth_month - 1) == today_month) && (today_day < birth_day)) {
+        //     age--;
+        //     return age;
+        // }
+
         const obj = {
             ClinicId: clinicid,
-            FirstName: firstnm,
+            FirstName: FirstNm,
             LastName: lastnm,
             MobileNo: mobile,
             Password: password,
             Email: email,
             DOB: dob,
+            // Age: age,
             Gender: gender,
             Address: address,
             City: city,
@@ -105,8 +127,404 @@ const Add_Patinet = ({ show, handleclose }) => {
         event.preventDefault();
     };
 
+    // document.addEventListener('DOMContentLoaded', () => {
+
+    //     const selectDrop = document.querySelector('#countries');
+    //     // const selectDrop = document.getElementById('countries');
+    //     fetch("https://api.countrystatecity.in/v1/countries/IN/states/MH/cities").then(res => {
+    //       return res.json();
+    //     }).then(data => {
+    //       let output = "";
+    //       data.forEach(country => {
+    //         output += `
+    //         <option value="${country.name}">${country.name}</option>`;
+    //       })
+    //       selectDrop.innerHTML = output;
+    //     }).catch(err => {
+    //       console.log(err);
+    //     })    
+    //   });
+
+
+    //      document.addEventListener('DOMContentLoaded', () => {
+    //     var headers = new Headers();
+    // headers.append("X-CSCAPI-KEY", "API_KEY");
+
+    // var requestOptions = {
+    //   method: 'GET',
+    //   headers: headers,
+    //   redirect: 'follow'
+    // };
+
+    // fetch("https://api.countrystatecity.in/v1/countries", requestOptions)
+    //   .then(response => response.text())
+    //   .then(result => console.log(result))
+    //   .catch(error => console.log('error', error));
+    // });
+
+    // var headers = new Headers();
+    // headers.append("X-CSCAPI-KEY", "API_KEY");
+
+    // var requestOptions = {
+    //   method: 'GET',
+    //   headers: headers,
+    //   redirect: 'follow'
+    // };
+
+    // // Pass Country & State Code -- Eg: Country Code : IN & State Code : MH
+    // fetch("https://api.countrystatecity.in/v1/countries/IN/states/MH/cities", requestOptions)
+    //   .then(response => response.text())
+    //   .then(result => console.log(result))
+    //   .catch(error => console.log('error', error));
+
+
+
+
+    // setOptions({
+    //     theme: 'ios',
+    //     themeVariant: 'light'
+    // });
+
+    // function App() {
+    //     const [myData, setMyData] = React.useState([]);
+
+    //     const inputProps = {
+    //         inputStyle: 'box',
+    //         labelStyle: 'stacked',
+    //         placeholder: 'Please select...'
+    //     };
+
+    //     React.useEffect(() => {
+    //         getJson('https://trial.mobiscroll.com/content/countries.json', (resp) => {
+    //             const countries = [];
+    //             for (let i = 0; i < resp.length; ++i) {
+    //                 const country = resp[i];
+    //                 countries.push({ text: country.text, value: country.value });
+    //             }
+    //             setMyData(countries);
+    //         });
+    //     }, []);
+
+    //     const renderCustomItem = (item) => {
+    //         return <div className="md-country-picker-item">
+    //             <img className="md-country-picker-flag" src={'https://img.mobiscroll.com/demos/flags/' + item.data.value + '.png'} alt="Flag" />
+    //             {item.display}
+    //         </div>;
+    //     }
+
+    //     return (
+    //         <Page>
+    //             <Select
+    //                 data={myData}
+    //                 label="Countries"
+    //                 inputProps={inputProps}
+    //                 display="anchored"
+    //                 itemHeight={40}
+    //                 renderItem={renderCustomItem}
+    //             />
+    //         </Page>
+    //     ); 
+    // }
+
+
+
+
+
+
+    // mobiscroll.setOptions({
+    //     theme: 'ios',
+    //     themeVariant: 'light'
+    // });
+
+    // var inst = mobiscroll.select('#demo-country-picker', {
+    //     display: 'anchored',
+    //     filter: true,
+    //     itemHeight: 40,
+    //     renderItem: function (item) {
+    //         return '<div class="md-country-picker-item">' +
+    //             '<img class="md-country-picker-flag" src="https://img.mobiscroll.com/demos/flags/' + item.data.value + '.png" />' +
+    //             item.display + '</div>';
+    //     }
+    // });
+
+    // mobiscroll.util.http.getJson('https://trial.mobiscroll.com/content/countries.json', function (resp) {
+    //     var countries = [];
+    //     for (var i = 0; i < resp.length; ++i) {
+    //         var country = resp[i];
+    //         countries.push({ text: country.text, value: country.value });
+    //     }
+    //     inst.setOptions({ data: countries });
+    // });
+
+
+
+    // function ajaxCall() {
+    //     this.send = function(data, url, method, success, type) {
+    //         type = type||'json';
+    //         var successRes = function(data) {
+    //             success(data);
+    //         }
+
+    //         var errorRes = function(e) {
+    //             console.log(e);
+    //             //alert("Error found \nError Code: "+e.status+" \nError Message: "+e.statusText);
+    //             //jQuery('#loader').modal('hide');
+    //         }
+    //         jQuery.ajax({
+    //             url: url,
+    //             type: method,
+    //             data: data,
+    //             success: successRes,
+    //             error: errorRes,
+    //             dataType: type,
+    //             timeout: 60000
+    //         });
+
+    //     }
+
+    // }
+
+    // function locationInfo() {
+    //     var rootUrl = "https://api.countrystatecity.in/v1/countries/IN/states/MH/cities";
+    //     //now check for set values
+    //     var addParams = '';
+    //     if(jQuery("#gds_appid").length > 0) {
+    //         addParams += '&appid=' + jQuery("#gds_appid").val();
+    //     }
+    //     if(jQuery("#gds_hash").length > 0) {
+    //         addParams += '&hash=' + jQuery("#gds_hash").val();
+    //     }
+
+    //     var call = new ajaxCall();
+
+    //     this.confCity = function(id) {
+    //      //   console.log(id);
+    //      //   console.log('started');
+    //         var url = rootUrl+'?type=confCity&countryId='+ jQuery('#countryId option:selected').attr('countryid') +'&stateId=' + jQuery('#stateId option:selected').attr('stateid') + '&cityId=' + id;
+    //         var method = "post";
+    //         var data = {};
+    //         call.send(data, url, method, function(data) {
+    //             if(data){
+    //                 //    alert(data);
+    //             }
+    //             else{
+    //                 //   alert('No data');
+    //             }
+    //         });
+    //     };
+
+    //     this.getCities = function(id) {
+    //         jQuery(".cities option:gt(0)").remove();
+    //         //get additional fields
+    //         var stateClasses = jQuery('#cityId').attr('class');
+
+    //         var cC = stateClasses.split(" ");
+    //         cC.shift();
+    //         var addClasses = '';
+    //         if(cC.length > 0)
+    //         {
+    //             acC = cC.join();
+    //             addClasses = '&addClasses=' + encodeURIComponent(acC);
+    //         }
+    //         var url = rootUrl+'?type=getCities&countryId='+ jQuery('#countryId option:selected').attr('countryid') +'&stateId=' + id + addParams + addClasses;
+    //         var method = "post";
+    //         var data = {};
+    //         jQuery('.cities').find("option:eq(0)").html("Please wait..");
+    //         call.send(data, url, method, function(data) {
+    //             jQuery('.cities').find("option:eq(0)").html("Select City");
+    //             if(data.tp == 1){
+    //                 var listlen = Object.keys(data['result']).length;
+
+    //                 if(listlen > 0)
+    //                 {
+    //                     jQuery.each(data['result'], function(key, val) {
+
+    //                         var option = jQuery('<option />');
+    //                         option.attr('value', val).text(val);
+    //                         jQuery('.cities').append(option);
+    //                     });
+    //                 }
+    //                 else
+    //                 {
+    //                     var usestate = jQuery('#stateId option:selected').val();
+    //                     var option = jQuery('<option />');
+    //                     option.attr('value', usestate).text(usestate);
+    //                     option.attr('selected', 'selected');
+    //                     jQuery('.cities').append(option);
+    //                 }
+
+    //                 jQuery(".cities").prop("disabled",false);
+    //             }
+    //             else{
+    //                 alert(data.msg);
+    //             }
+    //         });
+    //     };
+    //     this.getStates = function(id) {
+    //         jQuery(".states option:gt(0)").remove();
+    //         jQuery(".cities option:gt(0)").remove();
+    //         //get additional fields
+    //         var stateClasses = jQuery('#stateId').attr('class');
+
+    //         var cC = stateClasses.split(" ");
+    //         cC.shift();
+    //         var addClasses = '';
+    //         if(cC.length > 0)
+    //         {
+    //             acC = cC.join();
+    //             addClasses = '&addClasses=' + encodeURIComponent(acC);
+    //         }
+    //         var url = rootUrl+'?type=getStates&countryId=' + id + addParams  + addClasses;
+    //         var method = "post";
+    //         var data = {};
+    //         jQuery('.states').find("option:eq(0)").html("Please wait..");
+    //         call.send(data, url, method, function(data) {
+    //             jQuery('.states').find("option:eq(0)").html("Select State");
+    //             if(data.tp == 1){
+    //                 jQuery.each(data['result'], function(key, val) {
+    //                     var option = jQuery('<option />');
+    //                     option.attr('value', val).text(val);
+    //                     option.attr('stateid', key);
+    //                     jQuery('.states').append(option);
+    //                 });
+    //                 jQuery(".states").prop("disabled",false);
+    //             }
+    //             else{
+    //                 alert(data.msg);
+    //             }
+    //         });
+    //     };
+
+    //     this.getCountries = function() {
+    //         //get additional fields
+    //         var countryClasses = jQuery('#countryId').attr('class');
+
+    //         var cC = countryClasses(" ");
+    //         cC.shift();
+    //         var addClasses = '';
+    //         if(cC.length > 0)
+    //         {
+    //             acC = cC.join();
+    //             addClasses = '&addClasses=' + encodeURIComponent(acC);
+    //         }
+
+    //         var presel = false;
+    //         var iip = 'N';
+    //         jQuery.each(cC, function( index, value ) {
+    //             if (value.match("^presel-")) {
+    //                 presel = value.substring(7);
+
+    //             }
+    //             if(value.match("^presel-byi"))
+    //             {
+    //                 var iip = 'Y';
+    //             }
+    //         });
+
+    //         var url = rootUrl+'?type=getCountries' + addParams + addClasses;
+    //         var method = "post";
+    //         var data = {};
+    //         jQuery('.countries').find("option:eq(0)").html("Please wait..");
+    //         call.send(data, url, method, function(data) {
+    //             jQuery('.countries').find("option:eq(0)").html("Select Country");
+
+    //             if(data.tp == 1){
+    //                 if(presel == 'byip')
+    //                 {
+    //                     presel = data['presel'];
+    //                     console.log('2 presel is set as ' + presel);
+    //                 }
+
+
+    //                 if(jQuery.inArray("group-continents",cC) > -1)
+    //                 {
+    //                     var $select = jQuery('.countries');
+    //                     console.log(data['result']);
+    //                     jQuery.each(data['result'], function(i, optgroups) {
+    //                         var $optgroup = jQuery("<optgroup>", {label: i});
+    //                         if(optgroups.length > 0)
+    //                         {
+    //                             $optgroup.appendTo($select);
+    //                         }
+
+    //                         jQuery.each(optgroups, function(groupName, options) {
+    //                             var coption = jQuery('<option />');
+    //                             coption.attr('value', options.name).text(options.name);
+    //                             coption.attr('countryid', options.id);
+    //                             if(presel) {
+    //                                 if (presel.toUpperCase() == options.id) {
+    //                                     coption.attr('selected', 'selected');
+    //                                 }
+    //                             }
+    //                             coption.appendTo($optgroup);
+    //                         });
+    //                     });
+    //                 }
+    //                 else
+    //                 {
+    //                     jQuery.each(data['result'], function(key, val) {
+    //                         var option = jQuery('<option />');
+    //                         option.attr('value', val).text(val);
+    //                         option.attr('countryid', key);
+    //                         if(presel)
+    //                         {
+    //                             if(presel.toUpperCase() ==  key)
+    //                             {
+    //                                 option.attr('selected', 'selected');
+    //                             }
+    //                         }
+    //                         jQuery('.countries').append(option);
+    //                     });
+    //                 }
+    //                 if(presel)
+    //                 {
+    //                     jQuery('.countries').trigger('change');
+    //                 }
+    //                 jQuery(".countries").prop("disabled",false);
+    //             }
+    //             else{
+    //                 alert(data.msg);
+    //             }
+    //         });
+    //     };
+
+    // }
+
+    // jQuery(function() {
+    //     var loc = new locationInfo();
+    //     loc.getCountries();
+    //     jQuery(".countries").on("change", function(ev) {
+    //         var countryId = jQuery("option:selected", this).attr('countryid');
+    //         if(countryId != ''){
+    //             loc.getStates(countryId);
+    //         }
+    //         else{
+    //             jQuery(".states option:gt(0)").remove();
+    //         }
+    //     });
+    //     jQuery(".states").on("change", function(ev) {
+    //         var stateId = jQuery("option:selected", this).attr('stateid');
+    //         if(stateId != ''){
+    //             loc.getCities(stateId);
+    //         }
+    //         else{
+    //             jQuery(".cities option:gt(0)").remove();
+    //         }
+    //     });
+
+    //     jQuery(".cities").on("change", function(ev) {
+    //         var cityId = jQuery("option:selected", this).val();
+    //         if(cityId != ''){
+    //             loc.confCity(cityId);
+    //         }
+    //     });
+    // });
+
+
+
     return (
         <>
+
             <Dialog
                 open={show}
                 maxWidth={maxWidth}
@@ -131,8 +549,9 @@ const Add_Patinet = ({ show, handleclose }) => {
                                                 if (e.target.value == '' || re.test(e.target.value)) {
                                                     setfirstnm(e.target.value)
                                                 }
-                                            }}
-                                            id="outlined-basic" size="small" placeholder="First Name*" variant="outlined" /> *
+                                            }} style={{ marginLeft: 13 }}
+                                            id="outlined-basic" size="small" placeholder="First Name" variant="outlined" />
+                                        <span style={{ position: 'relative', bottom: 8, fontSize: 20, color: 'red' }}> *</span>
                                         <TextField className={classes.inputFields} value={lastnm}
                                             onChange={(e) => {
                                                 const re = /^[a-z ,.'-]+$/i;
@@ -142,7 +561,8 @@ const Add_Patinet = ({ show, handleclose }) => {
                                                 if (e.target.value == '' || re.test(e.target.value)) {
                                                     setlastnm(e.target.value)
                                                 }
-                                            }} id="outlined-basic" size="small" placeholder="Last Name*" variant="outlined" /> *
+                                            }} style={{ marginLeft: 13 }} id="outlined-basic" size="small" placeholder="Last Name" variant="outlined" />
+                                        <span style={{ position: 'relative', bottom: 8, fontSize: 20, color: 'red' }}> *</span>
                                         <TextField
                                             className={classes.inputFields}
                                             value={mobile}
@@ -151,21 +571,52 @@ const Add_Patinet = ({ show, handleclose }) => {
 
                                                 // if value is not blank, then test the regex
 
-                                                if (e.target.value ==    '' || re.test(e.target.value)) {
+                                                if (e.target.value == '' || re.test(e.target.value)) {
                                                     setmobile(e.target.value)
                                                 }
-                                            }}
+                                            }} style={{ marginLeft: 13 }}
                                             id="outlined-basic"
                                             type="number"
                                             size="small"
-                                            placeholder="Mobile Number*"
+                                            placeholder="Mobile Number"
                                             variant="outlined"
                                             onInput={(e) => {
                                                 e.target.value = Math.max(0, parseInt(e.target.value)).toString().slice(0, 10)
                                             }}
-                                        /> *
+                                        /> <span style={{ position: 'relative', bottom: 8, fontSize: 20, color: 'red' }}> *</span>
+
+
+                                        {/* <form action="" method="post">  
+  <div class="container">
+    <div class="row">
+      <div class="col-sm-4">
+        <h3>Country</h3>
+        <select name="country" class="countries form-control" id="countryId">
+      <option value="">Select Country</option>
+  </select>
+
+      </div>
+      <div class="col-sm-4">
+        <h3>State</h3>
+        <select name="state" class="states form-control" id="stateId">
+      <option value="">Select State</option>
+  </select>
+      </div>
+      <div class="col-sm-4">
+        <h3>City</h3>        
+        <select name="city" class="cities form-control" id="cityId">
+      <option value="">Select City</option>
+  </select>
+      </div>
+    </div>
+  </div>
+</form> */}
+
+
+
                                         <TextField className={classes.inputFields} value={password} onChange={(e) => setpassword(e.target.value)}
-                                            id="outlined-basic" type={showPassword ? 'text' : 'password'} size="small" placeholder="Password*" variant="outlined"
+                                            id="outlined-basic" type={showPassword ? 'text' : 'password'} size="small" placeholder="Password" variant="outlined"
+                                            style={{ marginLeft: 12 }}
                                             InputProps={{
                                                 endAdornment: (
                                                     <InputAdornment position="end">
@@ -178,9 +629,10 @@ const Add_Patinet = ({ show, handleclose }) => {
                                                         </IconButton>
                                                     </InputAdornment>
                                                 ),
-                                            }} /> *
-                                        <TextField className={classes.inputFields} value={email} onChange={(e) => setemail(e.target.value)} id="outlined-basic" type="email" size="small" placeholder="Email Id" variant="outlined" style={{marginRight : 10}}/>
-                                        <TextField className={classes.inputFields} value={dob} onChange={(e) => setdob(e.target.value)} id="outlined-basic" type="date" size="small" placeholder="DOB*" variant="outlined" /> *
+                                            }} />  <span style={{ position: 'relative', bottom: 8, fontSize: 20, color: 'red' }}> *</span>
+                                        <TextField className={classes.inputFields} value={email} onChange={(e) => setemail(e.target.value)} id="outlined-basic" type="email" size="small" placeholder="Email Id" variant="outlined" />
+                                        <TextField className={classes.inputFields} style={{ marginLeft: 13 }} value={dob} onChange={(e) => setdob(e.target.value)} id="outlined-basic" type="date" size="small" placeholder="DOB" variant="outlined" />
+                                        <span style={{ position: 'relative', bottom: 8, fontSize: 20, color: 'red' }}> *</span>
                                         <FormControl variant="outlined" size='small' className={classes.formControl}  >
                                             <Select
                                                 className={classes.inputFields}
@@ -189,17 +641,19 @@ const Add_Patinet = ({ show, handleclose }) => {
                                                 value={gender}
                                                 label="Gender"
                                                 onChange={(e) => setgender(e.target.value)}
+
                                                 inputProps={{
                                                     name: 'gender',
                                                     id: 'outlined-gender-native-simple',
                                                 }}
-                                                style={{marginRight: 5}}
+                                                style={{ marginLeft: 14 }}
                                             >
                                                 <option aria-label="None" value="" >Gender*</option>
                                                 <option value='Male'>Male</option>
                                                 <option value='Female'>Female</option>
+
                                             </Select>
-                                        </FormControl>* 
+                                        </FormControl> <span style={{ position: 'relative', bottom: 4, fontSize: 20, right: 8, color: 'red' }}> *</span>
                                     </div>
                                 </center>
                             </Grid>
@@ -207,13 +661,35 @@ const Add_Patinet = ({ show, handleclose }) => {
                             <Grid item xs={12} sm={6}>
                                 <center>
                                     <div>
-                                        <TextField className={classes.inputFields} multiline
+                                        <TextField className={classes.inputFields} value={country}
                                             onChange={(e) => {
-                                                setaddress(e.target.value)
+                                                const re = /^[A-Za-z]+$/;
+
+                                                // if value is not blank, then test the regex
+
+                                                if (e.target.value === '' || re.test(e.target.value)) {
+                                                    setcountry(e.target.value)
+                                                }
+                                            }} id="outlined-basic" size="small" placeholder="Country" variant="outlined" />
+
+                                        {/* <select name="country" class="countries" id="countryId">
+                                             <option value="">Select Country</option>
+                                            </select> */}
+
+                                        {/* <label for="countries">Choose your Country:</label>
+                                        <select id="countries" name="countries"></select> */}
+
+                                        <TextField className={classes.inputFields} value={state}
+                                            onChange={(e) => {
+                                                const re = /^[A-Za-z]+$/;
+
+                                                // if value is not blank, then test the regex
+
+                                                if (e.target.value === '' || re.test(e.target.value)) {
+                                                    setstate(e.target.value)
+                                                }
                                             }}
-                                            rows={2}
-                                            rowsMax={6} id="outlined-basic" size="small" label="Address" variant="outlined"
-                                        />
+                                            id="outlined-basic" size="small" placeholder="State" variant="outlined" />
                                         <TextField
                                             className={classes.inputFields}
                                             value={city}
@@ -231,28 +707,17 @@ const Add_Patinet = ({ show, handleclose }) => {
                                             placeholder="City"
                                             variant="outlined"
                                         />
-                                        <TextField className={classes.inputFields} value={pincode} onChange={(e) => setpincode(e.target.value)} id="outlined-basic" size="small" placeholder="Pincode" variant="outlined" />
-                                        <TextField className={classes.inputFields} value={state}
+                                        <TextField className={classes.inputFields} multiline
                                             onChange={(e) => {
-                                                const re = /^[A-Za-z]+$/;
-
-                                                // if value is not blank, then test the regex
-
-                                                if (e.target.value === '' || re.test(e.target.value)) {
-                                                    setstate(e.target.value)
-                                                }
+                                                setaddress(e.target.value)
                                             }}
-                                            id="outlined-basic" size="small" placeholder="State" variant="outlined" />
-                                        <TextField className={classes.inputFields} value={country}
-                                            onChange={(e) => {
-                                                const re = /^[A-Za-z]+$/;
+                                            rows={2}
+                                            rowsMax={6} id="outlined-basic" size="small" label="Address" variant="outlined"
+                                        />
 
-                                                // if value is not blank, then test the regex
+                                        <TextField className={classes.inputFields} value={pincode} onChange={(e) => setpincode(e.target.value)} id="outlined-basic" size="small" placeholder="Pincode" variant="outlined" />
 
-                                                if (e.target.value === '' || re.test(e.target.value)) {
-                                                    setcountry(e.target.value)
-                                                }
-                                            }} id="outlined-basic" size="small" placeholder="Country" variant="outlined" />
+
                                         <TextField
                                             className={classes.inputFields}
                                             value={height}
@@ -439,9 +904,8 @@ const useStyles = makeStyles((theme) => ({
         marginBottom: 20
     },
     formControl: {
-        margin: theme.spacing(0.1),
-        marginTop: theme.spacing(1),
-        minWidth: 150,
+        margin: theme.spacing(1),
+        minWidth: 180,
     },
     btnAdd: {
         backgroundColor: '#2C7FB2 !important',

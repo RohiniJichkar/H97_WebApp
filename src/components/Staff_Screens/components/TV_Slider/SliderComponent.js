@@ -30,8 +30,7 @@ const TV_Slider_Component = () => {
     const [advertisement, setAdvertisement] = useState([]);
 
     const fetchAdvertisements = async () => {
-        let Category = 'Dashboard';
-        const getrequest = await get_advertisments(Category);
+        const getrequest = await get_advertisments();
         setAdvertisement(getrequest);
     }
 

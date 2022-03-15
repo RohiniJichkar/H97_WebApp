@@ -85,6 +85,9 @@ export default function DoctorDashboard() {
         navigate("/Todays_appointment_Tabs");
     };
 
+    const handleCalanderAppointmentClick=()=>{
+        navigate("/Calander_appointment_tabs");
+    }
 
 
     const handleSendIn = () => {
@@ -230,7 +233,7 @@ export default function DoctorDashboard() {
                         </Typography>
                     </Paper>
                 </Grid>
-                <Grid item xs={12} sm={3} onClick={handleTodaysAppointmentClick} style={{ cursor: 'pointer' }}>
+                <Grid item xs={12} sm={3} onClick={handleCalanderAppointmentClick} style={{ cursor: 'pointer' }}>
                     <Paper className={classes.paperServices} elevation={4} style={{ borderRadius: '25px' }}>
                         <Typography variant="h7" noWrap={true} style={{ color: '#2C7FB2', fontSize: 15 }}>
                             MONTHLY APPOINTMENTS

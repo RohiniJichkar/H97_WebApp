@@ -30,6 +30,7 @@ function DoctorPaymentDetails() {
     const [fees, setfees] = useState('');
     const [details, setdetails] = useState(location.state.detail);
     const [pdf, setpdf] = useState('');
+    const [costcode, setcostcode] = useState('');
 
     const dispatch = useDispatch();
     const selectedMedicine = useSelector(state => state.reducer);
@@ -44,6 +45,7 @@ function DoctorPaymentDetails() {
             DoctorId: doctorid,
             PatientId: details.UserId,
             AppointmentId: details.id,
+            CostCode: costcode,
             PaymentAmount: fees,
             PaymentMode: paymentmode,
         }
@@ -227,8 +229,9 @@ function DoctorPaymentDetails() {
                                         </Grid>
                                     </Grid>
                                 </Grid>
-
-                                <Grid item xs={12}>
+                                <Grid item xs={12} container style={{borderBottom:'1px solid lightgray'}}  >
+                                    <Grid item xs={12} sm={6}>
+                                {/* <Grid item xs={6}> */}
                                     <center>
                                         <Typography variant="h6" noWrap={true} style={{
                                             fontSize: 16,
@@ -237,26 +240,65 @@ function DoctorPaymentDetails() {
                                             color: '#707070',
                                             fontWeight: 600,
                                             paddingTop: 10,
+                                            borderRight: '1px solid lightgray',
+                                         
                                             paddingBottom: 10,
 
                                         }}>
-                                            Title
+                                           Appointment Title
                                         </Typography>
+                                        
                                     </center>
-                                    <center>
+                                    </Grid>
+                                    <Grid item xs={12} sm={6} >
+                                        <center>
+                                            <Typography variant="h6" noWrap={true} style={{
+                                                fontSize: 16,
+                                                fontFamily: 'Poppins',
+                                                fontStyle: 'normal',
+                                                color: '#707070',
+                                                fontWeight: 600,
+                                                paddingBottom: 10,
+                                                paddingTop: 10,
+                                               
+                                            }}>
+                                                Cost code
+                                            </Typography>
+                                        </center>
+                                    </Grid>
+                                    {/* */}
+                                    <Grid item xs={12} sm={6}>
+
+                                        <Grid item xs={12} container style={{ borderRight: '1px solid lightgray' }}>
+                                            <Grid item xs={12}>
+                                            <center>
+                                        
                                         <Typography variant="h6" noWrap={true} style={{
                                             fontSize: 16,
                                             fontFamily: 'Poppins',
                                             fontStyle: 'normal',
                                             color: '#707070',
-                                            borderBottom: '1px solid lightgray',
+                                            
                                             paddingBottom: 10,
+                                            marginLeft:6
                                         }}>
                                             {details.Title}
                                         </Typography>
+                                        
                                     </center>
-                                </Grid>
 
+                                            </Grid>
+                                        </Grid>
+
+                                    </Grid>
+                                    <Grid item xs={12} sm={6}>
+                                        <center>
+                                            <TextField style={{width:150,marginBottom:10,   borderRadius: 25,}} onChange={(e) => setcostcode(e.target.value)} type='number' id="outlined-basic" size="small" label="Cost Code" variant="outlined" />
+                                        </center>
+                                    </Grid>
+                                    </Grid>
+                                 
+                                
                                 <Grid item xs={12} container >
                                     <Grid item xs={12} sm={6}>
                                         <center>
@@ -269,8 +311,9 @@ function DoctorPaymentDetails() {
                                                 borderRight: '1px solid lightgray',
                                                 paddingTop: 10,
                                                 paddingBottom: 10,
+                                                
                                             }}>
-                                                Payment Mode
+                                                Payment Mode*
                                             </Typography>
                                         </center>
                                     </Grid>
@@ -286,7 +329,7 @@ function DoctorPaymentDetails() {
                                                 paddingTop: 10,
                                                 paddingBottom: 10,
                                             }}>
-                                                Total Fee
+                                                Total Fee*
                                             </Typography>
                                         </center>
                                     </Grid>
@@ -334,7 +377,7 @@ function DoctorPaymentDetails() {
 
                     <Grid item xs={12} sm={8} >
                         <Paper className={classes.paper} elevation={6} style={{ marginLeft: 25, marginRight: 20 }}>
-                            <Grid style={{ height: 290, overflowY: 'scroll' }}>
+                            <Grid style={{ height: 305, overflowY: 'scroll' }}>
                                 {selectedMedicine.map((item) => {
                                     return (
                                         <>
@@ -711,7 +754,8 @@ const useStyles = makeStyles((theme) => ({
         fontWeight: 400,
         fontSize: 12,
         textAlign: 'center',
-        width: '100%'
+        width: '100%',
+     
     },
     facilitiesInput: {
         fontSize: 16,

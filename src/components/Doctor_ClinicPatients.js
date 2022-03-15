@@ -177,13 +177,44 @@ export default function DoctorClinicPatients() {
         }
     }
 
+
+    // const calculateAge = async () => {
+    //     let dobstr = patientDetails.DOB;
+    //     let now = new Date();
+    //     let date = now.toLocaleTimeString().split('T')[0];
+
+    //     let birth_year = Number(dobstr.substring(0, 4));
+    //     let birth_month = Number(dobstr.substring(5, 2));
+    //     let birth_day = Number(dobstr.substring(8, 2));
+
+    //     let today_year = now.getFullYear();
+    //     let today_month = now.getMonth();
+    //     let today_day = now.getDate();
+    //     let age = today_year - birth_year;
+
+    //     if (today_month < (birth_month - 1)) {
+    //         age--;
+    //         return age;
+    //     }
+    //     if (((birth_month - 1) == today_month) && (today_day < birth_day)) {
+    //         age--;
+    //         return age;
+    //     }
+
+    //     console.log(age);
+    // }
+
     useEffect(() => {
         fetchPatientData();
     }, [])
 
     const handleCellClick = async (userid) => {
-        const patientDetailedInfo = await axios.post(getPatientDetailsApi, { UserId: userid });
-        setpatientDetails(patientDetailedInfo?.data?.PatientDetails);
+        try {
+            const patientDetailedInfo = await axios.post(getPatientDetailsApi, { UserId: userid });
+            setpatientDetails(patientDetailedInfo?.data?.PatientDetails);
+        } catch (e) {
+            console.log(e);
+        }
     }
 
     const handleGoBack = () => {
@@ -253,7 +284,7 @@ export default function DoctorClinicPatients() {
                             columnWidth={10}
                             pageSize={10}
                             onRowClick={(newSelection) => {
-                                handleCellClick(newSelection.row.UserId);
+                               handleCellClick(newSelection.row.UserId);   
                             }}
                         />
 
@@ -347,7 +378,7 @@ export default function DoctorClinicPatients() {
                                         Address
                                     </Typography>
                                     <Typography variant="h6" noWrap={true} style={{ paddingTop: 5, fontSize: 14, color: '#707070', fontFamily: 'Poppins', marginLeft: 10, marginRight: 10 }}>
-                                        {patientDetails.Address ? patientDetails.Address : 'NA'} {patientDetails.City} {patientDetails.State} {patientDetails.Country} {patientDetails.Pincode} 
+                                        {patientDetails.Address ? patientDetails.Address : 'NA'} {patientDetails.City} {patientDetails.State} {patientDetails.Country} {patientDetails.Pincode}
                                     </Typography>
                                 </Grid>
                                 <Grid item xs={3} style={{ border: '1px solid #F0F0F0', borderLeft: '0px', borderTop: '0px', paddingBottom: 20 }}>

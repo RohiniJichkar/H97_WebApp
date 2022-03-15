@@ -3,9 +3,12 @@ import axios from 'axios';
 import ip from '../../ipaddress/ip';
 
 
-export const get_advertisments = async (category) => {
+export const get_advertisments = async () => {
     try {
-        const getadvertisements = await axios.post(ip + 'GetAllAdvertisements', { Category: category });
+        var data = await localStorage.getItem("userdata");
+        let parsed = JSON.parse(data);
+        let clinicid = parsed.ClinicId;
+        const getadvertisements = await axios.post(ip + 'Web_GetAllTVAdvertisements', { ClinicId: clinicid });
         return (getadvertisements?.data?.Advetisements);
     } catch (error) {
         return (error.response.data.message);

@@ -16,6 +16,9 @@ export function BookedAppointment_List({ data }) {
     const [openmodal, setopenmodal] = useState(false);
     const [patientdetails, setpatientdetails] = useState([]);
 
+    console.log(data)
+    console.log('patientin', patientIn)
+
     const fetchPatientIn = async (item) => {
         // const data = await PatientIn(id, FirstName);
         // setpatientIn(data);
@@ -53,6 +56,9 @@ export function BookedAppointment_List({ data }) {
                                     </Grid>
                                     <Grid item xs={12} style={{ textAlign: 'center', color: '#2C7FB2', paddingBottom: 10 }}>
                                         {item.AppointmentStatus}
+                                    </Grid>
+                                    <Grid item xs={12} style={{ textAlign: 'center', color: '#2C7FB2', paddingBottom: 10 }}>
+                                        {item.FName} {item.LName}
                                     </Grid>
                                 </Paper>
                                 <div>

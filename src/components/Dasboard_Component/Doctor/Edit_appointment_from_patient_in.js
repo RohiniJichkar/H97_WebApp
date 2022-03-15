@@ -45,11 +45,11 @@ export const Edit_Appointment_From_PatientIn_Queue = ({ show, data, handlemodal 
         const currentTime = new Date();
         let systemTime = currentTime.toTimeString();
         let tdate = currentTime.toISOString().split('T')[0];
-        if (appTime < systemTime) {
-            alert(`You can't not set Appointment at ${appTime}`);
-            return
-        }
-        else if (appDate < tdate) {
+        // if (appTime < systemTime) {
+        //     alert(`You can't not set Appointment at ${appTime}`);
+        //     return
+        // }
+        if (appDate < tdate) {
             alert(`You cannot set appointment for ${appDate}`);
             return
         }
@@ -247,7 +247,7 @@ export const Edit_Appointment_From_PatientIn_Queue = ({ show, data, handlemodal 
                                         variant="outlined"
                                         size="small"
                                         onChange={(e) => {
-                                            const re = /^[0-9\b]+$/;
+                                            const re = /^[0-9-.\b]+$/;
                                             if (e.target.value === '' || re.test(e.target.value)) {
                                                 setBp(e.target.value)}}}
                                         style={{ marginRight: 10 }}
@@ -265,7 +265,7 @@ export const Edit_Appointment_From_PatientIn_Queue = ({ show, data, handlemodal 
                                         variant="outlined"
                                         size="small"
                                         onChange={(e) => {
-                                            const re = /^[0-9\b]+$/;
+                                            const re = /^[0-9-.\b]+$/;
                                             if (e.target.value === '' || re.test(e.target.value)) {
                                                 setTemp(e.target.value)}}}
                                         style={{ marginRight: 10 }}
@@ -283,7 +283,7 @@ export const Edit_Appointment_From_PatientIn_Queue = ({ show, data, handlemodal 
                                         variant="outlined"
                                         size="small"
                                         onChange={(e) => {
-                                            const re = /^[0-9\b]+$/;
+                                            const re = /^[0-9-.\b]+$/;
                                             if (e.target.value === '' || re.test(e.target.value)) {
                                                 setHeight(e.target.value)}}}
                                     />
@@ -304,7 +304,7 @@ export const Edit_Appointment_From_PatientIn_Queue = ({ show, data, handlemodal 
                                         variant="outlined"
                                         size="small"
                                         onChange={(e) => {
-                                            const re = /^[0-9\b]+$/;
+                                            const re = /^[0-9-.\b]+$/;
                                             if (e.target.value === '' || re.test(e.target.value)) {
                                                 setWeight(e.target.value)}}}
                                         style={{ marginRight: 10 }}

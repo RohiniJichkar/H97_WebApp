@@ -450,7 +450,7 @@ export default function DoctorClinicServices() {
                                     <Button
                                         onClick={() => {
                                             if (serviceDetails === '') {
-                                                alert("Please select patient");
+                                                alert("Please Select Service");
                                                 return;
                                             }
                                             setOpenDeletemodal(true)
@@ -461,7 +461,7 @@ export default function DoctorClinicServices() {
                                     <Button
                                         onClick={() => {
                                             if (serviceDetails === '') {
-                                                alert("Please select patient");
+                                                alert("Please Select Service");
                                                 return;
                                             }
                                             setOpenEditmodal(true)
@@ -477,7 +477,7 @@ export default function DoctorClinicServices() {
                                 <Grid item sm={6} >
                                     <Grid container>
                                         <Grid item xs={12} sm={4}>
-                                            <Typography variant="h6" noWrap={true} className={classes.facilitiesTitle}>Name</Typography>
+                                            <Typography variant="h6" noWrap={true} className={classes.facilitiesTitle}>Name</Typography> 
                                             <Typography variant="h6" noWrap={true} className={classes.facilitiesTitle}>Discount</Typography>
                                             <Typography variant="h6" noWrap={true} className={classes.facilitiesTitle}>Price</Typography>
                                             <Typography variant="h6" noWrap={true} className={classes.facilitiesTitle}>Total Price</Typography>

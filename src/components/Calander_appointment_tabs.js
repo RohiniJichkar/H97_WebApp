@@ -47,7 +47,7 @@ function a11yProps(index) {
     };
 }
 
-const Todays_appointment_Tabs = () => {
+const Calander_appointment_tabs = () => {
     const classes = useStyles();
     const theme = useTheme();
     const [value, setValue] = useState(0);
@@ -81,18 +81,18 @@ const Todays_appointment_Tabs = () => {
                                 color:'#2C7FB2'
                             }}
                         >
-                            <Tab label="Today's Appointment" {...a11yProps(0)} style={{ fontWeight: 600,
-                                fontFamily: 'Poppins'}} />
-                            {/* <Tab label="Calender" {...a11yProps(1)} style={{ fontWeight: 600,
+                            {/* <Tab label="Todays Appointment" {...a11yProps(0)} style={{ fontWeight: 600,
                                 fontFamily: 'Poppins'}} /> */}
+                            <Tab label="Calender" {...a11yProps(1)} style={{ fontWeight: 600,
+                                fontFamily: 'Poppins'}} />
                         </Tabs>
                     </AppBar>
-                    <TabPanel value={value} index={0}>
+                    {/* <TabPanel value={value} index={0}>
                         <DoctorTodaysAppointment />
-                    </TabPanel>
-                    {/* <TabPanel value={value} index={1}>
-                        <Appointments_On_Calender />
                     </TabPanel> */}
+                    <TabPanel value={value} index={0}>
+                        <Appointments_On_Calender />
+                    </TabPanel>
                 </div>
             </div>
         </>
@@ -114,4 +114,4 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 
-export default Todays_appointment_Tabs
+export default Calander_appointment_tabs

@@ -406,7 +406,7 @@ export default function DoctorBookAppointment() {
                                             fontSize: 12,
                                         }}
                                         >
-                                            {patientDetails.Address !== null ? patientDetails.Address : 'Not Provided'} {patientDetails.City} {patientDetails.State} {patientDetails.Pincode} {patientDetails.Country}
+                                            {patientDetails.Address ? patientDetails.Address : 'NA'} {patientDetails.City} {patientDetails.State} {patientDetails.Pincode} {patientDetails.Country}
                                         </Typography>
                                         <Divider style={{ paddingTop: '10px', backgroundColor: '#fff' }} />
                                         Contact: <Typography variant="h7" noWrap={true} style={{
@@ -421,7 +421,7 @@ export default function DoctorBookAppointment() {
                                             fontSize: 12,
                                         }}
                                         >
-                                            {patientDetails.MobileNo !== null ? patientDetails.MobileNo : 'Not Provided'}
+                                            {patientDetails.MobileNo ? patientDetails.MobileNo : 'NA'}
                                         </Typography>
                                         <Divider style={{ paddingTop: '10px', backgroundColor: '#fff' }} />
                                         Email Id: <Typography variant="h7" noWrap={true} style={{
@@ -436,7 +436,7 @@ export default function DoctorBookAppointment() {
                                             fontSize: 12,
                                         }}
                                         >
-                                            {patientDetails.Email != '' ? patientDetails.Email : 'Not Provided'}
+                                            {patientDetails.Email ? patientDetails.Email : 'NA'}
                                         </Typography>
                                     </Paper>
                                 </Grid>
@@ -484,7 +484,7 @@ export default function DoctorBookAppointment() {
                                                 {doctorData.map(v => (<option value={v.DoctorId}>Dr. {v.FirstName} {v.LastName}</option>))}
 
                                             </Select>
-                                        </FormControl>
+                                        </FormControl> 
 
                                         <Divider style={{ opacity: 0 }} />
                                         {!walkIn ? <FormControl variant="outlined" size="small" className={classes.formControl} >
@@ -503,8 +503,9 @@ export default function DoctorBookAppointment() {
                                                 <option aria-label="None" value="">Select Appointment Channel</option>
                                                 {appChannel.map(v => (<option value={v.AppointmentChannel}>{v.AppointmentChannel}</option>))}
 
-                                            </Select>
+                                            </Select> 
                                         </FormControl>
+                                         
                                             :
                                             <FormControl variant="outlined" size="small" className={classes.formControl} disabled>
                                                 <Select
@@ -673,9 +674,9 @@ export default function DoctorBookAppointment() {
 
                                                 </FormControl>
                                             }
-                                        </Grid>
+                                        </Grid> 
                                         <Grid item xs={12} sm={6} >
-                                            <FormControl variant="outlined" size="small" className={classes.formControl} style={{ paddingRight: 20, position: 'relative', bottom: 3 }}>
+                                            <FormControl variant="outlined" size="small" className={classes.formControl} style={{ paddingRight: 20, bottom: 3 }}>
                                                 <TextField
                                                     variant="outlined"
                                                     onChange={(e) => setappDate(e.target.value)}
@@ -684,7 +685,7 @@ export default function DoctorBookAppointment() {
                                                     type="date"
                                                     size="small"
                                                     style={{ width: '85%', fontSize: 12 }}
-                                                />
+                                                /> 
                                             </FormControl>
                                         </Grid>
                                     </Grid>
@@ -755,7 +756,7 @@ export default function DoctorBookAppointment() {
                                                 size="small"
                                                 value={bp}
                                                 onChange={(e) => {
-                                                    const re = /^[0-9\b]+$/;
+                                                    const re = /^[0-9-.\b]+$/;
                                                     if (e.target.value === '' || re.test(e.target.value)) {
                                                         setBp(e.target.value)
                                                     }
@@ -770,7 +771,7 @@ export default function DoctorBookAppointment() {
                                                 size="small"
                                                 value={temp}
                                                 onChange={(e) => {
-                                                    const re = /^[0-9\b]+$/;
+                                                    const re = /^[0-9-.\b]+$/;
                                                     if (e.target.value === '' || re.test(e.target.value)) {
                                                         setTemp(e.target.value)
                                                     }
@@ -785,7 +786,7 @@ export default function DoctorBookAppointment() {
                                                 size="small"
                                                 value={height}
                                                 onChange={(e) => {
-                                                    const re = /^[0-9\b]+$/;
+                                                    const re = /^[0-9-.\b]+$/;
                                                     if (e.target.value === '' || re.test(e.target.value)) {
                                                         setHeight(e.target.value)
                                                     }
@@ -801,7 +802,7 @@ export default function DoctorBookAppointment() {
                                                 size="small"
                                                 value={weight}
                                                 onChange={(e) => {
-                                                    const re = /^[0-9\b]+$/;
+                                                    const re = /^[0-9-.\b]+$/;
                                                     if (e.target.value === '' || re.test(e.target.value)) {
                                                         setWeight(e.target.value)
                                                     }

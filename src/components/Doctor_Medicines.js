@@ -351,6 +351,20 @@ export default function DoctorMedicines() {
         let parsed = JSON.parse(data);
         let clinicid = parsed.ClinicId;
         let doctorid = parsed.userid;
+
+        if (mName == '') {
+            alert("Please Enter Medicine Name")
+            return;
+        }
+        else if (mDescription == '') {
+            alert("Please Enter Description")
+            return;
+        }
+        else if (mType == '') {
+            alert("Please Select Medicine Type")
+            return;
+        }
+
         const obj = {
             ClinicId: clinicid,
             DoctorId: doctorid,
@@ -363,11 +377,16 @@ export default function DoctorMedicines() {
             StartDate: mStartDate,
             ExpiryDate: mExpiryDate
         }
-        const add = await Add_Medicine(obj);
-        let parse = JSON.parse(add);
-        if (parse.success === "200") {
-            alert(parse.message);
-            window.location.reload()
+
+        try {
+            const add = await Add_Medicine(obj);
+            let parse = JSON.parse(add);
+            if (parse.success === "200") {
+                alert(parse.message);
+                window.location.reload()
+            }
+        } catch (e) {
+            console.log(e);
         }
     }
 
@@ -478,7 +497,7 @@ export default function DoctorMedicines() {
                                         textDecoration: 'underline'
                                     }}>
                                     Details
-                                    <Button size='small'
+                                    {/* <Button size='small'
                                         onClick={() => {
                                             if (medicineDetails === '') {
                                                 alert("Please select medicine");
@@ -499,37 +518,42 @@ export default function DoctorMedicines() {
                                         }}
                                         style={{ float: 'right', backgroundColor: '#2C7FB2', color: '#fff', marginLeft: 20, fontFamily: 'Poppins', fontSize: 13, fontWeight: 400, width: 100, borderRadius: 20 }}>
                                         Delete
-                                    </Button>
+                                    </Button> */}
                                 </Typography>
 
                             </Grid>
 
-                            <Grid container spacing={2} style={{ paddingTop: 20 }}>
-                                <Grid item sm={6} >
+                            <Grid container style={{ paddingTop: 10 }}>
+                                <Grid item sm={12} >
                                     <Grid container>
-                                        <Grid item xs={12} sm={4}>
+                                        <Grid item xs={12} sm={2}>
                                             <Typography variant="h6" noWrap={true} className={classes.facilitiesTitle}>Name</Typography>
-                                            <Typography variant="h6" noWrap={true} className={classes.facilitiesTitle}>Type</Typography>
                                             <Typography variant="h6" noWrap={true} className={classes.facilitiesTitle}>Start Date</Typography>
-                                            <Typography variant="h6" noWrap={true} className={classes.facilitiesTitle}>End Date</Typography>
                                             <Typography variant="h6" noWrap={true} className={classes.facilitiesTitle}>Strength</Typography>
 
                                         </Grid>
-                                        <Grid item xs={12} sm={8} >
+                                        <Grid item xs={12} sm={4} >
                                             <Typography variant="h6" noWrap={true} className={classes.facilitiesInput} >
                                                 {medicineDetails.MedicineName ? medicineDetails.MedicineName : 'NA'}
-                                            </Typography>
-                                            <Typography variant="h6" noWrap={true} className={classes.facilitiesInput}>
-                                                {medicineDetails.MedicineType ? medicineDetails.MedicineType : 'NA'}
                                             </Typography>
                                             <Typography variant="h6" noWrap={true} className={classes.facilitiesInput}>
                                                 {medicineDetails.StartDate ? medicineDetails.StartDate : 'NA'}
                                             </Typography>
                                             <Typography variant="h6" noWrap={true} className={classes.facilitiesInput}>
-                                                {medicineDetails.ExpiryDate ? medicineDetails.ExpiryDate : 'NA'}
+                                                {medicineDetails.Strength ? medicineDetails.Strength : 'NA'}
+                                            </Typography>
+                                        </Grid>
+
+                                        <Grid item xs={12} sm={2}>
+                                            <Typography variant="h6" noWrap={true} className={classes.facilitiesTitle}>Type</Typography>
+                                            <Typography variant="h6" noWrap={true} className={classes.facilitiesTitle}>End Date</Typography>
+                                        </Grid>
+                                        <Grid item xs={12} sm={4} >
+                                            <Typography variant="h6" noWrap={true} className={classes.facilitiesInput}>
+                                                {medicineDetails.MedicineType ? medicineDetails.MedicineType : 'NA'}
                                             </Typography>
                                             <Typography variant="h6" noWrap={true} className={classes.facilitiesInput}>
-                                                {medicineDetails.Strength ? medicineDetails.Strength : 'NA'}
+                                                {medicineDetails.ExpiryDate ? medicineDetails.ExpiryDate : 'NA'}
                                             </Typography>
                                         </Grid>
                                     </Grid>
@@ -557,9 +581,38 @@ export default function DoctorMedicines() {
                                     </Typography>
                                 </Grid>
                                 <Grid item xs={12} >
-                                    <div className={classes.description} style={{ height: 125, width: 750, }}>
+                                    <div className={classes.description} style={{ height: 155, width: 750 }}>
                                         {medicineDetails.MedicineDiscription != '' ? medicineDetails.MedicineDiscription : 'Not Provided'}
                                     </div>
+                                </Grid>
+                            </Grid>
+
+
+                            <Grid container>
+                                <Grid item xs={6}>
+                                    <center>
+                                        <Button className={classes.btnregister} onClick={() => {
+                                            if (medicineDetails === '') {
+                                                alert("Please select medicine");
+                                                return;
+                                            }
+                                            setOpenDeletemodal(true)
+                                        }} style={{ float: 'right', marginRight: 20 }}>Delete</Button>
+
+                                    </center>
+                                </Grid>
+                                <Grid item xs={6}>
+                                    <center>
+                                        <Button
+                                            onClick={() => {
+                                                if (medicineDetails === '') {
+                                                    alert("Please select medicine");
+                                                    return;
+                                                }
+                                                setopeneditmodal(true)
+                                            }} className={classes.btnregister} style={{ float: 'left', marginLeft: 20 }}>Edit</Button>
+
+                                    </center>
                                 </Grid>
                             </Grid>
                         </Paper>
@@ -590,16 +643,16 @@ export default function DoctorMedicines() {
                                 <div>
                                     <center>
                                         <FormControl variant="outlined" className={classes.formControl}  >
-                                            <TextField className={classes.inputFields} onChange={(e) => setmName(e.target.value)} id="outlined-basic" label="Medicine Name" variant="outlined" size="small" />
-                                        </FormControl>
+                                            <TextField className={classes.inputFields} onChange={(e) => setmName(e.target.value)} id="outlined-basic" label="Medicine Name" variant="outlined" size="small" style={{ marginLeft: 15 }} />
+                                        </FormControl> <span style={{ fontSize: 20, color: 'red' }}> *</span>
                                     </center>
                                     <center>
                                         <FormControl variant="outlined" className={classes.formControl}  >
-                                            <TextField className={classes.inputFields} onChange={(e) => setmDescription(e.target.value)} multiline rows={2} maxRows={4} id="outlined-basic" label="Description" variant="outlined" size="small" />
-                                        </FormControl>
+                                            <TextField className={classes.inputFields} onChange={(e) => setmDescription(e.target.value)} multiline rows={2} maxRows={4} id="outlined-basic" label="Description" variant="outlined" size="small" style={{ marginLeft: 15 }} />
+                                        </FormControl> <span style={{ fontSize: 20, color: 'red' }}> *</span>
                                     </center>
                                     <center>
-                                        <FormControl variant="outlined" size="small" className={classes.formControl} style={{ width: '65%', marginLeft: '-5px' }} >
+                                        <FormControl variant="outlined" size="small" className={classes.formControl} style={{ width: '65%', marginLeft: '20px' }} >
 
                                             <Select
                                                 className={classes.textFieldForm}
@@ -618,7 +671,7 @@ export default function DoctorMedicines() {
                                                 <option value='Tablet'>Tablet</option>
                                                 <option value='Syrup'>Syrup</option>
                                             </Select>
-                                        </FormControl>
+                                        </FormControl> <span style={{ fontSize: 20, color: 'red', marginLeft: 12 }}> *</span>
                                     </center>
                                     <Grid container style={{ marginTop: 10 }}>
                                         <Grid item xs={6}>

@@ -154,7 +154,7 @@ export default function DoctorHomeVisitHistory() {
     const [norecords, setnorecords] = useState('15');
     const [view, setview] = useState(false);
 
-    
+    console.log(appointmentlist)
     const handleGoBack = () => {
         navigate("/DoctorHomeVisitors");
     };

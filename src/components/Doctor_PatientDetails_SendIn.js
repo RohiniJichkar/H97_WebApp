@@ -352,7 +352,7 @@ export default function DoctorPatientDetails_SendIn() {
                                 </Grid>
                                 <Grid item xs={12} sm={2}>
                                     <Typography variant="h6" noWrap={true} style={{ fontSize: 15, color: '#707070', fontWeight: '400' }}>
-                                        {details.Patient_Height ? details.Patient_Height : 'NA'} cm
+                                        {details.Patient_Height ? details.Patient_Height : 'NA'} ft
                                     </Typography>
                                 </Grid>
                             </Grid>

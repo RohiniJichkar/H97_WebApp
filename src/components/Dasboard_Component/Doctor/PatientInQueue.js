@@ -56,6 +56,7 @@ export function PatientInueue_List({ data }) {
                                             </Grid>
                                             <Grid item xs={12} style={{ textAlign: 'center', color: '#2C7FB2', paddingBottom: 10 }}>
                                                 {item.AppointmentStatus}
+                                                
                                             </Grid>
                                         </Paper>
                                         <div>
@@ -125,7 +126,7 @@ export function PatientInueue_List({ data }) {
                                             {item.AppointmentTime}
                                         </Grid>
                                         <Grid item xs={12} style={{ textAlign: 'center', color: '#fff', paddingBottom: 10 }}>
-                                            {item.AppointmentStatus}
+                                            {/* {item.AppointmentStatus} */}<br/>
                                         </Grid>
                                         {/* <Grid item xs={12} style={{ marginTop: 5 }}>
                                             <Typography style={{ textAlign: 'center', color: '#fff', fontWeight: 600, fontSize: 18 }}> Treat Now </Typography>

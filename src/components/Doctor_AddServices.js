@@ -329,7 +329,6 @@ export default function DoctorAddServices() {
 
         try {
             const add_service = await Add_Services(formData);
-           
                 let parse = JSON.parse(add_service);
                 if (parse.success === "200") {
                     alert(parse.message);
@@ -431,7 +430,7 @@ export default function DoctorAddServices() {
                                         if (e.target.value === '' || re.test(e.target.value)) {
                                             setserviceName(e.target.value)
                                         }
-                                    }} size="small" label="Service Name" variant="outlined" />
+                                    }} size="small" label="Service Name" variant="outlined" /> <span style={{ position: 'relative', top: 10, left: '-7px', fontSize: 14, color: 'red' }}> *</span>
                                 </center>
                                 <center>
                                     <TextField className={classes.textField} id="outlined-basic" value={category}
@@ -440,7 +439,7 @@ export default function DoctorAddServices() {
                                             if (e.target.value === '' || re.test(e.target.value)) {
                                                 setcategory(e.target.value)
                                             }
-                                        }} size="small" label="Category" variant="outlined" />
+                                        }} size="small" label="Category" variant="outlined" /> <span style={{ position: 'relative', top: 10, left: '-7px', fontSize: 14, color: 'red' }}> *</span>
                                 </center>
                                 <center>
                                     <TextField className={classes.textField} id="outlined-basic" value={price}
@@ -448,7 +447,7 @@ export default function DoctorAddServices() {
                                             const re = /^[0-9\b]+$/;
                                             if (e.target.value === '' || re.test(e.target.value)) { setprice(e.target.value) }
                                         }}
-                                        type="number" size="small" label="Cost" variant="outlined" />
+                                        type="number" size="small" label="Cost" variant="outlined" /> <span style={{ position: 'relative', top: 10, left: '-7px', fontSize: 14, color: 'red' }}> *</span>
                                 </center>
                                 <center>
                                     <TextField className={classes.textField} id="outlined-basic" value={discount}
@@ -456,16 +455,16 @@ export default function DoctorAddServices() {
                                             const re = /^[0-9\b]+$/;
                                             if (e.target.value === '' || re.test(e.target.value)) { setdiscount(e.target.value) }
                                         }}
-                                        type="number" size="small" label="Discount" variant="outlined" />
+                                        type="number" size="small" label="Discount" variant="outlined" /> 
                                 </center>
                                 <center>
                                     <TextField className={classes.textField} multiline={true}
                                         rows={2}
                                         rowsMax={2} id="outlined-basic" onChange={(e) => setdescription(e.target.value)} size="small" label="Description" variant="outlined"
-                                    />
+                                    /> <span style={{ position: 'relative', top: 10, left: '-7px', fontSize: 14, color: 'red' }}> *</span>
                                 </center>
                                 <div style={{ marginLeft: 10 }}>
-                                    <input type="file" onChange={(e) => setserviceImage(e.target.files[0])} id="serviceimage" style={{ color: '#000' }} />
+                                    <input type="file" onChange={(e) => setserviceImage(e.target.files[0])} id="serviceimage" style={{ color: '#000' }} /> <span style={{   fontSize: 14, color: 'red' }}> *</span>
                                 </div>
                             </div>
 

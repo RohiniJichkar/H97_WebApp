@@ -191,12 +191,16 @@ function DoctorGeneratePrescription() {
     };
 
     const handleContinue = () => {
-        handleaddPrescriptionDetails().then(data=> {
-            Edit_Appointment().then(data=> {
+        if (selectedMedicine.reducer.length <= 0) {
+            alert("Please add some medicines then try")
+            return;
+        }
+        handleaddPrescriptionDetails().then(data => {
+            Edit_Appointment().then(data => {
                 handleGeneratePDF();
                 navigate('/DoctorPaymentDetails', { state: { detail: location.state.detail } })
             })
-        }) 
+        })
     };
 
     const handleGoBack = () => {
@@ -456,7 +460,7 @@ function DoctorGeneratePrescription() {
                                         <Button onClick={handleGoBack} className={classes.btnPreview} style={{ marginRight: 40 }}  >
                                             Cancel
                                         </Button>
-                                        <Button variant="contained" onClick={() => handleContinue() } className={classes.btngenerate} >
+                                        <Button variant="contained" onClick={() => handleContinue()} className={classes.btngenerate} >
                                             Continue
                                         </Button>
                                     </center>

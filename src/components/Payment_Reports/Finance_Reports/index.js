@@ -45,11 +45,13 @@ const columns = [
         field: 'cash',
         headerName: 'Cash',
         width: 150,
+        align: 'center'
     },
     {
         field: 'online',
         headerName: 'Online',
         width: 150,
+        align: 'center'
     },
 ];
 
@@ -229,8 +231,8 @@ const Finance_Analysis_reports = () => {
                     />
                 </Grid>
                 <Grid item xs={12} >
-                    <label style={{ fontFamily: 'Poppins', fontWeight: 600, color: '#707070' }}>Total</label>
-                    <label style={{ fontFamily: 'Poppins', fontWeight: 600, color: '#707070', paddingLeft: 710 }}><label style={{ fontFamily: 'Poppins', fontWeight: 600, color: '#707070', paddingRight: 150 }}>{cash ? cash : '0'}</label>{online ? online : '0'}</label>
+                    <label style={{ fontFamily: 'Poppins', fontWeight: 600, color: '#2C7FB2' }}>Total</label>
+                    <label style={{ fontFamily: 'Poppins', fontWeight: 600, color: '#2C7FB2', paddingLeft: 750 }}><label style={{ fontFamily: 'Poppins', fontWeight: 600, color: '#2C7FB2', paddingRight: 125 }}>{cash ? cash : '0'}</label>{online ? online : '0'}</label>
                 </Grid>
                 <Grid item xs={12} >
                     <Grid item xs={12} >

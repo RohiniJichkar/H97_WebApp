@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import clsx from 'clsx';
 import { makeStyles, useTheme } from '@material-ui/core/styles';
 import { useNavigate } from 'react-router-dom';
-import { AppBar, Toolbar, CssBaseline, Typography, Drawer, Divider, MenuItem, Menu, ListItem, ListItemIcon, ListItemText, List, IconButton, Avatar } from "@material-ui/core";
+import { AppBar, Toolbar, CssBaseline, Typography, Drawer, Divider, MenuItem, Menu,Tooltip, ListItem, ListItemIcon, ListItemText, List, IconButton, Avatar } from "@material-ui/core";
 import MenuIcon from '@material-ui/icons/Menu';
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
 import ChevronRightIcon from '@material-ui/icons/ChevronRight';
@@ -469,14 +469,20 @@ export default function DoctorNavbar() {
             <center>
               <p style={{ color: '#fff', backgroundColor: 'red', position: 'absolute', top: 0, marginLeft: 14, marginTop: 5, border: '1px solid red', borderRadius: 45, width: '20px', fontSize: 12, fontWeight: 600, fontFamily: 'Poppins' }}> {appointcount[0] ? appointcount[0].count : '0'}  </p>
             </center>
+            <Tooltip title="Clinic Appointments" arrow>
             <NotificationsNoneIcon onClick={() => handleAppoint()} style={{ color: '#2C7FB2', cursor: 'pointer' }} />
+            </Tooltip>
           </div>
           <div>
             <center>
               <p style={{ color: '#fff', backgroundColor: 'red', position: 'absolute', top: 0, marginLeft: 14, marginTop: 5, border: '1px solid red', borderRadius: 45, width: '20px', fontSize: 12, fontWeight: 600, fontFamily: 'Poppins' }}> {hvreq[0] ? hvreq[0].count : '0'} </p>
             </center>
+            <Tooltip title="Home Visitor Appointments" arrow>
+           
             <DirectionsWalkIcon onClick={() => handleHVReq()} style={{ color: '#2C7FB2', cursor: 'pointer' }} />
+            </Tooltip>
           </div>
+        
           {/* <div>
             <SettingsIcon onClick={() => setopenmodal(true)} style={{ color: '#2C7FB2', cursor: 'pointer', marginLeft: 10 }} />
           </div> */}

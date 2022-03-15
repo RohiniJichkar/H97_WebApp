@@ -21,7 +21,7 @@
 //     const navigate = useNavigate();
 //     let obj = JSON.stringify(data);
 //     let parse=JSON.parse(obj)
-    
+
 //     const [maxWidth, setMaxWidth] = React.useState('md');
 //     const [firstnm, setfirstnm] = useState(parse[0].FirstName);
 //     const [lastnm, setlastnm] = useState(obj ? obj.LastName : '');
@@ -58,8 +58,8 @@
 //         var cdata = await localStorage.getItem("userdata");
 //         let parsed = JSON.parse(cdata);
 //         let clinicid = parsed.ClinicId;
-       
-        
+
+
 //         const object = {
 //             ClinicId: clinicid,
 //             UserId: parse[0].UserId,
@@ -90,7 +90,7 @@
 //         alert(editPatientRequest);
 //         window.location.reload();
 
-        
+
 
 //     }
 //     const fetchDoctorCategory = async () => {
@@ -104,7 +104,7 @@
 
 //     useEffect(() => {
 
-        
+
 //         fetchDoctorCategory();
 //         fetchTimes();
 //     }, []);
@@ -622,8 +622,8 @@ import { Dialog, DialogContent, DialogContentText, DialogTitle, TextField, Slide
 import CloseIcon from '@material-ui/icons/Close';
 import { EditPatient } from '../../../Apis/Clinic_Patients/Edit_Patient';
 import { EditStaffdata } from '../../../Apis/Clinic_Staff/index';
-import { Doctor_Category} from '../../../Apis/Clinic_Staff/index';
-import { Times} from '../../../Apis/Clinic_Staff/index';
+import { Doctor_Category } from '../../../Apis/Clinic_Staff/index';
+import { Times } from '../../../Apis/Clinic_Staff/index';
 const drawerWidth = 240;
 
 const Transition = React.forwardRef(function Transition(props, ref) {
@@ -638,8 +638,8 @@ export default function Edit_staff({ show, data, handleCloseEditmodal }) {
     const theme = useTheme();
     const navigate = useNavigate();
     let obj = JSON.stringify(data);
-    let parse=JSON.parse(obj)
-    
+    let parse = JSON.parse(obj)
+
     const [maxWidth, setMaxWidth] = React.useState('md');
     const [firstnm, setfirstnm] = useState(parse[0].FirstName);
     const [lastnm, setlastnm] = useState(parse[0] ? parse[0].LastName : '');
@@ -657,31 +657,30 @@ export default function Edit_staff({ show, data, handleCloseEditmodal }) {
 
     const [editfirstName, seteditfirstName] = useState(parse[0].FirstName);
     const [editlastName, seteditlastName] = useState(parse[0].LastName);
-    const [editmobile, seteditmobile] = useState(parse[0]. MobileNo);
-    const [editaddress, seteditaddress] = useState(parse[0]. Address);
+    const [editmobile, seteditmobile] = useState(parse[0].MobileNo);
+    const [editaddress, seteditaddress] = useState(parse[0].Address);
     const [editeducation, setediteducation] = useState(parse[0].Education);
     const [editemail, seteditemail] = useState(parse[0].Email);
     const [editgender, seteditgender] = useState(parse[0].Gender);
     // const [editpassword, seteditpassword] = useState(parse[0]. Password);
-    const [editcategory, seteditcategory] = useState(parse[0]. Category);
-    const [editrole, seteditrole] = useState(parse[0].role);
+    const [editcategory, seteditcategory] = useState(parse[0].Category);
+    const [editrole, seteditrole] = useState(parse[0].Role);
     const [doctorCategory, setdoctorCategory] = useState([]);
     const [times, settimes] = useState([]);
-    const [editmorningStartTime, seteditmorningStartTime] = useState(parse[0]. morningStartTime);
-    const [editmorningEndTime, seteditmorningEndTime] = useState(parse[0].morningEndTime);
-    const [editeveningStartTime, setediteveningStartTime] = useState(parse[0]. eveningStartTime);
-    const [editeveningEndTime, setediteveningEndTime] = useState(parse[0]. eveningEndTime);
- 
+    const [editmorningStartTime, seteditmorningStartTime] = useState(parse[0].MorningStartTime);
+    const [editmorningEndTime, seteditmorningEndTime] = useState(parse[0].MorningEndTime);
+    const [editeveningStartTime, setediteveningStartTime] = useState(parse[0].EveningStartTime);
+    const [editeveningEndTime, setediteveningEndTime] = useState(parse[0].EveningEndTime);
+
     const [openModal, setopenModal] = React.useState(false);
 
-   
 
     const fetchClinicStaffData = async () => {
         var cdata = await localStorage.getItem("userdata");
         let parsed = JSON.parse(cdata);
         let clinicid = parsed.ClinicId;
-       
-        
+
+
         const object = {
             ClinicId: clinicid,
             UserId: parse[0].UserId,
@@ -693,33 +692,25 @@ export default function Edit_staff({ show, data, handleCloseEditmodal }) {
             // Password: editpassword,
             Gender: editgender,
             Category: editcategory,
-            role: editrole,
+            Role: editrole,
             Address: editaddress,
-            morningStartTime: editmorningStartTime,
-            morningEndTime: editmorningEndTime,
-            eveningStartTime: editeveningStartTime,
-            eveningEndTime: editeveningEndTime,
-
-
-            // City: city,
-            // Pincode: pincode,
-            // State: state,
-            // Country: country,
-            // Height: height,
-            // Weight: weight
+            MorningStartTime: editmorningStartTime,
+            MorningEndTime: editmorningEndTime,
+            EveningStartTime: editeveningStartTime,
+            EveningEndTime: editeveningEndTime,
         }
-        
-    const editPatientRequest = await EditStaffdata(object);
-    let par = JSON.parse(editPatientRequest);
-    if (par.success === "200") {
-        alert('clinic Staff Details Edited Successfully');
-        handleCloseEditmodal();
-        window.location.reload();
+
+        const editPatientRequest = await EditStaffdata(object);
+        let par = JSON.parse(editPatientRequest);
+        if (par.success === "200") {
+            alert('clinic Staff Details Edited Successfully');
+            handleCloseEditmodal();
+            window.location.reload();
+        }
+        else {
+            alert(par.message);
+        }
     }
-    else {
-        alert(par.message);
-    }
-}
     const fetchDoctorCategory = async () => {
         const category = await Doctor_Category();
         setdoctorCategory(category);
@@ -734,47 +725,47 @@ export default function Edit_staff({ show, data, handleCloseEditmodal }) {
     };
 
     function disableBtn() {
-        document.getElementById("outlined-category-native-simple").hidden= true;
-        document.getElementById("mybtn").hidden= true;
-        document.getElementById("mybtn2").hidden= true;
-       
-        document.getElementById("mybtn3").hidden= true;
-        document.getElementById("mybtn4").hidden= true;
-        document.getElementById("mybtn5").hidden= true;
-        document.getElementById("mybtn6").hidden= true;
-        document.getElementById("mybtn7").hidden= true;
-        document.getElementById("mybtn8").hidden= true;
-        document.getElementById("mybtn9").hidden= true;
-        document.getElementById("mybtn10").hidden= true;
-        document.getElementById("mybtn11").hidden= true;
+        document.getElementById("outlined-category-native-simple").hidden = true;
+        document.getElementById("mybtn").hidden = true;
+        document.getElementById("mybtn2").hidden = true;
+
+        document.getElementById("mybtn3").hidden = true;
+        document.getElementById("mybtn4").hidden = true;
+        document.getElementById("mybtn5").hidden = true;
+        document.getElementById("mybtn6").hidden = true;
+        document.getElementById("mybtn7").hidden = true;
+        document.getElementById("mybtn8").hidden = true;
+        document.getElementById("mybtn9").hidden = true;
+        document.getElementById("mybtn10").hidden = true;
+        document.getElementById("mybtn11").hidden = true;
         // document.getElementById("outlined-start-time-native-simple").disabled= true;
         // document.getElementById("outlined-end-time-native-simple").disabled= true;
         // document.getElementById("outlined-start1-time-native-simple").disabled= true;
         // document.getElementById("outlined-end1-time-native-simple").disabled= true;
-      }
-      function enableBtn() {
-        document.getElementById("outlined-category-native-simple").hidden= false;
-        document.getElementById("mybtn").hidden= false;
-        document.getElementById("mybtn2").hidden= false;
-        document.getElementById("mybtn3").hidden= false;
-        document.getElementById("mybtn4").hidden= false;
-        document.getElementById("mybtn5").hidden= false;
-        document.getElementById("mybtn6").hidden= false;
-        document.getElementById("mybtn7").hidden= false;
-        document.getElementById("mybtn8").hidden= false;
-        document.getElementById("mybtn9").hidden= false;
-        document.getElementById("mybtn10").hidden= false;
-        document.getElementById("mybtn11").hidden= false;
+    }
+    function enableBtn() {
+        document.getElementById("outlined-category-native-simple").hidden = false;
+        document.getElementById("mybtn").hidden = false;
+        document.getElementById("mybtn2").hidden = false;
+        document.getElementById("mybtn3").hidden = false;
+        document.getElementById("mybtn4").hidden = false;
+        document.getElementById("mybtn5").hidden = false;
+        document.getElementById("mybtn6").hidden = false;
+        document.getElementById("mybtn7").hidden = false;
+        document.getElementById("mybtn8").hidden = false;
+        document.getElementById("mybtn9").hidden = false;
+        document.getElementById("mybtn10").hidden = false;
+        document.getElementById("mybtn11").hidden = false;
         // document.getElementById("mybtn").hidden= false;
         // document.getElementById("outlined-start-time-native-simple").disabled= false;
         // document.getElementById("outlined-end-time-native-simple").disabled= false;
         // document.getElementById("outlined-start1-time-native-simple").disabled= false;
         // document.getElementById("outlined-end1-time-native-simple").disabled= false;
-      }
+    }
 
     useEffect(() => {
 
-        
+
         fetchDoctorCategory();
         fetchTimes();
     }, []);
@@ -801,56 +792,56 @@ export default function Edit_staff({ show, data, handleCloseEditmodal }) {
                             <Grid item xs={6} style={{ borderRight: '1px solid #F0F0F0' }}>
                                 <center>
                                     <div>
-                                        <TextField className={classes.inputFields} label="FirstName" 
-                                        value={editfirstName} onChange={(e) => {
-                                            const re = /^[A-Za-z]+$/;
+                                        <TextField className={classes.inputFields} label="FirstName"
+                                            value={editfirstName} onChange={(e) => {
+                                                const re = /^[A-Za-z]+$/;
 
-                                            // if value is not blank, then test the regex
+                                                // if value is not blank, then test the regex
 
-                                            if (e.target.value === '' || re.test(e.target.value)) {
-                                                seteditfirstName(e.target.value)
-                                            }
+                                                if (e.target.value === '' || re.test(e.target.value)) {
+                                                    seteditfirstName(e.target.value)
+                                                }
 
-                                        }}
-                                        id="outlined-basic" size="small" placeholder="First Name" variant="outlined" />
+                                            }}
+                                            id="outlined-basic" size="small" placeholder="First Name" variant="outlined" />
                                         <TextField className={classes.inputFields} label="LastName"
-                                         value={editlastName} onChange={(e) => {
-                                            const re = /^[A-Za-z]+$/;
+                                            value={editlastName} onChange={(e) => {
+                                                const re = /^[A-Za-z]+$/;
 
-                                            // if value is not blank, then test the regex
+                                                // if value is not blank, then test the regex
 
-                                            if (e.target.value === '' || re.test(e.target.value)) {
-                                                seteditlastName(e.target.value)
-                                            }
+                                                if (e.target.value === '' || re.test(e.target.value)) {
+                                                    seteditlastName(e.target.value)
+                                                }
 
-                                        }} id="outlined-basic" size="small" placeholder="Last Name" variant="outlined" />
+                                            }} id="outlined-basic" size="small" placeholder="Last Name" variant="outlined" />
                                         <TextField className={classes.inputFields} label="Mobile"
-                                        value={mobile}
-                                        onChange={(e) => {
-                                            const re = /^[0-9\b]+$/;
-                                            if (e.target.value === '' || re.test(e.target.value)) {
-                                                setmobile(e.target.value)
-                                            }
-                                        }}id="outlined-basic" type="number" size="small" placeholder="Mobile Number" variant="outlined"
-                                        onInput={(e) => {
-                                            e.target.value = Math.max(0, parseInt(e.target.value)).toString().slice(0, 10)
+                                            value={mobile}
+                                            onChange={(e) => {
+                                                const re = /^[0-9\b]+$/;
+                                                if (e.target.value === '' || re.test(e.target.value)) {
+                                                    setmobile(e.target.value)
+                                                }
+                                            }} id="outlined-basic" type="number" size="small" placeholder="Mobile Number" variant="outlined"
+                                            onInput={(e) => {
+                                                e.target.value = Math.max(0, parseInt(e.target.value)).toString().slice(0, 10)
 
-                                        }} />
-                                        <TextField className={classes.inputFields} label="Email" 
-                                        value={editemail} onChange={(e) => seteditemail(e.target.value)} id="outlined-basic" type="email" size="small" placeholder="Email Id" variant="outlined" />
+                                            }} />
+                                        <TextField className={classes.inputFields} label="Email"
+                                            value={editemail} onChange={(e) => seteditemail(e.target.value)} id="outlined-basic" type="email" size="small" placeholder="Email Id" variant="outlined" />
                                         {/* <TextField className={classes.inputFields} value={editpassword} onChange={(e) => seteditpassword(e.target.value)} type="password" id="outlined-basic" size="small" label="Password" variant="outlined" /> */}
                                         <TextField className={classes.inputFields} multiline
                                             rows={3}
                                             rowsMax={5} id="outlined-basic" size="small" label="Address" placeholder="Address" variant="outlined" value={editaddress} onChange={(e) => seteditaddress(e.target.value)}
                                         />
 
-                                         <Grid item xs={12} sm={6}>
+                                        <Grid item xs={12} sm={6}>
                                             <InputLabel htmlFor="outlined-age-native-simple" style={{ marginLeft: -210 }}>Doctor
                                                 <Radio
                                                     checked={editrole === 'Doctor'}
                                                     color='primary'
-                                                    onChange={(e) => seteditrole(e.target.value)} value={editrole}
-                                                  onClick={enableBtn}
+                                                    onChange={(e) => seteditrole(e.target.value)}
+                                                    onClick={enableBtn}
                                                     value="Doctor"
                                                     name="radio-button-demo"
                                                     inputProps={{ 'aria-label': 'Doctor' }}
@@ -864,7 +855,7 @@ export default function Edit_staff({ show, data, handleCloseEditmodal }) {
 
                                                 <Radio
                                                     checked={editrole === 'Receptionist'}
-                                                    onChange={(e) => seteditrole(e.target.value)} value={editrole}
+                                                    onChange={(e) => seteditrole(e.target.value)}
                                                     onClick={disableBtn}
                                                     value="Receptionist"
                                                     color='primary'
@@ -882,24 +873,24 @@ export default function Edit_staff({ show, data, handleCloseEditmodal }) {
                             <Grid item xs={6}>
                                 <center>
                                     <Grid container style={{ marginTop: '-5px' }}>
-                                
+
                                         <Grid xs={12} style={{ marginTop: 5 }}>
                                             <FormControl variant="outlined" size="small" className={classes.formControlForm} style={{ width: '73%' }} >
-                                                <InputLabel htmlFor="outlined-age-native-simple"  style={{ marginLeft: 20}}>Gender</InputLabel>
+                                                <InputLabel htmlFor="outlined-age-native-simple" style={{ marginLeft: 20 }}>Gender</InputLabel>
                                                 <Select
                                                     className={classes.textFieldForm}
                                                     size='large'
                                                     native
                                                     value={editgender}
-                                                    onChange={(e) => seteditgender(e.target.value)} value={editgender}
+                                                    onChange={(e) => seteditgender(e.target.value)}
                                                     placeholder='gender'
                                                     inputProps={{
                                                         name: 'gender',
                                                         id: 'outlined-gender-native-simple',
                                                     }}
-                                                    style={{ width: '90%', fontSize: 14,}}
+                                                    style={{ width: '90%', fontSize: 14, }}
                                                 >
-                                                   
+                                                    <option aria-label="None" value=''>Gender</option>
                                                     <option value={"Male"}>Male</option>
                                                     <option value={"Female"}>Female</option>
 
@@ -909,28 +900,28 @@ export default function Edit_staff({ show, data, handleCloseEditmodal }) {
                                     </Grid>
 
                                     <div >
-                                        <TextField className={classes.inputFields} label="Education" value={editeducation} 
-                                        onChange={(e) => {
-                                            const re = /^[A-Za-z]+$/;
+                                        <TextField className={classes.inputFields} label="Education" value={editeducation}
+                                            onChange={(e) => {
+                                                const re = /^[A-Za-z]+$/;
 
-                                            // if value is not blank, then test the regex
+                                                // if value is not blank, then test the regex
 
-                                            if (e.target.value === '' || re.test(e.target.value)) {
-                                                setediteducation(e.target.value)
-                                            }
+                                                if (e.target.value === '' || re.test(e.target.value)) {
+                                                    setediteducation(e.target.value)
+                                                }
 
-                                        }}
-                                         id="outlined-basic" placeholder="Education" variant="outlined" size="small" />
+                                            }}
+                                            id="outlined-basic" placeholder="Education" variant="outlined" size="small" />
                                         {/* <TextField className={classes.inputFields} id="outlined-basic" label="Category" variant="outlined" size="small" />  */}
                                         <Grid xs={12} >
-                                            <FormControl  id='mybtn' variant="outlined" size="small" className={classes.formControlForm} style={{ width: '73%' }} >
-                                                <InputLabel  htmlFor="outlined-age-native-simple"style={{ marginLeft: 20 }}>Category</InputLabel>
+                                            <FormControl id='mybtn' variant="outlined" size="small" className={classes.formControlForm} style={{ width: '73%' }} >
+                                                <InputLabel htmlFor="outlined-age-native-simple" style={{ marginLeft: 20 }}>Category</InputLabel>
                                                 <Select
                                                     className={classes.textFieldForm}
                                                     size='large'
                                                     native
-                                                    value={editcategory} 
-                                                    
+                                                    value={editcategory}
+
                                                     onChange={(e) => seteditcategory(e.target.value)}
 
                                                     placeholder='Category'
@@ -940,7 +931,7 @@ export default function Edit_staff({ show, data, handleCloseEditmodal }) {
                                                     }}
                                                     style={{ width: '90%', fontSize: 14 }}
                                                 >
-                                                    
+
                                                     {doctorCategory.map((item) => {
                                                         return (
                                                             <option value={item.Category}>{item.Category}</option>
@@ -949,9 +940,9 @@ export default function Edit_staff({ show, data, handleCloseEditmodal }) {
                                                 </Select>
                                             </FormControl>
                                         </Grid>
-                                        
+
                                         <Grid item xs={12}>
-                                            <center  id='mybtn2'>
+                                            <center id='mybtn2'>
                                                 <Typography variant="h6" noWrap={true} style={{ fontSize: 14, color: '#707070', fontWeight: 600, fontFamily: 'Poppins' }}>
                                                     Morning Shift Time
                                                 </Typography>

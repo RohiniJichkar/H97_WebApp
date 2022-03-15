@@ -288,6 +288,7 @@ export default function DoctorPatientMedicalHistory() {
         setmedicalhistory(medicalhistoryInfo?.data?.Appointment);
     }
 
+    console.log(details);
 
     const handleView = async () => {
         var data = await localStorage.getItem("userdata");
@@ -416,14 +417,14 @@ export default function DoctorPatientMedicalHistory() {
                                     <Grid item xs={6} style={{ borderRight: '1px solid #F0F0F0' }}>
                                         <center>
                                             <Typography variant="h6" noWrap={true} style={{ fontSize: 15, color: '#707070', fontFamily: 'Poppins', fontWeight: 600 }}>
-                                                {details[0].UserId}
+                                                {details[0].PatientId}
                                             </Typography>
                                         </center>
                                     </Grid>
                                     <Grid item xs={6}>
                                         <center>
                                             <Typography variant="h6" noWrap={true} style={{ fontSize: 15, color: '#707070', fontFamily: 'Poppins', fontWeight: 600 }}>
-                                                {details[0].Age}
+                                                {details[0].Age ? details[0].Age : 'NA'}
                                             </Typography>
                                         </center>
                                     </Grid>
@@ -440,7 +441,7 @@ export default function DoctorPatientMedicalHistory() {
                                     </Grid>
                                     <Grid item xs={6}>
                                         <Typography variant="h6" noWrap={true} style={{ fontSize: 14, color: '#707070', fontFamily: 'Poppins' }}>
-                                            {details[0].Address} {details[0].City}
+                                            {details[0].Address ? details[0].Address : 'NA'} {details[0].City}
                                         </Typography>
                                     </Grid>
                                     <Grid item xs={6} style={{ marginTop: 20 }}>
@@ -464,7 +465,7 @@ export default function DoctorPatientMedicalHistory() {
                                     </Grid>
                                     <Grid item xs={6} style={{ marginTop: 20 }}>
                                         <Typography variant="h6" noWrap={true} style={{ fontSize: 14, color: '#707070', fontFamily: 'Poppins' }}>
-                                            {details[0].Email != null ? details[0].Email : 'Not Provided'}
+                                            {details[0].Email ? details[0].Email : 'NA'}
                                         </Typography>
                                     </Grid>
                                 </Grid>
@@ -474,7 +475,7 @@ export default function DoctorPatientMedicalHistory() {
                 </Grid>
 
 
-                <Grid item sm={12} sm={8} style={{ marginTop: 10, }} >
+                <Grid item xs={8} style={{ marginTop: 10 }} >
                     <Paper elevation={6} className={classes.paper} style={{ padding: theme.spacing(2), paddingRight: 0, marginRight: 20 }}>
                         <Grid container xs spacing={3}>
                             <Grid item xs={12}>

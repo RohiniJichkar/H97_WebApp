@@ -30,8 +30,7 @@ const TV_Slider_Component = () => {
     const [advertisement, setAdvertisement] = useState([]);
 
     const fetchAdvertisements = async () => {
-        let Category = 'Dashboard';
-        const getrequest = await get_advertisments(Category);
+        const getrequest = await get_advertisments();
         setAdvertisement(getrequest);
     }
 
@@ -43,17 +42,17 @@ const TV_Slider_Component = () => {
         <div className="TV_Slider_Component">
             <Slider dots={true} autoplay={true}>
                 {advertisement.length != 0 ?
-                advertisement.map((item) => (
-                    <div key={item.id}>
-                        <img src={item.Image} style={{height: '500px', width: '100%'}}/>
-                    </div>
-                ))
-                :
-                <>
-                <img src='default-image.png' style={{height: '500px', width: '100%'}}></img>
-                </>
+                    advertisement.map((item) => (
+                        <div key={item.id}>
+                            <img src={item.Image} style={{ height: '500px', width: '100%' }} />
+                        </div>
+                    ))
+                    :
+                    <>
+                        <img src='default-image.png' style={{ height: '500px', width: '100%' }}></img>
+                    </>
                 }
-                </Slider>
+            </Slider>
         </div>
     );
 }

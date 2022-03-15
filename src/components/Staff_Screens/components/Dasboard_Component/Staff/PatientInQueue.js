@@ -62,6 +62,9 @@ export function PatientInueue_List({ data }) {
                                             <Grid item xs={12} style={{ textAlign: 'center', color: '#707070', paddingBottom: 10 }}>
                                                 {item.AppointmentStatus}
                                             </Grid>
+                                            <Grid item xs={12} style={{ textAlign: 'center', color: '#707070', paddingBottom: 10 }}>
+                                                {item.FName} {item.LName}
+                                            </Grid>
                                         </Paper>
                                         <div>
                                             <center>
@@ -94,6 +97,9 @@ export function PatientInueue_List({ data }) {
                                                 </Grid>
                                                 <Grid item xs={12} style={{ textAlign: 'center', color: '#2C7FB2', paddingBottom: 10 }}>
                                                     {item.AppointmentStatus}
+                                                </Grid>
+                                                <Grid item xs={12} style={{ textAlign: 'center', color: '#2C7FB2', paddingBottom: 10 }}>
+                                                    {item.FName} {item.LName}
                                                 </Grid>
                                             </Paper>
                                             <div>
