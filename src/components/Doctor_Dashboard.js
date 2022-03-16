@@ -29,21 +29,27 @@ export default function DoctorDashboard() {
         var data = await localStorage.getItem("userdata");
         let parsed = JSON.parse(data);
         let clinicid = parsed.ClinicId;
-        const todayregistrationInfo = await axios.post(ip + 'Web_NewRegistrationReport', { ClinicId: clinicid })
-        settodaysregistration(todayregistrationInfo?.data);
-        // window.location.reload(10000);
-        setInterval(settodaysregistration(todayregistrationInfo?.data), 1)
-
+        try {
+            const todayregistrationInfo = await axios.post(ip + 'Web_NewRegistrationReport', { ClinicId: clinicid })
+            settodaysregistration(todayregistrationInfo?.data);
+            // window.location.reload(10000);
+            setInterval(settodaysregistration(todayregistrationInfo?.data), 1)
+        } catch (e) {
+            console.log(e);
+        }
     }
 
     const fetchDailyAppointments = async () => {
         var data = await localStorage.getItem("userdata");
         let parsed = JSON.parse(data);
         let userid = parsed.userid;
-        const appInfo = await axios.post(ip + 'Web_AppointmentReport', { DoctorId: userid })
-        setappointments(appInfo?.data);
-        // window.location.reload(100000);
-
+        try {
+            const appInfo = await axios.post(ip + 'Web_AppointmentReport', { DoctorId: userid })
+            setappointments(appInfo?.data);
+            // window.location.reload(100000);
+        } catch (e) {
+            console.log(e);
+        }
     }
 
     useEffect(() => {
@@ -62,14 +68,21 @@ export default function DoctorDashboard() {
 
 
     const fetchPatientInQueue = async () => {
-        const data = await PatientInQueue();
-        setPatientInQueue(data);
-
+        try {
+            const data = await PatientInQueue();
+            setPatientInQueue(data);
+        } catch (e) {
+            console.log(e);
+        }
     }
 
     const fetchBookedAppointments = async () => {
-        const data = await BookedAppointments();
-        setbookedAppointments(data);
+        try {
+            const data = await BookedAppointments();
+            setbookedAppointments(data);
+        } catch (e) {
+            console.log(e);
+        }
     }
 
 
@@ -85,7 +98,7 @@ export default function DoctorDashboard() {
         navigate("/Todays_appointment_Tabs");
     };
 
-    const handleCalanderAppointmentClick=()=>{
+    const handleCalanderAppointmentClick = () => {
         navigate("/Calander_appointment_tabs");
     }
 

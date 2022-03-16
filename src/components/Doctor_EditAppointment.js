@@ -4,22 +4,18 @@ import { makeStyles, useTheme, alpha } from '@material-ui/core/styles';
 import { useNavigate } from 'react-router-dom';
 import { Container, Avatar, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, TextField, Slide, Select, FormControl, InputLabel, Typography, Button, Table, TableContainer, TableBody, TableCell, TableHead, InputBase, TableRow, TablePagination, Drawer, Divider, MenuItem, Menu, ListItem, ListItemIcon, ListItemText, List, IconButton, Grid, Paper, Link } from "@material-ui/core";
 import { Redirect } from 'react-router-dom';
-import DoctorNavbar from './Staff_Navbar';
+import DoctorNavbar from './Doctor_Navbar';
 import SearchIcon from '@material-ui/icons/Search';
 import { FixedSizeList } from 'react-window';
 import PropTypes from 'prop-types';
 import ArrowBackIcon from '@material-ui/icons/ArrowBack';
-import CloseIcon from '@material-ui/icons/Close';
-import AccountCircleIcon from '@material-ui/icons/AccountCircle';
 import axios from 'axios';
 import { DataGrid } from '@material-ui/data-grid';
-import { Register_Patient } from '../../Apis/Staff/Clinic_Patients/Patient_Registration';
-import Edit_Patient from './components/Clinic_Patients/Edit_Patient/index';
-import Delete_Patient from './components/Clinic_Patients/Delete_Patient/index';
-import Add_Patinet from './components/Clinic_Patients/Add_Patient/index';
+import { Edit_Appointment_From_TodaysApp } from './Todays_Appointments/Slots/Edit_Appointment/index';
+import Delete_Appointment from './Todays_Appointments/Slots/Delete_Appointment/index';
+import { Todays_Appointment } from '../Apis/Todays_Appointments/index';
 
-const getPatientDataApi = 'http://13.233.217.107:8080/api/Web_GetPatients';
-const getPatientDetailsApi = 'http://13.233.217.107:8080/api/ShowPatientDetailUsingId';
+const getAppDetailsApi = 'http://13.233.217.107:8080/api/Web_GetAppointmentById';
 const getPatientSearchApi = 'http://13.233.217.107:8080/api/Web_SearchPatients';
 
 
@@ -36,8 +32,8 @@ const columns = [
             }`,
     },
     {
-        field: 'MobileNo',
-        headerName: 'Contact No',
+        field: 'AppointmentDate',
+        headerName: 'Appointment Date',
         width: 160,
         editable: true,
     },
@@ -82,89 +78,28 @@ const Transition = React.forwardRef(function Transition(props, ref) {
     return <Slide direction="up" ref={ref} {...props} />;
 });
 
-export default function Staff_ClinicPatients() {
+export default function DoctorEditAppointment() {
     const classes = useStyles();
     const theme = useTheme();
     const navigate = useNavigate();
     const [open, setOpen] = React.useState(false);
-    const [page, setPage] = React.useState(0);
-    const [rowsPerPage, setRowsPerPage] = React.useState(9);
-    const [counterbtn, setCounterBtn] = React.useState(0);
-    const [maxWidth, setMaxWidth] = React.useState('md');
-    const [openmodal, setOpenmodal] = React.useState(false);
-    const [patientData, setpatientData] = useState([]);
-    const [patientDetails, setpatientDetails] = useState([]);
-    const [firstnm, setfirstnm] = useState('');
-    const [lastnm, setlastnm] = useState('');
-    const [mobile, setmobile] = useState('');
-    const [email, setemail] = useState('');
-    const [dob, setdob] = useState('');
-    const [password, setpassword] = useState('');
-    const [gender, setgender] = useState('');
-    const [address, setaddress] = useState('');
-    const [city, setcity] = useState('');
-    const [pincode, setpincode] = useState('');
-    const [state, setstate] = useState('');
-    const [country, setcountry] = useState('');
-    const [height, setheight] = useState('');
-    const [weight, setweight] = useState('');
-    const [openeditmodal, setOpenEditmodal] = React.useState(false);
-    const [opendeletemodal, setOpenDeletemodal] = React.useState(false);
     const [patientsearch, setpatientsearch] = useState([]);
-    const [showPassword, setshowPassword] = useState(false);
+    const [appointmentlist, setappointmentlist] = useState([]);
+    const [appDetails, setappDetails] = useState('');
+    const [openeditmodal, setopeneditmodal] = useState(false);
+    const [opendeletemodal, setOpenDeletemodal] = React.useState(false);
 
-    const PatientRegistration = async () => {
-        var data = await localStorage.getItem("userdata");
-        let parsed = JSON.parse(data);
-        let clinicid = parsed.ClinicId;
-        const date = new Date();
-        const now = date.toISOString().split('T')[0];
-        if (firstnm.trim() == '' || lastnm.trim() == '' || mobile.trim() == '' || password.trim() == '' || dob.trim() == '' || gender.trim() == '') {
-            alert('Please Enter Mandatory fields')
-            return;
-        }
-        const obj = {
-            ClinicId: clinicid,
-            FirstName: firstnm,
-            LastName: lastnm,
-            MobileNo: mobile,
-            Password: password,
-            Email: email,
-            DOB: dob,
-            Gender: gender,
-            Address: address,
-            City: city,
-            Pincode: pincode,
-            State: state,
-            Country: country,
-            Height: height,
-            Weight: weight,
-            createdDate: now
-        }
 
-        try {
-            const registration = await Register_Patient(obj);
-            let parse = JSON.parse(registration);
-            if (parse.success === "200") {
-                alert(parse.message);
-                setOpenmodal(false);
-                window.location.reload()
-            } else {
-                alert(parse.message);
-            }
-        } catch (error) {
-            console.log(error);
-        }
+    const fetchAppointments = async () => {
+        const appointments = await Todays_Appointment();
+        setappointmentlist(appointments);
     }
 
-    const fetchPatientData = async () => {
-        var data = await localStorage.getItem("userdata");
-        let parsed = JSON.parse(data);
-        let clinicid = parsed.ClinicId;
-        try{
-        const patientInfo = await axios.post(getPatientDataApi, { ClinicId: clinicid });
-        setpatientData(patientInfo?.data?.Patients);
-        }catch(e){
+    const handleCellClick = async (id) => {
+        try {
+            const appDetailedInfo = await axios.post(getAppDetailsApi, { id: id });
+            setappDetails(appDetailedInfo?.data?.Appointment);
+        } catch (e) {
             console.log(e);
         }
     }
@@ -175,7 +110,7 @@ export default function Staff_ClinicPatients() {
         let clinicid = parsed.ClinicId;
         try {
             const patientsInfo = await axios.post(getPatientSearchApi, { ClinicId: clinicid, Name: patientsearch });
-            setpatientData(patientsInfo?.data?.Patients);
+            setappointmentlist(patientsInfo?.data?.Patients);
         }
         catch (e) {
             console.log(e)
@@ -183,22 +118,13 @@ export default function Staff_ClinicPatients() {
     }
 
     useEffect(() => {
-        fetchPatientData();
+        fetchAppointments();
     }, [])
 
-    const handleCellClick = async (userid) => {
-        try{
-        const patientDetailedInfo = await axios.post(getPatientDetailsApi, { UserId: userid });
-        setpatientDetails(patientDetailedInfo?.data?.PatientDetails);
-        }catch(e){
-            console.log(e);
-        }
-    }
 
     const handleGoBack = () => {
-        navigate(-1);
+        navigate("/Todays_appointment_Tabs");
     };
-
 
     return (
         <div className={classes.root} style={{ backgroundColor: '#ffffff' }}>
@@ -214,7 +140,7 @@ export default function Staff_ClinicPatients() {
                 <Grid item xs={12}>
                     <Typography variant="h5" noWrap={true}
                         style={{
-                            fontFamily: '"Poppins", san-serif;',
+                            fontFamily: 'Poppins',
                             fontStyle: 'normal',
                             fontWeight: 500,
                             overflow: 'hidden',
@@ -223,8 +149,7 @@ export default function Staff_ClinicPatients() {
                             color: '#2C7FB2',
                         }}>
                         <Button style={{ marginLeft: '-20px', backgroundColor: 'white', color: '#2C7FB2', fontSize: '12px' }}> <ArrowBackIcon onClick={handleGoBack} />  </Button>
-                        Clinic Patients
-                        <Button className={classes.btnregister} onClick={() => setOpenmodal(true)} style={{ float: 'right', marginRight: 20, width: '150px', fontFamily: 'Poppins', fontSize: 12.5, fontWeight: 400 }}>New Registration</Button>
+                        Appointments
                     </Typography>
                 </Grid>
 
@@ -257,13 +182,13 @@ export default function Staff_ClinicPatients() {
 
                         <DataGrid
                             style={{ height: 370, marginTop: 20, fontSize: 13, fontFamily: 'Poppins', fontWeight: 600, color: '#2C7FB2', cursor: 'pointer' }}
-                            rows={patientData}
+                            rows={appointmentlist}
                             rowHeight={30}
                             columns={columns}
                             columnWidth={10}
                             pageSize={10}
                             onRowClick={(newSelection) => {
-                                handleCellClick(newSelection.row.UserId);
+                                handleCellClick(newSelection.row.id);
                             }}
                         />
 
@@ -279,14 +204,13 @@ export default function Staff_ClinicPatients() {
                             fontStyle: 'normal',
 
                         }}>
-                            Profile
+                            Details
                         </Typography>
                         <center>
                             <div style={{ paddingBottom: 10 }}>
-                                {patientDetails.ProfileImage ?
-                                    <Avatar style={{ borderRadius: 50, height: 100, width: 100 }} src={patientDetails.ProfileImage} /> :
-                                    <Avatar style={{ borderRadius: 50, height: 100, width: 100 }} />}
-                                {/* <img src="Pallavi Kale.jpg" style={{ borderRadius: 50, height: 100 }}></img> */}
+
+                                <Avatar style={{ borderRadius: 50, height: 100, width: 100 }} />
+
                             </div>
 
                             <Typography variant="h6" noWrap={true} style={{
@@ -296,7 +220,7 @@ export default function Staff_ClinicPatients() {
                                 color: '#707070',
                                 fontWeight: 600
                             }}>
-                                {patientDetails.FirstName ? patientDetails.FirstName : "NA"}   {patientDetails.LastName ? patientDetails.LastName : ""}
+                                {appDetails.FirstName ? appDetails.FirstName : "NA"}   {appDetails.LastName ? appDetails.LastName : ""}
 
                             </Typography>
                             <Typography variant="h6" noWrap={true} style={{
@@ -306,77 +230,83 @@ export default function Staff_ClinicPatients() {
                                 color: '#707070',
                                 fontWeight: 400
                             }}>
-                                PID- {patientDetails.PatientId}
+                                Appointment Title- {appDetails.Title}
                             </Typography>
                             <Grid container xs={12} style={{ paddingTop: 15 }}>
                                 <Grid item xs={3} style={{ border: '1px solid #F0F0F0', paddingBottom: 20 }}>
                                     <Typography variant="h6" noWrap={true} style={{ paddingTop: 10, fontSize: 14, color: '#707070', fontWeight: 600, fontFamily: 'Poppins', }}>
-                                        Mobile Number
+                                        Appointment Date
                                     </Typography>
                                     <Typography variant="h6" noWrap={true} style={{ paddingTop: 5, fontSize: 14, color: '#707070', fontFamily: 'Poppins', }}>
-                                        {patientDetails.MobileNo ? patientDetails.MobileNo : "NA"}
+                                        {appDetails.AppointmentDate ? appDetails.AppointmentDate : "NA"}
                                     </Typography>
                                 </Grid>
                                 <Grid item xs={3} style={{ border: '1px solid #F0F0F0', borderLeft: '0px', paddingBottom: 20 }}>
                                     <Typography variant="h6" noWrap={true} style={{ paddingTop: 10, fontSize: 14, color: '#707070', fontWeight: 600, fontFamily: 'Poppins', }}>
-                                        Email ID
+                                        Appointment Time
                                     </Typography>
                                     <Typography variant="h6" noWrap={true} style={{ paddingTop: 5, fontSize: 14, color: '#707070', marginLeft: 10, marginRight: 10, fontFamily: 'Poppins', }}>
-                                        {patientDetails.Email ? patientDetails.Email : 'NA'}
+                                        {appDetails.AppointmentTime ? appDetails.AppointmentTime : 'NA'}
                                     </Typography>
                                 </Grid>
                                 <Grid item xs={3} style={{ border: '1px solid #F0F0F0', borderLeft: '0px', paddingBottom: 20 }}>
                                     <Typography variant="h6" noWrap={true} style={{ paddingTop: 10, fontSize: 14, color: '#707070', fontWeight: 600, fontFamily: 'Poppins', }}>
-                                        Date Of Birth
+                                        Appointment Channel
                                     </Typography>
                                     <Typography variant="h6" noWrap={true} style={{ paddingTop: 5, fontSize: 14, color: '#707070', fontFamily: 'Poppins', }}>
-                                        {patientDetails.DOB ? patientDetails.DOB : 'NA'}
+                                        {appDetails.AppointmentChannel ? appDetails.AppointmentChannel : 'NA'}
                                     </Typography>
                                 </Grid>
                                 <Grid item xs={3} style={{ border: '1px solid #F0F0F0', borderLeft: '0px', paddingBottom: 20 }}>
                                     <Typography variant="h6" noWrap={true} style={{ paddingTop: 10, fontSize: 14, color: '#707070', fontWeight: 600, fontFamily: 'Poppins', }}>
-                                        Age
+                                        Appointment Type
                                     </Typography>
                                     <Typography variant="h6" noWrap={true} style={{ paddingTop: 5, fontSize: 14, color: '#707070', fontFamily: 'Poppins', }}>
-                                        {patientDetails.Age ? patientDetails.Age : 'NA'}
+                                        {appDetails.AppointmentType ? appDetails.AppointmentType : 'NA'}
                                     </Typography>
                                 </Grid>
                             </Grid>
 
                             <Grid container xs={12}>
-                                <Grid item xs={3} style={{ border: '1px solid #F0F0F0', borderTop: '0px', paddingBottom: 20 }}>
+                                <Grid item xs={6} style={{ border: '1px solid #F0F0F0', borderTop: '0px', paddingBottom: 20 }}>
                                     <Typography variant="h6" noWrap={true} style={{ paddingTop: 10, fontSize: 14, color: '#707070', fontWeight: 600, fontFamily: 'Poppins', }}>
-                                        Gender
+                                        Appointment Reason
                                     </Typography>
                                     <Typography variant="h6" noWrap={true} style={{ paddingTop: 5, fontSize: 14, color: '#707070', fontFamily: 'Poppins', }}>
-                                        {patientDetails.Gender ? patientDetails.Gender : 'NA'}
+                                        {appDetails.AppointmentReason ? appDetails.AppointmentReason : 'NA'}
                                     </Typography>
                                 </Grid>
                                 <Grid item xs={6} style={{ border: '1px solid #F0F0F0', borderLeft: '0px', borderTop: '0px', paddingBottom: 20 }}>
                                     <Typography variant="h6" noWrap={true} style={{ paddingTop: 10, fontSize: 14, color: '#707070', fontWeight: 600, fontFamily: 'Poppins', }}>
-                                        Address
+                                        Short Note
                                     </Typography>
                                     <Typography variant="h6" noWrap={true} style={{ paddingTop: 5, fontSize: 14, color: '#707070', fontFamily: 'Poppins', marginLeft: 10, marginRight: 10 }}>
-                                        {patientDetails.Address ? patientDetails.Address : 'NA'} {patientDetails.City} {patientDetails.State} {patientDetails.Country} {patientDetails.Pincode} 
+                                        {appDetails.ShortNote ? appDetails.ShortNote : 'NA'}
                                     </Typography>
                                 </Grid>
-                                {/* <Grid item xs={3} style={{ border: '1px solid #F0F0F0', borderLeft: '0px', borderTop: '0px', paddingBottom: 20 }}>
-                                    <Typography variant="h6" noWrap={true} style={{ paddingTop: 10, fontSize: 14, color: '#707070', fontWeight: 600, fontFamily: 'Poppins', }}>
-                                        Medical History
-                                    </Typography>
-                                    <a onClick={() => navigate('/DoctorPatientMedicalHistory', {
-                                        state: { Details: patientDetails }
-                                    })} style={{ fontSize: 12, color: '#2C7FB2', fontFamily: 'Poppins', cursor: 'pointer', textDecoration: 'underline' }}>Patient History</a>
-                                </Grid> */}
                             </Grid>
 
                             <Grid container xs={12} style={{ marginTop: 15 }}>
                                 <Grid item sm={6} >
-                                    <Button className={classes.btnregister} onClick={() => setOpenDeletemodal(true)} style={{ float: 'right', marginRight: 20 }}>Delete</Button>
+                                    <Button className={classes.btnregister} onClick={() => {
+                                        if (appDetails == '') {
+                                            alert('Please Select Patient from List');
+                                            return;
+                                        }
+                                        setOpenDeletemodal(true);
+                                    }} style={{ float: 'right', marginRight: 20 }}>Delete</Button>
 
                                 </Grid>
                                 <Grid item sm={6} >
-                                    <Button className={classes.btnregister} onClick={() => setOpenEditmodal(true)} style={{ float: 'left', marginLeft: 20 }}>Edit</Button>
+                                    <Button className={classes.btnregister} onClick={() => {
+                                        if (appDetails == '') {
+                                            alert('Please Select Patient from List');
+                                            return;
+                                        }
+                                        console.log(appDetails.id);
+
+                                        setopeneditmodal(true);
+                                    }} style={{ float: 'left', marginLeft: 20 }}>Edit</Button>
                                 </Grid>
                             </Grid>
 
@@ -386,18 +316,12 @@ export default function Staff_ClinicPatients() {
                 </Grid>
 
 
-                {/* Add new Patient Dialog */}
-                {openmodal ? <Add_Patinet show={openmodal} handleclose={() => setOpenmodal(false)} /> : null}
 
-
-                {openeditmodal ? <Edit_Patient show={openeditmodal} data={patientDetails} handleCloseEditmodal={() => setOpenEditmodal(false)} /> : null}
-
-
-                {/* for Delete User */}
-
-                {opendeletemodal ? <Delete_Patient show={opendeletemodal} data={patientDetails} handleclose={() => setOpenDeletemodal(false)} /> : null}
-
-
+                {/* Edit Appointment */}
+                {openeditmodal ? <Edit_Appointment_From_TodaysApp show={openeditmodal} data={appDetails} handlemodal={() => setopeneditmodal(false)} /> : null}
+                
+                {/* Delete Appointment */}
+                {opendeletemodal ? <Delete_Appointment show={opendeletemodal} data={appDetails.id} handleclose={() => setOpenDeletemodal(false)} /> : null}
 
             </Grid> {/* main grid */}
 

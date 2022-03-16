@@ -194,15 +194,17 @@ export default function Staff_Assign_Home_Visitor() {
         navigate('/Staff_Home_Visit_Request');
     }
 
-    const handleAssignHomeVisitor = async (obj, hvid) => {
+    const handleAssignHomeVisitor = async (obj, hvid, time) => {
         if (hvDoctorDetails == '') {
             alert("Please select home visitor from list");
             return;
         }
-        const res = await ApprovedHomeVisitorRequest(obj, hvid)
+        let ptime = approvedRequestInfo.PreferedTime.split(' ')[1];
+
+        const res = await ApprovedHomeVisitorRequest(obj, hvid, ptime)
 
         if (res) {
-            setassignHomeVisitor(obj, hvid)
+            setassignHomeVisitor(obj, hvid, ptime)
             alert('Home Visitor Request Approved');
             navigate("/Staff_Home_Visit_Request");
         }
@@ -475,7 +477,7 @@ export default function Staff_Assign_Home_Visitor() {
                                         <Button className={classes.btnregister} onClick={handleAssign} style={{ float: 'right', marginRight: 20 }}>Cancel</Button>
                                     </Grid>
                                     <Grid item sm={6} >
-                                        <Button className={classes.btnregister} onClick={() => handleAssignHomeVisitor(approvedRequestInfo, hvDoctorDetails.UserId)} style={{ float: 'left', marginLeft: 20 }}>Assign</Button>
+                                        <Button className={classes.btnregister} onClick={() => handleAssignHomeVisitor(approvedRequestInfo, hvDoctorDetails.UserId, approvedRequestInfo.PreferedTime)} style={{ float: 'left', marginLeft: 20 }}>Assign</Button>
                                     </Grid>
                                 </Grid>
 

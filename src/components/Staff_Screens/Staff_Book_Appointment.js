@@ -404,7 +404,7 @@ export default function Staff_Book_Appointment() {
                                             fontSize: 12,
                                         }}
                                         >
-                                            {patientDetails.Address !== null ? patientDetails.Address : 'Not Provided'} {patientDetails.City} {patientDetails.State} {patientDetails.Pincode} {patientDetails.Country}
+                                            {patientDetails.Address ? patientDetails.Address : 'NA'} {patientDetails.City} {patientDetails.State} {patientDetails.Pincode} {patientDetails.Country}
                                         </Typography>
                                         <Divider style={{ paddingTop: '10px', backgroundColor: '#fff' }} />
                                         Contact: <Typography variant="h7" noWrap={true} style={{
@@ -419,7 +419,7 @@ export default function Staff_Book_Appointment() {
                                             fontSize: 12,
                                         }}
                                         >
-                                            {patientDetails.MobileNo !== null ? patientDetails.MobileNo : 'Not Provided'}
+                                            {patientDetails.MobileNo ? patientDetails.MobileNo : 'NA'}
                                         </Typography>
                                         <Divider style={{ paddingTop: '10px', backgroundColor: '#fff' }} />
                                         Email Id: <Typography variant="h7" noWrap={true} style={{
@@ -434,7 +434,7 @@ export default function Staff_Book_Appointment() {
                                             fontSize: 12,
                                         }}
                                         >
-                                            {patientDetails.Email != '' ? patientDetails.Email : 'Not Provided'}
+                                            {patientDetails.Email ? patientDetails.Email : 'NA'}
                                         </Typography>
                                     </Paper>
                                 </Grid>

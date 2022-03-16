@@ -90,9 +90,9 @@ const columns = [
                         <EditIcon />
                     </IconButton> : null}
                     {opendeletemodal ? <Delete_Appointment show={opendeletemodal} data={params.row.id} handleclose={() => setOpenDeletemodal(false)} /> : null}
-                    {params.row.AppointmentDate >= t_date ?<IconButton color="secondary" onClick={() => setOpenDeletemodal(true)} style={{ color: '#BBB' }}>
+                    {params.row.AppointmentDate >= t_date ? <IconButton color="secondary" onClick={() => setOpenDeletemodal(true)} style={{ color: '#BBB' }}>
                         <DeleteIcon />
-                    </IconButton>:null}
+                    </IconButton> : null}
 
                 </>
             );
@@ -328,8 +328,12 @@ export default function Staff_Todays_Appointment() {
         await fetchEveningCount(doctorid);
     }
     const fetchAppointments = async (doctorid,) => {
-        const appointments = await Todays_Appointment(doctorid);
-        setappointmentlist(appointments);
+        try {
+            const appointments = await Todays_Appointment(doctorid);
+            setappointmentlist(appointments);
+        } catch (e) {
+            console.log(e);
+        }
     }
 
     const fetchMorningCount = async (doctorid) => {

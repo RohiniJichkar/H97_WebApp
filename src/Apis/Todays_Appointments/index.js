@@ -58,7 +58,7 @@ export const GetEveningSlots = async () => {
 
 
 export const Todays_Appointment = async () => {
-    var data = localStorage.getItem("userdata");
+    var data = await localStorage.getItem("userdata");
     let parsed = JSON.parse(data);
     let doctorid = parsed.userid;
     try {

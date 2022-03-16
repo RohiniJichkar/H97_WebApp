@@ -80,29 +80,22 @@ const columns = [
         //         </Button>
         //     );
         // }
-        RenderCell: (params) => {
+        renderCell: (params) => {
             const onClickDelete = async () => {
                 return alert("Are you Sure!! Do you want to delete medicine");
             };
-            const onClickEdit = async () => {
-                return alert(JSON.stringify(params.row, null, 4));
-            };
+            // const onClickEdit = async () => {;
+            //    navigate('/Doctor_EditAppointment')
+            // };
 
-            const [openeditmodal, setopeneditmodal] = useState(false);
-            const [opendeletemodal, setOpenDeletemodal] = useState(false);
             let currentDate = new Date();
             let t_date = currentDate.toISOString().split('T')[0];
             return (
-                <>
-                    {openeditmodal ? <Edit_Appointment_From_TodaysApp show={openeditmodal} data={params.row} handlemodal={() => setopeneditmodal(false)} /> : null}
-                    {params.row.AppointmentDate >= t_date ? <IconButton onClick={() => setopeneditmodal(true)} style={{ color: '#2C7FB2' }}>
+                <>  
+                <Button size='small' href='/DoctorEditAppointment' style={{fontFamily: 'Poppins', fontWeight: 600, fontSize: 14, color: '#2C7FB2', cursor: 'pointer'}}>Edit</Button>
+                    {/* {params.row.AppointmentDate >= t_date ? <IconButton onClick={() => setopeneditmodal(true)} style={{ color: '#2C7FB2' }}>
                         <EditIcon />
-                    </IconButton> : null}
-                    {opendeletemodal ? <Delete_Appointment show={opendeletemodal} data={params.row.id} handleclose={() => setOpenDeletemodal(false)} /> : null}
-                    {params.row.AppointmentDate >= t_date ? < IconButton color="secondary" onClick={() => setOpenDeletemodal(true)} style={{ color: '#707070' }}>
-                        <DeleteIcon />
-                    </IconButton> : null}
-
+                    </IconButton> : null} */}
                 </>
             );
         }

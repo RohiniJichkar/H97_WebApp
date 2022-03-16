@@ -585,35 +585,6 @@ const Add_Patinet = ({ show, handleclose }) => {
                                             }}
                                         /> <span style={{ position: 'relative', bottom: 8, fontSize: 20, color: 'red' }}> *</span>
 
-
-                                        {/* <form action="" method="post">  
-  <div class="container">
-    <div class="row">
-      <div class="col-sm-4">
-        <h3>Country</h3>
-        <select name="country" class="countries form-control" id="countryId">
-      <option value="">Select Country</option>
-  </select>
-
-      </div>
-      <div class="col-sm-4">
-        <h3>State</h3>
-        <select name="state" class="states form-control" id="stateId">
-      <option value="">Select State</option>
-  </select>
-      </div>
-      <div class="col-sm-4">
-        <h3>City</h3>        
-        <select name="city" class="cities form-control" id="cityId">
-      <option value="">Select City</option>
-  </select>
-      </div>
-    </div>
-  </div>
-</form> */}
-
-
-
                                         <TextField className={classes.inputFields} value={password} onChange={(e) => setpassword(e.target.value)}
                                             id="outlined-basic" type={showPassword ? 'text' : 'password'} size="small" placeholder="Password" variant="outlined"
                                             style={{ marginLeft: 12 }}

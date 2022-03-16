@@ -16,9 +16,6 @@ export function BookedAppointment_List({ data }) {
     const [openmodal, setopenmodal] = useState(false);
     const [patientdetails, setpatientdetails] = useState([]);
 
-    console.log(data)
-    console.log('patientin', patientIn)
-
     const fetchPatientIn = async (item) => {
         // const data = await PatientIn(id, FirstName);
         // setpatientIn(data);

@@ -80,6 +80,7 @@ import Staff_payment from './components/Staff_Screens/Staff_payment';
 import { Provider } from 'react-redux';
 import store from './Redux/Store/index';
 import DoctorMedicines from './components/Doctor_Medicines';
+import DoctorEditAppointment from './components/Doctor_EditAppointment';
 
 const App = () => {
   const navigate = useNavigate();
@@ -161,6 +162,7 @@ const App = () => {
             <Route exact path="/Calander_appointment_tabs" element={<Calander_appointment_tabs />}></Route>
 
             <Route exact path="/DoctorTodaysHVAppDiary" element={<DoctorTodaysHVAppDiary />}></Route>
+            <Route exact path="/DoctorEditAppointment" element={<DoctorEditAppointment />}></Route>
 
 
 

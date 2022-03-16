@@ -32,24 +32,29 @@ export const Edit_Appointment_From_PatientIn_Queue = ({ show, data, handlemodal 
     }, [])
 
     const fetchtimings = async () => {
-        const timingInfo = await Time()
-        settime(timingInfo);
+        try {
+            const timingInfo = await Time()
+            settime(timingInfo);
+        } catch (e) {
+            console.log(e);
+        }
     }
 
     const fetchNotefordoctor = async () => {
-        const doctorsNoteInfo = await Note_for_Doctor()
-        setdoctorsNote(doctorsNoteInfo);
+        try {
+            const doctorsNoteInfo = await Note_for_Doctor()
+            setdoctorsNote(doctorsNoteInfo);
+        } catch (e) {
+            console.log(e);
+        }
     }
 
     const EditAppointmentDetails = async () => {
         const currentTime = new Date();
         let systemTime = currentTime.toTimeString();
         let tdate = currentTime.toISOString().split('T')[0];
-        if (appTime < systemTime) {
-            alert(`You can't not set Appointment at ${appTime}`);
-            return
-        }
-        else if (appDate < tdate) {
+
+        if (appDate < tdate) {
             alert(`You cannot set appointment for ${appDate}`);
             return
         }
@@ -67,19 +72,23 @@ export const Edit_Appointment_From_PatientIn_Queue = ({ show, data, handlemodal 
             AppointmentReason: reason,
             id: data.id
         }
-        const editrequest = await Edit_App_for_Dashboard(obj);
-        let parse = JSON.parse(editrequest);
-        if (parse.success === "200") {
-            alert(parse.message);
-            handlemodal();
-            window.location.reload()
-        }
-        else{
-            alert(parse.message);
+        try {
+            const editrequest = await Edit_App_for_Dashboard(obj);
+            let parse = JSON.parse(editrequest);
+            if (parse.success === "200") {
+                alert(parse.message);
+                handlemodal();
+                window.location.reload()
+            }
+            else {
+                alert(parse.message);
+            }
+        } catch (e) {
+            console.log(e);
         }
 
     }
-    console.log(data)
+
     return (
         <>
             <Dialog
@@ -249,7 +258,9 @@ export const Edit_Appointment_From_PatientIn_Queue = ({ show, data, handlemodal 
                                         onChange={(e) => {
                                             const re = /^[0-9\b]+$/;
                                             if (e.target.value === '' || re.test(e.target.value)) {
-                                                setBp(e.target.value)}}}
+                                                setBp(e.target.value)
+                                            }
+                                        }}
                                         style={{ marginRight: 10 }}
                                     />
                                 </Grid>
@@ -267,7 +278,9 @@ export const Edit_Appointment_From_PatientIn_Queue = ({ show, data, handlemodal 
                                         onChange={(e) => {
                                             const re = /^[0-9\b]+$/;
                                             if (e.target.value === '' || re.test(e.target.value)) {
-                                                setTemp(e.target.value)}}}
+                                                setTemp(e.target.value)
+                                            }
+                                        }}
                                         style={{ marginRight: 10 }}
                                     />
                                 </Grid>
@@ -285,7 +298,9 @@ export const Edit_Appointment_From_PatientIn_Queue = ({ show, data, handlemodal 
                                         onChange={(e) => {
                                             const re = /^[0-9\b]+$/;
                                             if (e.target.value === '' || re.test(e.target.value)) {
-                                                setHeight(e.target.value)}}}
+                                                setHeight(e.target.value)
+                                            }
+                                        }}
                                     />
                                 </Grid>
                             </Grid>
@@ -306,7 +321,9 @@ export const Edit_Appointment_From_PatientIn_Queue = ({ show, data, handlemodal 
                                         onChange={(e) => {
                                             const re = /^[0-9\b]+$/;
                                             if (e.target.value === '' || re.test(e.target.value)) {
-                                                setWeight(e.target.value)}}}
+                                                setWeight(e.target.value)
+                                            }
+                                        }}
                                         style={{ marginRight: 10 }}
                                     />
                                 </Grid>
@@ -324,7 +341,9 @@ export const Edit_Appointment_From_PatientIn_Queue = ({ show, data, handlemodal 
                                         onChange={(e) => {
                                             const re = /^[0-9\b]+$/;
                                             if (e.target.value === '' || re.test(e.target.value)) {
-                                                setSpo2(e.target.value)}}}
+                                                setSpo2(e.target.value)
+                                            }
+                                        }}
                                         style={{ marginRight: 10 }}
                                     />
                                 </Grid>
@@ -343,7 +362,9 @@ export const Edit_Appointment_From_PatientIn_Queue = ({ show, data, handlemodal 
                                         onChange={(e) => {
                                             const re = /^[0-9\b]+$/;
                                             if (e.target.value === '' || re.test(e.target.value)) {
-                                                setPlus(e.target.value)}}}
+                                                setPlus(e.target.value)
+                                            }
+                                        }}
                                     />
                                 </Grid>
                             </Grid>
