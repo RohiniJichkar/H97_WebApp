@@ -430,7 +430,7 @@ export default function DoctorNavbar() {
     {
       text: 'Upload Advertisements',
       icon: FeaturedVideoIcon,
-      onClick: () => setopenmodal(true),
+      onClick: () => navigate("/DoctorAdvertisements"),
     },
 
   ];

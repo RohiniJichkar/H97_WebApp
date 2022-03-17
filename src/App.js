@@ -164,7 +164,7 @@ const App = () => {
             <Route exact path="/Calander_appointment_tabs" element={<Calander_appointment_tabs />}></Route>
             <Route exact path="/DoctorAdvertisements" element={<DoctorAdvertisements />}></Route>
 
-            <Route exact path="/DoctorAdvertisements" element={<DoctorTodaysHVAppDiary />}></Route>
+            <Route exact path="/Doctor_TodaysHVAppDiary" element={<DoctorTodaysHVAppDiary />}></Route>
             <Route exact path="/DoctorEditAppointment" element={<DoctorEditAppointment />}></Route>
 
 
