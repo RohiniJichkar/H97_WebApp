@@ -2,27 +2,9 @@ import React from 'react';
 import axios from 'axios';
 import ip from '../../../ipaddress/ip';
 
-export const Register_Patient = async (clinicid, firstnm, lastnm, mobile, password, email, dob, gender, address, city, pincode, state, country, height, weight, now) => {
-    const body = {
-        ClinicId:clinicid, 
-        FirstName:firstnm, 
-        LastName:lastnm, 
-        MobileNo:mobile, 
-        Password:password, 
-        Email:email, 
-        DOB:dob, 
-        Gender:gender, 
-        Address:address, 
-        City:city, 
-        Pincode:pincode, 
-        State:state, 
-        Country:country, 
-        Height:height, 
-        Weight:weight, 
-        createdDate:now
-    }
+export const Register_Patient = async (obj) => {
     try {
-        const registerPatient = await axios.post(ip + 'Web_AddPatients',body)
+        const registerPatient = await axios.post(ip + 'Web_AddPatients', obj)
         return JSON.stringify(registerPatient?.data);
     }
     catch (error) {

@@ -226,6 +226,28 @@ export default function Edit_Patient({ show, data, handleCloseEditmodal }) {
         let parsed = JSON.parse(cdata);
         let clinicid = parsed.ClinicId;
 
+        let dobstr = dob;
+        let now = new Date();
+        let date = now.toLocaleTimeString().split('T')[0];
+
+        let birth_year = Number(dobstr.substring(0, 4));
+        let birth_month = Number(dobstr.substring(5, 2));
+        let birth_day = Number(dobstr.substring(8, 2));
+
+        let today_year = now.getFullYear();
+        let today_month = now.getMonth();
+        let today_day = now.getDate();
+        let age = today_year - birth_year;
+
+        if (today_month < (birth_month - 1)) {
+            age--;
+            return age;
+        }
+        if (((birth_month - 1) == today_month) && (today_day < birth_day)) {
+            age--;
+            return age;
+        }
+
         const object = {
             ClinicId: clinicid,
             UserId: obj.UserId,
@@ -234,6 +256,7 @@ export default function Edit_Patient({ show, data, handleCloseEditmodal }) {
             MobileNo: mobile,
             Email: email,
             DOB: dob,
+            Age: age,
             Gender: gender,
             Address: address,
             City: city,

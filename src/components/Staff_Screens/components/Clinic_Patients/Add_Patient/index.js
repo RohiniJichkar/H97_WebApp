@@ -40,21 +40,82 @@ const Add_Patinet = ({ show, handleclose }) => {
         let clinicid = parsed.ClinicId;
         const date = new Date();
         const now = date.toISOString().split('T')[0];
+        //     try {
+        //         const registration = await Register_Patient(clinicid, firstnm, lastnm, mobile, password, email, dob, gender, address, city, pincode, state, country, height, weight, now);
+        //         let parse = JSON.parse(registration);
+        //         if (parse.success === "200") {
+        //             alert(parse.message);
+        //             handleclose();
+        //             window.location.reload()
+        //         }
+        //         else {
+        //             alert(parse.message);
+        //         }
+        //     } catch (e) {
+        //         console.log(e)
+        //     }
+
+        // }
+        if (firstnm.trim() == '' || lastnm.trim() == '' || mobile.trim() == '' || password.trim() == '' || dob.trim() == '' || gender.trim() == '') {
+            alert('Please Enter Mandatory fields')
+            return;
+        }
+
+        var FirstNm = firstnm.split(/\s/).join('');
+
+        let dobstr = dob;
+
+        let birth_year = Number(dobstr.substring(0, 4));
+        let birth_month = Number(dobstr.substring(5, 2));
+        let birth_day = Number(dobstr.substring(8, 2));
+
+        let today_year = date.getFullYear();
+        let today_month = date.getMonth();
+        let today_day = date.getDate();
+        let age = today_year - birth_year;
+
+        if (today_month < (birth_month - 1)) {
+            age--;
+            return age;
+        }
+        if (((birth_month - 1) == today_month) && (today_day < birth_day)) {
+            age--;
+            return age;
+        }
+
+        const obj = {
+            ClinicId: clinicid,
+            FirstName: FirstNm,
+            LastName: lastnm,
+            MobileNo: mobile,
+            Password: password,
+            Email: email,
+            DOB: dob,
+            Age: age,
+            Gender: gender,
+            Address: address,
+            City: city,
+            Pincode: pincode,
+            State: state,
+            Country: country,
+            Height: height,
+            Weight: weight,
+            createdDate: now
+        }
+
         try {
-            const registration = await Register_Patient(clinicid, firstnm, lastnm, mobile, password, email, dob, gender, address, city, pincode, state, country, height, weight, now);
+            const registration = await Register_Patient(obj);
             let parse = JSON.parse(registration);
             if (parse.success === "200") {
                 alert(parse.message);
-                handleclose();
+                // setOpenmodal(false);
                 window.location.reload()
-            }
-            else {
+            } else {
                 alert(parse.message);
             }
-        } catch (e) {
-            console.log(e)
+        } catch (error) {
+            console.log(error);
         }
-
     }
 
     const handleClickShowPassword = () => {
@@ -80,7 +141,7 @@ const Add_Patinet = ({ show, handleclose }) => {
                 </DialogTitle>
                 <DialogContent>
                     <DialogContentText id="alert-dialog-description">
-                    <Grid container>
+                        <Grid container>
                             <Grid item xs={12} sm={6} style={{ borderRight: '1px solid #F0F0F0' }}>
                                 <center>
                                     <div>
@@ -93,9 +154,9 @@ const Add_Patinet = ({ show, handleclose }) => {
                                                 if (e.target.value === '' || re.test(e.target.value)) {
                                                     setfirstnm(e.target.value)
                                                 }
-                                            }}style={{marginLeft:14}}
+                                            }} style={{ marginLeft: 14 }}
                                             id="outlined-basic" size="small" placeholder="First Name" variant="outlined" />
-                                            <span style={{position:'relative', bottom:8, fontSize:20, color:'red'}}> *</span>
+                                        <span style={{ position: 'relative', bottom: 8, fontSize: 20, color: 'red' }}> *</span>
                                         <TextField className={classes.inputFields} value={lastnm}
                                             onChange={(e) => {
                                                 const re = /^[A-Za-z]+$/;
@@ -105,8 +166,8 @@ const Add_Patinet = ({ show, handleclose }) => {
                                                 if (e.target.value === '' || re.test(e.target.value)) {
                                                     setlastnm(e.target.value)
                                                 }
-                                            }}style={{marginLeft:14}} id="outlined-basic" size="small" placeholder="Last Name" variant="outlined" />
-                                            <span style={{position:'relative', bottom:8, fontSize:20, color:'red'}}> *</span>
+                                            }} style={{ marginLeft: 14 }} id="outlined-basic" size="small" placeholder="Last Name" variant="outlined" />
+                                        <span style={{ position: 'relative', bottom: 8, fontSize: 20, color: 'red' }}> *</span>
                                         <TextField
                                             className={classes.inputFields}
                                             value={mobile}
@@ -126,9 +187,9 @@ const Add_Patinet = ({ show, handleclose }) => {
                                             variant="outlined"
                                             onInput={(e) => {
                                                 e.target.value = Math.max(0, parseInt(e.target.value)).toString().slice(0, 10)
-                                            }}style={{marginLeft:14}}
-                                        /><span style={{position:'relative', bottom:8, fontSize:20, color:'red'}}> *</span>
-                                        <TextField className={classes.inputFields} style={{marginLeft:14}} value={password} onChange={(e) => setpassword(e.target.value)} id="outlined-basic"
+                                            }} style={{ marginLeft: 14 }}
+                                        /><span style={{ position: 'relative', bottom: 8, fontSize: 20, color: 'red' }}> *</span>
+                                        <TextField className={classes.inputFields} style={{ marginLeft: 14 }} value={password} onChange={(e) => setpassword(e.target.value)} id="outlined-basic"
                                             type={showPassword ? 'text' : 'password'}
                                             size="small" placeholder="Password" variant="outlined"
                                             InputProps={{
@@ -143,10 +204,10 @@ const Add_Patinet = ({ show, handleclose }) => {
                                                         </IconButton>
                                                     </InputAdornment>
                                                 ),
-                                            }} /><span style={{position:'relative', bottom:8, fontSize:20, color:'red'}}> *</span>
+                                            }} /><span style={{ position: 'relative', bottom: 8, fontSize: 20, color: 'red' }}> *</span>
                                         <TextField className={classes.inputFields} value={email} onChange={(e) => setemail(e.target.value)} id="outlined-basic" type="email" size="small" placeholder="Email Id" variant="outlined" />
-                                        <TextField className={classes.inputFields} style={{marginLeft:14}} value={dob} onChange={(e) => setdob(e.target.value)} id="outlined-basic" type="date" size="small" placeholder="DOB" variant="outlined" />
-                                        <span style={{position:'relative', bottom:8, fontSize:20, color:'red'}}> *</span>
+                                        <TextField className={classes.inputFields} style={{ marginLeft: 14 }} value={dob} onChange={(e) => setdob(e.target.value)} id="outlined-basic" type="date" size="small" placeholder="DOB" variant="outlined" />
+                                        <span style={{ position: 'relative', bottom: 8, fontSize: 20, color: 'red' }}> *</span>
                                         <FormControl variant="outlined" size='small' className={classes.formControl}  >
                                             <Select
                                                 className={classes.inputFields}
@@ -158,13 +219,13 @@ const Add_Patinet = ({ show, handleclose }) => {
                                                 inputProps={{
                                                     name: 'gender',
                                                     id: 'outlined-gender-native-simple',
-                                                }}style={{marginLeft:14}}
+                                                }} style={{ marginLeft: 14 }}
                                             >
                                                 <option aria-label="None" value="" >Gender</option>
                                                 <option value='Male'>Male</option>
                                                 <option value='Female'>Female</option>
                                             </Select>
-                                        </FormControl><span style={{position:'relative', bottom:7, fontSize:20, color:'red'}}> *</span>
+                                        </FormControl><span style={{ position: 'relative', bottom: 7, fontSize: 20, color: 'red' }}> *</span>
                                     </div>
                                 </center>
                             </Grid>

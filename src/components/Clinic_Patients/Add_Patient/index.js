@@ -63,24 +63,25 @@ const Add_Patinet = ({ show, handleclose }) => {
 
         var FirstNm = firstnm.split(/\s/).join('');
 
-        // var dobstr = dob;
-        // var birth_year = dobstr.substr(0, 4);
-        // var birth_month = dobstr.substr(5, 2);
-        // var birth_day = dobstr.substr(8, 2);
+        let dobstr = dob;
 
-        // var today_year = date.getFullYear();
-        // var today_month = date.getMonth();
-        // var today_day = date.getDate();
-        // var age = today_year - birth_year;
+        let birth_year = Number(dobstr.substring(0, 4));
+        let birth_month = Number(dobstr.substring(5, 2));
+        let birth_day = Number(dobstr.substring(8, 2));
 
-        // if (today_month < (birth_month - 1)) {
-        //     age--;
-        //     return age;
-        // }
-        // if (((birth_month - 1) == today_month) && (today_day < birth_day)) {
-        //     age--;
-        //     return age;
-        // }
+        let today_year = date.getFullYear();
+        let today_month = date.getMonth();
+        let today_day = date.getDate();
+        let age = today_year - birth_year;
+
+        if (today_month < (birth_month - 1)) {
+            age--;
+            return age;
+        }
+        if (((birth_month - 1) == today_month) && (today_day < birth_day)) {
+            age--;
+            return age;
+        }
 
         const obj = {
             ClinicId: clinicid,
@@ -90,7 +91,7 @@ const Add_Patinet = ({ show, handleclose }) => {
             Password: password,
             Email: email,
             DOB: dob,
-            // Age: age,
+            Age: age,
             Gender: gender,
             Address: address,
             City: city,
