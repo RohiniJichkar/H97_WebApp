@@ -106,9 +106,6 @@ export default function DoctorEditClinicDetails() {
         navigate("/DoctorProfile");
     };
 
-    console.log(doctordata);
-
-
     return (
         <div className={classes.root} style={{ backgroundColor: '#ffffff' }}>
             <DoctorNavbar />
@@ -137,11 +134,7 @@ export default function DoctorEditClinicDetails() {
                         <Button className={classes.btnregister} onClick={handledetailOpenEditmodal} style={{ float: 'right', marginRight: 20, fontFamily: 'Poppins', fontSize: 12, width: 180 }}>Change Clinic Logo</Button>
 
                     </Typography>
-                    {/* <Button onClick={handledetailOpenEditmodal}
-                        style={{color: 'white', border: 'grey', marginBottom: 10, bottom: 24, backgroundColor: '#2C7FB2', borderRadius: 28, width: 130, textTransform: 'capitalize' }} >
-                       
-
-                    </Button> */}
+                  
                     {editdetails ? <ClinicDetails show={editdetails} handleCloseEditmodal={() => seteditdetails(false)} /> : null}
                 </Grid>
                 <Grid item xs={12} >

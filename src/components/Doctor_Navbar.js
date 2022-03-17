@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import clsx from 'clsx';
 import { makeStyles, useTheme } from '@material-ui/core/styles';
 import { useNavigate } from 'react-router-dom';
-import { AppBar, Toolbar, CssBaseline, Typography, Drawer, Divider, MenuItem, Menu,Tooltip, ListItem, ListItemIcon, ListItemText, List, IconButton, Avatar } from "@material-ui/core";
+import { AppBar, Toolbar, CssBaseline, Typography, Button, TextField, FormControl, Grid, Drawer, Divider, MenuItem, Menu, Tooltip, ListItem, ListItemIcon, ListItemText, List, IconButton, Avatar, Dialog, DialogTitle, DialogContent, DialogContentText } from "@material-ui/core";
 import MenuIcon from '@material-ui/icons/Menu';
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
 import ChevronRightIcon from '@material-ui/icons/ChevronRight';
@@ -19,8 +19,10 @@ import PeopleOutlineIcon from '@material-ui/icons/PeopleOutline';
 import ChatIcon from '@material-ui/icons/Chat';
 import SettingsIcon from '@material-ui/icons/Settings';
 import NotificationsNoneIcon from '@material-ui/icons/NotificationsNone';
+import FeaturedVideoIcon from '@material-ui/icons/FeaturedVideo';
 import ip from '../ipaddress/ip';
 import axios from 'axios';
+import CloseIcon from '@material-ui/icons/Close';
 
 const drawerWidth = 240;
 
@@ -167,7 +169,45 @@ const useStyles = makeStyles((theme) => ({
     overflow: 'hidden',
     whiteSpace: 'nowrap',
     textOverflow: 'ellipsis',
-  }
+  },
+  formControl: {
+    margin: theme.spacing(1),
+    minWidth: 180,
+  },
+  btnAdd: {
+    backgroundColor: '#2C7FB2 !important',
+    color: '#fff !important',
+    fontFamily: '"Poppins", san-serif;',
+    fontStyle: 'normal',
+    fontWeight: 400,
+    textAlign: 'center',
+    borderRadius: 28,
+    width: 130,
+  },
+  btnCancle: {
+    backgroundColor: '#2C7FB2 !important',
+    color: '#fff !important',
+    fontFamily: 'Poppins',
+    fontStyle: 'normal',
+    fontWeight: 400,
+    textAlign: 'center',
+    borderRadius: 28,
+    width: 120,
+    marginTop: 10,
+    fontSize: 12
+  },
+  btnregister: {
+    backgroundColor: '#2C7FB2 !important',
+    color: '#fff !important',
+    fontFamily: 'Poppins',
+    fontStyle: 'normal',
+    fontWeight: 400,
+    textAlign: 'center',
+    borderRadius: 28,
+    width: 120,
+    marginTop: 10,
+    fontSize: 12
+  },
 }));
 
 
@@ -177,6 +217,8 @@ export default function DoctorNavbar() {
   const [open, setOpen] = React.useState(false);
   const [auth, setAuth] = React.useState(true);
   const [anchorEl, setAnchorEl] = React.useState(null);
+  const [maxWidth, setMaxWidth] = React.useState('md');
+
   const open1 = Boolean(anchorEl);
   const [doctordata, setdoctordata] = useState({});
   const [staffdata, setstaffdata] = useState({});
@@ -187,6 +229,8 @@ export default function DoctorNavbar() {
   const [appointcount, setappointcount] = useState([]);
   const [openmodal, setopenmodal] = React.useState(false);
   const [Subscriptiondata, setSubscriptiondata] = React.useState('');
+  const [file, setfile] = useState();
+  const [Description, setDescription] = useState('');
 
   // const openprofile = Boolean(anchorElProfile);
   const navigate = useNavigate();
@@ -261,6 +305,33 @@ export default function DoctorNavbar() {
       console.log('still have subcription')
     }
   }
+
+
+
+  const addAdvertisement = async () => {
+    var cdata = await localStorage.getItem("userdata");
+    let parsed = JSON.parse(cdata);
+    let clinicid = parsed.ClinicId;
+    let doctorid = parsed.userid;
+
+    const formdata = new FormData();
+    formdata.append("file", file);
+    formdata.append("DoctorId", doctorid);
+    formdata.append("ClinicId", clinicid);
+    formdata.append("Category", 'TV');
+    formdata.append("Discription", Description);
+
+    try {
+      const addAdvertisements = await axios.post(ip + 'Web_AddTVAdvertisement', formdata, { headers: { "Content-Type": "multipart/form-data" } })
+      if (addAdvertisements) {
+        alert('Advertisement Added Successfully');
+        setopenmodal(false);
+      }
+    } catch (e) {
+      console.log(e);
+    }
+  }
+
 
   useEffect(() => {
     fetchDoctorProfile();
@@ -337,11 +408,6 @@ export default function DoctorNavbar() {
       onClick: () => navigate("/DoctorReports"),
     },
     {
-      text: 'Home Visitor Requests',
-      icon: ChatIcon,
-      onClick: () => navigate('/DoctorHomeVisitRequest'),
-    },
-    {
       text: 'Clinic Staff',
       icon: SupervisorAccountIcon,
       onClick: () => navigate('/DoctorClinicStaff'),
@@ -360,6 +426,11 @@ export default function DoctorNavbar() {
       text: "Clinic Services",
       icon: SettingsIcon,
       onClick: () => navigate("/DoctorClinicServices"),
+    },
+    {
+      text: 'Upload Advertisements',
+      icon: FeaturedVideoIcon,
+      onClick: () => setopenmodal(true),
     },
 
   ];
@@ -470,7 +541,7 @@ export default function DoctorNavbar() {
               <p style={{ color: '#fff', backgroundColor: 'red', position: 'absolute', top: 0, marginLeft: 14, marginTop: 5, border: '1px solid red', borderRadius: 45, width: '20px', fontSize: 12, fontWeight: 600, fontFamily: 'Poppins' }}> {appointcount[0] ? appointcount[0].count : '0'}  </p>
             </center>
             <Tooltip title="Clinic Appointments" arrow>
-            <NotificationsNoneIcon onClick={() => handleAppoint()} style={{ color: '#2C7FB2', cursor: 'pointer' }} />
+              <NotificationsNoneIcon onClick={() => handleAppoint()} style={{ color: '#2C7FB2', cursor: 'pointer' }} />
             </Tooltip>
           </div>
           <div>
@@ -478,11 +549,11 @@ export default function DoctorNavbar() {
               <p style={{ color: '#fff', backgroundColor: 'red', position: 'absolute', top: 0, marginLeft: 14, marginTop: 5, border: '1px solid red', borderRadius: 45, width: '20px', fontSize: 12, fontWeight: 600, fontFamily: 'Poppins' }}> {hvreq[0] ? hvreq[0].count : '0'} </p>
             </center>
             <Tooltip title="Home Visitor Appointments" arrow>
-           
-            <DirectionsWalkIcon onClick={() => handleHVReq()} style={{ color: '#2C7FB2', cursor: 'pointer' }} />
+
+              <DirectionsWalkIcon onClick={() => handleHVReq()} style={{ color: '#2C7FB2', cursor: 'pointer' }} />
             </Tooltip>
           </div>
-        
+
           {/* <div>
             <SettingsIcon onClick={() => setopenmodal(true)} style={{ color: '#2C7FB2', cursor: 'pointer', marginLeft: 10 }} />
           </div> */}
@@ -521,6 +592,91 @@ export default function DoctorNavbar() {
       </Drawer>
 
       <Footer />
+
+
+      {/* Add Advertisement */}
+      <Dialog
+        open={openmodal}
+        maxWidth={maxWidth}
+        aria-labelledby="alert-dialog-title"
+        aria-describedby="alert-dialog-description"
+      >
+        <DialogTitle id="alert-dialog-title" style={{ fontFamily: 'Poppins', fontWeight: 600, fontSize: 20, color: '#2C7FB2' }}>{"Upload Advertisements"}
+          <IconButton edge="start" color="inherit" onClick={() => setopenmodal(false)} aria-label="close" style={{ float: 'right', color: '#2C7FB2', backgroundColor: '#F0F0F0' }}>
+            <CloseIcon />
+          </IconButton>
+        </DialogTitle>
+        <DialogContent>
+          <DialogContentText id="alert-dialog-description">
+            <Grid container xs={12}>
+              <Grid item xs={6}>
+                <center>
+                  <Typography variant="h6" noWrap={true} style={{
+                    fontSize: 16,
+                    fontFamily: 'Poppins',
+                    fontStyle: 'normal',
+                    color: '#707070',
+                    fontWeight: 'bold',
+                    textAlign: 'center',
+                    alignItems: 'center',
+
+                  }}>
+                    Image:
+                  </Typography>
+                </center>
+
+                <center>
+                  <Typography variant="h6" noWrap={true} style={{
+                    fontSize: 16,
+                    fontFamily: 'Poppins',
+                    fontStyle: 'normal',
+                    color: '#707070',
+                    fontWeight: 'bold',
+                    textAlign: 'center',
+                    alignItems: 'center',
+                    marginTop: 25
+
+                  }}>
+                    Description:
+                  </Typography>
+                </center>
+              </Grid>
+              <Grid item xs={6}>
+                <center>
+                  <FormControl variant="outlined"   >
+                    <TextField id="outlined-basic" enctype="multipart/form-data" onChange={e => {
+                      const file = e.target.files[0];
+                      setfile(file)
+                    }} type="file" size="small" label="" variant="outlined" />
+                  </FormControl>
+                </center>
+
+                <TextField multiline
+                  rows={2}
+                  rowsMax={6} id="outlined-basic" size="small" label="" variant="outlined"
+                  onChange={(e) => setDescription(e.target.value)}
+                  style={{ marginTop: 20, width: '94%', marginLeft: 10 }}
+                />
+              </Grid>
+
+              <Grid container>
+                <Grid xs={12} sm={6}>
+                  <Button className={classes.btnCancle} onClick={() => setopenmodal(false)} style={{ float: 'right', marginRight: 20, marginTop: 40 }}>
+                    Cancel
+                  </Button>
+                </Grid>
+                <Grid xs={12} sm={6}>
+                  <Button className={classes.btnregister} onClick={() => addAdvertisement()} autoFocus style={{ float: 'left', marginLeft: 20, marginTop: 40 }}>
+                    Submit
+                  </Button>
+                </Grid>
+              </Grid>
+
+            </Grid>
+          </DialogContentText>
+        </DialogContent>
+
+      </Dialog>
     </div>
   );
 }

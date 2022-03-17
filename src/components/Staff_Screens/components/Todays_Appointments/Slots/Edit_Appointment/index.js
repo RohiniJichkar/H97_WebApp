@@ -103,7 +103,7 @@ export const Edit_Appointment_From_TodaysApp = ({ show, data, handlemodal }) => 
                                 <center>
                                     <Typography variant="h5" noWrap={true}
                                         style={{
-                                            fontFamily: '"Poppins", san-serif;',
+                                            fontFamily: 'Poppins',
                                             fontStyle: 'normal',
                                             fontWeight: 500,
                                             overflow: 'hidden',
@@ -137,7 +137,7 @@ export const Edit_Appointment_From_TodaysApp = ({ show, data, handlemodal }) => 
                                 <center>
                                     <Typography variant="h5" noWrap={true}
                                         style={{
-                                            fontFamily: '"Poppins", san-serif;',
+                                            fontFamily: 'Poppins',
                                             fontStyle: 'normal',
                                             fontWeight: 600,
                                             overflow: 'hidden',

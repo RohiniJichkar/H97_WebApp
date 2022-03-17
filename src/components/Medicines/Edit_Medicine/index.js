@@ -4,6 +4,8 @@ import { useNavigate } from 'react-router-dom';
 import { Dialog, DialogContent, DialogContentText, DialogTitle, TextField, Slide, Select, FormControl, Button, IconButton, Grid, InputLabel, Radio, Typography, Paper, Link } from "@material-ui/core";
 import CloseIcon from '@material-ui/icons/Close';
 import { edit_Medicine } from '../../../Apis/Medicines/index';
+import axios from 'axios';
+import ip from '../../../ipaddress/ip';
 
 const drawerWidth = 240;
 
@@ -21,6 +23,16 @@ export default function Edit_Medicine({ show, data, handleEditModal }) {
     const [mQuantity, setmQuantity] = useState(data.Quantity);
     const [mStartDate, setmStartDate] = useState(data.StartDate);
     const [mExpiryDate, setmExpiryDate] = useState(data.ExpiryDate);
+    const [medicineTypes, setmedicineTypes] = useState([]);
+
+    const fetchmedicinetypes = async () => {
+        try {
+            const medicineInfo = await axios.post(ip + 'Web_GetMedicineTypes');
+            setmedicineTypes(medicineInfo?.data?.MedicineType);
+        } catch (e) {
+            console.log(e);
+        }
+    }
 
     const editMedicine = async () => {
         var sessiondata = await localStorage.getItem("userdata");
@@ -39,13 +51,21 @@ export default function Edit_Medicine({ show, data, handleEditModal }) {
             StartDate: mStartDate,
             ExpiryDate: mExpiryDate,
         }
-        const edit = await edit_Medicine(obj);
-        let parse = JSON.parse(edit);
-        if (parse.success === "200") {
-            alert(parse.message);
-            window.location.reload()
+        try {
+            const edit = await edit_Medicine(obj);
+            let parse = JSON.parse(edit);
+            if (parse.success === "200") {
+                alert(parse.message);
+                window.location.reload()
+            }
+        } catch (e) {
+            console.log(e);
         }
     }
+
+    useEffect(() => {
+        fetchmedicinetypes();
+    }, []);
 
     return (
         <>
@@ -87,9 +107,7 @@ export default function Edit_Medicine({ show, data, handleEditModal }) {
                                                     style={{ width: '75%', fontSize: 14, marginLeft: 50, marginBottom: 15 }}
                                                 >
                                                     <option aria-label="None" value="" >Medicine Type</option>
-                                                    <option value={"Tablet"}>Tablet</option>
-                                                    <option value={"Syrup"}>Syrup</option>
-
+                                                    {medicineTypes.map(v => (<option value={v.MedicineType}>{v.MedicineType}</option>))}
                                                 </Select>
                                             </FormControl>
                                         </Grid>

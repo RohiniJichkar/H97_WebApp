@@ -210,7 +210,7 @@ export default function DoctorDashboard() {
                                     color: '#78B088',
 
                                 }}>
-                                MONTHLY APPOINTMENTS
+                                MONTHLY COMPLETED APPOINTMENTS
                             </Typography>
                         </div>
                         <div className="row" style={{ padding: theme.spacing(0), color: '#00318B' }}>
@@ -222,13 +222,10 @@ export default function DoctorDashboard() {
                 </Grid>
                 {/* Reports grid end */}
 
-
-                <Grid item xs={12} sm={3} onClick={handleRegisterClick} style={{ cursor: 'pointer' }}>
-                    {/* <Button className={classes.btn} size="small" style={{ fontSize: 20 }}>Register Patients</Button> */}
-
+                <Grid item xs={12} sm={3} onClick={handleTodaysAppointmentClick} style={{ cursor: 'pointer' }}>
                     <Paper className={classes.paperServices} elevation={4} style={{ borderRadius: '25px' }}>
                         <Typography variant="h7" noWrap={true} style={{ color: '#2C7FB2', fontSize: 15 }}>
-                            REGISTER PATIENTS
+                            TODAY'S CALENDER
                         </Typography>
                     </Paper>
                 </Grid>
@@ -239,17 +236,18 @@ export default function DoctorDashboard() {
                         </Typography>
                     </Paper>
                 </Grid>
-                <Grid item xs={12} sm={3} onClick={handleTodaysAppointmentClick} style={{ cursor: 'pointer' }}>
+                <Grid item xs={12} sm={3} onClick={handleRegisterClick} style={{ cursor: 'pointer' }}>
+                    {/* <Button className={classes.btn} size="small" style={{ fontSize: 20 }}>Register Patients</Button> */}
                     <Paper className={classes.paperServices} elevation={4} style={{ borderRadius: '25px' }}>
                         <Typography variant="h7" noWrap={true} style={{ color: '#2C7FB2', fontSize: 15 }}>
-                            TODAY'S APPOINTMENTS
+                            REGISTER PATIENTS
                         </Typography>
                     </Paper>
                 </Grid>
                 <Grid item xs={12} sm={3} onClick={handleCalanderAppointmentClick} style={{ cursor: 'pointer' }}>
                     <Paper className={classes.paperServices} elevation={4} style={{ borderRadius: '25px' }}>
                         <Typography variant="h7" noWrap={true} style={{ color: '#2C7FB2', fontSize: 15 }}>
-                            MONTHLY APPOINTMENTS
+                            MONTHLY CALENDER
                         </Typography>
                     </Paper>
                 </Grid>
@@ -406,6 +404,7 @@ const useStyles = makeStyles((theme) => ({
         whiteSpace: 'nowrap',
         textOverflow: 'ellipsis',
         textAlign: 'center',
+        marginTop: 10
 
     },
     gridServices: {

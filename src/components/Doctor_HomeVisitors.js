@@ -516,7 +516,7 @@ export default function DoctorHomeVisitors() {
                                                             }
                                                         }
                                                         } id="outlined-basic" size="small" label="First Name" variant="outlined" style={{ width: '155%', position: 'relative', top: 3 }} />
-                                                </FormControl>
+                                                </FormControl><span style={{position:'relative',left:120, bottom:8, fontSize:20, color:'red'}}> *</span>
                                             </div>
                                             <div>
                                                 <FormControl variant="outlined" className={classes.formControlForm}  >
@@ -530,7 +530,7 @@ export default function DoctorHomeVisitors() {
                                                         }
 
                                                     }} id="outlined-basic" label="Last Name" variant="outlined" size="small" style={{ width: '155%', position: 'relative', top: 12 }} />
-                                                </FormControl>
+                                                </FormControl><span style={{position:'relative',left:120, fontSize:20, color:'red'}}> *</span>
                                             </div>
                                             <div>
                                                 <FormControl variant="outlined" className={classes.formControlForm} >
@@ -543,7 +543,7 @@ export default function DoctorHomeVisitors() {
                                                             seteducation(e.target.value)
                                                         }
                                                     }} id="outlined-basic" type="text" label="Education" variant="outlined" size="small" style={{ width: '155%', position: 'relative', top: 25 }} />
-                                                </FormControl>
+                                                </FormControl><span style={{position:'relative',left:120,top:12, fontSize:20, color:'red'}}> *</span>
                                             </div>
 
                                             <div>
@@ -567,11 +567,11 @@ export default function DoctorHomeVisitors() {
                                                             e.target.value = Math.max(0, parseInt(e.target.value)).toString().slice(0, 10)
 
                                                         }} />
-                                                </FormControl>
+                                                </FormControl><span style={{position:'relative',left:382, bottom:23, fontSize:20, color:'red'}}> *</span>
 
 
                                                 <div>
-                                                    <FormControl variant="outlined" className={classes.formControlForm}  >
+                                                    <FormControl variant="outlined" className={classes.formControlForm}   style={{marginTop:-35}}>
                                                         <TextField className={classes.textFieldForm} onChange={(e) => setemail(e.target.value)} id="outlined-basic" type='email' label="Email ID" variant="outlined" size="small" style={{ width: '185%', marginTop: 51, marginLeft: 43 }} />
                                                     </FormControl>
                                                 </div>
@@ -643,7 +643,7 @@ export default function DoctorHomeVisitors() {
                                         </Grid>
                                     </Grid> */}
                                     <Grid container style={{ marginTop: 0 }}>
-                                        <Grid item xs={6}>
+                                        <Grid item xs={6} style={{marginTop:-11}}>
 
                                             <div>
                                                 <Typography variant="h6" noWrap={true} style={{
@@ -743,7 +743,7 @@ export default function DoctorHomeVisitors() {
                                                         type={showPassword ? 'text' : 'password'}
 
                                                         size='small'
-                                                        style={{ width: '105%', marginLeft: 49, marginTop: 26 }}
+                                                        style={{ width: '103%', marginLeft: 53, marginTop: 15 }}
 
                                                         onChange={(e) => setpassword(e.target.value)}
 
@@ -774,7 +774,7 @@ export default function DoctorHomeVisitors() {
                                                         }}
 
                                                     />
-                                                </FormControl>
+                                                </FormControl><span style={{position:'relative',left:60,top:5, fontSize:20, color:'red'}}> *</span>
                                             </div>
 
                                         </Grid>

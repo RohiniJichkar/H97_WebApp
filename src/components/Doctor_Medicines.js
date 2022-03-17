@@ -306,6 +306,7 @@ export default function DoctorMedicines() {
     const [maxWidth, setMaxWidth] = React.useState('md');
 
     const [medicines, setmedicines] = useState([]);
+    const [medicineTypes, setmedicineTypes] = useState([]);
     const [medicineDetails, setmedicineDetails] = useState('');
     const [mName, setmName] = useState('');
     const [mDescription, setmDescription] = useState('');
@@ -327,13 +328,21 @@ export default function DoctorMedicines() {
         var data = await localStorage.getItem("userdata");
         let parsed = JSON.parse(data);
         let clinicid = parsed.ClinicId;
-        const medicineInfo = await axios.post(ip + 'Web_GetAllMedicines', { ClinicId: clinicid });
-        setmedicines(medicineInfo?.data?.Medicine);
+        try {
+            const medicineInfo = await axios.post(ip + 'Web_GetAllMedicines', { ClinicId: clinicid });
+            setmedicines(medicineInfo?.data?.Medicine);
+        } catch (e) {
+            console.log(e);
+        }
     }
 
     const handleCellClick = async (id) => {
-        const medicineDetailedInfo = await axios.post(ip + 'Web_GetMedicineById', { id: id });
-        setmedicineDetails(medicineDetailedInfo?.data?.Medicine);
+        try {
+            const medicineDetailedInfo = await axios.post(ip + 'Web_GetMedicineById', { id: id });
+            setmedicineDetails(medicineDetailedInfo?.data?.Medicine);
+        } catch (e) {
+            console.log(e);
+        }
     }
 
     const SearchMedicine = async (searchterm) => {
@@ -342,6 +351,16 @@ export default function DoctorMedicines() {
             setmedicines(request)
         } catch (e) {
             console.log(e)
+        }
+    }
+
+
+    const fetchmedicinetypes = async () => {
+        try {
+            const medicineInfo = await axios.post(ip + 'Web_GetMedicineTypes');
+            setmedicineTypes(medicineInfo?.data?.MedicineType);
+        } catch (e) {
+            console.log(e);
         }
     }
 
@@ -397,6 +416,7 @@ export default function DoctorMedicines() {
 
     useEffect(() => {
         fetchmedicines();
+        fetchmedicinetypes();
     }, []);
 
     const handleGoBack = () => {
@@ -668,8 +688,8 @@ export default function DoctorMedicines() {
                                                 style={{ width: '105%', fontSize: 14 }}
                                             >
                                                 <option aria-label="None" value="" >Medicine Type</option>
-                                                <option value='Tablet'>Tablet</option>
-                                                <option value='Syrup'>Syrup</option>
+                                                {medicineTypes.map(v => (<option value={v.MedicineType}>{v.MedicineType}</option>))}
+                                               
                                             </Select>
                                         </FormControl> <span style={{ fontSize: 20, color: 'red', marginLeft: 12 }}> *</span>
                                     </center>

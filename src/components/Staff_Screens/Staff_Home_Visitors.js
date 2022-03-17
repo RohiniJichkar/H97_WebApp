@@ -508,7 +508,8 @@ export default function Staff_Home_Visitors() {
                                                             }
                                                         }
                                                         } id="outlined-basic" size="small" label="First Name" variant="outlined" style={{ width: '155%', position: 'relative', top: 3 }} />
-                                                </FormControl>
+                                                        
+                                                </FormControl><span style={{position:'relative',left:120, bottom:8, fontSize:20, color:'red'}}> *</span>
                                             </div>
                                             <div>
                                                 <FormControl variant="outlined" className={classes.formControlForm}  >
@@ -522,7 +523,7 @@ export default function Staff_Home_Visitors() {
                                                         }
 
                                                     }} id="outlined-basic" label="Last Name" variant="outlined" size="small" style={{ width: '155%', position: 'relative', top: 12 }} />
-                                                </FormControl>
+                                                </FormControl><span style={{position:'relative',left:120, fontSize:20, color:'red'}}> *</span>
                                             </div>
                                             <div>
                                                 <FormControl variant="outlined" className={classes.formControlForm} >
@@ -552,18 +553,18 @@ export default function Staff_Home_Visitors() {
                                                             const re = /^[0-9\b]+$/;
                                                             if (e.target.value === '' || re.test(e.target.value)) {
                                                                 setmobile(e.target.value)
-                                                            }
-                                                        }} id="outlined-basic" type='number' label="Mobile No" variant="outlined" size="small" style={{ width: '185%', marginLeft: 45, position: 'relative', top: 38 }}
+                                                            } 
+                                                        }}  id="outlined-basic" type='number' label="Mobile No" variant="outlined" size="small" style={{ width: '185%', marginLeft: 45, position: 'relative', top: 38 }}
                                                         onInput={(e) => {
                                                             e.target.value = Math.max(0, parseInt(e.target.value)).toString().slice(0, 10)
 
-                                                        }} />
-                                                </FormControl>
+                                                        }} /> 
+                                                </FormControl><span style={{position:'relative',left:'211%',bottom:23, fontSize:20, color:'red'}}> *</span>
 
 
                                                 <div>
                                                     <FormControl variant="outlined" className={classes.formControlForm}  >
-                                                        <TextField className={classes.textFieldForm} onChange={(e) => setemail(e.target.value)} id="outlined-basic" type='email' label="Email ID" variant="outlined" size="small" style={{ width: '185%', marginTop: 51, marginLeft: 43 }} />
+                                                        <TextField className={classes.textFieldForm} onChange={(e) => setemail(e.target.value)} id="outlined-basic" type='email' label="Email ID" variant="outlined" size="small" style={{ width: '185%',marginTop:15, marginLeft: 43 }} />
                                                     </FormControl>
                                                 </div>
 
@@ -759,7 +760,7 @@ export default function Staff_Home_Visitors() {
                                                         }}
 
                                                     />
-                                                </FormControl>
+                                                </FormControl><span style={{position:'relative',left:62,top:15, fontSize:20, color:'red'}}> *</span>
                                             </div>
 
                                         </Grid>

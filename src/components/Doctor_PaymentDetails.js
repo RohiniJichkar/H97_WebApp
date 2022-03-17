@@ -40,6 +40,16 @@ function DoctorPaymentDetails() {
         let parsed = JSON.parse(sessiondata);
         let clinicid = parsed.ClinicId;
         let doctorid = parsed.userid;
+
+        if (paymentmode == '') {
+            alert('Please Select Payment Mode');
+            return;
+        }
+        else if (fees == '') {
+            alert('Please Enter Fees');
+            return;
+        }
+
         const obj = {
             ClinicId: clinicid,
             DoctorId: doctorid,
@@ -64,6 +74,15 @@ function DoctorPaymentDetails() {
 
 
     const handlePrintFinish = async () => {
+        if (paymentmode == '') {
+            alert('Please Select Payment Mode');
+            return;
+        }
+        else if (fees == '') {
+            alert('Please Enter Fees');
+            return;
+        }
+
         handlePaymentDetails().then(data => {
             window.open(pdf, "PRINT", "height=400,width=600");
         })
@@ -229,26 +248,26 @@ function DoctorPaymentDetails() {
                                         </Grid>
                                     </Grid>
                                 </Grid>
-                                <Grid item xs={12} container style={{borderBottom:'1px solid lightgray'}}  >
+                                <Grid item xs={12} container style={{ borderBottom: '1px solid lightgray' }}  >
                                     <Grid item xs={12} sm={6}>
-                                {/* <Grid item xs={6}> */}
-                                    <center>
-                                        <Typography variant="h6" noWrap={true} style={{
-                                            fontSize: 16,
-                                            fontFamily: 'Poppins',
-                                            fontStyle: 'normal',
-                                            color: '#707070',
-                                            fontWeight: 600,
-                                            paddingTop: 10,
-                                            borderRight: '1px solid lightgray',
-                                         
-                                            paddingBottom: 10,
+                                        {/* <Grid item xs={6}> */}
+                                        <center>
+                                            <Typography variant="h6" noWrap={true} style={{
+                                                fontSize: 16,
+                                                fontFamily: 'Poppins',
+                                                fontStyle: 'normal',
+                                                color: '#707070',
+                                                fontWeight: 600,
+                                                paddingTop: 10,
+                                                borderRight: '1px solid lightgray',
 
-                                        }}>
-                                           Appointment Title
-                                        </Typography>
-                                        
-                                    </center>
+                                                paddingBottom: 10,
+
+                                            }}>
+                                                Appointment Title
+                                            </Typography>
+
+                                        </center>
                                     </Grid>
                                     <Grid item xs={12} sm={6} >
                                         <center>
@@ -260,7 +279,7 @@ function DoctorPaymentDetails() {
                                                 fontWeight: 600,
                                                 paddingBottom: 10,
                                                 paddingTop: 10,
-                                               
+
                                             }}>
                                                 Cost code
                                             </Typography>
@@ -271,21 +290,21 @@ function DoctorPaymentDetails() {
 
                                         <Grid item xs={12} container style={{ borderRight: '1px solid lightgray' }}>
                                             <Grid item xs={12}>
-                                            <center>
-                                        
-                                        <Typography variant="h6" noWrap={true} style={{
-                                            fontSize: 16,
-                                            fontFamily: 'Poppins',
-                                            fontStyle: 'normal',
-                                            color: '#707070',
-                                            
-                                            paddingBottom: 10,
-                                            marginLeft:6
-                                        }}>
-                                            {details.Title}
-                                        </Typography>
-                                        
-                                    </center>
+                                                <center>
+
+                                                    <Typography variant="h6" noWrap={true} style={{
+                                                        fontSize: 16,
+                                                        fontFamily: 'Poppins',
+                                                        fontStyle: 'normal',
+                                                        color: '#707070',
+
+                                                        paddingBottom: 10,
+                                                        marginLeft: 6
+                                                    }}>
+                                                        {details.Title}
+                                                    </Typography>
+
+                                                </center>
 
                                             </Grid>
                                         </Grid>
@@ -293,12 +312,12 @@ function DoctorPaymentDetails() {
                                     </Grid>
                                     <Grid item xs={12} sm={6}>
                                         <center>
-                                            <TextField style={{width:150,marginBottom:10,   borderRadius: 25,}} onChange={(e) => setcostcode(e.target.value)} type='number' id="outlined-basic" size="small" label="Cost Code" variant="outlined" />
+                                            <TextField style={{ width: 150, marginBottom: 10, borderRadius: 25, }} onChange={(e) => setcostcode(e.target.value)} type='number' id="outlined-basic" size="small" label="Cost Code" variant="outlined" />
                                         </center>
                                     </Grid>
-                                    </Grid>
-                                 
-                                
+                                </Grid>
+
+
                                 <Grid item xs={12} container >
                                     <Grid item xs={12} sm={6}>
                                         <center>
@@ -311,7 +330,7 @@ function DoctorPaymentDetails() {
                                                 borderRight: '1px solid lightgray',
                                                 paddingTop: 10,
                                                 paddingBottom: 10,
-                                                
+
                                             }}>
                                                 Payment Mode*
                                             </Typography>
@@ -755,7 +774,7 @@ const useStyles = makeStyles((theme) => ({
         fontSize: 12,
         textAlign: 'center',
         width: '100%',
-     
+
     },
     facilitiesInput: {
         fontSize: 16,

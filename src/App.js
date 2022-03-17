@@ -49,6 +49,7 @@ import PaymentReports from './components/Doctor_PaymentReports';
 import Todays_appointment_Tabs from './components/Todays_appointment_tabs';
 import Calander_appointment_tabs from './components/Calander_appointment_tabs';
 import DoctorTodaysHVAppDiary from './components/Doctor_TodaysHVAppDiary';
+import DoctorAdvertisements from './components/Doctor_Advertisements';
 
 import SignUp from './components/SignUp';
 
@@ -81,6 +82,7 @@ import { Provider } from 'react-redux';
 import store from './Redux/Store/index';
 import DoctorMedicines from './components/Doctor_Medicines';
 import DoctorEditAppointment from './components/Doctor_EditAppointment';
+import Staff_EditAppointment from './components/Staff_Screens/Staff_EditAppointment';
 
 const App = () => {
   const navigate = useNavigate();
@@ -160,8 +162,9 @@ const App = () => {
             <Route exact path='/DoctorHomeVisitHistory' element={<DoctorHomeVisitHistory />}></Route>
             <Route exact path="/Todays_appointment_Tabs" element={<Todays_appointment_Tabs />}></Route>
             <Route exact path="/Calander_appointment_tabs" element={<Calander_appointment_tabs />}></Route>
+            <Route exact path="/DoctorAdvertisements" element={<DoctorAdvertisements />}></Route>
 
-            <Route exact path="/DoctorTodaysHVAppDiary" element={<DoctorTodaysHVAppDiary />}></Route>
+            <Route exact path="/DoctorAdvertisements" element={<DoctorTodaysHVAppDiary />}></Route>
             <Route exact path="/DoctorEditAppointment" element={<DoctorEditAppointment />}></Route>
 
 
@@ -190,6 +193,7 @@ const App = () => {
             <Route exact path="/Staff_Home_Visitors" element={<Staff_Home_Visitors />}></Route>
             <Route exact path="/Staff_Patient_Details_SendIn" element={<Staff_Patient_Details_SendIn />}></Route>
             <Route exact path="/Staff_payment" element={<Staff_payment/>}></Route>
+            <Route exact path="/Staff_EditAppointment" element={<Staff_EditAppointment/>}></Route>
             
           </Routes>
         </Fragment>

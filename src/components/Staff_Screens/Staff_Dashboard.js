@@ -203,7 +203,7 @@ export default function Staff_Dashboard() {
                                     color: '#78B088',
 
                                 }}>
-                                MONTHLY APPOINTMENTS
+                                MONTHLY COMPLETED APPOINTMENTS
                             </Typography>
                         </div>
                         <div className="row" style={{ padding: theme.spacing(0), color: '#00318B' }}>
