@@ -161,10 +161,10 @@ export default function Staff_ClinicPatients() {
         var data = await localStorage.getItem("userdata");
         let parsed = JSON.parse(data);
         let clinicid = parsed.ClinicId;
-        try{
-        const patientInfo = await axios.post(getPatientDataApi, { ClinicId: clinicid });
-        setpatientData(patientInfo?.data?.Patients);
-        }catch(e){
+        try {
+            const patientInfo = await axios.post(getPatientDataApi, { ClinicId: clinicid });
+            setpatientData(patientInfo?.data?.Patients);
+        } catch (e) {
             console.log(e);
         }
     }
@@ -187,10 +187,10 @@ export default function Staff_ClinicPatients() {
     }, [])
 
     const handleCellClick = async (userid) => {
-        try{
-        const patientDetailedInfo = await axios.post(getPatientDetailsApi, { UserId: userid });
-        setpatientDetails(patientDetailedInfo?.data?.PatientDetails);
-        }catch(e){
+        try {
+            const patientDetailedInfo = await axios.post(getPatientDetailsApi, { UserId: userid });
+            setpatientDetails(patientDetailedInfo?.data?.PatientDetails);
+        } catch (e) {
             console.log(e);
         }
     }
@@ -199,6 +199,23 @@ export default function Staff_ClinicPatients() {
         navigate(-1);
     };
 
+
+    const handleOpenEditModal = () => {
+        if (patientDetails != '') {
+            setOpenEditmodal(true);
+        } else {
+            alert('Please Select Patient from List');
+        }
+    };
+
+
+    const handleOpenDeleteModal = () => {
+        if (patientDetails != '') {
+            setOpenDeletemodal(true);
+        } else {
+            alert('Please Select Patient from List');
+        }
+    };
 
     return (
         <div className={classes.root} style={{ backgroundColor: '#ffffff' }}>
@@ -338,7 +355,7 @@ export default function Staff_ClinicPatients() {
                                         Age
                                     </Typography>
                                     <Typography variant="h6" noWrap={true} style={{ paddingTop: 5, fontSize: 14, color: '#707070', fontFamily: 'Poppins', }}>
-                                        {patientDetails.Age ? patientDetails.Age : 'NA'}
+                                        {patientDetails.Age ? patientDetails.Age : 'NA'} years
                                     </Typography>
                                 </Grid>
                             </Grid>
@@ -352,12 +369,12 @@ export default function Staff_ClinicPatients() {
                                         {patientDetails.Gender ? patientDetails.Gender : 'NA'}
                                     </Typography>
                                 </Grid>
-                                <Grid item xs={6} style={{ border: '1px solid #F0F0F0', borderLeft: '0px', borderTop: '0px', paddingBottom: 20 }}>
+                                <Grid item xs={9} style={{ border: '1px solid #F0F0F0', borderLeft: '0px', borderTop: '0px', paddingBottom: 20 }}>
                                     <Typography variant="h6" noWrap={true} style={{ paddingTop: 10, fontSize: 14, color: '#707070', fontWeight: 600, fontFamily: 'Poppins', }}>
                                         Address
                                     </Typography>
                                     <Typography variant="h6" noWrap={true} style={{ paddingTop: 5, fontSize: 14, color: '#707070', fontFamily: 'Poppins', marginLeft: 10, marginRight: 10 }}>
-                                        {patientDetails.Address ? patientDetails.Address : 'NA'} {patientDetails.City} {patientDetails.State} {patientDetails.Country} {patientDetails.Pincode} 
+                                        {patientDetails.Address ? patientDetails.Address : 'NA'} {patientDetails.City} {patientDetails.State} {patientDetails.Country} {patientDetails.Pincode}
                                     </Typography>
                                 </Grid>
                                 {/* <Grid item xs={3} style={{ border: '1px solid #F0F0F0', borderLeft: '0px', borderTop: '0px', paddingBottom: 20 }}>
@@ -372,11 +389,11 @@ export default function Staff_ClinicPatients() {
 
                             <Grid container xs={12} style={{ marginTop: 15 }}>
                                 <Grid item sm={6} >
-                                    <Button className={classes.btnregister} onClick={() => setOpenDeletemodal(true)} style={{ float: 'right', marginRight: 20 }}>Delete</Button>
+                                    <Button className={classes.btnregister} onClick={() => handleOpenDeleteModal()} style={{ float: 'right', marginRight: 20 }}>Delete</Button>
 
                                 </Grid>
                                 <Grid item sm={6} >
-                                    <Button className={classes.btnregister} onClick={() => setOpenEditmodal(true)} style={{ float: 'left', marginLeft: 20 }}>Edit</Button>
+                                    <Button className={classes.btnregister} onClick={() => handleOpenEditModal()} style={{ float: 'left', marginLeft: 20 }}>Edit</Button>
                                 </Grid>
                             </Grid>
 

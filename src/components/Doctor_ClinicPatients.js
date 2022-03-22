@@ -94,67 +94,9 @@ export default function DoctorClinicPatients() {
     const [openmodal, setOpenmodal] = React.useState(false);
     const [patientData, setpatientData] = useState([]);
     const [patientDetails, setpatientDetails] = useState([]);
-    // const [firstnm, setfirstnm] = useState('');
-    // const [lastnm, setlastnm] = useState('');
-    // const [mobile, setmobile] = useState('');
-    // const [email, setemail] = useState('');
-    // const [dob, setdob] = useState('');
-    // const [password, setpassword] = useState('');
-    // const [gender, setgender] = useState('');
-    // const [address, setaddress] = useState('');
-    // const [city, setcity] = useState('');
-    // const [pincode, setpincode] = useState('');
-    // const [state, setstate] = useState('');
-    // const [country, setcountry] = useState('');
-    // const [height, setheight] = useState('');
-    // const [weight, setweight] = useState('');
     const [openeditmodal, setOpenEditmodal] = React.useState(false);
     const [opendeletemodal, setOpenDeletemodal] = React.useState(false);
     const [patientsearch, setpatientsearch] = useState([]);
-
-    // const PatientRegistration = async () => {
-    //     var data = await localStorage.getItem("userdata");
-    //     let parsed = JSON.parse(data);
-    //     let clinicid = parsed.ClinicId;
-    //     const date = new Date();
-    //     const now = date.toISOString().split('T')[0];
-    //     if (firstnm.trim() == '' || lastnm.trim() == '' || mobile.trim() == '' || password.trim() == '' || dob.trim() == '' || gender.trim() == '') {
-    //         alert('Please Enter Mandatory fields')
-    //         return;
-    //     }
-    //     const obj = {
-    //         ClinicId: clinicid,
-    //         FirstName: firstnm,
-    //         LastName: lastnm,
-    //         MobileNo: mobile,
-    //         Password: password,
-    //         Email: email,
-    //         DOB: dob,
-    //         Gender: gender,
-    //         Address: address,
-    //         City: city,
-    //         Pincode: pincode,
-    //         State: state,
-    //         Country: country,
-    //         Height: height,
-    //         Weight: weight,
-    //         createdDate: now
-    //     }
-
-    //     try {
-    //         const registration = await Register_Patient(obj);
-    //         let parse = JSON.parse(registration);
-    //         if (parse.success === "200") {
-    //             alert(parse.message);
-    //             setOpenmodal(false);
-    //             window.location.reload()
-    //         } else {
-    //             alert(parse.message);
-    //         }
-    //     } catch (error) {
-    //         console.log(error);
-    //     }
-    // }
 
     const fetchPatientData = async () => {
         var data = await localStorage.getItem("userdata");
@@ -177,33 +119,6 @@ export default function DoctorClinicPatients() {
         }
     }
 
-
-    // const calculateAge = async () => {
-    //     let dobstr = patientDetails.DOB;
-    //     let now = new Date();
-    //     let date = now.toLocaleTimeString().split('T')[0];
-
-    //     let birth_year = Number(dobstr.substring(0, 4));
-    //     let birth_month = Number(dobstr.substring(5, 2));
-    //     let birth_day = Number(dobstr.substring(8, 2));
-
-    //     let today_year = now.getFullYear();
-    //     let today_month = now.getMonth();
-    //     let today_day = now.getDate();
-    //     let age = today_year - birth_year;
-
-    //     if (today_month < (birth_month - 1)) {
-    //         age--;
-    //         return age;
-    //     }
-    //     if (((birth_month - 1) == today_month) && (today_day < birth_day)) {
-    //         age--;
-    //         return age;
-    //     }
-
-    //     console.log(age);
-    // }
-
     useEffect(() => {
         fetchPatientData();
     }, [])
@@ -216,6 +131,23 @@ export default function DoctorClinicPatients() {
             console.log(e);
         }
     }
+
+
+    const handleOpenEditModal = () => {
+        if (patientDetails != '') {
+            setOpenEditmodal(true);
+        } else {
+            alert('Please Select Patient from List');
+        }
+    };
+
+    const handleOpenDeleteModal = () => {
+        if (patientDetails != '') {
+            setOpenDeletemodal(true);
+        } else {
+            alert('Please Select Patient from List');
+        }
+    };
 
     const handleGoBack = () => {
         navigate("/DoctorHome");
@@ -356,10 +288,10 @@ export default function DoctorClinicPatients() {
                                 </Grid>
                                 <Grid item xs={3} style={{ border: '1px solid #F0F0F0', borderLeft: '0px', paddingBottom: 20 }}>
                                     <Typography variant="h6" noWrap={true} style={{ paddingTop: 10, fontSize: 14, color: '#707070', fontWeight: 600, fontFamily: 'Poppins', }}>
-                                        Height/Weight
+                                        Age
                                     </Typography>
                                     <Typography variant="h6" noWrap={true} style={{ paddingTop: 5, fontSize: 14, color: '#707070', fontFamily: 'Poppins', }}>
-                                        {patientDetails.Height ? patientDetails.Height : ' '} ft / {patientDetails.Weight} Kg
+                                        {patientDetails.Age ? patientDetails.Age : 'NA'} years 
                                     </Typography>
                                 </Grid>
                             </Grid>
@@ -393,11 +325,11 @@ export default function DoctorClinicPatients() {
 
                             <Grid container xs={12} style={{ marginTop: 15 }}>
                                 <Grid item sm={6} >
-                                    <Button className={classes.btnregister} onClick={() => setOpenDeletemodal(true)} style={{ float: 'right', marginRight: 20 }}>Delete</Button>
+                                    <Button className={classes.btnregister} onClick={() => handleOpenDeleteModal()} style={{ float: 'right', marginRight: 20 }}>Delete</Button>
 
                                 </Grid>
                                 <Grid item sm={6} >
-                                    <Button className={classes.btnregister} onClick={() => setOpenEditmodal(true)} style={{ float: 'left', marginLeft: 20 }}>Edit</Button>
+                                    <Button className={classes.btnregister} onClick={() => handleOpenEditModal()} style={{ float: 'left', marginLeft: 20 }}>Edit</Button>
                                 </Grid>
                             </Grid>
 

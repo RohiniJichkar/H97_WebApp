@@ -47,11 +47,11 @@ export const Show_Send_In_Details = ({ show, data, handlemodal }) => {
                                                 }}
                                             >
                                                 <center>
-                                                    <h4 style={{
+                                                    <h1 style={{
                                                         fontFamily: "Poppins",
                                                         color: '#78B088',
                                                         fontWeight: 600
-                                                    }}>{item.FirstName} {item.LastName}</h4>
+                                                    }}>{item.FirstName} {item.LastName}</h1>
                                                 </center>
                                             </Grid>
                                             <Grid item xs={12}

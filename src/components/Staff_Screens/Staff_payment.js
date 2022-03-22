@@ -54,24 +54,16 @@ const columns = [
         align: "center",
         headerClassName: 'super-app-theme--header'
     },
-
     // {
-    //     field: 'MobileNo',
-    //     headerName: 'Contact No',
-    //     width: 160,
+    //     field: 'PaymentMode',
+    //     headerName: 'PaymentMode',
+    //     width: 180,
+    //     textAlign: "center",
+    //     headerAlign: 'center',
     //     editable: true,
+    //     align: "center",
+    //     headerClassName: 'super-app-theme--header',
     // },
-
-    {
-        field: 'PaymentMode',
-        headerName: 'PaymentMode',
-        width: 180,
-        textAlign: "center",
-        headerAlign: 'center',
-        editable: true,
-        align: "center",
-        headerClassName: 'super-app-theme--header',
-    },
     {
         field: 'PaymentAmount',
         headerName: 'Amount',
@@ -87,14 +79,13 @@ const columns = [
         field: "Action",
         headerAlign: 'center',
         headerName: "Action",
-        width: 310,
+        width: 495,
         align: "center",
         headerClassName: 'super-app-theme--header',
         sortable: false,
 
         renderCell: (params) => {
-           
-           
+
             let currentDate = new Date();
             let t_date = currentDate.toISOString().split('T')[0];
             let t_time = currentDate.toISOString().split('T')[1];
@@ -104,7 +95,7 @@ const columns = [
                     PaymentMode: 'Cash',
                     PaymentDate: t_date,
                     PaymentTime: t_time,
-                    AppointmentId : params.row.id
+                    AppointmentId: params.row.id
                 }
                 try {
                     var cash = await handle_cashpayment(obj);
@@ -126,7 +117,7 @@ const columns = [
                     PaymentMode: 'Online',
                     PaymentDate: t_date,
                     PaymentTime: t_time,
-                    AppointmentId : params.row.id
+                    AppointmentId: params.row.id
                 }
                 try {
                     var cash = await handle_cashpayment(obj);
@@ -144,11 +135,11 @@ const columns = [
             return (
                 <>
 
-                    {params.row.Action = <Button onClick={() => handleCashPayment()} style={{ color: '#2C7FB2',borderRadius:"26px" }}>
-                        Cash
+                    {params.row.Action = <Button size='small' onClick={() => handleCashPayment()} style={{ backgroundColor: '#2C7FB2', color: '#fff', borderRadius: 25, width: 150 }}>
+                        Cash Payment
                     </Button>}
-                    {params.row.Action = <Button color="secondary" onClick={() => handleOnlinePayment()} style={{ color: '#BBB' }}>
-                        Online
+                    {params.row.Action = <Button size='small' color="secondary" onClick={() => handleOnlinePayment()} style={{ backgroundColor: '#2C7FB2', color: '#fff', borderRadius: 25, marginLeft: 20, width: 150 }}>
+                        Online Payment
                     </Button>}
 
                 </>
@@ -364,24 +355,20 @@ export default function Staff_payment() {
     const theme = useTheme();
     const navigate = useNavigate();
     const [open, setOpen] = React.useState(false);
-    const [page, setPage] = React.useState(0);
-    const [rowsPerPage, setRowsPerPage] = React.useState(4);
-    const [selectedValue, setSelectedValue] = useState('');
-    const [times, settimes] = useState([]);
-    const [eveningtimes, seteveningtimes] = useState([]);
     const [appointmentlist, setappointmentlist] = useState([]);
-    const [startdate, setstartdate] = useState('');
-    const [endDate, setendDate] = useState('');
     const [morningcount, setmorningcount] = useState([]);
     const [eveningcount, seteveningcount] = useState([]);
     const [paymenthistory, setpaymenthistory] = useState([]);
-    const [doctorData, setdoctorData] = useState([]);
-    const [doctor, setDoctor] = React.useState('');
+    const [appTime, setappTime] = useState('');
 
     useEffect(() => {
+        const interval = setInterval(() => {
+            fetchpaymentHistory();
+        }, 10000);
         fetchpaymentHistory();
+        return () => clearInterval(interval);
+    }, []);
 
-    }, [])
     const handleGoBack = () => {
         navigate("/Staff_Home");
     };
@@ -396,24 +383,6 @@ export default function Staff_payment() {
     }
 
 
-    const fetchAppointments = async (doctorid,) => {
-        const appointments = await Todays_Appointment(doctorid);
-        setappointmentlist(appointments);
-    }
-
-
-    const fetchEveningCount = async (doctorid) => {
-        try {
-            const count = await GetEveningSlots(doctorid);
-            seteveningcount(count);
-        }
-        catch (e) {
-            console.log(e);
-        }
-    }
-    console.log(setpaymenthistory)
-
-
     return (
         <div className={classes.root} style={{ backgroundColor: '#ffffff' }}>
             <DoctorNavbar />
@@ -425,121 +394,8 @@ export default function Staff_payment() {
                 })}
                 direction="row"
             >
-                <Grid item xs={12} style={{ paddingTop: 15 }}>
-                    {/* <FormControl variant="outlined" size="small" className={classes.formControl} >
-                        <Select
-                            className={classes.textField}
-                            native
-                            value={doctor}
-                            onChange={(e) => setDoctor(e.target.value)}
-                            label="doctor"
-                            inputProps={{
-                                name: 'doctor',
-                                id: 'outlined-doctor-native-simple',
-                            }}
-                            style={{ width: '100%', position: 'relative', color: '#707070', fontSize: 14, fontWeight: 400, fontFamily: 'Poppins' }}
-                        >
-                            <option aria-label="None" value="" >Select Doctor</option>
-                            {doctorData.map(v => (<option value={v.DoctorId}>Dr. {v.FirstName} {v.LastName}</option>))}
 
-                        </Select>
-                    </FormControl> */}
-
-                    {/* <Button className={classes.btnview} onClick={() => callbackfunction(doctor)} >View</Button> */}
-
-                </Grid>
-                <Grid item xs={12} >
-                    {/* <Typography variant="h5" noWrap={true}
-                        style={{
-                            fontFamily: '"Poppins", san-serif;',
-                            fontStyle: 'normal',
-                            fontWeight: 500,
-                            overflow: 'hidden',
-                            whiteSpace: 'nowrap',
-                            textOverflow: 'ellipsis',
-                            color: '#2C7FB2',
-
-                        }}>
-                        Morning Slots
-                    </Typography> */}
-
-                    {morningcount.map((item) => {
-                        return (<>
-                            <IconButton size='small'  >
-                                <div className='row' style={{ marginLeft: '-30px', marginRight: '-30px' }}>
-                                    <div style={{ marginTop: '-5px', color: '#2C7FB2' }} >
-                                        {item.Count}
-                                    </div>
-                                    <div>
-                                        {item.Count == '0' ? <Button variant="contained" className={classes.btn} style={{ marginTop: '-8px' }}>
-                                            {item.ActualTime}
-                                        </Button> :
-                                            <Button variant="contained" className={classes.btn} style={{ marginTop: '-8px', backgroundColor: '#2C7FB2', color: '#fff' }}>
-                                                {item.ActualTime}
-                                            </Button>}
-                                    </div>
-                                </div>
-                            </IconButton>
-                        </>);
-                    })}
-                </Grid>
-
-                <Grid item xs={12} >
-                    {/* <Typography variant="h5" noWrap={true}
-                        style={{
-                            fontFamily: '"Poppins", san-serif;',
-                            fontStyle: 'normal',
-                            fontWeight: 500,
-                            overflow: 'hidden',
-                            whiteSpace: 'nowrap',
-                            textOverflow: 'ellipsis',
-                            color: '#2C7FB2',
-                            paddingTop: 20
-                        }}>
-                        Evening Slots
-                    </Typography> */}
-
-                    {eveningcount.map((item) => {
-                        return (<>
-                            <IconButton size='small'  >
-                                <div className='row' style={{ marginLeft: '-30px', marginRight: '-30px' }}>
-                                    <div style={{ marginTop: '-5px', color: '#2C7FB2' }} >
-                                        {item.Count}
-                                    </div>
-                                    <div>
-                                        {item.Count == '0' ? <Button variant="contained" className={classes.btn} style={{ marginTop: '-8px' }}>
-                                            {item.ActualTime}
-                                        </Button> :
-                                            <Button variant="contained" className={classes.btn} style={{ marginTop: '-8px', backgroundColor: '#2C7FB2', color: '#fff' }}>
-                                                {item.ActualTime}
-                                            </Button>
-                                        }
-                                    </div>
-                                </div>
-                            </IconButton>
-
-                        </>);
-
-                    })}
-                </Grid>
-                <Grid item xs={12} style={{ paddingTop: 15 }}>
-                    {/* <Typography variant="h8" noWrap={true} style={{ paddingLeft: 5, paddingRight: 20 }}>
-                        From
-                    </Typography>
-
-                    <input id="fromdate" type="date" value={startdate} onChange={(e) => {
-                        setstartdate(e.target.value)
-                    }} style={{ border: '1px solid #F0F0F0', height: 35 }} />
-
-                    <Typography variant="h8" noWrap={true} style={{ paddingLeft: 40, paddingRight: 20 }}>
-                        To
-                    </Typography>
-                    <input id="fromdate" type="date" value={endDate} onChange={(e) => {
-                        setendDate(e.target.value)
-                    }} style={{ border: '1px solid #F0F0F0', height: 35 }} />
-
-                  
-                  <Button className={classes.btnview} onClick={() => Appointmentbydate(startdate, endDate)} >View</Button> */}
+                <Grid item xs={12} style={{ paddingTop: 65 }}>
                     <Button style={{ marginLeft: '-20px', backgroundColor: 'white', color: '#2C7FB2', borderRadius: 105, fontSize: '12px', bottom: '60px' }}> <ArrowBackIcon onClick={handleGoBack} />  </Button>
                     <h4 style={{ color: '#2C7FB2', position: "relative", bottom: 25, marginTop: -68, left: 45 }}>Payment Details</h4>
                 </Grid>
@@ -550,7 +406,6 @@ export default function Staff_payment() {
                             '& .super-app-theme--header': {
                                 backgroundColor: '#78B088',
                                 color: '#fff',
-
                                 fontSize: 14
                             },
                         }}

@@ -13,7 +13,7 @@ import axios from 'axios';
 import { DataGrid } from '@material-ui/data-grid';
 import { Edit_Appointment_From_TodaysApp } from './components/Todays_Appointments/Slots/Edit_Appointment/index';
 import Delete_Appointment from './components/Todays_Appointments/Slots/Delete_Appointment/index';
-import { Todays_Appointment } from '../../Apis/Staff/Todays_Appointments/index';
+import { Todays_Appointment_ForEdit } from '../../Apis/Staff/Todays_Appointments/index';
 
 const getAppDetailsApi = 'http://13.233.217.107:8080/api/Web_GetAppointmentById';
 const getPatientSearchApi = 'http://13.233.217.107:8080/api/Web_SearchPatients';
@@ -91,10 +91,10 @@ export default function Staff_EditAppointment() {
 
 
     const fetchAppointments = async () => {
-        try{
-        const appointments = await Todays_Appointment();
-        setappointmentlist(appointments);
-        }catch(e){
+        try {
+            const appointments = await Todays_Appointment_ForEdit();
+            setappointmentlist(appointments);
+        } catch (e) {
             console.log(e);
         }
     }
@@ -122,12 +122,17 @@ export default function Staff_EditAppointment() {
     }
 
     useEffect(() => {
+        const interval = setInterval(() => {
+            fetchAppointments();
+        }, 10000);
         fetchAppointments();
+        return () => clearInterval(interval);
+
     }, [])
 
 
     const handleGoBack = () => {
-        navigate("/Todays_appointment_Tabs");
+        navigate("/Staff_Todays_Appointment");
     };
 
     return (
@@ -294,7 +299,7 @@ export default function Staff_EditAppointment() {
                                 <Grid item sm={6} >
                                     <Button className={classes.btnregister} onClick={() => {
                                         if (appDetails == '') {
-                                            alert('Please Select Patient from List');
+                                            alert('Please Select Appointment from List');
                                             return;
                                         }
                                         setOpenDeletemodal(true);
@@ -304,7 +309,7 @@ export default function Staff_EditAppointment() {
                                 <Grid item sm={6} >
                                     <Button className={classes.btnregister} onClick={() => {
                                         if (appDetails == '') {
-                                            alert('Please Select Patient from List');
+                                            alert('Please Select Appointment from List');
                                             return;
                                         }
                                         console.log(appDetails.id);
@@ -323,7 +328,7 @@ export default function Staff_EditAppointment() {
 
                 {/* Edit Appointment */}
                 {openeditmodal ? <Edit_Appointment_From_TodaysApp show={openeditmodal} data={appDetails} handlemodal={() => setopeneditmodal(false)} /> : null}
-                
+
                 {/* Delete Appointment */}
                 {opendeletemodal ? <Delete_Appointment show={opendeletemodal} data={appDetails.id} handleclose={() => setOpenDeletemodal(false)} /> : null}
 

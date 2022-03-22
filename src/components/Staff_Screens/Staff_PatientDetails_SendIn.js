@@ -117,7 +117,6 @@ export default function Staff_Patient_Details_SendIn() {
     const [details, setdetails] = useState([location.state.details]);
     const obj = JSON.stringify(details);
 
-
     useEffect(() => {
         setdetails(location.state.details);
     }, []);
@@ -208,7 +207,7 @@ export default function Staff_Patient_Details_SendIn() {
                                 <Grid container xs={12} style={{ paddingTop: 30 }}>
                                     <Grid item sm={6} >
                                         <Typography variant="h6" noWrap={true} style={{ fontSize: 14, color: '#707070', marginBottom: 15, fontWeight: 600 }}>
-                                            Location :
+                                            Age :
                                         </Typography>
                                         <Typography variant="h6" noWrap={true} style={{ fontSize: 14, color: '#707070', marginBottom: 15, fontWeight: 600 }}>
                                             Contact :
@@ -219,7 +218,7 @@ export default function Staff_Patient_Details_SendIn() {
                                     </Grid>
                                     <Grid item sm={6} >
                                         <Typography variant="h6" noWrap={true} style={{ fontSize: 14, color: '#707070', marginBottom: 15 }}>
-                                            {details.Address ? details.Address : 'NA'} {details.City}
+                                            {details.Age ? details.Age : 'NA'}
                                         </Typography>
                                         <Typography variant="h6" noWrap={true} style={{ fontSize: 14, color: '#707070', marginBottom: 15 }}>
                                             {details.MobileNo ? details.MobileNo : 'NA'}

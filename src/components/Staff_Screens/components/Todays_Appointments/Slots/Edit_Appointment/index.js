@@ -66,7 +66,6 @@ export const Edit_Appointment_From_TodaysApp = ({ show, data, handlemodal }) => 
             let parse = JSON.parse(editrequest);
             if (parse.success === "200") {
                 alert(parse.message);
-                handlemodal();
                 window.location.reload()
             }
             else {

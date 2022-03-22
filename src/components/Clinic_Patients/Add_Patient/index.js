@@ -40,24 +40,13 @@ const Add_Patinet = ({ show, handleclose }) => {
         let clinicid = parsed.ClinicId;
         const date = new Date();
         const now = date.toISOString().split('T')[0];
-        //     try {
-        //         const registration = await Register_Patient(clinicid, firstnm, lastnm, mobile, password, email, dob, gender, address, city, pincode, state, country, height, weight, now);
-        //         let parse = JSON.parse(registration);
-        //         if (parse.success === "200") {
-        //             alert(parse.message);
-        //             handleclose();
-        //             window.location.reload()
-        //         }
-        //         else {
-        //             alert(parse.message);
-        //         }
-        //     } catch (e) {
-        //         console.log(e)
-        //     }
-
-        // }
+       
         if (firstnm.trim() == '' || lastnm.trim() == '' || mobile.trim() == '' || password.trim() == '' || dob.trim() == '' || gender.trim() == '') {
             alert('Please Enter Mandatory fields')
+            return;
+        }
+        else if (dob > now) {
+            alert('Invalid Date of Birth');
             return;
         }
 
@@ -118,8 +107,6 @@ const Add_Patinet = ({ show, handleclose }) => {
         }
     }
 
-
-
     const handleClickShowPassword = () => {
         setshowPassword(!showPassword);
     };
@@ -128,404 +115,8 @@ const Add_Patinet = ({ show, handleclose }) => {
         event.preventDefault();
     };
 
-    // document.addEventListener('DOMContentLoaded', () => {
-
-    //     const selectDrop = document.querySelector('#countries');
-    //     // const selectDrop = document.getElementById('countries');
-    //     fetch("https://api.countrystatecity.in/v1/countries/IN/states/MH/cities").then(res => {
-    //       return res.json();
-    //     }).then(data => {
-    //       let output = "";
-    //       data.forEach(country => {
-    //         output += `
-    //         <option value="${country.name}">${country.name}</option>`;
-    //       })
-    //       selectDrop.innerHTML = output;
-    //     }).catch(err => {
-    //       console.log(err);
-    //     })    
-    //   });
-
-
-    //      document.addEventListener('DOMContentLoaded', () => {
-    //     var headers = new Headers();
-    // headers.append("X-CSCAPI-KEY", "API_KEY");
-
-    // var requestOptions = {
-    //   method: 'GET',
-    //   headers: headers,
-    //   redirect: 'follow'
-    // };
-
-    // fetch("https://api.countrystatecity.in/v1/countries", requestOptions)
-    //   .then(response => response.text())
-    //   .then(result => console.log(result))
-    //   .catch(error => console.log('error', error));
-    // });
-
-    // var headers = new Headers();
-    // headers.append("X-CSCAPI-KEY", "API_KEY");
-
-    // var requestOptions = {
-    //   method: 'GET',
-    //   headers: headers,
-    //   redirect: 'follow'
-    // };
-
-    // // Pass Country & State Code -- Eg: Country Code : IN & State Code : MH
-    // fetch("https://api.countrystatecity.in/v1/countries/IN/states/MH/cities", requestOptions)
-    //   .then(response => response.text())
-    //   .then(result => console.log(result))
-    //   .catch(error => console.log('error', error));
-
-
-
-
-    // setOptions({
-    //     theme: 'ios',
-    //     themeVariant: 'light'
-    // });
-
-    // function App() {
-    //     const [myData, setMyData] = React.useState([]);
-
-    //     const inputProps = {
-    //         inputStyle: 'box',
-    //         labelStyle: 'stacked',
-    //         placeholder: 'Please select...'
-    //     };
-
-    //     React.useEffect(() => {
-    //         getJson('https://trial.mobiscroll.com/content/countries.json', (resp) => {
-    //             const countries = [];
-    //             for (let i = 0; i < resp.length; ++i) {
-    //                 const country = resp[i];
-    //                 countries.push({ text: country.text, value: country.value });
-    //             }
-    //             setMyData(countries);
-    //         });
-    //     }, []);
-
-    //     const renderCustomItem = (item) => {
-    //         return <div className="md-country-picker-item">
-    //             <img className="md-country-picker-flag" src={'https://img.mobiscroll.com/demos/flags/' + item.data.value + '.png'} alt="Flag" />
-    //             {item.display}
-    //         </div>;
-    //     }
-
-    //     return (
-    //         <Page>
-    //             <Select
-    //                 data={myData}
-    //                 label="Countries"
-    //                 inputProps={inputProps}
-    //                 display="anchored"
-    //                 itemHeight={40}
-    //                 renderItem={renderCustomItem}
-    //             />
-    //         </Page>
-    //     ); 
-    // }
-
-
-
-
-
-
-    // mobiscroll.setOptions({
-    //     theme: 'ios',
-    //     themeVariant: 'light'
-    // });
-
-    // var inst = mobiscroll.select('#demo-country-picker', {
-    //     display: 'anchored',
-    //     filter: true,
-    //     itemHeight: 40,
-    //     renderItem: function (item) {
-    //         return '<div class="md-country-picker-item">' +
-    //             '<img class="md-country-picker-flag" src="https://img.mobiscroll.com/demos/flags/' + item.data.value + '.png" />' +
-    //             item.display + '</div>';
-    //     }
-    // });
-
-    // mobiscroll.util.http.getJson('https://trial.mobiscroll.com/content/countries.json', function (resp) {
-    //     var countries = [];
-    //     for (var i = 0; i < resp.length; ++i) {
-    //         var country = resp[i];
-    //         countries.push({ text: country.text, value: country.value });
-    //     }
-    //     inst.setOptions({ data: countries });
-    // });
-
-
-
-    // function ajaxCall() {
-    //     this.send = function(data, url, method, success, type) {
-    //         type = type||'json';
-    //         var successRes = function(data) {
-    //             success(data);
-    //         }
-
-    //         var errorRes = function(e) {
-    //             console.log(e);
-    //             //alert("Error found \nError Code: "+e.status+" \nError Message: "+e.statusText);
-    //             //jQuery('#loader').modal('hide');
-    //         }
-    //         jQuery.ajax({
-    //             url: url,
-    //             type: method,
-    //             data: data,
-    //             success: successRes,
-    //             error: errorRes,
-    //             dataType: type,
-    //             timeout: 60000
-    //         });
-
-    //     }
-
-    // }
-
-    // function locationInfo() {
-    //     var rootUrl = "https://api.countrystatecity.in/v1/countries/IN/states/MH/cities";
-    //     //now check for set values
-    //     var addParams = '';
-    //     if(jQuery("#gds_appid").length > 0) {
-    //         addParams += '&appid=' + jQuery("#gds_appid").val();
-    //     }
-    //     if(jQuery("#gds_hash").length > 0) {
-    //         addParams += '&hash=' + jQuery("#gds_hash").val();
-    //     }
-
-    //     var call = new ajaxCall();
-
-    //     this.confCity = function(id) {
-    //      //   console.log(id);
-    //      //   console.log('started');
-    //         var url = rootUrl+'?type=confCity&countryId='+ jQuery('#countryId option:selected').attr('countryid') +'&stateId=' + jQuery('#stateId option:selected').attr('stateid') + '&cityId=' + id;
-    //         var method = "post";
-    //         var data = {};
-    //         call.send(data, url, method, function(data) {
-    //             if(data){
-    //                 //    alert(data);
-    //             }
-    //             else{
-    //                 //   alert('No data');
-    //             }
-    //         });
-    //     };
-
-    //     this.getCities = function(id) {
-    //         jQuery(".cities option:gt(0)").remove();
-    //         //get additional fields
-    //         var stateClasses = jQuery('#cityId').attr('class');
-
-    //         var cC = stateClasses.split(" ");
-    //         cC.shift();
-    //         var addClasses = '';
-    //         if(cC.length > 0)
-    //         {
-    //             acC = cC.join();
-    //             addClasses = '&addClasses=' + encodeURIComponent(acC);
-    //         }
-    //         var url = rootUrl+'?type=getCities&countryId='+ jQuery('#countryId option:selected').attr('countryid') +'&stateId=' + id + addParams + addClasses;
-    //         var method = "post";
-    //         var data = {};
-    //         jQuery('.cities').find("option:eq(0)").html("Please wait..");
-    //         call.send(data, url, method, function(data) {
-    //             jQuery('.cities').find("option:eq(0)").html("Select City");
-    //             if(data.tp == 1){
-    //                 var listlen = Object.keys(data['result']).length;
-
-    //                 if(listlen > 0)
-    //                 {
-    //                     jQuery.each(data['result'], function(key, val) {
-
-    //                         var option = jQuery('<option />');
-    //                         option.attr('value', val).text(val);
-    //                         jQuery('.cities').append(option);
-    //                     });
-    //                 }
-    //                 else
-    //                 {
-    //                     var usestate = jQuery('#stateId option:selected').val();
-    //                     var option = jQuery('<option />');
-    //                     option.attr('value', usestate).text(usestate);
-    //                     option.attr('selected', 'selected');
-    //                     jQuery('.cities').append(option);
-    //                 }
-
-    //                 jQuery(".cities").prop("disabled",false);
-    //             }
-    //             else{
-    //                 alert(data.msg);
-    //             }
-    //         });
-    //     };
-    //     this.getStates = function(id) {
-    //         jQuery(".states option:gt(0)").remove();
-    //         jQuery(".cities option:gt(0)").remove();
-    //         //get additional fields
-    //         var stateClasses = jQuery('#stateId').attr('class');
-
-    //         var cC = stateClasses.split(" ");
-    //         cC.shift();
-    //         var addClasses = '';
-    //         if(cC.length > 0)
-    //         {
-    //             acC = cC.join();
-    //             addClasses = '&addClasses=' + encodeURIComponent(acC);
-    //         }
-    //         var url = rootUrl+'?type=getStates&countryId=' + id + addParams  + addClasses;
-    //         var method = "post";
-    //         var data = {};
-    //         jQuery('.states').find("option:eq(0)").html("Please wait..");
-    //         call.send(data, url, method, function(data) {
-    //             jQuery('.states').find("option:eq(0)").html("Select State");
-    //             if(data.tp == 1){
-    //                 jQuery.each(data['result'], function(key, val) {
-    //                     var option = jQuery('<option />');
-    //                     option.attr('value', val).text(val);
-    //                     option.attr('stateid', key);
-    //                     jQuery('.states').append(option);
-    //                 });
-    //                 jQuery(".states").prop("disabled",false);
-    //             }
-    //             else{
-    //                 alert(data.msg);
-    //             }
-    //         });
-    //     };
-
-    //     this.getCountries = function() {
-    //         //get additional fields
-    //         var countryClasses = jQuery('#countryId').attr('class');
-
-    //         var cC = countryClasses(" ");
-    //         cC.shift();
-    //         var addClasses = '';
-    //         if(cC.length > 0)
-    //         {
-    //             acC = cC.join();
-    //             addClasses = '&addClasses=' + encodeURIComponent(acC);
-    //         }
-
-    //         var presel = false;
-    //         var iip = 'N';
-    //         jQuery.each(cC, function( index, value ) {
-    //             if (value.match("^presel-")) {
-    //                 presel = value.substring(7);
-
-    //             }
-    //             if(value.match("^presel-byi"))
-    //             {
-    //                 var iip = 'Y';
-    //             }
-    //         });
-
-    //         var url = rootUrl+'?type=getCountries' + addParams + addClasses;
-    //         var method = "post";
-    //         var data = {};
-    //         jQuery('.countries').find("option:eq(0)").html("Please wait..");
-    //         call.send(data, url, method, function(data) {
-    //             jQuery('.countries').find("option:eq(0)").html("Select Country");
-
-    //             if(data.tp == 1){
-    //                 if(presel == 'byip')
-    //                 {
-    //                     presel = data['presel'];
-    //                     console.log('2 presel is set as ' + presel);
-    //                 }
-
-
-    //                 if(jQuery.inArray("group-continents",cC) > -1)
-    //                 {
-    //                     var $select = jQuery('.countries');
-    //                     console.log(data['result']);
-    //                     jQuery.each(data['result'], function(i, optgroups) {
-    //                         var $optgroup = jQuery("<optgroup>", {label: i});
-    //                         if(optgroups.length > 0)
-    //                         {
-    //                             $optgroup.appendTo($select);
-    //                         }
-
-    //                         jQuery.each(optgroups, function(groupName, options) {
-    //                             var coption = jQuery('<option />');
-    //                             coption.attr('value', options.name).text(options.name);
-    //                             coption.attr('countryid', options.id);
-    //                             if(presel) {
-    //                                 if (presel.toUpperCase() == options.id) {
-    //                                     coption.attr('selected', 'selected');
-    //                                 }
-    //                             }
-    //                             coption.appendTo($optgroup);
-    //                         });
-    //                     });
-    //                 }
-    //                 else
-    //                 {
-    //                     jQuery.each(data['result'], function(key, val) {
-    //                         var option = jQuery('<option />');
-    //                         option.attr('value', val).text(val);
-    //                         option.attr('countryid', key);
-    //                         if(presel)
-    //                         {
-    //                             if(presel.toUpperCase() ==  key)
-    //                             {
-    //                                 option.attr('selected', 'selected');
-    //                             }
-    //                         }
-    //                         jQuery('.countries').append(option);
-    //                     });
-    //                 }
-    //                 if(presel)
-    //                 {
-    //                     jQuery('.countries').trigger('change');
-    //                 }
-    //                 jQuery(".countries").prop("disabled",false);
-    //             }
-    //             else{
-    //                 alert(data.msg);
-    //             }
-    //         });
-    //     };
-
-    // }
-
-    // jQuery(function() {
-    //     var loc = new locationInfo();
-    //     loc.getCountries();
-    //     jQuery(".countries").on("change", function(ev) {
-    //         var countryId = jQuery("option:selected", this).attr('countryid');
-    //         if(countryId != ''){
-    //             loc.getStates(countryId);
-    //         }
-    //         else{
-    //             jQuery(".states option:gt(0)").remove();
-    //         }
-    //     });
-    //     jQuery(".states").on("change", function(ev) {
-    //         var stateId = jQuery("option:selected", this).attr('stateid');
-    //         if(stateId != ''){
-    //             loc.getCities(stateId);
-    //         }
-    //         else{
-    //             jQuery(".cities option:gt(0)").remove();
-    //         }
-    //     });
-
-    //     jQuery(".cities").on("change", function(ev) {
-    //         var cityId = jQuery("option:selected", this).val();
-    //         if(cityId != ''){
-    //             loc.confCity(cityId);
-    //         }
-    //     });
-    // });
-
-
-
     return (
         <>
-
             <Dialog
                 open={show}
                 maxWidth={maxWidth}
@@ -602,8 +193,9 @@ const Add_Patinet = ({ show, handleclose }) => {
                                                     </InputAdornment>
                                                 ),
                                             }} />  <span style={{ position: 'relative', bottom: 8, fontSize: 20, color: 'red' }}> *</span>
-                                        <TextField className={classes.inputFields} value={email} onChange={(e) => setemail(e.target.value)} id="outlined-basic" type="email" size="small" placeholder="Email Id" variant="outlined" />
-                                        <TextField className={classes.inputFields} style={{ marginLeft: 13 }} value={dob} onChange={(e) => setdob(e.target.value)} id="outlined-basic" type="date" size="small" placeholder="DOB" variant="outlined" />
+                                        <TextField className={classes.inputFields} value={email} onChange={(e) => setemail(e.target.value)} id="outlined-basic" type="email" size="small" placeholder="Email Id" variant="outlined" style={{marginLeft: 30}}/>
+                                        <span style={{position:'relative', top:50, right:290, fontSize:13}}>DOB</span>
+                                        <TextField className={classes.inputFields} style={{ marginLeft: 13 }} defaultValue={new Date()} value={dob} onChange={(e) => setdob(e.target.value)} id="outlined-basic" type="date" size="small" variant="outlined" />
                                         <span style={{ position: 'relative', bottom: 8, fontSize: 20, color: 'red' }}> *</span>
                                         <FormControl variant="outlined" size='small' className={classes.formControl}  >
                                             <Select
@@ -693,12 +285,18 @@ const Add_Patinet = ({ show, handleclose }) => {
                                         <TextField
                                             className={classes.inputFields}
                                             value={height}
-                                            onChange={(e) => setheight(e.target.value)}
+                                            onChange={(e) => {
+                                                const re = /^[0-9-.\b]+$/;
+                                                if (e.target.value === '' || re.test(e.target.value)) {
+                                                    setheight(e.target.value)
+                                                }
+                                            }}
                                             id="outlined-basic"
                                             size="small"
                                             placeholder="Height"
                                             variant="outlined"
                                         />
+
                                         <TextField className={classes.inputFields} value={weight} onChange={(e) => setweight(e.target.value)} id="outlined-basic" size="small" placeholder="Weight" variant="outlined" />
 
                                     </div>

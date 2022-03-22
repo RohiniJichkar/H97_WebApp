@@ -100,6 +100,10 @@ export default function Staff_Dashboard() {
         navigate("/Staff_Todays_Appointment");
     };
 
+    const handleMonthlyAppointmentClick = () => {
+        navigate("/Staff_Monthly_Appointment");
+    };
+
     return (
         <div className={classes.root} style={{ backgroundColor: '#ffffff' }}>
             <DoctorNavbar />
@@ -216,7 +220,7 @@ export default function Staff_Dashboard() {
                 {/* Reports grid end */}
 
 
-                <Grid item xs={12} sm={4} onClick={handleRegisterClick} style={{ cursor: 'pointer' }}>
+                <Grid item xs={12} sm={3} onClick={handleRegisterClick} style={{ cursor: 'pointer' }}>
                     {/* <Button className={classes.btn} size="small" style={{ fontSize: 20 }}>Register Patients</Button> */}
 
                     <Paper className={classes.paperServices} elevation={4} style={{ borderRadius: '25px' }}>
@@ -225,17 +229,24 @@ export default function Staff_Dashboard() {
                         </Typography>
                     </Paper>
                 </Grid>
-                <Grid item xs={12} sm={4} onClick={handleBookAppointmentClick} style={{ cursor: 'pointer' }}>
+                <Grid item xs={12} sm={3} onClick={handleBookAppointmentClick} style={{ cursor: 'pointer' }}>
                     <Paper className={classes.paperServices} elevation={4} style={{ borderRadius: '25px' }} >
                         <Typography variant="h7" noWrap={true} style={{ color: '#2C7FB2', fontSize: 15 }}>
                             BOOK APPOINTMENT
                         </Typography>
                     </Paper>
                 </Grid>
-                <Grid item xs={12} sm={4} onClick={handleTodaysAppointmentClick} style={{ cursor: 'pointer' }}>
+                <Grid item xs={12} sm={3} onClick={handleTodaysAppointmentClick} style={{ cursor: 'pointer' }}>
                     <Paper className={classes.paperServices} elevation={4} style={{ borderRadius: '25px' }}>
                         <Typography variant="h7" noWrap={true} style={{ color: '#2C7FB2', fontSize: 15 }}>
                             TODAY'S APPOINTMENTS
+                        </Typography>
+                    </Paper>
+                </Grid>
+                <Grid item xs={12} sm={3} onClick={handleMonthlyAppointmentClick} style={{ cursor: 'pointer' }}>
+                    <Paper className={classes.paperServices} elevation={4} style={{ borderRadius: '25px' }}>
+                        <Typography variant="h7" noWrap={true} style={{ color: '#2C7FB2', fontSize: 15 }}>
+                            MONTHLY APPOINTMENTS
                         </Typography>
                     </Paper>
                 </Grid>

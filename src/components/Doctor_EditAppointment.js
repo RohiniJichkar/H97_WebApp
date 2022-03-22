@@ -290,7 +290,7 @@ export default function DoctorEditAppointment() {
                                 <Grid item sm={6} >
                                     <Button className={classes.btnregister} onClick={() => {
                                         if (appDetails == '') {
-                                            alert('Please Select Patient from List');
+                                            alert('Please Select Appointment from List');
                                             return;
                                         }
                                         setOpenDeletemodal(true);
@@ -300,7 +300,7 @@ export default function DoctorEditAppointment() {
                                 <Grid item sm={6} >
                                     <Button className={classes.btnregister} onClick={() => {
                                         if (appDetails == '') {
-                                            alert('Please Select Patient from List');
+                                            alert('Please Select Appointment from List');
                                             return;
                                         }
                                         console.log(appDetails.id);

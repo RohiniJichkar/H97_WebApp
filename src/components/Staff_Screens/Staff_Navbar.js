@@ -2,14 +2,12 @@ import React, { useEffect, useState } from 'react';
 import clsx from 'clsx';
 import { makeStyles, useTheme } from '@material-ui/core/styles';
 import { useNavigate } from 'react-router-dom';
-import { AppBar, Toolbar, CssBaseline, Typography, Drawer, Divider, MenuItem, Menu, ListItem, ListItemIcon, ListItemText, List, IconButton, Avatar } from "@material-ui/core";
+import { AppBar, Toolbar, CssBaseline, Typography, Drawer, Tooltip, Divider, MenuItem, Menu, ListItem, ListItemIcon, ListItemText, List, IconButton, Avatar } from "@material-ui/core";
 import MenuIcon from '@material-ui/icons/Menu';
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
 import ChevronRightIcon from '@material-ui/icons/ChevronRight';
 import Footer from '../Footer';
 import DashboardIcon from '@material-ui/icons/Dashboard';
-import SupervisorAccountIcon from '@material-ui/icons/SupervisorAccount';
-import LocalHospitalIcon from '@material-ui/icons/LocalHospital';
 import HomeIcon from '@material-ui/icons/Home';
 import DirectionsWalkIcon from '@material-ui/icons/DirectionsWalk';
 import AssignmentTurnedInIcon from '@material-ui/icons/AssignmentTurnedIn';
@@ -182,6 +180,7 @@ export default function DoctorNavbar() {
   const [authProfile, setAuthProfile] = React.useState(true);
   const [anchorElProfile, setAnchorElProfile] = React.useState(false);
   const [Subscriptiondata, setSubscriptiondata] = React.useState('');
+  const [feescount, setfeescount] = React.useState('');
   // const openprofile = Boolean(anchorElProfile);
   const navigate = useNavigate();
 
@@ -193,7 +192,6 @@ export default function DoctorNavbar() {
     let Role = parsed.Role;
     try {
       const doctorInfo = await axios.post(ip + 'ShowUserDetailUsingId', { UserId: userid, Role: Role });
-      console.log(doctorInfo?.data?.NewUser);
       let dato = doctorInfo?.data?.NewUser[0];
       setdoctordata(dato);
     }
@@ -249,10 +247,26 @@ export default function DoctorNavbar() {
   }
 
 
+  const fetchFeesCount = async () => {
+    var data = await localStorage.getItem("userdata");
+    let parsed = JSON.parse(data);
+    let clinicid = parsed.ClinicId;
+    const fees = await axios.post(ip + 'Web_FeesCount', { ClinicId: clinicid });
+    setfeescount(fees?.data?.Fees);
+  }
+
+
   useEffect(() => {
+    const interval = setInterval(() => {
+      fetchDoctorProfile();
+      fetchClinicDetails();
+      fetchFeesCount();
+    }, 10000);
+    fetchFeesCount();
     fetchDoctorProfile();
     fetchClinicDetails();
     fetch_Subscription_Profile();
+    return () => clearInterval(interval);
   }, [])
 
 
@@ -436,9 +450,18 @@ export default function DoctorNavbar() {
               </Menu>
             </div>
           )}
-          <IconButton onClick={handleAppointment} class="fa fa-inr" style={{ color: '#2C7FB2', backgroundColor: '#fff', cursor: 'pointer', border: '0px solid white', borderRadius: 25, fontSize: 14, fontWeight: 600 }} >
-            Fees
-          </IconButton>
+
+          <div>
+            <center>
+              <p style={{ color: '#fff', backgroundColor: 'red', position: 'absolute', top: 0, marginLeft: 28, marginTop: 5, border: '1px solid red', borderRadius: 45, width: '20px', fontSize: 12, fontWeight: 600, fontFamily: 'Poppins', cursor: 'pointer' }}> {feescount[0] ? feescount[0].count : '0'} </p>
+            </center>
+            <Tooltip title="Pending Appointment Fees" arrow>
+              <IconButton onClick={handleAppointment} class="fa fa-inr" style={{ color: '#2C7FB2', backgroundColor: '#fff', cursor: 'pointer', border: '0px solid white', borderRadius: 25, fontSize: 14, fontWeight: 600 }} >
+                Fees
+              </IconButton>
+            </Tooltip>
+          </div>
+
         </Toolbar>
       </AppBar>
       <Drawer

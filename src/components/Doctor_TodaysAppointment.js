@@ -311,46 +311,6 @@ export default function DoctorTodaysAppointment() {
 
     let currentDate = new Date();
     let t_date = currentDate.toISOString().split('T')[0];
-
-    // function currentlySelected(params: GridCellParams) {
-    //     const value = params.colDef.field;
-    //     const api: GridApi = params.api;
-
-    //     { openeditmodal ? <Edit_Appointment_From_TodaysApp show={openeditmodal} data={params.getValue(params.row)} handlemodal={() => setopeneditmodal(false)} /> : null }
-    //     {
-    //         params.row.AppointmentDate >= t_date ? <IconButton onClick={() => setopeneditmodal(true)} style={{ color: '#2C7FB2' }}>
-    //             <EditIcon />
-    //         </IconButton> : null
-    //     }
-    //     { opendeletemodal ? <Delete_Appointment show={opendeletemodal} data={params.getValue(params.row.id)} handleclose={() => setOpenDeletemodal(false)} /> : null }
-    //     {
-    //         params.row.AppointmentDate >= t_date ? < IconButton color="secondary" onClick={() => setOpenDeletemodal(true)} style={{ color: '#707070' }}>
-    //             <DeleteIcon />
-    //         </IconButton> : null
-    //     }
-
-
-    //     // if (!(value === "edit" || value === "delete")) {
-    //     //     return;
-    //     // }
-    //     // const fields = api
-    //     //     .getAllColumns()
-    //     //     .map((c) => c.field)
-    //     //     .filter((c) => c !== "__check__" && !!c);
-    //     // const thisRow: Record<string, GridCellValue> = {};
-
-    //     // fields.forEach((f) => {
-    //     //     thisRow[f] = params.getValue(params.id, f);
-    //     // });
-
-    //     // setSelectedUser(user);
-    //     // setOpenDialog(true);
-    // }
-
-    // const handleClose = () => {
-    //     setOpenDialog(false);
-    // };
-
     
     const fetchAppointments = async () => {
         const appointments = await Todays_Appointment();

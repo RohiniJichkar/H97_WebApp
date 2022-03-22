@@ -60,6 +60,10 @@ const Add_Patinet = ({ show, handleclose }) => {
             alert('Please Enter Mandatory fields')
             return;
         }
+        else if (dob > now) {
+            alert('Invalid Date of Birth');
+            return;
+        }
 
         var FirstNm = firstnm.split(/\s/).join('');
 
@@ -205,8 +209,9 @@ const Add_Patinet = ({ show, handleclose }) => {
                                                     </InputAdornment>
                                                 ),
                                             }} /><span style={{ position: 'relative', bottom: 8, fontSize: 20, color: 'red' }}> *</span>
-                                        <TextField className={classes.inputFields} value={email} onChange={(e) => setemail(e.target.value)} id="outlined-basic" type="email" size="small" placeholder="Email Id" variant="outlined" />
-                                        <TextField className={classes.inputFields} style={{ marginLeft: 14 }} value={dob} onChange={(e) => setdob(e.target.value)} id="outlined-basic" type="date" size="small" placeholder="DOB" variant="outlined" />
+                                        <TextField className={classes.inputFields} value={email} onChange={(e) => setemail(e.target.value)} id="outlined-basic" type="email" size="small" placeholder="Email Id" variant="outlined" style={{ marginLeft: 30 }} />
+                                        <span style={{ position: 'relative', top: 50, right: 290, fontSize: 13 }}>DOB</span>
+                                        <TextField className={classes.inputFields} style={{ marginLeft: 13 }} defaultValue={new Date()} value={dob} onChange={(e) => setdob(e.target.value)} id="outlined-basic" type="date" size="small" variant="outlined" />
                                         <span style={{ position: 'relative', bottom: 8, fontSize: 20, color: 'red' }}> *</span>
                                         <FormControl variant="outlined" size='small' className={classes.formControl}  >
                                             <Select
@@ -233,13 +238,29 @@ const Add_Patinet = ({ show, handleclose }) => {
                             <Grid item xs={12} sm={6}>
                                 <center>
                                     <div>
-                                        <TextField className={classes.inputFields} multiline
+                                        <TextField className={classes.inputFields} value={country}
                                             onChange={(e) => {
-                                                setaddress(e.target.value)
+                                                const re = /^[A-Za-z]+$/;
+
+                                                // if value is not blank, then test the regex
+
+                                                if (e.target.value === '' || re.test(e.target.value)) {
+                                                    setcountry(e.target.value)
+                                                }
+                                            }} id="outlined-basic" size="small" placeholder="Country" variant="outlined" />
+
+                                        <TextField className={classes.inputFields} value={state}
+                                            onChange={(e) => {
+                                                const re = /^[A-Za-z]+$/;
+
+                                                // if value is not blank, then test the regex
+
+                                                if (e.target.value === '' || re.test(e.target.value)) {
+                                                    setstate(e.target.value)
+                                                }
                                             }}
-                                            rows={2}
-                                            rowsMax={6} id="outlined-basic" size="small" label="Address" variant="outlined"
-                                        />
+                                            id="outlined-basic" size="small" placeholder="State" variant="outlined" />
+
                                         <TextField
                                             className={classes.inputFields}
                                             value={city}
@@ -257,32 +278,26 @@ const Add_Patinet = ({ show, handleclose }) => {
                                             placeholder="City"
                                             variant="outlined"
                                         />
-                                        <TextField className={classes.inputFields} value={pincode} onChange={(e) => setpincode(e.target.value)} id="outlined-basic" size="small" placeholder="Pincode" variant="outlined" />
-                                        <TextField className={classes.inputFields} value={state}
+
+                                        <TextField className={classes.inputFields} multiline
                                             onChange={(e) => {
-                                                const re = /^[A-Za-z]+$/;
-
-                                                // if value is not blank, then test the regex
-
-                                                if (e.target.value === '' || re.test(e.target.value)) {
-                                                    setstate(e.target.value)
-                                                }
+                                                setaddress(e.target.value)
                                             }}
-                                            id="outlined-basic" size="small" placeholder="State" variant="outlined" />
-                                        <TextField className={classes.inputFields} value={country}
-                                            onChange={(e) => {
-                                                const re = /^[A-Za-z]+$/;
+                                            rows={1.2}
+                                            rowsMax={2} id="outlined-basic" size="small" label="Address" variant="outlined"
+                                        />
 
-                                                // if value is not blank, then test the regex
+                                        <TextField className={classes.inputFields} value={pincode} onChange={(e) => setpincode(e.target.value)} id="outlined-basic" size="small" placeholder="Pincode" variant="outlined" />
 
-                                                if (e.target.value === '' || re.test(e.target.value)) {
-                                                    setcountry(e.target.value)
-                                                }
-                                            }} id="outlined-basic" size="small" placeholder="Country" variant="outlined" />
                                         <TextField
                                             className={classes.inputFields}
                                             value={height}
-                                            onChange={(e) => setheight(e.target.value)}
+                                            onChange={(e) => {
+                                                const re = /^[0-9-.\b]+$/;
+                                                if (e.target.value === '' || re.test(e.target.value)) {
+                                                    setheight(e.target.value)
+                                                }
+                                            }}
                                             id="outlined-basic"
                                             size="small"
                                             placeholder="Height"

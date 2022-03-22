@@ -275,6 +275,8 @@ export default function Edit_Patient({ show, data, handleCloseEditmodal }) {
             console.log(error)
         }
     }
+
+    
     return (
         <>
             {/* Edit Patient Details */}
@@ -317,8 +319,9 @@ export default function Edit_Patient({ show, data, handleCloseEditmodal }) {
                                         }} onInput={(e) => {
                                             e.target.value = Math.max(0, parseInt(e.target.value)).toString().slice(0, 10)
                                         }} id="outlined-basic" type="number" size="small" label="Mobile Number" variant="outlined" />
-                                        <TextField className={classes.inputFields} value={email} onChange={(e) => setemail(e.target.value)} id="outlined-basic" type="email" size="small" label="Email Id" variant="outlined" />
-                                        <TextField className={classes.inputFields} value={dob} onChange={(e) => setdob(e.target.value)} id="outlined-basic" type="date" size="small" label="DOB" variant="outlined" />
+                                        <TextField className={classes.inputFields} value={email} onChange={(e) => setemail(e.target.value)} id="outlined-basic" type="email" size="small" placeholder="Email Id" variant="outlined" style={{ marginLeft: 30 }} />
+                                        <span style={{ position: 'relative', top: 50, right: 290, fontSize: 13 }}>DOB</span>
+                                        <TextField className={classes.inputFields} style={{ marginLeft: 3 }} defaultValue={new Date()} value={dob} onChange={(e) => setdob(e.target.value)} id="outlined-basic" type="date" size="small" variant="outlined" />
                                         <FormControl variant="outlined" size='small' className={classes.formControl}  >
                                             <Select
                                                 className={classes.inputFields}
@@ -346,38 +349,47 @@ export default function Edit_Patient({ show, data, handleCloseEditmodal }) {
                             <Grid item xs={12} sm={6}>
                                 <center>
                                     <div style={{ paddingTop: 10 }}>
-                                        <TextField className={classes.inputFields} multiline value={address} onChange={(e) => setaddress(e.target.value)}
-                                            rows={2}
-                                            rowsMax={5} id="outlined-basic" size="small" label="Address" variant="outlined"
-                                        />
-                                        <TextField className={classes.inputFields} value={city} onChange={(e) => {
-                                            const re = /^[A-Za-z]+$/;
-                                            if (e.target.value === '' || re.test(e.target.value)) {
-                                                setcity(e.target.value)
-                                            }
-                                        }} id="outlined-basic" size="small" label="City" variant="outlined" />
-                                        <TextField className={classes.inputFields} value={pincode} onChange={(e) => {
-                                            const re = /^[0-9\b]+$/;
-                                            if (e.target.value === '' || re.test(e.target.value)) {
-                                                setpincode(e.target.value)
-                                            }
-                                        }} id="outlined-basic" size="small" label="Pincode" variant="outlined" />
-                                        <TextField className={classes.inputFields} value={state} onChange={(e) => {
-                                            const re = /^[A-Za-z]+$/;
-                                            if (e.target.value === '' || re.test(e.target.value)) {
-                                                setstate(e.target.value)
-                                            }
-                                        }} id="outlined-basic" size="small" label="State" variant="outlined" />
                                         <TextField className={classes.inputFields} value={country} onChange={(e) => {
                                             const re = /^[A-Za-z]+$/;
                                             if (e.target.value === '' || re.test(e.target.value)) {
                                                 setcountry(e.target.value)
                                             }
                                         }} id="outlined-basic" size="small" label="Country" variant="outlined" />
+                                        <TextField className={classes.inputFields} value={state} onChange={(e) => {
+                                            const re = /^[A-Za-z]+$/;
+                                            if (e.target.value === '' || re.test(e.target.value)) {
+                                                setstate(e.target.value)
+                                            }
+                                        }} id="outlined-basic" size="small" label="State" variant="outlined" />
+                                        <TextField className={classes.inputFields} value={city} onChange={(e) => {
+                                            const re = /^[A-Za-z]+$/;
+                                            if (e.target.value === '' || re.test(e.target.value)) {
+                                                setcity(e.target.value)
+                                            }
+                                        }} id="outlined-basic" size="small" label="City" variant="outlined" />
+                                        <TextField className={classes.inputFields} multiline value={address} onChange={(e) => setaddress(e.target.value)}
+                                            rows={2}
+                                            rowsMax={5} id="outlined-basic" size="small" label="Address" variant="outlined"
+                                        />
+
+                                        <TextField className={classes.inputFields} value={pincode} onChange={(e) => {
+                                            const re = /^[0-9\b]+$/;
+                                            if (e.target.value === '' || re.test(e.target.value)) {
+                                                setpincode(e.target.value)
+                                            }
+                                        }} id="outlined-basic" size="small" label="Pincode" variant="outlined" />
+
                                         <Grid container>
                                             <Grid item xs={12} sm={6}>
                                                 <center>
-                                                    <TextField className={classes.inputFields} value={height} onChange={(e) => setheight(e.target.value)} id="outlined-basic" size="small" type="number" label="Height" variant="outlined" style={{ width: 150, float: 'right', marginRight: 5 }} />
+                                                    <TextField className={classes.inputFields} value={height}
+                                                        onChange={(e) => {
+                                                            const re = /^[0-9-.\b]+$/;
+                                                            if (e.target.value === '' || re.test(e.target.value)) {
+                                                                setheight(e.target.value)
+                                                            }
+                                                        }}
+                                                        id="outlined-basic" size="small" type="number" label="Height" variant="outlined" style={{ width: 150, float: 'right', marginRight: 5 }} />
                                                 </center>
                                             </Grid>
                                             <Grid item xs={12} sm={6}>

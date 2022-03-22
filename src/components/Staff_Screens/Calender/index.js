@@ -7,16 +7,16 @@ import AccountCircle from '@material-ui/icons/AccountCircle';
 import SearchIcon from '@material-ui/icons/Search';
 import DeleteIcon from '@material-ui/icons/Delete';
 import EditIcon from '@material-ui/icons/Edit';
-import { GetMorningSlots, GetEveningSlots, Todays_Appointment, Todays_Appointment_By_Date } from '../../Apis/Todays_Appointments/index';
+import { GetMorningSlots, GetEveningSlots, Todays_Appointment, Todays_Appointment_By_Date } from '../../../Apis/Todays_Appointments/index';
 import { DataGrid } from '@material-ui/data-grid';
-import { Edit_Appointment_From_TodaysApp } from '../Todays_Appointments/Slots/Edit_Appointment/index';
-import Delete_Appointment from '../Todays_Appointments/Slots/Delete_Appointment/index';
+import { Edit_Appointment_From_TodaysApp } from '../../Todays_Appointments/Slots/Edit_Appointment/index';
+import Delete_Appointment from '../../Todays_Appointments/Slots/Delete_Appointment/index';
 import { Calendar, momentLocalizer } from "react-big-calendar";
 import moment from "moment";
 import "react-big-calendar/lib/css/react-big-calendar.css";
 import axios from 'axios';
-import { BookedAppointments } from '../../Apis/PatientInQueue';
-import ip from '../../ipaddress/ip';
+import { BookedAppointments } from '../../../Apis/PatientInQueue';
+import ip from '../../../ipaddress/ip';
 import { Show_Appointment_details } from './Show_Appointment_Details/index';
 
 const drawerWidth = 240;
@@ -337,23 +337,25 @@ export default function Appointments_On_Calender() {
         return {
             id: items.id,
             title: items.FirstName + ' ' + items.LastName,
-            appointmentTitle: items.Title,
             allDay: true,
             startDate: items.AppointmentDate + ' ' + items.AppointmentTime,
             endDate: items.AppointmentDate + ' ' + items.AppointmentTime,
+            doctor: items.DFName + ' ' + items.DLName,
             data: { items }
             //description: "sdsdsdsdsdsdsdsd"
         }
     })
 
+    console.log(appointmentlist)
+
     const fetchAppointments = async () => {
         var data = await localStorage.getItem("userdata");
         let parsed = JSON.parse(data);
-        let UserId = parsed.userid;
+        // let UserId = parsed.userid;
         let ClinicId = parsed.ClinicId;
         try {
-            const request = await axios.post(ip + 'Web_GetMonthlyAppoints', {
-                DoctorId: UserId,
+            const request = await axios.post(ip + 'Web_GetMonthlyAppoints_Recp', {
+                // DoctorId: UserId,
                 ClinicId: ClinicId
             })
             setappointmentlist(request?.data?.Appointment)

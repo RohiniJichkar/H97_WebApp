@@ -4,11 +4,9 @@ import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import { useDispatch, useSelector } from "react-redux";
 import './App.css';
 import BookAppointment from './components/Staff_BookAppointment';
-import Footer from './components/Footer';
 import HomeScreen from './components/HomeScreen';
 import Login from './components/Login';
 import { useNavigate } from 'react-router-dom';
-import Navbar from './components/Navbar';
 import PatientRegistration from './components/Staff_PatientRegistration';
 import TodaysAppointment from './components/Staff_TodaysAppointment';
 import Dashboard from './components/Staff_Dashboard';
@@ -77,6 +75,7 @@ import Staff_Home_Visitors from './components/Staff_Screens/Staff_Home_Visitors'
 import Staff_Patient_Details_SendIn from './components/Staff_Screens/Staff_PatientDetails_SendIn';
 import Staff_Assign_Home_Visitor from './components/Staff_Screens/Staff_Assign_Home_Visitor';
 import Staff_payment from './components/Staff_Screens/Staff_payment';
+import Staff_Monthly_Appointment from './components/Staff_Screens/Staff_Monthly_Appointment';
 
 import { Provider } from 'react-redux';
 import store from './Redux/Store/index';
@@ -192,9 +191,11 @@ const App = () => {
             <Route exact path="/Staff_Home_Visit_Request" element={<Staff_Home_Visit_Request />}></Route>
             <Route exact path="/Staff_Home_Visitors" element={<Staff_Home_Visitors />}></Route>
             <Route exact path="/Staff_Patient_Details_SendIn" element={<Staff_Patient_Details_SendIn />}></Route>
-            <Route exact path="/Staff_payment" element={<Staff_payment/>}></Route>
-            <Route exact path="/Staff_EditAppointment" element={<Staff_EditAppointment/>}></Route>
-            
+            <Route exact path="/Staff_payment" element={<Staff_payment />}></Route>
+            <Route exact path="/Staff_EditAppointment" element={<Staff_EditAppointment />}></Route>
+            <Route exact path="/Staff_Monthly_Appointment" element={<Staff_Monthly_Appointment />}></Route>
+
+
           </Routes>
         </Fragment>
       </div>

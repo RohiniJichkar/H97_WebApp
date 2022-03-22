@@ -507,7 +507,7 @@ export default function DoctorAddStaff() {
                         </Paper>
                     </Grid>
 
-                    <Grid item xs={12} xs={2}>
+                    <Grid item sm={2}>
                         <Paper elevation={0}></Paper>
                     </Grid>
 

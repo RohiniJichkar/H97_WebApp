@@ -8,7 +8,7 @@ import AccountCircle from '@material-ui/icons/AccountCircle';
 import SearchIcon from '@material-ui/icons/Search';
 import DeleteIcon from '@material-ui/icons/Delete';
 import EditIcon from '@material-ui/icons/Edit';
-import { GetMorningSlots, GetEveningSlots, Todays_Appointment, Todays_Appointment_By_Date } from '../../Apis/Staff/Todays_Appointments/index';
+import { GetMorningSlots, GetEveningSlots, Todays_Appointment, Todays_Appointment_By_Date, GetAppByTimeWise } from '../../Apis/Staff/Todays_Appointments/index';
 import { DataGrid } from '@material-ui/data-grid';
 import { Edit_Appointment_From_TodaysApp } from './components/Todays_Appointments/Slots/Edit_Appointment/index';
 import Delete_Appointment from './components/Todays_Appointments/Slots/Delete_Appointment/index';
@@ -32,8 +32,8 @@ const columns = [
     //     editable: true,
     // },
     {
-        field: 'AppointmentReason',
-        headerName: 'Appointment Reason',
+        field: 'Title',
+        headerName: 'Appointment Title',
         width: 220,
         editable: true,
     },
@@ -85,7 +85,7 @@ const columns = [
             // let t_date = currentDate.toISOString().split('T')[0];
             return (
                 <>
-                <Button size='small' href='/Staff_EditAppointment' style={{fontFamily: 'Poppins', fontWeight: 600, fontSize: 14, color: '#2C7FB2', cursor: 'pointer'}}>Edit</Button>
+                    <Button size='small' href='/Staff_EditAppointment' style={{ fontFamily: 'Poppins', fontWeight: 600, fontSize: 14, color: '#2C7FB2', cursor: 'pointer' }}>Edit</Button>
 
                     {/* {openeditmodal ? <Edit_Appointment_From_TodaysApp show={openeditmodal} data={params.row} handlemodal={() => setopeneditmodal(false)} /> : null}
                     {params.row.AppointmentDate >= t_date ? <IconButton onClick={() => setopeneditmodal(true)} style={{ color: '#2C7FB2' }}>
@@ -311,9 +311,11 @@ export default function Staff_Todays_Appointment() {
     const [endDate, setendDate] = useState('');
     const [morningcount, setmorningcount] = useState([]);
     const [eveningcount, seteveningcount] = useState([]);
+    const [docid, setdocid] = useState('');
 
     const [doctorData, setdoctorData] = useState([]);
     const [doctor, setDoctor] = React.useState('');
+
 
     const fetchdoctorsdata = async () => {
         try {
@@ -325,11 +327,19 @@ export default function Staff_Todays_Appointment() {
         }
     }
     const callbackfunction = async (doctorid, startdate, endDate) => {
+        setdocid(doctorid);
+        const interval = setInterval(() => {
+            fetchAppointments(doctorid);
+            fetchMorningCount(doctorid);
+            fetchEveningCount(doctorid)
+        }, 10000);
         await fetchAppointments(doctorid);
         await fetchMorningCount(doctorid);
         await fetchEveningCount(doctorid);
+        return () => clearInterval(interval);
     }
-    const fetchAppointments = async (doctorid,) => {
+
+    const fetchAppointments = async (doctorid) => {
         try {
             const appointments = await Todays_Appointment(doctorid);
             setappointmentlist(appointments);
@@ -358,6 +368,24 @@ export default function Staff_Todays_Appointment() {
         }
     }
 
+    const fetchAppTimeWise = async (val, doctorid) => {
+        var data = await localStorage.getItem("userdata");
+        let parsed = JSON.parse(data);
+        let clinicid = parsed.ClinicId;
+
+        const obj = {
+            ClinicId: clinicid,
+            AppointmentTime: val,
+            DoctorId: docid
+        }
+        try {
+            const appointmentInfo = await GetAppByTimeWise(obj);
+            setappointmentlist(appointmentInfo);
+        } catch (e) {
+            console.log(e);
+        }
+    }
+
     useEffect(() => {
         fetchdoctorsdata();
     }, []);
@@ -377,6 +405,7 @@ export default function Staff_Todays_Appointment() {
             console.log(e)
         }
     }
+
 
     return (
         <div className={classes.root} style={{ backgroundColor: '#ffffff' }}>
@@ -435,10 +464,10 @@ export default function Staff_Todays_Appointment() {
                                         {item.Count}
                                     </div>
                                     <div>
-                                        {item.Count == '0' ? <Button variant="contained" className={classes.btn} style={{ marginTop: '-8px' }}>
+                                        {item.Count == '0' ? <Button variant="contained" onClick={(val) => fetchAppTimeWise(item.ActualTime)} className={classes.btn} style={{ marginTop: '-8px' }}>
                                             {item.ActualTime}
                                         </Button> :
-                                            <Button variant="contained" className={classes.btn} style={{ marginTop: '-8px', backgroundColor: '#2C7FB2', color: '#fff' }}>
+                                            <Button variant="contained" className={classes.btn} onClick={(val) => fetchAppTimeWise(item.ActualTime)} style={{ marginTop: '-8px', backgroundColor: '#2C7FB2', color: '#fff' }}>
                                                 {item.ActualTime}
                                             </Button>}
                                     </div>
@@ -471,10 +500,10 @@ export default function Staff_Todays_Appointment() {
                                         {item.Count}
                                     </div>
                                     <div>
-                                        {item.Count == '0' ? <Button variant="contained" className={classes.btn} style={{ marginTop: '-8px' }}>
+                                        {item.Count == '0' ? <Button variant="contained" onClick={(val) => fetchAppTimeWise(item.ActualTime)} className={classes.btn} style={{ marginTop: '-8px' }}>
                                             {item.ActualTime}
                                         </Button> :
-                                            <Button variant="contained" className={classes.btn} style={{ marginTop: '-8px', backgroundColor: '#2C7FB2', color: '#fff' }}>
+                                            <Button variant="contained" className={classes.btn} onClick={(val) => fetchAppTimeWise(item.ActualTime)} style={{ marginTop: '-8px', backgroundColor: '#2C7FB2', color: '#fff' }}>
                                                 {item.ActualTime}
                                             </Button>
                                         }

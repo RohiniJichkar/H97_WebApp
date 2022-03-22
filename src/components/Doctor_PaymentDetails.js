@@ -41,11 +41,7 @@ function DoctorPaymentDetails() {
         let clinicid = parsed.ClinicId;
         let doctorid = parsed.userid;
 
-        if (paymentmode == '') {
-            alert('Please Select Payment Mode');
-            return;
-        }
-        else if (fees == '') {
+       if (fees == '') {
             alert('Please Enter Fees');
             return;
         }
@@ -74,11 +70,7 @@ function DoctorPaymentDetails() {
 
 
     const handlePrintFinish = async () => {
-        if (paymentmode == '') {
-            alert('Please Select Payment Mode');
-            return;
-        }
-        else if (fees == '') {
+        if (fees == '') {
             alert('Please Enter Fees');
             return;
         }
@@ -158,6 +150,7 @@ function DoctorPaymentDetails() {
                                         {details.ProfileImage ?
                                             <Avatar style={{ borderRadius: 200, height: 90, width: 90, marginTop: 20 }} src={details.ProfileImage} /> :
                                             <Avatar style={{ borderRadius: 200, height: 90, width: 90, marginTop: 20 }} />}
+                                        <Typography style={{color: '#707070', fontFamily: 'Poppins', fontWeight: 600}}>Age - {details.Age ? details.Age : 'NA'}</Typography>
                                     </center>
                                 </Grid>
 
@@ -332,7 +325,7 @@ function DoctorPaymentDetails() {
                                                 paddingBottom: 10,
 
                                             }}>
-                                                Payment Mode*
+                                                Payment Mode
                                             </Typography>
                                         </center>
                                     </Grid>

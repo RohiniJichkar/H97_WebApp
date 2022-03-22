@@ -1140,7 +1140,7 @@ export default function DoctorClinicStaff() {
             Gender: gender,
             MorningStartTime: MorningStartTime,
             MorningEndTime: MorningEndTime,
-            EveningStartTime:EveningStartTime,
+            EveningStartTime: EveningStartTime,
             EveningEndTime: EveningEndTime
 
         }
@@ -1211,8 +1211,18 @@ export default function DoctorClinicStaff() {
     const [openeditmodal, setOpenEditmodal] = React.useState(false);
 
     const handleClickOpenEditmodal = () => {
-        if (staffDetails.length > 0) {
+        if (staffDetails != '') {
             seteditmodal(true);
+        }
+        else {
+            alert('Please Select Staff from List');
+        }
+    };
+
+
+    const handleClickOpenDeletemodal = () => {
+        if (staffDetails != '') {
+            setOpenDeletemodal(true);
         }
         else {
             alert('Please Select Staff from List');
@@ -1268,7 +1278,7 @@ export default function DoctorClinicStaff() {
                 </Grid>
 
                 <Grid item xs={12} sm={4} >
-                    <Paper elevation={6} className={classes.paper} style={{ padding: 30, paddingBottom: 10, height:450 }}>
+                    <Paper elevation={6} className={classes.paper} style={{ padding: 30, paddingBottom: 10, height: 450 }}>
                         <Grid container>
                             <Grid item xs={12} sm={6}>
                                 <SearchIcon className={classes.searchIcon} />
@@ -1401,13 +1411,13 @@ export default function DoctorClinicStaff() {
                                 <Grid item xs={3} style={{ border: '1px solid #F0F0F0', borderLeft: '0px', borderTop: '0px', paddingBottom: 20 }}>
                                     <Typography variant="h6" noWrap={true} style={{ paddingTop: 10, fontSize: 14, color: '#707070', fontWeight: 600, fontFamily: 'Poppins', }}>
                                         Shift Timing
-                                    </Typography>       
-                                    <Typography variant="h6" noWrap={true} style={{ fontSize: 14, color: '#707070', fontFamily: 'Poppins', marginLeft: 10, marginRight: 10 }}>                                                                                  
-                                       {staffDetails[0] ? staffDetails[0].From_AvailabilityTime ? staffDetails[0].From_AvailabilityTime : staffDetails[0].MorningStartTime : null} - {staffDetails[0] ? staffDetails[0].To_AvailabilityTime ? staffDetails[0].To_AvailabilityTime : staffDetails[0].MorningEndTime : null}                                                                         
-                                       </Typography>
-                                       <Typography variant="h6" noWrap={true} style={{ fontSize: 14, color: '#707070', fontFamily: 'Poppins', marginLeft: 10, marginRight: 10 }}>                                                                                                                        
-                                       {staffDetails[0] ? staffDetails[0].EveningStartTime !== null ? staffDetails[0].EveningStartTime : '' : null} - {staffDetails[0] ? staffDetails[0].EveningEndTime !== null ? staffDetails[0].EveningEndTime : '' : null}                                        
-                                       </Typography>
+                                    </Typography>
+                                    <Typography variant="h6" noWrap={true} style={{ fontSize: 14, color: '#707070', fontFamily: 'Poppins', marginLeft: 10, marginRight: 10 }}>
+                                        {staffDetails[0] ? staffDetails[0].From_AvailabilityTime ? staffDetails[0].From_AvailabilityTime : staffDetails[0].MorningStartTime : null} - {staffDetails[0] ? staffDetails[0].To_AvailabilityTime ? staffDetails[0].To_AvailabilityTime : staffDetails[0].MorningEndTime : null}
+                                    </Typography>
+                                    <Typography variant="h6" noWrap={true} style={{ fontSize: 14, color: '#707070', fontFamily: 'Poppins', marginLeft: 10, marginRight: 10 }}>
+                                        {staffDetails[0] ? staffDetails[0].EveningStartTime !== null ? staffDetails[0].EveningStartTime : '' : null} - {staffDetails[0] ? staffDetails[0].EveningEndTime !== null ? staffDetails[0].EveningEndTime : '' : null}
+                                    </Typography>
                                 </Grid>
                             </Grid>
 
@@ -1415,10 +1425,10 @@ export default function DoctorClinicStaff() {
 
                             <Grid container xs={12} style={{ marginTop: 15 }}>
                                 <Grid item sm={6} >
-                                    <Button className={classes.btnregister} onClick={() => setOpenDeletemodal(true)} style={{ float: 'right', marginRight: 20 }}>Delete</Button>
+                                    <Button className={classes.btnregister} onClick={() => handleClickOpenDeletemodal()} style={{ float: 'right', marginRight: 20 }}>Delete</Button>
                                 </Grid>
                                 <Grid item sm={6} >
-                                    <Button className={classes.btnregister} onClick={handleClickOpenEditmodal} style={{ float: 'left', marginLeft: 20 }}>Edit</Button>
+                                    <Button className={classes.btnregister} onClick={() => handleClickOpenEditmodal()} style={{ float: 'left', marginLeft: 20 }}>Edit</Button>
                                 </Grid>
                             </Grid>
 
@@ -1437,7 +1447,7 @@ export default function DoctorClinicStaff() {
                     aria-labelledby="alert-dialog-title"
                     aria-describedby="alert-dialog-description"
                 >
-                     <DialogTitle id="alert-dialog-title" style={{ fontFamily: 'Poppins', fontWeight: 600, fontSize: 20, color: '#2C7FB2' }}>{"Add Staff"}<span style={{marginLeft: 200, color: 'red', fontFamily: 'Poppins', fontSize: 12 }}>Note : You have added {staffData.length} out of 5 staffs in current subscription</span>
+                    <DialogTitle id="alert-dialog-title" style={{ fontFamily: 'Poppins', fontWeight: 600, fontSize: 20, color: '#2C7FB2' }}>{"Add Staff"}<span style={{ marginLeft: 200, color: 'red', fontFamily: 'Poppins', fontSize: 12 }}>Note : You have added {staffData.length} out of 5 staffs in current subscription</span>
                         <IconButton edge="start" color="inherit" onClick={() => setOpenmodal(false)} aria-label="close" style={{ float: 'right', color: '#2C7FB2', backgroundColor: '#F0F0F0' }}>
                             <CloseIcon />
                         </IconButton>
@@ -1452,14 +1462,14 @@ export default function DoctorClinicStaff() {
                                                 onChange={(e) => {
                                                     const re = /^[A-Za-z]+$/;
                                                     if (e.target.value === '' || re.test(e.target.value)) { setfirstName(e.target.value) }
-                                                }}style={{marginLeft:14}}
-                                                id="outlined-basic" size="small" label="First Name*" variant="outlined" /><span style={{position:'relative', bottom:8, fontSize:20, color:'red'}}> *</span>
+                                                }} style={{ marginLeft: 14 }}
+                                                id="outlined-basic" size="small" label="First Name*" variant="outlined" /><span style={{ position: 'relative', bottom: 8, fontSize: 20, color: 'red' }}> *</span>
                                             <TextField className={classes.inputFields} value={lastName}
                                                 onChange={(e) => {
                                                     const re = /^[A-Za-z]+$/;
                                                     if (e.target.value === '' || re.test(e.target.value)) { setlastName(e.target.value) }
-                                                }}style={{marginLeft:14}}
-                                                id="outlined-basic" size="small" label="Last Name*" variant="outlined" /><span style={{position:'relative', bottom:8, fontSize:20, color:'red'}}> *</span>
+                                                }} style={{ marginLeft: 14 }}
+                                                id="outlined-basic" size="small" label="Last Name*" variant="outlined" /><span style={{ position: 'relative', bottom: 8, fontSize: 20, color: 'red' }}> *</span>
                                             <TextField
 
                                                 className={classes.inputFields}
@@ -1478,9 +1488,9 @@ export default function DoctorClinicStaff() {
                                                 onInput={(e) => {
                                                     e.target.value = Math.max(0, parseInt(e.target.value)).toString().slice(0, 10)
 
-                                                }} style={{marginLeft:14}}
+                                                }} style={{ marginLeft: 14 }}
 
-                                            /><span style={{position:'relative', bottom:8, fontSize:20, color:'red'}}> *</span>
+                                            /><span style={{ position: 'relative', bottom: 8, fontSize: 20, color: 'red' }}> *</span>
                                             <TextField className={classes.inputFields}
                                                 onChange={(e) => setemail(e.target.value)}
                                                 id="outlined-basic" type="email" size="small" label="Email Id" variant="outlined" />
@@ -1499,13 +1509,13 @@ export default function DoctorClinicStaff() {
                                                             </IconButton>
                                                         </InputAdornment>
                                                     ),
-                                                }}style={{marginLeft:14}}
-                                            /><span style={{position:'relative', bottom:8, fontSize:20, color:'red'}}> *</span>
+                                                }} style={{ marginLeft: 14 }}
+                                            /><span style={{ position: 'relative', bottom: 8, fontSize: 20, color: 'red' }}> *</span>
                                             <TextField className={classes.inputFields} multiline
                                                 onChange={(e) => setaddress(e.target.value)}
                                                 rows={3}
-                                                rowsMax={5} id="outlined-basic" size="small" label="Address*" variant="outlined" style={{marginLeft:14}}
-                                            /> <span style={{position:'relative', bottom:8, color: 'red', fontSize:20}}> *</span>
+                                                rowsMax={5} id="outlined-basic" size="small" label="Address*" variant="outlined" style={{ marginLeft: 14 }}
+                                            /> <span style={{ position: 'relative', bottom: 8, color: 'red', fontSize: 20 }}> *</span>
                                         </div>
                                     </center>
                                 </Grid>
@@ -1518,7 +1528,7 @@ export default function DoctorClinicStaff() {
                                                     <Radio
                                                         checked={editrole === 'Doctor'}
                                                         color='primary'
-                                                        onChange={(e) => seteditrole(e.target.value)} 
+                                                        onChange={(e) => seteditrole(e.target.value)}
                                                         value='Doctor'
                                                         onClick={enableBtn}
                                                         name="radio-button-demo"
@@ -1533,7 +1543,7 @@ export default function DoctorClinicStaff() {
 
                                                     <Radio
                                                         checked={editrole === 'Receptionist'}
-                                                        onChange={(e) => seteditrole(e.target.value)} 
+                                                        onChange={(e) => seteditrole(e.target.value)}
                                                         value="Receptionist"
                                                         onClick={disableBtn}
                                                         color='primary'
@@ -1556,14 +1566,14 @@ export default function DoctorClinicStaff() {
                                                             name: 'gender',
                                                             id: 'outlined-gender-native-simple',
                                                         }}
-                                                        style={{ width: '90%', fontSize: 14, marginLeft:14 }}
+                                                        style={{ width: '90%', fontSize: 14, marginLeft: 14 }}
                                                     >
                                                         <option aria-label="None" value="" >Gender*</option>
                                                         <option value='Male'>Male</option>
                                                         <option value='Female'>Female</option>
 
                                                     </Select>
-                                                </FormControl><span style={{position:'relative', right:11, bottom:8, fontSize:20, color:'red'}}> *</span>
+                                                </FormControl><span style={{ position: 'relative', right: 11, bottom: 8, fontSize: 20, color: 'red' }}> *</span>
                                             </Grid>
                                         </Grid>
 
@@ -1589,7 +1599,7 @@ export default function DoctorClinicStaff() {
                                                             name: 'category',
                                                             id: 'outlined-category-native-simple',
                                                         }}
-                                                        style={{ width: '90%', fontSize: 14, marginLeft:14 }}
+                                                        style={{ width: '90%', fontSize: 14, marginLeft: 14 }}
                                                     >
                                                         <option aria-label="None" value="" >Category*</option>
                                                         {doctorCategory.map((item) => {
@@ -1599,7 +1609,7 @@ export default function DoctorClinicStaff() {
                                                         })}
 
                                                     </Select>
-                                                </FormControl><span style={{position:'relative', right:11, bottom:8, fontSize:20, color:'red'}}> *</span>
+                                                </FormControl><span style={{ position: 'relative', right: 11, bottom: 8, fontSize: 20, color: 'red' }}> *</span>
                                             </Grid>
                                             <Grid item xs={12}>
                                                 <center id='mybtn2'>
