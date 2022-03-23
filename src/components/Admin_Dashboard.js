@@ -80,6 +80,7 @@ export default function AdminDashboard() {
 
     const classes = useStyles();
     const theme = useTheme();
+    const [open, setOpen] = React.useState(false);
     const [startdate, setstartdate] = useState('');
     const [endDate, setendDate] = useState('');
     const [Clinic, setClinic] = useState([]);
@@ -148,7 +149,7 @@ export default function AdminDashboard() {
     return (
 
 
-        <div style={{ backgroundColor: '#ffffff', marginLeft: '84px',overflow:'hidden' }}>
+        <div style={{ backgroundColor: '#ffffff', marginLeft: '84px', overflow: 'hidden' }}>
             <AdminNavbar />
 
 

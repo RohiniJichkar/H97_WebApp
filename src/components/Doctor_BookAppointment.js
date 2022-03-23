@@ -237,16 +237,16 @@ export default function DoctorBookAppointment() {
   };
 
 
-  const handleChangeWalkIn = async (e) => {
-    var currTime = moment();
-    var currDate = moment();
-    walkIn ? (timeselected && appchannelselected) : ((currTime.format("HH:mm")) && (currDate.format('YYYY-MM-DD')) && 'Walk-In');
-    setwalkIn(e.target.checked);
-    //    console.log("Current Walk In", currTime.format("HH:mm"));
-    //    console.log("Current channel", 'Walk-In');
-    //    console.log("Selected Time", timeselected);
-    //    console.log("Selected channel", appchannelselected);
-  }
+  // const handleChangeWalkIn = async (e) => {
+  //   var currTime = moment();
+  //   var currDate = moment();
+  //    walkIn ? (timeselected && appchannelselected) : ((currTime.format("HH:mm")) && (currDate.format('YYYY-MM-DD')) && 'Walk-In');
+  //   setwalkIn(e.target.checked);
+  //   //    console.log("Current Walk In", currTime.format("HH:mm"));
+  //   //    console.log("Current channel", 'Walk-In');
+  //   //    console.log("Selected Time", timeselected);
+  //   //    console.log("Selected channel", appchannelselected);
+  // }
 
   function renderRow(props) {
     const { index, style } = props;
@@ -618,7 +618,6 @@ export default function DoctorBookAppointment() {
                         control={
                           <Switch
                             checked={walkIn}
-                            onClick={handleChangeWalkIn}
                             onChange={(e) => setwalkIn(e.target.checked)}
                             name="checkedB"
                             color='primary'

@@ -247,51 +247,6 @@ export default function AdminNavbar() {
       icon: LocalHospitalIcon,
       onClick: () => navigate("/AdminAddClinic"),
     },
-    // {
-    //   text: "Appointments On TV",
-    //   icon: TvIcon,
-    //   onClick : () => window.open('/Doctor_TV_TodaysAppointments', '_blank'),
-    // },
-    // {
-    //   text: 'Book Appointment',
-    //   icon: AssignmentTurnedInIcon,
-    //   onClick: () => navigate("/DoctorBookAppointment"),
-    // },
-    // {
-    //   text: 'Clinic Patients',
-    //   icon: PeopleOutlineIcon,
-    //   onClick: () => navigate("/DoctorClinicPatients"),
-    // },
-    // {
-    //   text: "Upload Reports",
-    //   icon: AssignmentIcon,
-    //   onClick: () => navigate("/DoctorReports"),
-    // },
-    // {
-    //   text: 'Home Visitor Requests',
-    //   icon: ChatIcon,
-    //   onClick: () => navigate('/DoctorHomeVisitRequest'),
-    // },
-    // {
-    //   text: 'Clinic Staff',
-    //   icon: SupervisorAccountIcon,
-    //   onClick: () => navigate('/DoctorClinicStaff'),
-    // },
-    // {
-    //   text: "Home Visitors",
-    //   icon: DirectionsWalkIcon,
-    //   onClick: () => navigate("/DoctorHomeVisitors"),
-    // },
-    // {
-    //   text: "Medicines",
-    //   icon: LocalHospitalIcon,
-    //   onClick: () => navigate("/DoctorAddMedicine"),
-    // },
-    // {
-    //   text: "Clinic Services",
-    //   icon: SettingsIcon,
-    //   onClick: () => navigate("/DoctorClinicServices"),
-    // },
 
   ];
 
