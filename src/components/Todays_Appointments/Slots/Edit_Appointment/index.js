@@ -228,8 +228,10 @@ export const Edit_Appointment_From_TodaysApp = ({ show, data, handlemodal }) => 
                                         size="small"
                                         onChange={(e) => {
                                             const re = /^[0-9\b]+$/;
-                                                if (e.target.value === '' || re.test(e.target.value)) {
-                                                            setBp(e.target.value)}}}
+                                            if (e.target.value === '' || re.test(e.target.value)) {
+                                                setBp(e.target.value)
+                                            }
+                                        }}
                                         style={{ marginRight: 10 }}
                                     />
                                 </Grid>
@@ -246,8 +248,10 @@ export const Edit_Appointment_From_TodaysApp = ({ show, data, handlemodal }) => 
                                         size="small"
                                         onChange={(e) => {
                                             const re = /^[0-9\b]+$/;
-                                                if (e.target.value === '' || re.test(e.target.value)) {
-                                                    setTemp(e.target.value)}}}
+                                            if (e.target.value === '' || re.test(e.target.value)) {
+                                                setTemp(e.target.value)
+                                            }
+                                        }}
                                         style={{ marginRight: 10 }}
                                     />
                                 </Grid>
@@ -263,9 +267,11 @@ export const Edit_Appointment_From_TodaysApp = ({ show, data, handlemodal }) => 
                                         variant="outlined"
                                         size="small"
                                         onChange={(e) => {
-                                            const re = /^[0-9\b]+$/;
-                                                if (e.target.value === '' || re.test(e.target.value)) {
-                                                    setHeight(e.target.value)}}}
+                                            const re = /^[0-9-.\b]+$/;
+                                            if (e.target.value === '' || re.test(e.target.value)) {
+                                                setHeight(e.target.value)
+                                            }
+                                        }}
                                     />
                                 </Grid>
                             </Grid>
@@ -284,9 +290,11 @@ export const Edit_Appointment_From_TodaysApp = ({ show, data, handlemodal }) => 
                                         variant="outlined"
                                         size="small"
                                         onChange={(e) => {
-                                            const re = /^[0-9\b]+$/;
-                                                if (e.target.value === '' || re.test(e.target.value)) {
-                                                    setWeight(e.target.value)}}}
+                                            const re = /^[0-9-.\b]+$/;
+                                            if (e.target.value === '' || re.test(e.target.value)) {
+                                                setWeight(e.target.value)
+                                            }
+                                        }}
                                         style={{ marginRight: 10 }}
                                     />
                                 </Grid>
@@ -303,8 +311,10 @@ export const Edit_Appointment_From_TodaysApp = ({ show, data, handlemodal }) => 
                                         size="small"
                                         onChange={(e) => {
                                             const re = /^[0-9\b]+$/;
-                                                if (e.target.value === '' || re.test(e.target.value)) {
-                                                    setSpo2(e.target.value)}}}
+                                            if (e.target.value === '' || re.test(e.target.value)) {
+                                                setSpo2(e.target.value)
+                                            }
+                                        }}
                                         style={{ marginRight: 10 }}
                                     />
                                 </Grid>
@@ -322,8 +332,10 @@ export const Edit_Appointment_From_TodaysApp = ({ show, data, handlemodal }) => 
                                         size="small"
                                         onChange={(e) => {
                                             const re = /^[0-9\b]+$/;
-                                                if (e.target.value === '' || re.test(e.target.value)) {
-                                                    setPlus(e.target.value)}}}
+                                            if (e.target.value === '' || re.test(e.target.value)) {
+                                                setPlus(e.target.value)
+                                            }
+                                        }}
                                     />
                                 </Grid>
                             </Grid>
