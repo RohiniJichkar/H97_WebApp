@@ -5,9 +5,11 @@ import AdminNavbar from './Admin_Navbar';
 import { DataGrid } from '@material-ui/data-grid';
 import ip from '../ipaddress/ip';
 import axios from 'axios';
-import { Appointment_Details } from '../Admin_Apis/Dashboard/index';
+import { Appointment_Details } from '../Apis/payment_reports_apis';
 
 import { Container, Typography, Button, Grid, Paper, Avatar, CssBaseline, Box } from "@material-ui/core";
+
+
 
 const columns = [
     {
@@ -18,8 +20,8 @@ const columns = [
         align: 'center',
         width: 220,
         valueGetter: (params) =>
-            `${params.getValue(params.id, 'FirstName') || ''} ${params.getValue(params.id, 'LastName') || ''
-            }`,
+        `${params.getValue(params.id, 'FirstName') || ''} ${params.getValue(params.id, 'LastName') || ''
+        }`,
 
 
     },
@@ -31,8 +33,8 @@ const columns = [
         align: 'center',
         width: 290,
         valueGetter: (params) =>
-            `${params.getValue(params.id, 'DFName') || ''} ${params.getValue(params.id, 'DLName') || ''
-            }`,
+        `${params.getValue(params.id, 'DFName') || ''} ${params.getValue(params.id, 'DLName') || ''
+        }`,
     },
 
     {
@@ -40,7 +42,7 @@ const columns = [
         headerName: 'AppointmentType',
         headerAlign: 'center',
         align: 'center',
-        width: 180,
+        width: 190,
         editable: true,
 
     },
@@ -56,7 +58,7 @@ const columns = [
     {
         field: 'AppointmentTime',
         headerName: 'Time',
-        width: 180,
+        width: 190,
         headerAlign: 'center',
         align: 'center',
         editable: true,
@@ -76,7 +78,7 @@ const columns = [
 
 
 
-export default function AdminDashboard() {
+export default function Admin_Clinic() {
 
     const classes = useStyles();
     const theme = useTheme();
@@ -98,38 +100,38 @@ export default function AdminDashboard() {
         let userid = parsed.userid;
         const appInfo = await axios.post(ip + 'Web_Admin_DashboardReport', { DoctorId: userid })
         setappointments(appInfo?.data);
+        // window.location.reload(100000);
     }
 
     const fetchDefaultAppointments = async () => {
-        try {
-            const appInfo = await axios.post(ip + 'Web_Admin_DashboardTodaysAppointments');
-            setdetails(appInfo?.data?.Appointment);
-        } catch (e) {
-            console.log(e);
-        }
+
+        const appInfo = await axios.post(ip + 'Web_Admin_DashboardTodaysAppointments')
+        setdetails(appInfo?.data?.Appointment);
+        
     }
 
+
     const fetchClinics = async () => {
-        try {
-            const appInfo = await axios.post(ip + 'GetAllClinic')
-            setClinic(appInfo?.data?.Clinic);
-        } catch (e) {
-            console.log(e);
-        }
+        const appInfo = await axios.post(ip + 'GetAllClinic')
+        setClinic(appInfo?.data?.Clinic);
+
+
     }
 
     const fetchAppointments = async (startdate, endDate, clinicid) => {
+
         const appInfo = await axios.post(ip + 'Web_Admin_DashboardAppointmentsByDate', { StartDate: startdate, EndDate: endDate, ClinicId: clinicid })
         setdetails(appInfo?.data?.Appointment);
-        console.log(appInfo);
+      console.log(appInfo);
 
     }
+    console.log(details);
 
     const Show_appointmentsbydate = async (startdate, endDate, clinicid) => {
         try {
             const request = await Appointment_Details(startdate, endDate, clinicid);
             setrecords(request)
-
+          
         }
         catch (e) {
             console.log(e);
@@ -148,7 +150,7 @@ export default function AdminDashboard() {
     return (
 
 
-        <div style={{ backgroundColor: '#ffffff', marginLeft: '84px',overflow:'hidden' }}>
+        <div style={{ backgroundColor: '#ffffff', marginLeft: '84px', }}>
             <AdminNavbar />
 
 
@@ -323,7 +325,7 @@ export default function AdminDashboard() {
                             height: 30,
                             marginLeft: 42
                         }}
-                        onClick={() => { Show_appointmentsbydate(startdate, endDate, ClinicId); fetchAppointments(startdate, endDate, ClinicId) }}
+                        onClick={() =>{ Show_appointmentsbydate(startdate, endDate, ClinicId);fetchAppointments(startdate, endDate, ClinicId)}}
                     >
                         view
                     </Button>
@@ -460,7 +462,7 @@ export default function AdminDashboard() {
             >
                 <DataGrid
                     style={{ height: 205, width: 1260, marginTop: 40, fontSize: 12, fontFamily: 'Poppins', fontWeight: 600, color: '#2C7FB2', cursor: 'pointer' }}
-                    rows={details ? details : fetchAppointments}
+                    rows={details?details:fetchAppointments}
                     rowHeight={20}
                     columns={columns}
                     columnWidth={5}

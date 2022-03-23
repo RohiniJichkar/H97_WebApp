@@ -60,6 +60,7 @@ export const DeleteReportsByTitle = async (userid, reporttitle) => {
 export const DeleteReportsById = async (id) => {
     try {
         const deletereports = await axios.delete(ip + 'Web_DeletePatientReportById', { data: { id: id } });
+        console.log("Delete Reports : ", deletereports?.data);
         return JSON.stringify(deletereports?.data);
     } catch (error) {
         return (error.response.data.message);
