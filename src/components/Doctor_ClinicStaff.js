@@ -1126,6 +1126,14 @@ export default function DoctorClinicStaff() {
         var data = await localStorage.getItem("userdata");
         let parsed = JSON.parse(data);
         let clinicid = parsed.ClinicId;
+
+        if (editrole == 'Doctor') {
+            if (Category == '') {
+                alert('Please Select Category');
+                return;
+            }
+        }
+
         const obj = {
             ClinicId: clinicid,
             FirstName: firstName,

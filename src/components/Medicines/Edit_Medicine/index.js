@@ -111,8 +111,16 @@ export default function Edit_Medicine({ show, data, handleEditModal }) {
                                                 </Select>
                                             </FormControl>
                                         </Grid>
-                                        <TextField className={classes.inputFields} value={mStrength} onChange={(e) => setmStrength(e.target.value)} id="outlined-basic" size="small" label="Strength" variant="outlined" />
-                                        <TextField className={classes.inputFields} value={mQuantity} onChange={(e) => setmQuantity(e.target.value)} id="outlined-basic" type="number" size="small" label="Quantity" variant="outlined" />
+                                        <TextField className={classes.inputFields}
+                                            InputProps={{
+                                                inputProps: { min: 0 }
+                                            }}
+                                            value={mStrength} onChange={(e) => setmStrength(e.target.value)} id="outlined-basic" size="small" label="Strength" variant="outlined" />
+                                        <TextField className={classes.inputFields}
+                                            InputProps={{
+                                                inputProps: { min: 0 }
+                                            }}
+                                            value={mQuantity} onChange={(e) => setmQuantity(e.target.value)} id="outlined-basic" type="number" size="small" label="Quantity" variant="outlined" />
                                         <Grid container >
                                             <Grid item xs={6}>
                                                 <center>

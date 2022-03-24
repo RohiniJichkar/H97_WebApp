@@ -23,14 +23,14 @@ import ip from '../../../ipaddress/ip';
 // }
 
 
-export const GetMorningSlots = async (doctorid) => {
+export const GetMorningSlots = async (doctorid, currDate) => {
     var data = localStorage.getItem("userdata");
     let parsed = JSON.parse(data);
     let clinicid = parsed.ClinicId;
     let now = new Date();
     let date = now.toISOString().split('T')[0];
     try {
-        const getAppInfo = await axios.post(ip + 'Web_GetTimingForTodaysApp1_Recp', { AppointmentDate: date, DoctorId: doctorid, ClinicId: clinicid });
+        const getAppInfo = await axios.post(ip + 'Web_GetTimingForTodaysApp1_Recp', { AppointmentDate: currDate, DoctorId: doctorid, ClinicId: clinicid });
         return getAppInfo?.data?.Appointment
     }
     catch (error) {
@@ -39,15 +39,14 @@ export const GetMorningSlots = async (doctorid) => {
 }
 
 
-export const GetEveningSlots = async (doctorid) => {
+export const GetEveningSlots = async (doctorid, currDate) => {
     var data = localStorage.getItem("userdata");
     let parsed = JSON.parse(data);
     let clinicid = parsed.ClinicId;
     let now = new Date();
     let date = now.toISOString().split('T')[0];
-
     try {
-        const getAppInfo = await axios.post(ip + 'Web_GetTimingForTodaysApp2_Recp', { AppointmentDate: date, DoctorId: doctorid, ClinicId: clinicid });
+        const getAppInfo = await axios.post(ip + 'Web_GetTimingForTodaysApp2_Recp', { AppointmentDate: currDate, DoctorId: doctorid, ClinicId: clinicid });
         return getAppInfo?.data?.Appointment
     }
     catch (error) {

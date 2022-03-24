@@ -329,14 +329,14 @@ export default function DoctorAddServices() {
 
         try {
             const add_service = await Add_Services(formData);
-                let parse = JSON.parse(add_service);
-                if (parse.success === "200") {
-                    alert(parse.message);
-                    window.location.reload()
-                }else{
-                    alert(parse.message);
-                }
-         
+            let parse = JSON.parse(add_service);
+            if (parse.success === "200") {
+                alert(parse.message);
+                window.location.reload()
+            } else {
+                alert(parse.message);
+            }
+
         } catch (e) {
             console.log(e)
         }
@@ -447,6 +447,9 @@ export default function DoctorAddServices() {
                                             const re = /^[0-9\b]+$/;
                                             if (e.target.value === '' || re.test(e.target.value)) { setprice(e.target.value) }
                                         }}
+                                        InputProps={{
+                                            inputProps: { min: 0 }
+                                        }}
                                         type="number" size="small" label="Cost" variant="outlined" /> <span style={{ position: 'relative', top: 10, left: '-7px', fontSize: 14, color: 'red' }}> *</span>
                                 </center>
                                 <center>
@@ -455,7 +458,10 @@ export default function DoctorAddServices() {
                                             const re = /^[0-9\b]+$/;
                                             if (e.target.value === '' || re.test(e.target.value)) { setdiscount(e.target.value) }
                                         }}
-                                        type="number" size="small" label="Discount" variant="outlined" /> 
+                                        InputProps={{
+                                            inputProps: { min: 0 }
+                                        }}
+                                        type="number" size="small" label="Discount" variant="outlined" />
                                 </center>
                                 <center>
                                     <TextField className={classes.textField} multiline={true}
@@ -464,7 +470,7 @@ export default function DoctorAddServices() {
                                     /> <span style={{ position: 'relative', top: 10, left: '-7px', fontSize: 14, color: 'red' }}> *</span>
                                 </center>
                                 <div style={{ marginLeft: 10 }}>
-                                    <input type="file" onChange={(e) => setserviceImage(e.target.files[0])} id="serviceimage" style={{ color: '#000' }} /> <span style={{   fontSize: 14, color: 'red' }}> *</span>
+                                    <input type="file" onChange={(e) => setserviceImage(e.target.files[0])} id="serviceimage" style={{ color: '#000' }} /> <span style={{ fontSize: 14, color: 'red' }}> *</span>
                                 </div>
                             </div>
 

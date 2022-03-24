@@ -29,13 +29,13 @@ const Edit_Service_Details = ({ show, data, handleclose }) => {
     const Edit = async (id, Userid, ClinicID, ServiceName, Category, Cost, Discount, Description) => {
         try {
             const request = await Edit_Services(id, Userid, ClinicID, ServiceName, Category, Cost, Discount, Description)
-            let response=JSON.parse(request);
-            if(response.success=='200'){
+            let response = JSON.parse(request);
+            if (response.success == '200') {
                 alert(response.message)
                 handleclose();
                 window.location.reload();
             }
-            else{
+            else {
                 alert(request.message)
             }
         } catch (e) {
@@ -67,10 +67,18 @@ const Edit_Service_Details = ({ show, data, handleclose }) => {
                                     <TextField value={Category} onChange={(e) => setCategory(e.target.value)} label='Category' className={classes.textField} id="outlined-basic" size="small" variant="outlined" />
                                 </center>
                                 <center>
-                                    <TextField value={cost} onChange={(e) => setcost(e.target.value)} label='Cost' className={classes.textField} id="outlined-basic" type="number" size="small" variant="outlined" />
+                                    <TextField value={cost}
+                                        InputProps={{
+                                            inputProps: { min: 0 }
+                                        }}
+                                        onChange={(e) => setcost(e.target.value)} label='Cost' className={classes.textField} id="outlined-basic" type="number" size="small" variant="outlined" />
                                 </center>
                                 <center>
-                                    <TextField value={Discount} onChange={(e) => setDiscount(e.target.value)} label='Discount' className={classes.textField} id="outlined-basic" type="number" size="small" variant="outlined" />
+                                    <TextField
+                                        InputProps={{
+                                            inputProps: { min: 0 }
+                                        }}
+                                        value={Discount} onChange={(e) => setDiscount(e.target.value)} label='Discount' className={classes.textField} id="outlined-basic" type="number" size="small" variant="outlined" />
                                 </center>
                                 <center>
                                     <TextField

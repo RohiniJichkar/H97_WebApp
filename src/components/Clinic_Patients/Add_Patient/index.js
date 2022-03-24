@@ -236,13 +236,7 @@ const Add_Patinet = ({ show, handleclose }) => {
                                                 }
                                             }} id="outlined-basic" size="small" placeholder="Country" variant="outlined" />
 
-                                        {/* <select name="country" class="countries" id="countryId">
-                                             <option value="">Select Country</option>
-                                            </select> */}
-
-                                        {/* <label for="countries">Choose your Country:</label>
-                                        <select id="countries" name="countries"></select> */}
-
+                                     
                                         <TextField className={classes.inputFields} value={state}
                                             onChange={(e) => {
                                                 const re = /^[A-Za-z]+$/;

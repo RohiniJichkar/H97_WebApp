@@ -788,6 +788,10 @@ export default function DoctorBookAppointment() {
                         variant="outlined"
                         size="small"
                         value={height}
+                        type='number'
+                        InputProps={{
+                          inputProps: { min: 0 }
+                        }}
                         onChange={(e) => {
                           const re = /^[0-9-.\b]+$/;
                           if (e.target.value === '' || re.test(e.target.value)) {
@@ -803,6 +807,10 @@ export default function DoctorBookAppointment() {
                         id="outlined-size-small"
                         variant="outlined"
                         size="small"
+                        type='number'
+                        InputProps={{
+                          inputProps: { min: 0 }
+                        }}
                         value={weight}
                         onChange={(e) => {
                           const re = /^[0-9-.\b]+$/;

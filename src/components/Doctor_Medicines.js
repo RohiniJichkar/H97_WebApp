@@ -689,16 +689,24 @@ export default function DoctorMedicines() {
                                             >
                                                 <option aria-label="None" value="" >Medicine Type</option>
                                                 {medicineTypes.map(v => (<option value={v.MedicineType}>{v.MedicineType}</option>))}
-                                               
+
                                             </Select>
                                         </FormControl> <span style={{ fontSize: 20, color: 'red', marginLeft: 12 }}> *</span>
                                     </center>
                                     <Grid container style={{ marginTop: 10 }}>
                                         <Grid item xs={6}>
-                                            <TextField className={classes.inputFields} onChange={(e) => setmStrength(e.target.value)} id="outlined-basic" label="Strength" variant="outlined" size="small" style={{ width: '130px', float: 'right', marginRight: 15 }} />
+                                            <TextField className={classes.inputFields}
+                                                InputProps={{
+                                                    inputProps: { min: 0 }
+                                                }}
+                                                onChange={(e) => setmStrength(e.target.value)} id="outlined-basic" label="Strength" variant="outlined" size="small" style={{ width: '130px', float: 'right', marginRight: 15 }} />
                                         </Grid>
                                         <Grid item xs={6}>
-                                            <TextField className={classes.inputFields} onChange={(e) => setmQuantity(e.target.value)} id="outlined-basic" label="Quantity" variant="outlined" size="small" style={{ width: '130px', marginLeft: 15 }} />
+                                            <TextField
+                                                InputProps={{
+                                                    inputProps: { min: 0 }
+                                                }}
+                                                className={classes.inputFields} onChange={(e) => setmQuantity(e.target.value)} id="outlined-basic" label="Quantity" variant="outlined" size="small" style={{ width: '130px', marginLeft: 15 }} />
                                         </Grid>
                                     </Grid>
 

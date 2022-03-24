@@ -13,6 +13,8 @@ import { DataGrid } from '@material-ui/data-grid';
 import { Edit_Appointment_From_TodaysApp } from './components/Todays_Appointments/Slots/Edit_Appointment/index';
 import Delete_Appointment from './components/Todays_Appointments/Slots/Delete_Appointment/index';
 import { Time, App_Channels, App_Types, Doctors, Book_Appointment, Note_for_Doctor } from '../../Apis/Staff/Book_Appointment/index';
+import moment from 'moment';
+
 const drawerWidth = 240;
 
 const columns = [
@@ -326,17 +328,17 @@ export default function Staff_Todays_Appointment() {
             console.log(e)
         }
     }
-    const callbackfunction = async (doctorid, startdate, endDate) => {
+    const callbackfunction = async (doctorid, currDate, endDate) => {
         setdocid(doctorid);
-        const interval = setInterval(() => {
-            fetchAppointments(doctorid);
-            fetchMorningCount(doctorid);
-            fetchEveningCount(doctorid)
-        }, 10000);
+        // const interval = setInterval(() => {
+        //     fetchAppointments(doctorid);
+        //     fetchMorningCount(doctorid);
+        //     fetchEveningCount(doctorid)
+        // }, 10000);
         await fetchAppointments(doctorid);
-        await fetchMorningCount(doctorid);
-        await fetchEveningCount(doctorid);
-        return () => clearInterval(interval);
+        await fetchMorningCount(doctorid, currDate);
+        await fetchEveningCount(doctorid, currDate);
+        // return () => clearInterval(interval);
     }
 
     const fetchAppointments = async (doctorid) => {
@@ -348,9 +350,11 @@ export default function Staff_Todays_Appointment() {
         }
     }
 
-    const fetchMorningCount = async (doctorid) => {
+    const fetchMorningCount = async (doctorid, currDate) => {
+        var currDate = moment().format('YYYY-MM-DD');
         try {
-            const count = await GetMorningSlots(doctorid);
+            
+            const count = await GetMorningSlots(doctorid, currDate);
             setmorningcount(count);
         }
         catch (e) {
@@ -358,9 +362,10 @@ export default function Staff_Todays_Appointment() {
         }
     }
 
-    const fetchEveningCount = async (doctorid) => {
+    const fetchEveningCount = async (doctorid, currDate) => {
+        var currDate = moment().format('YYYY-MM-DD');
         try {
-            const count = await GetEveningSlots(doctorid);
+            const count = await GetEveningSlots(doctorid, currDate);
             seteveningcount(count);
         }
         catch (e) {
@@ -375,7 +380,7 @@ export default function Staff_Todays_Appointment() {
 
         const obj = {
             ClinicId: clinicid,
-            AppointmentTime: val,
+            Slot: val,
             DoctorId: docid
         }
         try {
