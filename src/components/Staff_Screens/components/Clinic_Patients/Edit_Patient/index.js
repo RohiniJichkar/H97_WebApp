@@ -276,7 +276,7 @@ export default function Edit_Patient({ show, data, handleCloseEditmodal }) {
         }
     }
 
-    
+
     return (
         <>
             {/* Edit Patient Details */}
@@ -389,12 +389,25 @@ export default function Edit_Patient({ show, data, handleCloseEditmodal }) {
                                                                 setheight(e.target.value)
                                                             }
                                                         }}
+                                                        InputProps={{
+                                                            inputProps: { min: 0 }
+                                                        }}
                                                         id="outlined-basic" size="small" type="number" label="Height" variant="outlined" style={{ width: 150, float: 'right', marginRight: 5 }} />
                                                 </center>
                                             </Grid>
                                             <Grid item xs={12} sm={6}>
                                                 <center>
-                                                    <TextField className={classes.inputFields} value={weight} onChange={(e) => setweight(e.target.value)} id="outlined-basic" size="small" type="number" label="Weight" variant="outlined" style={{ width: 150, float: 'left', }} />
+                                                    <TextField
+                                                        className={classes.inputFields}
+                                                        value={weight}
+                                                        InputProps={{
+                                                            inputProps: { min: 0 }
+                                                        }}
+                                                        onChange={(e) => setweight(e.target.value)}
+                                                        id="outlined-basic" size="small"
+                                                        type="number"
+                                                        label="Weight" variant="outlined"
+                                                        style={{ width: 150, float: 'left', }} />
                                                 </center>
                                             </Grid>
                                         </Grid>

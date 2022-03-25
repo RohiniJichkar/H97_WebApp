@@ -508,8 +508,8 @@ export default function Staff_Home_Visitors() {
                                                             }
                                                         }
                                                         } id="outlined-basic" size="small" label="First Name" variant="outlined" style={{ width: '155%', position: 'relative', top: 3 }} />
-                                                        
-                                                </FormControl><span style={{position:'relative',left:120, bottom:8, fontSize:20, color:'red'}}> *</span>
+
+                                                </FormControl><span style={{ position: 'relative', left: 120, bottom: 8, fontSize: 20, color: 'red' }}> *</span>
                                             </div>
                                             <div>
                                                 <FormControl variant="outlined" className={classes.formControlForm}  >
@@ -523,7 +523,7 @@ export default function Staff_Home_Visitors() {
                                                         }
 
                                                     }} id="outlined-basic" label="Last Name" variant="outlined" size="small" style={{ width: '155%', position: 'relative', top: 12 }} />
-                                                </FormControl><span style={{position:'relative',left:120, fontSize:20, color:'red'}}> *</span>
+                                                </FormControl><span style={{ position: 'relative', left: 120, fontSize: 20, color: 'red' }}> *</span>
                                             </div>
                                             <div>
                                                 <FormControl variant="outlined" className={classes.formControlForm} >
@@ -553,18 +553,18 @@ export default function Staff_Home_Visitors() {
                                                             const re = /^[0-9\b]+$/;
                                                             if (e.target.value === '' || re.test(e.target.value)) {
                                                                 setmobile(e.target.value)
-                                                            } 
-                                                        }}  id="outlined-basic" type='number' label="Mobile No" variant="outlined" size="small" style={{ width: '185%', marginLeft: 45, position: 'relative', top: 38 }}
+                                                            }
+                                                        }} id="outlined-basic" type='number' label="Mobile No" variant="outlined" size="small" style={{ width: '185%', marginLeft: 45, position: 'relative', top: 38 }}
                                                         onInput={(e) => {
                                                             e.target.value = Math.max(0, parseInt(e.target.value)).toString().slice(0, 10)
 
-                                                        }} /> 
-                                                </FormControl><span style={{position:'relative',left:'211%',bottom:23, fontSize:20, color:'red'}}> *</span>
+                                                        }} />
+                                                </FormControl><span style={{ position: 'relative', left: '211%', bottom: 23, fontSize: 20, color: 'red' }}> *</span>
 
 
                                                 <div>
                                                     <FormControl variant="outlined" className={classes.formControlForm}  >
-                                                        <TextField className={classes.textFieldForm} onChange={(e) => setemail(e.target.value)} id="outlined-basic" type='email' label="Email ID" variant="outlined" size="small" style={{ width: '185%',marginTop:15, marginLeft: 43 }} />
+                                                        <TextField className={classes.textFieldForm} onChange={(e) => setemail(e.target.value)} id="outlined-basic" type='email' label="Email ID" variant="outlined" size="small" style={{ width: '185%', marginTop: 15, marginLeft: 43 }} />
                                                     </FormControl>
                                                 </div>
 
@@ -629,16 +629,15 @@ export default function Staff_Home_Visitors() {
                                         </Grid>
                                     </Grid> */}
                                     <Grid container style={{ marginTop: 0 }}>
-                                        <Grid item xs={6}>
+                                        <Grid item xs={6} style={{ marginTop: -25 }}>
 
                                             <div>
                                                 <Typography variant="h6" noWrap={true} style={{
                                                     fontSize: 14, color: '#707070', fontFamily: 'Poppins',
                                                     fontStyle: 'normal',
                                                     fontWeight: 600,
-                                                    position: 'relative',
-                                                    top: 35,
-                                                    left: 5
+                                                    marginTop: 30
+
                                                 }}>
                                                     From
                                                 </Typography>
@@ -655,8 +654,7 @@ export default function Staff_Home_Visitors() {
                                                             id: 'outlined-from-time-native-simple',
                                                         }}
                                                         style={{
-                                                            width: '50%', fontSize: 12, marginLeft: 26, marginBottom: 14, position: 'relative',
-                                                            left: 23
+                                                            width: '50%', fontSize: 12, marginLeft: 46, marginTop: -30,
                                                         }}
                                                     >
                                                         <option aria-label="None" value='' >From</option>
@@ -676,9 +674,9 @@ export default function Staff_Home_Visitors() {
                                                     textAlign: 'center',
                                                     justifyContent: 'center',
                                                     fontWeight: 600,
-                                                    position: 'relative',
-                                                    bottom: 53,
-                                                    right: 22
+                                                    marginTop: -49,
+                                                    marginLeft: -34
+
                                                 }}>
                                                     To
                                                 </Typography>
@@ -694,7 +692,7 @@ export default function Staff_Home_Visitors() {
                                                             name: 'totime',
                                                             id: 'outlined-to-time-native-simple',
                                                         }}
-                                                        style={{ width: '50%', fontSize: 12, position: 'relative', left: 220, bottom: 88 }}
+                                                        style={{ width: '50%', fontSize: 12, marginLeft: 220, marginTop: -27 }}
                                                     >
                                                         <option aria-label="None" value='' >To</option>
 
@@ -713,72 +711,48 @@ export default function Staff_Home_Visitors() {
                                             <div>
                                                 <FormControl variant="outlined" className={classes.formControlForm}  >
                                                     <TextField
-
                                                         variant="outlined"
-
                                                         margin="normal"
-
                                                         fullWidth
-
                                                         id="password"
-
                                                         required
-
                                                         label="Password"
-
                                                         type={showPassword ? 'text' : 'password'}
-
                                                         size='small'
-                                                        style={{ width: '105%', marginLeft: 49, marginTop: 26 }}
-
+                                                        style={{ width: '103%', marginLeft: 53, marginTop: 5 }}
                                                         onChange={(e) => setpassword(e.target.value)}
-
                                                         InputProps={{
-
                                                             endAdornment: (
-
                                                                 <InputAdornment position="end">
-
                                                                     <IconButton
-
                                                                         aria-label="toggle password visibility"
-
                                                                         onClick={handleClickShowPassword}
-
                                                                         onMouseDown={handleMouseDownPassword}
-
                                                                     >
-
                                                                         {showPassword ? <Visibility /> : <VisibilityOff />}
-
                                                                     </IconButton>
-
                                                                 </InputAdornment>
-
                                                             ),
-
                                                         }}
-
                                                     />
-                                                </FormControl><span style={{position:'relative',left:62,top:15, fontSize:20, color:'red'}}> *</span>
+                                                </FormControl><span style={{ position: 'relative', left: 60, top: 5, fontSize: 20, color: 'red' }}> *</span>
                                             </div>
 
                                         </Grid>
                                     </Grid>
-                                    <Grid container>
+                                    <Grid container style={{ marginTop: -20, paddingBottom: 0 }}>
                                         <Grid item xs={12}>
-                                            <Grid container style={{ marginLeft: 350, position: 'relative', bottom: 70 }}>
+                                            <Grid container >
                                                 <Typography variant="h6" noWrap={true} style={{
                                                     fontSize: 17, color: '#2C7FB2', fontFamily: 'Poppins',
-                                                    fontStyle: 'normal', position: 'relative',
-                                                    right: 348, fontWeight: 600,
+                                                    fontStyle: 'normal', fontWeight: 600,
                                                     textDecorationLine: 'underline', textUnderlineOffset: '1px',
                                                 }}>
                                                     Availability
                                                 </Typography>
                                             </Grid>
                                         </Grid>
-                                        <Grid container style={{ marginTop: 20, position: 'relative', bottom: 70 }}>
+                                        <Grid container >
                                             <Grid item xs={2}>
                                                 <Typography variant="h6" noWrap={true} style={{
                                                     fontSize: 14, color: '#707070', fontFamily: 'Poppins',
@@ -786,7 +760,9 @@ export default function Staff_Home_Visitors() {
                                                     textAlign: 'center',
                                                     justifyContent: 'center',
                                                     fontWeight: 600,
-                                                    marginRight: 80
+                                                    marginRight: 80,
+                                                    marginTop: 15
+
                                                 }}>
                                                     All Days
                                                 </Typography>
@@ -800,7 +776,7 @@ export default function Staff_Home_Visitors() {
                                                             style={{ color: '#78B088', float: 'right' }}
                                                         />
                                                     }
-                                                    style={{ color: '#78B088', float: 'right', paddingRight: 20, position: 'relative', bottom: 25, right: -84 }}
+                                                    style={{ color: '#78B088', float: 'right', marginTop: -30, marginRight: -25 }}
                                                 />
                                             </Grid>
 
@@ -811,21 +787,23 @@ export default function Staff_Home_Visitors() {
                                                     textAlign: 'center',
                                                     justifyContent: 'center',
                                                     fontWeight: 600,
-                                                    marginRight: -175
+                                                    marginRight: -175,
+                                                    marginTop: 13
                                                 }}>
                                                     Wednesday
                                                 </Typography>
                                             </Grid>
 
-                                            <Grid item xs={2}>
+                                            <Grid item xs={5}>
                                                 <Typography variant="h6" noWrap={true} style={{
                                                     fontSize: 14, color: '#707070', fontFamily: 'Poppins',
                                                     fontStyle: 'normal',
                                                     textAlign: 'center',
                                                     justifyContent: 'center',
                                                     fontWeight: 600,
-                                                    position: 'relative',
-                                                    left: 224
+                                                    marginLeft: 223,
+                                                    marginTop: 10
+
                                                 }}>
                                                     Saturday
                                                 </Typography>
@@ -833,7 +811,7 @@ export default function Staff_Home_Visitors() {
 
                                         </Grid>
 
-                                         <Grid container>
+                                        <Grid container>
                                             <Grid item xs={2}>
                                                 <Typography variant="h6" noWrap={true} style={{
                                                     fontSize: 14, color: '#707070', fontFamily: 'Poppins',
@@ -842,29 +820,29 @@ export default function Staff_Home_Visitors() {
                                                     justifyContent: 'center',
                                                     fontWeight: 600,
                                                     marginRight: 80,
-                                                    position: 'relative',
-                                                    bottom: 90
+                                                    marginTop: 10
+
                                                 }}>
                                                     Monday
                                                 </Typography>
                                             </Grid>
 
-                                            <Grid item xs={2}>
+                                            <Grid item xs={3}>
                                                 <Typography variant="h6" noWrap={true} style={{
                                                     fontSize: 14, color: '#707070', fontFamily: 'Poppins',
                                                     fontStyle: 'normal',
                                                     textAlign: 'center',
                                                     justifyContent: 'center',
                                                     fontWeight: 600,
-                                                    position: 'relative',
-                                                    bottom: 90,
-                                                    left: 78
+                                                    marginLeft: 85,
+                                                    marginTop: 7
+
                                                 }}>
                                                     Thursday
                                                 </Typography>
 
                                             </Grid>
-                                            <Grid item xs={2}>
+                                            <Grid item xs={4}>
                                                 <center>
                                                     <Typography variant="h6" noWrap={true} style={{
                                                         fontSize: 14, color: '#707070', fontFamily: 'Poppins',
@@ -872,9 +850,9 @@ export default function Staff_Home_Visitors() {
                                                         textAlign: 'center',
                                                         justifyContent: 'center',
                                                         fontWeight: 600,
-                                                        position: 'relative',
-                                                        bottom: 90,
-                                                        left: 220
+                                                        marginLeft: 140,
+                                                        marginTop: 5
+
                                                     }}>
                                                         Sunday
                                                     </Typography>
@@ -889,9 +867,9 @@ export default function Staff_Home_Visitors() {
                                                     textAlign: 'center',
                                                     justifyContent: 'center',
                                                     fontWeight: 600,
-                                                    marginRight: 80,
-                                                    position: 'relative',
-                                                    bottom: 70
+                                                    marginTop: 17,
+                                                    marginRight: 74
+
                                                 }}>
                                                     Tuesday
                                                 </Typography>
@@ -903,15 +881,13 @@ export default function Staff_Home_Visitors() {
                                                     textAlign: 'center',
                                                     justifyContent: 'center',
                                                     fontWeight: 600,
-                                                    position: 'relative',
-                                                    bottom: 70,
-                                                    right: 5
+                                                    marginTop: 20
+
                                                 }}>
                                                     Friday
                                                 </Typography>
                                             </Grid>
                                         </Grid>
-
 
 
                                         <Grid container>
@@ -925,7 +901,7 @@ export default function Staff_Home_Visitors() {
                                                             style={{ color: '#2C7FB2', float: 'right' }}
                                                         />
                                                     }
-                                                    style={{ color: '#2C7FB2', float: 'right', paddingRight: 20, position: 'relative', bottom: 134, right: 65 }}
+                                                    style={{ color: '#2C7FB2', float: 'right', paddingRight: 20, marginTop: -78, marginRight: 104 }}
                                                 />
                                             </Grid>
                                             <Grid item xs={4}>
@@ -938,7 +914,7 @@ export default function Staff_Home_Visitors() {
                                                             style={{ color: '#2C7FB2', float: 'right' }}
                                                         />
                                                     }
-                                                    style={{ color: '#2C7FB2', float: 'right', paddingRight: 20, position: 'relative', bottom: 94, right: 364 }}
+                                                    style={{ color: '#2C7FB2', float: 'right', paddingRight: 20, marginTop: -36, marginRight: 403 }}
                                                 />
                                             </Grid>
                                             <Grid item xs={4}>
@@ -952,7 +928,7 @@ export default function Staff_Home_Visitors() {
                                                             style={{ color: '#2C7FB2', float: 'right' }}
                                                         />
                                                     }
-                                                    style={{ color: '#2C7FB2', float: 'right', paddingRight: 20, position: 'relative', bottom: 176, right: 370 }}
+                                                    style={{ color: '#2C7FB2', float: 'right', paddingRight: 20, marginRight: 403, marginTop: -122 }}
                                                 />
                                             </Grid>
                                         </Grid>
@@ -973,7 +949,7 @@ export default function Staff_Home_Visitors() {
                                                         style={{ color: '#2C7FB2', float: 'right' }}
                                                     />
                                                 }
-                                                style={{ color: '#2C7FB2', float: 'right', paddingRight: 20, position: 'relative', bottom: 172, left: 228 }}
+                                                style={{ color: '#2C7FB2', float: 'right', paddingRight: 20, marginRight: -194, marginTop: -83 }}
                                             />
                                         </Grid>
                                         <Grid item xs={4}>
@@ -987,7 +963,7 @@ export default function Staff_Home_Visitors() {
                                                         style={{ color: '#2C7FB2', float: 'right' }}
                                                     />
                                                 }
-                                                style={{ color: '#2C7FB2', float: 'right', paddingRight: 20, position: 'relative', bottom: 132, right: 70 }}
+                                                style={{ color: '#2C7FB2', float: 'right', paddingRight: 20, marginRight: 103, marginTop: -39 }}
                                             />
                                         </Grid>
                                         <Grid item xs={4}>
@@ -1001,7 +977,7 @@ export default function Staff_Home_Visitors() {
                                                         style={{ color: '#2C7FB2', float: 'right' }}
                                                     />
                                                 }
-                                                style={{ color: '#2C7FB2', float: 'right', paddingRight: 20, position: 'relative', bottom: 215, right: 83 }}
+                                                style={{ color: '#2C7FB2', float: 'right', paddingRight: 20, marginRight: 130, marginTop: -130 }}
                                             />
                                         </Grid>
                                     </Grid>
@@ -1023,14 +999,13 @@ export default function Staff_Home_Visitors() {
                                                             }}
                                                         />
                                                     }
-                                                    style={{ color: '#2C7FB2', float: 'center', marginLeft: 10, position: 'relative', bottom: 215, left: 305 }}
+                                                    style={{ color: '#2C7FB2', float: 'center', marginLeft: 560, marginTop: -175 }}
                                                 />
                                             </center>
                                         </Grid>
                                     </Grid>
 
-
-                                    <Grid container style={{ marginTop: -155, paddingBottom: 0, marginBottom: 0 }}>
+                                    <Grid container style={{ marginTop: -25, paddingBottom: 0, marginBottom: 0 }}>
                                         <Grid item sm={6} >
                                             <Button className={classes.btnregister} onClick={() => setOpenmodal(false)} style={{ float: 'right', marginRight: 20 }}>Cancel</Button>
                                         </Grid>

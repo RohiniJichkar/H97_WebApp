@@ -165,7 +165,7 @@ function DoctorSelectedMedicineList({ data }) {
                                             fontWeight: 600,
                                             color: '#707070'
                                         }}>
-                                            {item.AfternoonDose == true ? '1' : '0'}
+                                            {item.EveningDose == true ? '1' : '0'}
                                         </Typography>
                                     </Grid>
                                     <Grid item xs={12} sm={1} style={{

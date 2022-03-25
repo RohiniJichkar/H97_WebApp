@@ -11,7 +11,7 @@ import ArrowDropDownIcon from '@material-ui/icons/ArrowDropDown';
 import Pdf from '../Prescription_VinayH7B8_38 (1).pdf';
 import ArrowBackIcon from '@material-ui/icons/ArrowBack';
 import { DataGrid } from '@material-ui/data-grid';
-import { fetchMedicineData, addPrescriptionDetails, generatePrescription, UpdateAppointmentDetails, } from '../Apis/PatientInQueue/Generate_Prescription/Medicines_Table/index';
+import { fetchMedicineData, addPrescriptionDetails, generatePrescription, generateGeneralPrescription, UpdateAppointmentDetails, } from '../Apis/PatientInQueue/Generate_Prescription/Medicines_Table/index';
 import { Search_Medicine } from '../Apis/Medicines/index';
 import { useDispatch, connect, useSelector } from 'react-redux';
 import DoctorSelectedMedicineList from './Generate_Prescription/selected_medicines';
@@ -58,7 +58,6 @@ function DoctorGeneratePrescription() {
     const [openmodal, setopenmodal] = React.useState(false);
     const [searchterm, setsearchterm] = useState('');
 
-    console.log(details)
     const [defaultarray, setdefaultarray] = useState(0);
     const dispatch = useDispatch();
 
@@ -102,6 +101,7 @@ function DoctorGeneratePrescription() {
                 'DoseDays': counterbtn,
                 'MorningDose': dosestring1,
                 'AfternoonDose': dosestring2,
+                'EveningDose': dosestring3,
                 'NightDose': dosestring4,
                 'BeforeMeal': beforeMeal,
                 'PrescriptionNote': details[0].PrescriptionNote,
@@ -140,9 +140,26 @@ function DoctorGeneratePrescription() {
             UserId: details[0].UserId,
             id: details[0].id,
         }
-        const request = await generatePrescription(obj);
-        if (request.success === "200") {
-            dispatch({ type: 'RESET_MEDICINE_ITEM' });
+        try {
+            var data = await localStorage.getItem("userdata");
+            let parsed = JSON.parse(data);
+            let category = parsed.CodeValueCategory;
+
+            console.log(category)
+
+            if (category == 'Gynaecologist') {
+                const request = await generatePrescription(obj);
+                if (request.success === "200") {
+                    dispatch({ type: 'RESET_MEDICINE_ITEM' });
+                }
+            } else {
+                const request = await generateGeneralPrescription(obj);
+                if (request.success === "200") {
+                    dispatch({ type: 'RESET_MEDICINE_ITEM' });
+                }
+            }
+        } catch (e) {
+            console.log(e);
         }
 
     }
@@ -388,7 +405,7 @@ function DoctorGeneratePrescription() {
                                         <ArrowDropUpIcon size='small' onClick={handleIncrement2} style={{ marginTop: '-60px', marginLeft: 30, color: '#707070', cursor: 'pointer', fontSize: 30 }} />
                                     </div>
                                     <div>
-                                        <ArrowDropDownIcon size='small' onClick={handleDecrement2} style={{ marginTop: '-65px', marginLeft: 30, color: '#707070', cursor: 'pointer', fontSize: 30  }} />
+                                        <ArrowDropDownIcon size='small' onClick={handleDecrement2} style={{ marginTop: '-65px', marginLeft: 30, color: '#707070', cursor: 'pointer', fontSize: 30 }} />
                                     </div>
                                 </Paper>
                             </Grid>

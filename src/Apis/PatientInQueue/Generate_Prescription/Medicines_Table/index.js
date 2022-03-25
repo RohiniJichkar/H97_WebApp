@@ -41,6 +41,15 @@ export const generatePrescription = async (obj) => {
 }
 
 
+export const generateGeneralPrescription = async (obj) => {
+    try {
+        const generatePdf = await axios.post(ip + 'create_GeneralPrescription', obj);
+        return JSON.stringify(generatePdf?.data);
+    } catch (error) {
+        return (error.response.data.message);
+    }
+}
+
 export const paymentDetails = async (obj) => {
     try {
         const paymentdetails = await axios.post(ip + 'Web_AddAppointmentFee', obj);

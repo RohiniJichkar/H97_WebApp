@@ -292,6 +292,10 @@ const Add_Patinet = ({ show, handleclose }) => {
                                         <TextField
                                             className={classes.inputFields}
                                             value={height}
+                                            type='number'
+                                            InputProps={{
+                                                inputProps: { min: 0 }
+                                            }}
                                             onChange={(e) => {
                                                 const re = /^[0-9-.\b]+$/;
                                                 if (e.target.value === '' || re.test(e.target.value)) {
@@ -303,7 +307,19 @@ const Add_Patinet = ({ show, handleclose }) => {
                                             placeholder="Height"
                                             variant="outlined"
                                         />
-                                        <TextField className={classes.inputFields} value={weight} onChange={(e) => setweight(e.target.value)} id="outlined-basic" size="small" placeholder="Weight" variant="outlined" />
+
+                                        <TextField className={classes.inputFields}
+                                            type='number'
+                                            InputProps={{
+                                                inputProps: { min: 0 }
+                                            }}
+                                            value={weight}
+                                            onChange={(e) => setweight(e.target.value)}
+                                            id="outlined-basic"
+                                            size="small"
+                                            placeholder="Weight"
+                                            variant="outlined"
+                                        />
 
                                     </div>
                                 </center>

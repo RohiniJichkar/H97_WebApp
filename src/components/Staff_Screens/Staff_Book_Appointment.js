@@ -781,9 +781,13 @@ export default function Staff_Book_Appointment() {
                                                 id="outlined-size-small"
                                                 variant="outlined"
                                                 size="small"
+                                                type='number'
                                                 value={height}
+                                                InputProps={{
+                                                    inputProps: { min: 0 }
+                                                  }}
                                                 onChange={(e) => {
-                                                    const re = /^[0-9\b]+$/;
+                                                    const re = /^[0-9-.\b]+$/;
                                                     if (e.target.value === '' || re.test(e.target.value)) {
                                                         setHeight(e.target.value)
                                                     }
@@ -797,9 +801,13 @@ export default function Staff_Book_Appointment() {
                                                 id="outlined-size-small"
                                                 variant="outlined"
                                                 size="small"
+                                                type='number'
                                                 value={weight}
+                                                InputProps={{
+                                                    inputProps: { min: 0 }
+                                                  }}
                                                 onChange={(e) => {
-                                                    const re = /^[0-9\b]+$/;
+                                                    const re = /^[0-9-.\b]+$/;
                                                     if (e.target.value === '' || re.test(e.target.value)) {
                                                         setWeight(e.target.value)
                                                     }
