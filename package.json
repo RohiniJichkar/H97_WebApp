@@ -25,6 +25,7 @@
     "chart.js": "^3.6.2",
     "devextreme": "19.1.14",
     "devextreme-react": "19.1.14",
+    "geonames.js": "^3.0.6",
     "history": "^5.0.1",
     "material-ui": "^0.20.2",
     "moment": "^2.29.1",

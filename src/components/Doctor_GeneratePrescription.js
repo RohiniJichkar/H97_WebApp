@@ -145,8 +145,6 @@ function DoctorGeneratePrescription() {
             let parsed = JSON.parse(data);
             let category = parsed.CodeValueCategory;
 
-            console.log(category)
-
             if (category == 'Gynaecologist') {
                 const request = await generatePrescription(obj);
                 if (request.success === "200") {

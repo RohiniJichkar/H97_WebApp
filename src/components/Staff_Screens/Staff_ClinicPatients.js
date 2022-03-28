@@ -2,25 +2,26 @@ import React, { useState, useEffect } from 'react';
 import clsx from 'clsx';
 import { makeStyles, useTheme, alpha } from '@material-ui/core/styles';
 import { useNavigate } from 'react-router-dom';
-import { Container, Avatar, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, TextField, Slide, Select, FormControl, InputLabel, Typography, Button, Table, TableContainer, TableBody, TableCell, TableHead, InputBase, TableRow, TablePagination, Drawer, Divider, MenuItem, Menu, ListItem, ListItemIcon, ListItemText, List, IconButton, Grid, Paper, Link } from "@material-ui/core";
+import { Avatar, Slide, STypography, Button, InputBase, Divider, ListItem, ListItemText, IconButton, Typography, Grid, Paper, Link } from "@material-ui/core";
 import { Redirect } from 'react-router-dom';
 import DoctorNavbar from './Staff_Navbar';
 import SearchIcon from '@material-ui/icons/Search';
-import { FixedSizeList } from 'react-window';
+
 import PropTypes from 'prop-types';
 import ArrowBackIcon from '@material-ui/icons/ArrowBack';
-import CloseIcon from '@material-ui/icons/Close';
-import AccountCircleIcon from '@material-ui/icons/AccountCircle';
+
 import axios from 'axios';
 import { DataGrid } from '@material-ui/data-grid';
 import { Register_Patient } from '../../Apis/Staff/Clinic_Patients/Patient_Registration';
 import Edit_Patient from './components/Clinic_Patients/Edit_Patient/index';
 import Delete_Patient from './components/Clinic_Patients/Delete_Patient/index';
 import Add_Patinet from './components/Clinic_Patients/Add_Patient/index';
+import Add_Family_Member from './components/Clinic_Patients/Add_Family_Member/index';
 
 const getPatientDataApi = 'http://13.233.217.107:8080/api/Web_GetPatients';
 const getPatientDetailsApi = 'http://13.233.217.107:8080/api/ShowPatientDetailUsingId';
 const getPatientSearchApi = 'http://13.233.217.107:8080/api/Web_SearchPatients';
+const getPatientsCount = 'http://13.233.217.107:8080/api/Web_GetNoOfPatientCount';
 
 
 const drawerWidth = 240;
@@ -110,8 +111,18 @@ export default function Staff_ClinicPatients() {
     const [weight, setweight] = useState('');
     const [openeditmodal, setOpenEditmodal] = React.useState(false);
     const [opendeletemodal, setOpenDeletemodal] = React.useState(false);
+    const [openFamilyMemberModal, setopenFamilyMemberModal] = React.useState(false);
     const [patientsearch, setpatientsearch] = useState([]);
     const [showPassword, setshowPassword] = useState(false);
+    const [patientcountData, setpatientcountData] = useState([]);
+
+    const fetchPatientsCount = async () => {
+        var data = await localStorage.getItem("userdata");
+        let parsed = JSON.parse(data);
+        let clinicid = parsed.ClinicId;
+        const patientInfo = await axios.post(getPatientsCount, { ClinicId: clinicid });
+        setpatientcountData(patientInfo?.data?.Patients);
+    }
 
     const PatientRegistration = async () => {
         var data = await localStorage.getItem("userdata");
@@ -184,6 +195,7 @@ export default function Staff_ClinicPatients() {
 
     useEffect(() => {
         fetchPatientData();
+        fetchPatientsCount();
     }, [])
 
     const handleCellClick = async (userid) => {
@@ -217,6 +229,14 @@ export default function Staff_ClinicPatients() {
         }
     };
 
+    const handleOpenAddFamilyMemberModal = () => {
+        if (patientDetails != '') {
+            setopenFamilyMemberModal(true);
+        } else {
+            alert('Please Select Family Head Member from List');
+        }
+    };
+
     return (
         <div className={classes.root} style={{ backgroundColor: '#ffffff' }}>
             <DoctorNavbar />
@@ -242,6 +262,7 @@ export default function Staff_ClinicPatients() {
                         <Button style={{ marginLeft: '-20px', backgroundColor: 'white', color: '#2C7FB2', fontSize: '12px' }}> <ArrowBackIcon onClick={handleGoBack} />  </Button>
                         Clinic Patients
                         <Button className={classes.btnregister} onClick={() => setOpenmodal(true)} style={{ float: 'right', marginRight: 20, width: '150px', fontFamily: 'Poppins', fontSize: 12.5, fontWeight: 400 }}>New Registration</Button>
+                        <Button className={classes.btnregister} onClick={() => handleOpenAddFamilyMemberModal()} style={{ float: 'right', marginRight: 20, width: '150px', fontFamily: 'Poppins', fontSize: 12.5, fontWeight: 400 }}>Add Family Member</Button>
                     </Typography>
                 </Grid>
 
@@ -273,7 +294,7 @@ export default function Staff_ClinicPatients() {
 
 
                         <DataGrid
-                            style={{ height: 370, marginTop: 20, fontSize: 13, fontFamily: 'Poppins', fontWeight: 600, color: '#2C7FB2', cursor: 'pointer' }}
+                            style={{ height: 350, marginTop: 20, fontSize: 13, fontFamily: 'Poppins', fontWeight: 600, color: '#2C7FB2', cursor: 'pointer' }}
                             rows={patientData}
                             rowHeight={30}
                             columns={columns}
@@ -283,7 +304,12 @@ export default function Staff_ClinicPatients() {
                                 handleCellClick(newSelection.row.UserId);
                             }}
                         />
-
+                        <Typography variant="h6" noWrap={true} style={{
+                            fontSize: 12, color: '#2C7FB2', fontFamily: 'Poppins',
+                            fontStyle: 'normal',
+                        }}>
+                            Total Number of Patients : {patientcountData[0].Count}
+                        </Typography>
                     </Paper>
 
                 </Grid>
@@ -413,6 +439,11 @@ export default function Staff_ClinicPatients() {
                 {/* for Delete User */}
 
                 {opendeletemodal ? <Delete_Patient show={opendeletemodal} data={patientDetails} handleclose={() => setOpenDeletemodal(false)} /> : null}
+
+
+                {/* for Family Member */}
+
+                {openFamilyMemberModal ? <Add_Family_Member show={openFamilyMemberModal} data={patientDetails} handleclose={() => setopenFamilyMemberModal(false)} /> : null}
 
 
 

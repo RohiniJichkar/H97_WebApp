@@ -1,36 +1,40 @@
 import React, { useState, useEffect } from 'react';
 import { makeStyles, useTheme, alpha } from '@material-ui/core/styles';
 import { useNavigate } from 'react-router-dom';
-import { Dialog, DialogContent, DialogContentText, DialogTitle, TextField, Slide, Select, FormControl, Button, IconButton, Grid, Paper } from "@material-ui/core";
+import { Dialog, DialogContent, DialogContentText, DialogTitle, TextField, Slide, Select, FormControl, Button, IconButton, Grid, Paper, Link } from "@material-ui/core";
 import CloseIcon from '@material-ui/icons/Close';
-import Visibility from '@material-ui/icons/Visibility';
-import VisibilityOff from '@material-ui/icons/VisibilityOff';
-import InputAdornment from '@material-ui/core/InputAdornment';
-import { Register_Patient, Country, State, City } from '../../../../../Apis/Staff/Clinic_Patients/Patient_Registration';
+import { AddFamilyMember } from '../../../../../Apis/Staff/Clinic_Patients/Add_Family_Member';
+import { Country, State, City } from '../../../../../Apis/Staff/Clinic_Patients/Patient_Registration';
 
 const drawerWidth = 240;
 
-const Add_Patinet = ({ show, handleclose }) => {
+const Transition = React.forwardRef(function Transition(props, ref) {
+    return <Slide direction="up" ref={ref} {...props} />;
+});
+
+
+export default function Add_Family_Member({ show, data, handleclose }) {
     const classes = useStyles();
     const theme = useTheme();
     const navigate = useNavigate();
+    let obj = {};
+    obj = data;
     const [maxWidth, setMaxWidth] = React.useState('md');
-
-    const [firstnm, setfirstnm] = useState('');
-    const [lastnm, setlastnm] = useState('');
-    const [mobile, setmobile] = useState('');
-    const [email, setemail] = useState('');
-    const [dob, setdob] = useState('');
-    const [password, setpassword] = useState('');
-    const [gender, setgender] = useState('');
-    const [address, setaddress] = useState('');
-    const [city, setcity] = useState('');
-    const [pincode, setpincode] = useState('');
-    const [state, setstate] = useState('');
-    const [country, setcountry] = useState('');
-    const [height, setheight] = useState('');
-    const [weight, setweight] = useState('');
-    const [showPassword, setshowPassword] = useState(false);
+    const [firstnm, setfirstnm] = useState();
+    const [lastnm, setlastnm] = useState();
+    const [mobile, setmobile] = useState(obj ? obj.MobileNo : '');
+    const [alternatemobile, setalternatemobile] = useState('');
+    const [email, setemail] = useState();
+    const [dob, setdob] = useState();
+    const [gender, setgender] = useState();
+    const [bloodrelation, setbloodrelation] = useState('');
+    const [address, setaddress] = useState(obj ? obj?.Address : '');
+    const [city, setcity] = useState(obj ? obj?.City : '');
+    const [pincode, setpincode] = useState(obj ? obj?.Pincode : '');
+    const [state, setstate] = useState(obj ? obj?.State : '');
+    const [country, setcountry] = useState(obj ? obj?.Country : '');
+    const [height, setheight] = useState();
+    const [weight, setweight] = useState();
     const [countryData, setcountryData] = useState([]);
     const [stateData, setstateData] = useState([]);
     const [cityData, setcityData] = useState([]);
@@ -40,7 +44,6 @@ const Add_Patinet = ({ show, handleclose }) => {
         setcountryData(countries);
     }
 
-    console.log(city)
     const fetchState = async () => {
         const statess = await State();
         setstateData(statess);
@@ -54,57 +57,39 @@ const Add_Patinet = ({ show, handleclose }) => {
         setcityData(cities);
     }
 
-    useEffect(() => {
-        fetchCountry();
-        fetchState();
-    }, []);
 
-    const PatientRegistration = async (firstnm, lastnm, mobile, password, email, dob, gender, address, city, pincode, state, country, height, weight) => {
-        var data = await localStorage.getItem("userdata");
-        let parsed = JSON.parse(data);
+    const AddDFamilyMemberDetails = async () => {
+        var cdata = await localStorage.getItem("userdata");
+        let parsed = JSON.parse(cdata);
         let clinicid = parsed.ClinicId;
         const date = new Date();
         const now = date.toISOString().split('T')[0];
-        if (firstnm.trim() == '' || lastnm.trim() == '' || mobile.trim() == '' || password.trim() == '' || dob.trim() == '' || gender.trim() == '') {
-            alert('Please Enter Mandatory fields')
+
+        if (firstnm == '') {
+            alert('Please Enter First Name');
             return;
         }
-        else if (dob > now) {
-            alert('Invalid Date of Birth');
+        else if (lastnm == '') {
+            alert('Please Enter Last Name');
+            return;
+        }
+        else if (dob == '') {
+            alert('Please Enter DOB');
+            return;
+        }
+        else if (gender == '') {
+            alert('Please Enter Gender');
             return;
         }
 
-        var FirstNm = firstnm.split(/\s/).join('');
-
-        let dobstr = dob;
-
-        let birth_year = Number(dobstr.substring(0, 4));
-        let birth_month = Number(dobstr.substring(5, 2));
-        let birth_day = Number(dobstr.substring(8, 2));
-
-        let today_year = date.getFullYear();
-        let today_month = date.getMonth();
-        let today_day = date.getDate();
-        let age = today_year - birth_year;
-
-        if (today_month < (birth_month - 1)) {
-            age--;
-            return age;
-        }
-        if (((birth_month - 1) == today_month) && (today_day < birth_day)) {
-            age--;
-            return age;
-        }
-
-        const obj = {
+        const object = {
             ClinicId: clinicid,
-            FirstName: FirstNm,
+            FirstName: firstnm,
             LastName: lastnm,
-            MobileNo: mobile,
-            Password: password,
+            MobileNo: obj.MobileNo,
             Email: email,
             DOB: dob,
-            Age: age,
+            // Age: age,
             Gender: gender,
             Address: address,
             City: city,
@@ -113,41 +98,43 @@ const Add_Patinet = ({ show, handleclose }) => {
             Country: country,
             Height: height,
             Weight: weight,
+            AlternateMobileNo: alternatemobile,
+            BloodRelation: bloodrelation,
             createdDate: now
         }
-
         try {
-            const registration = await Register_Patient(obj);
-            let parse = JSON.parse(registration);
+            const addPatientRequest = await AddFamilyMember(object);
+            const parse = JSON.parse(addPatientRequest);
             if (parse.success === "200") {
                 alert(parse.message);
                 handleclose();
-                // window.location.reload()
+                // window.location.reload();
             } else {
                 alert(parse.message);
             }
         } catch (error) {
-            console.log(error);
+            console.log(error)
         }
+
     }
 
-    const handleClickShowPassword = () => {
-        setshowPassword(!showPassword);
-    };
-
-    const handleMouseDownPassword = (event) => {
-        event.preventDefault();
-    };
+    useEffect(() => {
+        fetchCountry();
+        fetchState();
+    }, []);
 
     return (
         <>
+            {/* Add Family Member Patient Details */}
+
             <Dialog
                 open={show}
+                onClose={handleclose}
                 maxWidth={maxWidth}
                 aria-labelledby="alert-dialog-title"
                 aria-describedby="alert-dialog-description"
             >
-                <DialogTitle id="alert-dialog-title" style={{ fontFamily: 'Poppins', fontWeight: 600, fontSize: 20, color: '#2C7FB2' }}>{"Register New Patient"}
+                <DialogTitle id="alert-dialog-title" style={{ fontFamily: 'Poppins', fontWeight: 600, fontSize: 20, color: '#2C7FB2' }}>{"Add New Family Member"}
                     <IconButton edge="start" color="inherit" onClick={handleclose} aria-label="close" style={{ float: 'right', color: '#2C7FB2', backgroundColor: '#F0F0F0' }}>
                         <CloseIcon />
                     </IconButton>
@@ -157,96 +144,95 @@ const Add_Patinet = ({ show, handleclose }) => {
                         <Grid container>
                             <Grid item xs={12} sm={6} style={{ borderRight: '1px solid #F0F0F0' }}>
                                 <center>
-                                    <div>
-                                        <TextField className={classes.inputFields} value={firstnm}
-                                            onChange={(e) => {
-                                                const re = /^[A-Za-z]+$/;
-
-                                                // if value is not blank, then test the regex
-
-                                                if (e.target.value === '' || re.test(e.target.value)) {
-                                                    setfirstnm(e.target.value)
-                                                }
-                                            }} style={{ marginLeft: 14 }}
-                                            id="outlined-basic" size="small" placeholder="First Name" variant="outlined" />
+                                    <div style={{ paddingTop: 10 }}>
+                                        <TextField className={classes.inputFields} value={firstnm} onChange={(e) => {
+                                            const re = /^[A-Za-z]+$/;
+                                            if (e.target.value === '' || re.test(e.target.value)) {
+                                                setfirstnm(e.target.value)
+                                            }
+                                        }} id="outlined-basic" size="small" label="First Name" variant="outlined" style={{ marginLeft: 12 }} />
                                         <span style={{ position: 'relative', bottom: 8, fontSize: 20, color: 'red' }}> *</span>
-                                        <TextField className={classes.inputFields} value={lastnm}
-                                            onChange={(e) => {
-                                                const re = /^[A-Za-z]+$/;
-
-                                                // if value is not blank, then test the regex
-
-                                                if (e.target.value === '' || re.test(e.target.value)) {
-                                                    setlastnm(e.target.value)
-                                                }
-                                            }} style={{ marginLeft: 14 }} id="outlined-basic" size="small" placeholder="Last Name" variant="outlined" />
+                                        <TextField className={classes.inputFields} value={lastnm} onChange={(e) => {
+                                            const re = /^[A-Za-z]+$/;
+                                            if (e.target.value === '' || re.test(e.target.value)) {
+                                                setlastnm(e.target.value)
+                                            }
+                                        }} id="outlined-basic" size="small" label="Last Name" variant="outlined" style={{ marginLeft: 12 }} />
                                         <span style={{ position: 'relative', bottom: 8, fontSize: 20, color: 'red' }}> *</span>
-                                        <TextField
-                                            className={classes.inputFields}
-                                            value={mobile}
-                                            onChange={(e) => {
-                                                const re = /^[0-9\b]+$/;
+                                        <TextField className={classes.inputFields} value={mobile} disabled onChange={(e) => {
+                                            const re = /^[0-9\b]+$/;
+                                            if (e.target.value === '' || re.test(e.target.value)) {
+                                                setmobile(e.target.value)
+                                            }
+                                        }} onInput={(e) => {
+                                            e.target.value = Math.max(0, parseInt(e.target.value)).toString().slice(0, 10)
+                                        }} id="outlined-basic" type="number" size="small" label="Mobile Number" variant="outlined" />
 
-                                                // if value is not blank, then test the regex
+                                        <TextField className={classes.inputFields} value={alternatemobile} onChange={(e) => {
+                                            const re = /^[0-9\b]+$/;
+                                            if (e.target.value === '' || re.test(e.target.value)) {
+                                                setalternatemobile(e.target.value)
+                                            }
+                                        }} onInput={(e) => {
+                                            e.target.value = Math.max(0, parseInt(e.target.value)).toString().slice(0, 10)
+                                        }} id="outlined-basic" type="number" size="small" label="Alternate Mobile Number" variant="outlined" />
 
-                                                if (e.target.value === '' || re.test(e.target.value)) {
-                                                    setmobile(e.target.value)
-                                                }
-                                            }}
-                                            id="outlined-basic"
-                                            type="number"
-                                            size="small"
-                                            placeholder="Mobile Number*"
-                                            variant="outlined"
-                                            onInput={(e) => {
-                                                e.target.value = Math.max(0, parseInt(e.target.value)).toString().slice(0, 10)
-                                            }} style={{ marginLeft: 14 }}
-                                        /><span style={{ position: 'relative', bottom: 8, fontSize: 20, color: 'red' }}> *</span>
-                                        <TextField className={classes.inputFields} style={{ marginLeft: 14 }} value={password} onChange={(e) => setpassword(e.target.value)} id="outlined-basic"
-                                            type={showPassword ? 'text' : 'password'}
-                                            size="small" placeholder="Password" variant="outlined"
-                                            InputProps={{
-                                                endAdornment: (
-                                                    <InputAdornment position="end">
-                                                        <IconButton
-                                                            aria-label="toggle password visibility"
-                                                            onClick={handleClickShowPassword}
-                                                            onMouseDown={handleMouseDownPassword}
-                                                        >
-                                                            {showPassword ? <Visibility /> : <VisibilityOff />}
-                                                        </IconButton>
-                                                    </InputAdornment>
-                                                ),
-                                            }} /><span style={{ position: 'relative', bottom: 8, fontSize: 20, color: 'red' }}> *</span>
-                                        <TextField className={classes.inputFields} value={email} onChange={(e) => setemail(e.target.value)} id="outlined-basic" type="email" size="small" placeholder="Email Id" variant="outlined" style={{ marginLeft: 30 }} />
-                                        <span style={{ position: 'relative', top: 50, right: 290, fontSize: 13 }}>DOB</span>
-                                        <TextField className={classes.inputFields} style={{ marginLeft: 13 }} defaultValue={new Date()} value={dob} onChange={(e) => setdob(e.target.value)} id="outlined-basic" type="date" size="small" variant="outlined" />
-                                        <span style={{ position: 'relative', bottom: 8, fontSize: 20, color: 'red' }}> *</span>
+                                        <TextField className={classes.inputFields} value={email} onChange={(e) => setemail(e.target.value)} id="outlined-basic" type="email" size="small" label="Email Id" variant="outlined" style={{ marginLeft: 25 }} />
+                                        <span style={{ position: 'relative', top: 50, right: 270, fontSize: 13 }}>DOB</span>
+                                        <TextField className={classes.inputFields} defaultValue={new Date()} value={dob} onChange={(e) => setdob(e.target.value)} id="outlined-basic" type="date" size="small" variant="outlined" style={{ marginLeft: 10 }} /><span style={{ position: 'relative', bottom: 8, fontSize: 20, color: 'red' }}> *</span>
                                         <FormControl variant="outlined" size='small' className={classes.formControl}  >
                                             <Select
                                                 className={classes.inputFields}
                                                 native
                                                 size='small'
                                                 value={gender}
-                                                label="Gender"
                                                 onChange={(e) => setgender(e.target.value)}
+                                                label="Gender"
                                                 inputProps={{
                                                     name: 'gender',
                                                     id: 'outlined-gender-native-simple',
-                                                }} style={{ marginLeft: 14 }}
+                                                }}
+                                                style={{ marginLeft: 10, marginTop: -10 }}
                                             >
                                                 <option aria-label="None" value="" >Gender</option>
                                                 <option value='Male'>Male</option>
                                                 <option value='Female'>Female</option>
+
                                             </Select>
-                                        </FormControl><span style={{ position: 'relative', bottom: 7, fontSize: 20, color: 'red' }}> *</span>
+                                        </FormControl><span style={{ position: 'relative', bottom: 4, fontSize: 20, right: 8, color: 'red' }}> *</span>
                                     </div>
                                 </center>
                             </Grid>
 
                             <Grid item xs={12} sm={6}>
                                 <center>
-                                    <div>
+                                    <div style={{ paddingTop: 10 }}>
+
+                                        <FormControl variant="outlined" size="small" className={classes.formControl} style={{ marginLeft: 43, width: '75%', fontWeight: 600 }} >
+                                            <Select
+                                                className={classes.textFieldForm}
+                                                size='large'
+                                                native
+                                                value={bloodrelation}
+                                                onChange={(e) => setbloodrelation(e.target.value)}
+                                                defaultChecked='India'
+                                                label="Blood Relation"
+                                                inputProps={{
+                                                    name: 'Blood Relation',
+                                                    id: 'outlined-end-time-native-simple',
+                                                }}
+                                                style={{ width: '90%', fontSize: 14, fontWeight: 600, color: '#707070' }}
+                                            >
+                                                <option aria-label="None" value="">Blood Relation</option>
+                                                <option value='Father'>Father</option>
+                                                <option value='Mother'>Mother</option>
+                                                <option value='Spouse'>Spouse</option>
+                                                <option value='Daughter'>Daughter</option>
+                                                <option value='Son'>Son</option>
+                                                <option value='Siblings'>Siblings</option>
+                                            </Select>
+                                        </FormControl>
+
                                         <FormControl variant="outlined" size="small" className={classes.formControl} style={{ marginLeft: 43, width: '75%', fontWeight: 600 }} >
                                             <Select
                                                 className={classes.textFieldForm}
@@ -261,7 +247,7 @@ const Add_Patinet = ({ show, handleclose }) => {
                                                     name: 'Country',
                                                     id: 'outlined-end-time-native-simple',
                                                 }}
-                                                style={{ width: '88%', fontSize: 14, fontWeight: 600, color: '#707070' }}
+                                                style={{ width: '90%', fontSize: 14, fontWeight: 600, color: '#707070' }}
                                             >
                                                 <option aria-label="None" value="">Country</option>
                                                 {countryData.map(v => {
@@ -274,7 +260,7 @@ const Add_Patinet = ({ show, handleclose }) => {
                                             </Select>
                                         </FormControl>
 
-                                        <FormControl variant="outlined" size="small" onClick={() => fetchCity()} className={classes.formControl} style={{ marginLeft: 43, width: '75%', fontWeight: 600, marginTop: 20 }} >
+                                        <FormControl variant="outlined" size="small" onClick={() => fetchCity()} className={classes.formControl} style={{ marginLeft: 43, width: '75%', fontWeight: 600 }} >
                                             <Select
                                                 disabled={country ? false : true}
                                                 className={classes.textFieldForm}
@@ -287,7 +273,7 @@ const Add_Patinet = ({ show, handleclose }) => {
                                                     name: 'State',
                                                     id: 'outlined-end-time-native-simple',
                                                 }}
-                                                style={{ width: '88%', fontSize: 14, fontWeight: 600, color: '#707070' }}
+                                                style={{ width: '90%', fontSize: 14, fontWeight: 600, color: '#707070' }}
                                             >
                                                 <option aria-label="None" value="">State</option>
                                                 {stateData.map(v => {
@@ -300,7 +286,7 @@ const Add_Patinet = ({ show, handleclose }) => {
                                             </Select>
                                         </FormControl>
 
-                                        <FormControl variant="outlined" size="small" className={classes.formControl} style={{ marginLeft: 43, width: '75%', fontWeight: 600, marginTop: 20 }} >
+                                        <FormControl variant="outlined" size="small" className={classes.formControl} style={{ marginLeft: 43, width: '75%', fontWeight: 600 }} >
                                             <Select
                                                 disabled={country ? false : true}
                                                 className={classes.textFieldForm}
@@ -313,7 +299,7 @@ const Add_Patinet = ({ show, handleclose }) => {
                                                     name: 'City',
                                                     id: 'outlined-end-time-native-simple',
                                                 }}
-                                                style={{ width: '88%', fontSize: 14, fontWeight: 600, color: '#707070' }}
+                                                style={{ width: '90%', fontSize: 14, fontWeight: 600, color: '#707070' }}
                                             >
                                                 <option aria-label="None" value="">City</option>
                                                 {cityData.map(v => {
@@ -326,60 +312,49 @@ const Add_Patinet = ({ show, handleclose }) => {
                                             </Select>
                                         </FormControl>
 
-                                        <TextField className={classes.inputFields} multiline
-                                            onChange={(e) => {
-                                                setaddress(e.target.value)
-                                            }}
-                                            rows={1.2}
+                                        <TextField className={classes.inputFields} multiline style={{ marginTop: 10 }} value={address} onChange={(e) => setaddress(e.target.value)}
+                                            rows={2}
                                             rowsMax={2} id="outlined-basic" size="small" label="Address" variant="outlined"
-                                            style={{marginTop: 20}}
                                         />
 
-                                        <TextField
-                                            className={classes.inputFields}
+                                        <TextField className={classes.inputFields}
                                             value={pincode}
                                             type='number'
                                             onInput={(e) => {
                                                 e.target.value = Math.max(0, parseInt(e.target.value)).toString().slice(0, 6)
                                             }}
                                             onChange={(e) => setpincode(e.target.value)}
-                                            id="outlined-basic"
-                                            size="small"
+                                            id="outlined-basic" size="small"
                                             placeholder="Pincode"
                                             variant="outlined" />
 
-                                        <TextField
-                                            className={classes.inputFields}
-                                            value={height}
-                                            type='number'
-                                            InputProps={{
-                                                inputProps: { min: 0 }
-                                            }}
-                                            onChange={(e) => {
-                                                const re = /^[0-9-.\b]+$/;
-                                                if (e.target.value === '' || re.test(e.target.value)) {
-                                                    setheight(e.target.value)
-                                                }
-                                            }}
-                                            id="outlined-basic"
-                                            size="small"
-                                            placeholder="Height"
-                                            variant="outlined"
-                                        />
 
-                                        <TextField className={classes.inputFields}
-                                            type='number'
-                                            InputProps={{
-                                                inputProps: { min: 0 }
-                                            }}
-                                            value={weight}
-                                            onChange={(e) => setweight(e.target.value)}
-                                            id="outlined-basic"
-                                            size="small"
-                                            placeholder="Weight"
-                                            variant="outlined"
-                                        />
-
+                                        <Grid container>
+                                            <Grid item xs={12} sm={6}>
+                                                <center>
+                                                    <TextField
+                                                        InputProps={{
+                                                            inputProps: { min: 0 }
+                                                        }}
+                                                        className={classes.inputFields}
+                                                        value={height} onChange={(e) => setheight(e.target.value)}
+                                                        id="outlined-basic" size="small" type="number" label="Height"
+                                                        variant="outlined" style={{ width: 145, float: 'right', marginRight: 5 }} />
+                                                </center>
+                                            </Grid>
+                                            <Grid item xs={12} sm={6}>
+                                                <center>
+                                                    <TextField
+                                                        InputProps={{
+                                                            inputProps: { min: 0 }
+                                                        }}
+                                                        className={classes.inputFields}
+                                                        value={weight} onChange={(e) => setweight(e.target.value)}
+                                                        id="outlined-basic" size="small" type="number" label="Weight"
+                                                        variant="outlined" style={{ width: 150, float: 'left', }} />
+                                                </center>
+                                            </Grid>
+                                        </Grid>
                                     </div>
                                 </center>
                             </Grid>
@@ -391,7 +366,7 @@ const Add_Patinet = ({ show, handleclose }) => {
                                     </Button>
                                 </Grid>
                                 <Grid xs={12} sm={6}>
-                                    <Button className={classes.btnregister} onClick={() => PatientRegistration(firstnm, lastnm, mobile, password, email, dob, gender, address, city, pincode, state, country, height, weight)} autoFocus style={{ float: 'left', marginLeft: 20 }}>
+                                    <Button className={classes.btnregister} onClick={() => AddDFamilyMemberDetails()} style={{ float: 'left', marginLeft: 20 }}>
                                         Register
                                     </Button>
                                 </Grid>
@@ -401,8 +376,10 @@ const Add_Patinet = ({ show, handleclose }) => {
                 </DialogContent>
             </Dialog>
         </>
-    )
+    );
 }
+
+
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -555,7 +532,8 @@ const useStyles = makeStyles((theme) => ({
         marginBottom: 20
     },
     formControl: {
-        minWidth: 150,
+        margin: theme.spacing(1),
+        minWidth: 180,
     },
     btnAdd: {
         backgroundColor: '#2C7FB2 !important',
@@ -576,7 +554,6 @@ const useStyles = makeStyles((theme) => ({
         textAlign: 'center',
         borderRadius: 28,
         width: 120,
-        marginTop: 10,
         fontSize: 12
     },
     btnregister: {
@@ -588,9 +565,6 @@ const useStyles = makeStyles((theme) => ({
         textAlign: 'center',
         borderRadius: 28,
         width: 120,
-        marginTop: 10,
         fontSize: 12
     },
-}))
-
-export default Add_Patinet
+}));

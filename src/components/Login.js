@@ -132,13 +132,20 @@ function Login(props) {
 
     const itemStr = await localStorage.getItem('rememberme');
     const item = [JSON.parse(itemStr)]
-    if(itemStr){
-    console.log(item)
-    setmobile(item[0].mobile)
-    setSelectedValue(item[0].role)
+    if (itemStr) {
+      console.log(item)
+      setmobile(item[0].mobile)
+      setSelectedValue(item[0].role)
     }
   }
 
+  const handleClickSignUp = () => {
+    navigate('/SignUp');
+  }
+
+  const handleClickForgotPass = () => {
+    navigate('/ForgotPassword');
+  }
 
   useEffect(() => {
     RememberUser();
@@ -328,7 +335,7 @@ function Login(props) {
                 /> */}
               </Grid>
               <Grid item sm={6} align="right" >
-                <Link href="/ForgotPassword" variant="body2" style={{ color: '#78B088' }}>
+                <Link onClick={() => handleClickForgotPass()}  variant="body2" style={{ color: '#78B088', cursor: 'pointer' }}>
                   Forgot password?
                 </Link>
               </Grid>
@@ -345,8 +352,8 @@ function Login(props) {
             <Typography component="h1">
               <Box mt={2}>
                 {/* <Copyright /> */}
-                To request an account just <a href="https://rajyugsolutions.com/contact" style={{ color: '#78B088' }}> email us </a> 
-                <a href="/SignUp"  style={{ color: '#78B088', float: 'right', fontFamily: 'Poppins', fontSize: 14 }}> Sign Up</a> 
+                To request an account just <a href="https://rajyugsolutions.com/contact" style={{ color: '#78B088' }}> email us </a>
+                <a onClick={() => handleClickSignUp()} style={{ color: '#78B088', float: 'right', fontFamily: 'Poppins', fontSize: 14, textDecoration: 'underline', cursor: 'pointer' }}> Sign Up</a>
                 {/* <Button
                 style={{ color: '#fff', fontSize: 12, fontFamily: 'Poppins', backgroundColor: '#78B088', float: 'right' }}   
               >
@@ -354,7 +361,7 @@ function Login(props) {
               </Button> */}
               </Box>
               <Box mt={2}>
-              
+
               </Box>
             </Typography>
 

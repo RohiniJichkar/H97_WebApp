@@ -4,8 +4,341 @@ import { useNavigate } from 'react-router-dom';
 import { Dialog, DialogContent, DialogContentText, DialogTitle, TextField, Slide, Select, FormControl, Button, IconButton, Grid, Paper, Link } from "@material-ui/core";
 import CloseIcon from '@material-ui/icons/Close';
 import { EditPatient } from '../../../../../Apis/Staff/Clinic_Patients/Edit_Patient';
+import { Country, State, City } from '../../../../../Apis/Staff/Clinic_Patients/Patient_Registration';
 
 const drawerWidth = 240;
+
+const Transition = React.forwardRef(function Transition(props, ref) {
+    return <Slide direction="up" ref={ref} {...props} />;
+});
+
+
+export default function Edit_Patient({ show, data, handleCloseEditmodal }) {
+    const classes = useStyles();
+    const theme = useTheme();
+    const navigate = useNavigate();
+    let obj = {};
+    obj = data;
+    const [maxWidth, setMaxWidth] = React.useState('md');
+    const [firstnm, setfirstnm] = useState(obj ? obj.FirstName : '');
+    const [lastnm, setlastnm] = useState(obj ? obj.LastName : '');
+    const [mobile, setmobile] = useState(obj ? obj.MobileNo : '');
+    const [email, setemail] = useState(obj ? obj.Email : '');
+    const [dob, setdob] = useState(obj ? obj.DOB : '');
+    const [gender, setgender] = useState(obj ? obj?.Gender : '');
+    const [address, setaddress] = useState(obj ? obj?.Address : '');
+    const [city, setcity] = useState(obj ? obj?.City : '');
+    const [pincode, setpincode] = useState(obj ? obj?.Pincode : '');
+    const [state, setstate] = useState(obj ? obj?.State : '');
+    const [country, setcountry] = useState(obj ? obj?.Country : '');
+    const [height, setheight] = useState(obj ? obj?.Height : '');
+    const [weight, setweight] = useState(obj ? obj?.Weight : '');
+    const [countryData, setcountryData] = useState([]);
+    const [stateData, setstateData] = useState([]);
+    const [cityData, setcityData] = useState([]);
+
+    const fetchCountry = async () => {
+        const countries = await Country();
+        setcountryData(countries);
+    }
+
+    const fetchState = async () => {
+        const statess = await State();
+        setstateData(statess);
+    }
+
+    const fetchCity = async () => {
+        const obj = {
+            StateName: state
+        }
+        const cities = await City(obj);
+        setcityData(cities);
+    }
+
+    useEffect(() => {
+        fetchCountry();
+        fetchState();
+    }, []);
+
+
+    const EditDetails = async () => {
+        var cdata = await localStorage.getItem("userdata");
+        let parsed = JSON.parse(cdata);
+        let clinicid = parsed.ClinicId;
+
+        let dobstr = dob;
+        let now = new Date();
+        let date = now.toLocaleTimeString().split('T')[0];
+
+        let birth_year = Number(dobstr.substring(0, 4));
+        let birth_month = Number(dobstr.substring(5, 2));
+        let birth_day = Number(dobstr.substring(8, 2));
+
+        let today_year = now.getFullYear();
+        let today_month = now.getMonth();
+        let today_day = now.getDate();
+        let age = today_year - birth_year;
+
+        if (today_month < (birth_month - 1)) {
+            age--;
+            return age;
+        }
+        if (((birth_month - 1) == today_month) && (today_day < birth_day)) {
+            age--;
+            return age;
+        }
+
+        const object = {
+            ClinicId: clinicid,
+            UserId: obj.UserId,
+            FirstName: firstnm,
+            LastName: lastnm,
+            MobileNo: mobile,
+            Email: email,
+            DOB: dob,
+            Age: age,
+            Gender: gender,
+            Address: address,
+            City: city,
+            Pincode: pincode,
+            State: state,
+            Country: country,
+            Height: height,
+            Weight: weight
+        }
+        try {
+            const editPatientRequest = await EditPatient(object);
+            const parse = JSON.parse(editPatientRequest);
+            alert(parse.message);
+            window.location.reload();
+        } catch (error) {
+            console.log(error)
+        }
+    }
+
+
+    return (
+        <>
+            {/* Edit Patient Details */}
+
+            <Dialog
+                open={show}
+                onClose={handleCloseEditmodal}
+                maxWidth={maxWidth}
+                aria-labelledby="alert-dialog-title"
+                aria-describedby="alert-dialog-description"
+            >
+                <DialogTitle id="alert-dialog-title" style={{ fontFamily: 'Poppins', fontWeight: 600, fontSize: 20, color: '#2C7FB2' }}>{"Edit Details"}
+                    <IconButton edge="start" color="inherit" onClick={handleCloseEditmodal} aria-label="close" style={{ float: 'right', color: '#2C7FB2', backgroundColor: '#F0F0F0' }}>
+                        <CloseIcon />
+                    </IconButton>
+                </DialogTitle>
+                <DialogContent>
+                    <DialogContentText id="alert-dialog-description">
+                        <Grid container>
+                            <Grid item xs={12} sm={6} style={{ borderRight: '1px solid #F0F0F0' }}>
+                                <center>
+                                    <div style={{ paddingTop: 10 }}>
+                                        <TextField className={classes.inputFields} value={firstnm} onChange={(e) => {
+                                            const re = /^[A-Za-z]+$/;
+                                            if (e.target.value === '' || re.test(e.target.value)) {
+                                                setfirstnm(e.target.value)
+                                            }
+                                        }} id="outlined-basic" size="small" label="First Name" variant="outlined" />
+                                        <TextField className={classes.inputFields} value={lastnm} onChange={(e) => {
+                                            const re = /^[A-Za-z]+$/;
+                                            if (e.target.value === '' || re.test(e.target.value)) {
+                                                setlastnm(e.target.value)
+                                            }
+                                        }} id="outlined-basic" size="small" label="Last Name" variant="outlined" />
+                                        <TextField className={classes.inputFields} value={mobile} onChange={(e) => {
+                                            const re = /^[0-9\b]+$/;
+                                            if (e.target.value === '' || re.test(e.target.value)) {
+                                                setmobile(e.target.value)
+                                            }
+                                        }} onInput={(e) => {
+                                            e.target.value = Math.max(0, parseInt(e.target.value)).toString().slice(0, 10)
+                                        }} id="outlined-basic" type="number" size="small" label="Mobile Number" variant="outlined" />
+                                        <TextField className={classes.inputFields} value={email} onChange={(e) => setemail(e.target.value)} id="outlined-basic" type="email" size="small" placeholder="Email Id" variant="outlined" style={{ marginLeft: 30 }} />
+                                        <span style={{ position: 'relative', top: 50, right: 290, fontSize: 13 }}>DOB</span>
+                                        <TextField className={classes.inputFields} style={{ marginLeft: 3 }} defaultValue={new Date()} value={dob} onChange={(e) => setdob(e.target.value)} id="outlined-basic" type="date" size="small" variant="outlined" />
+                                        <FormControl variant="outlined" size='small' className={classes.formControl}  >
+                                            <Select
+                                                className={classes.inputFields}
+                                                native
+                                                size='small'
+                                                value={gender}
+                                                onChange={(e) => setgender(e.target.value)}
+                                                label="Gender"
+                                                inputProps={{
+                                                    name: 'gender',
+                                                    id: 'outlined-gender-native-simple',
+                                                }}
+
+                                            >
+                                                <option aria-label="None" value="" >Gender</option>
+                                                <option value='Male'>Male</option>
+                                                <option value='Female'>Female</option>
+
+                                            </Select>
+                                        </FormControl>
+                                    </div>
+                                </center>
+                            </Grid>
+
+                            <Grid item xs={12} sm={6}>
+                                <center>
+                                    <div style={{ paddingTop: 10 }}>
+                                        <FormControl variant="outlined" size="small" className={classes.formControl} style={{ marginLeft: 43, width: '75%', fontWeight: 600 }} >
+                                            <Select
+                                                className={classes.textFieldForm}
+                                                size='large'
+                                                native
+                                                value={country}
+                                                key={country}
+                                                onChange={(e) => { setcountry(e.target.value) }}
+                                                defaultChecked='India'
+                                                label="Country"
+                                                inputProps={{
+                                                    name: 'Country',
+                                                    id: 'outlined-end-time-native-simple',
+                                                }}
+                                                style={{ width: '88%', fontSize: 14, fontWeight: 600, color: '#707070' }}
+                                            >
+                                                <option aria-label="None" value="">Country</option>
+                                                {countryData.map(v => {
+                                                    return (
+                                                        <>
+                                                            <option key={v.id} value={v.Name}>{v.Name}</option>
+                                                        </>
+                                                    )
+                                                })}
+                                            </Select>
+                                        </FormControl>
+
+                                        <FormControl variant="outlined" size="small" onClick={() => fetchCity()} className={classes.formControl} style={{ marginLeft: 43, width: '75%', fontWeight: 600, marginTop: 10 }} >
+                                            <Select
+                                                disabled={country ? false : true}
+                                                className={classes.textFieldForm}
+                                                size='large'
+                                                native
+                                                value={state}
+                                                onChange={(e) => setstate(e.target.value)}
+                                                label="State"
+                                                inputProps={{
+                                                    name: 'State',
+                                                    id: 'outlined-end-time-native-simple',
+                                                }}
+                                                style={{ width: '88%', fontSize: 14, fontWeight: 600, color: '#707070' }}
+                                            >
+                                                <option aria-label="None" value="">State</option>
+                                                {stateData.map(v => {
+                                                    return (
+                                                        <>
+                                                            <option value={v.StateName}>{v.StateName}</option>
+                                                        </>
+                                                    )
+                                                })}
+                                            </Select>
+                                        </FormControl>
+
+                                        <FormControl variant="outlined" size="small" className={classes.formControl} style={{ marginLeft: 43, width: '75%', fontWeight: 600, marginTop: 10 }} >
+                                            <Select
+                                                disabled={country ? false : true}
+                                                className={classes.textFieldForm}
+                                                size='large'
+                                                native
+                                                value={city}
+                                                onChange={(e) => setcity(e.target.value)}
+                                                label="City"
+                                                inputProps={{
+                                                    name: 'City',
+                                                    id: 'outlined-end-time-native-simple',
+                                                }}
+                                                style={{ width: '88%', fontSize: 14, fontWeight: 600, color: '#707070' }}
+                                            >
+                                                <option aria-label="None" value="">City</option>
+                                                {cityData.map(v => {
+                                                    return (
+                                                        <>
+                                                            <option value={v.CityName}>{v.CityName}</option>
+                                                        </>
+                                                    )
+                                                })}
+                                            </Select>
+                                        </FormControl>
+                                        <TextField className={classes.inputFields} multiline value={address} onChange={(e) => setaddress(e.target.value)}
+                                            rows={2}
+                                            rowsMax={2} id="outlined-basic" size="small" label="Address" variant="outlined"
+                                            style={{marginTop: 10, marginRight: 5}}
+                                        />
+
+                                        <TextField className={classes.inputFields} value={pincode} onChange={(e) => {
+                                            const re = /^[0-9\b]+$/;
+                                            if (e.target.value === '' || re.test(e.target.value)) {
+                                                setpincode(e.target.value)
+                                            }
+                                        }} id="outlined-basic" size="small" label="Pincode" variant="outlined" />
+
+                                        <Grid container>
+                                            <Grid item xs={12} sm={6}>
+                                                <center>
+                                                    <TextField className={classes.inputFields} value={height}
+                                                        onChange={(e) => {
+                                                            const re = /^[0-9-.\b]+$/;
+                                                            if (e.target.value === '' || re.test(e.target.value)) {
+                                                                setheight(e.target.value)
+                                                            }
+                                                        }}
+                                                        InputProps={{
+                                                            inputProps: { min: 0 }
+                                                        }}
+                                                        id="outlined-basic" size="small" type="number" label="Height" variant="outlined" style={{ width: 140, float: 'right', marginRight: 10 }} />
+                                                </center>
+                                            </Grid>
+                                            <Grid item xs={12} sm={6}>
+                                                <center>
+                                                    <TextField
+                                                        className={classes.inputFields}
+                                                        value={weight}
+                                                        InputProps={{
+                                                            inputProps: { min: 0 }
+                                                        }}
+                                                        onChange={(e) => setweight(e.target.value)}
+                                                        id="outlined-basic" size="small"
+                                                        type="number"
+                                                        label="Weight" variant="outlined"
+                                                        style={{ width: 140, float: 'left', marginLeft: 10, }} />
+                                                </center>
+                                            </Grid>
+                                        </Grid>
+                                    </div>
+                                </center>
+                            </Grid>
+
+                            <Grid container>
+                                <Grid xs={12} sm={6}>
+                                    <Button className={classes.btnCancle} onClick={handleCloseEditmodal} style={{ float: 'right', marginRight: 20 }}>
+                                        Cancel
+                                    </Button>
+                                </Grid>
+                                <Grid xs={12} sm={6}>
+                                    <Button className={classes.btnregister} onClick={EditDetails} style={{ float: 'left', marginLeft: 20 }}>
+                                        Update
+                                    </Button>
+                                </Grid>
+                            </Grid>
+                        </Grid>
+                    </DialogContentText>
+                </DialogContent>
+            </Dialog>
+        </>
+    );
+}
+
+
+
+
 const useStyles = makeStyles((theme) => ({
     root: {
         display: 'flex',
@@ -195,242 +528,3 @@ const useStyles = makeStyles((theme) => ({
         fontSize: 12
     },
 }));
-const Transition = React.forwardRef(function Transition(props, ref) {
-    return <Slide direction="up" ref={ref} {...props} />;
-});
-
-
-export default function Edit_Patient({ show, data, handleCloseEditmodal }) {
-    const classes = useStyles();
-    const theme = useTheme();
-    const navigate = useNavigate();
-    let obj = {};
-    obj = data;
-    const [maxWidth, setMaxWidth] = React.useState('md');
-    const [firstnm, setfirstnm] = useState(obj ? obj.FirstName : '');
-    const [lastnm, setlastnm] = useState(obj ? obj.LastName : '');
-    const [mobile, setmobile] = useState(obj ? obj.MobileNo : '');
-    const [email, setemail] = useState(obj ? obj.Email : '');
-    const [dob, setdob] = useState(obj ? obj.DOB : '');
-    const [gender, setgender] = useState(obj ? obj?.Gender : '');
-    const [address, setaddress] = useState(obj ? obj?.Address : '');
-    const [city, setcity] = useState(obj ? obj?.City : '');
-    const [pincode, setpincode] = useState(obj ? obj?.Pincode : '');
-    const [state, setstate] = useState(obj ? obj?.State : '');
-    const [country, setcountry] = useState(obj ? obj?.Country : '');
-    const [height, setheight] = useState(obj ? obj?.Height : '');
-    const [weight, setweight] = useState(obj ? obj?.Weight : '');
-
-    const EditDetails = async () => {
-        var cdata = await localStorage.getItem("userdata");
-        let parsed = JSON.parse(cdata);
-        let clinicid = parsed.ClinicId;
-
-        let dobstr = dob;
-        let now = new Date();
-        let date = now.toLocaleTimeString().split('T')[0];
-
-        let birth_year = Number(dobstr.substring(0, 4));
-        let birth_month = Number(dobstr.substring(5, 2));
-        let birth_day = Number(dobstr.substring(8, 2));
-
-        let today_year = now.getFullYear();
-        let today_month = now.getMonth();
-        let today_day = now.getDate();
-        let age = today_year - birth_year;
-
-        if (today_month < (birth_month - 1)) {
-            age--;
-            return age;
-        }
-        if (((birth_month - 1) == today_month) && (today_day < birth_day)) {
-            age--;
-            return age;
-        }
-
-        const object = {
-            ClinicId: clinicid,
-            UserId: obj.UserId,
-            FirstName: firstnm,
-            LastName: lastnm,
-            MobileNo: mobile,
-            Email: email,
-            DOB: dob,
-            Age: age,
-            Gender: gender,
-            Address: address,
-            City: city,
-            Pincode: pincode,
-            State: state,
-            Country: country,
-            Height: height,
-            Weight: weight
-        }
-        try {
-            const editPatientRequest = await EditPatient(object);
-            const parse = JSON.parse(editPatientRequest);
-            alert(parse.message);
-            window.location.reload();
-        } catch (error) {
-            console.log(error)
-        }
-    }
-
-
-    return (
-        <>
-            {/* Edit Patient Details */}
-
-            <Dialog
-                open={show}
-                onClose={handleCloseEditmodal}
-                maxWidth={maxWidth}
-                aria-labelledby="alert-dialog-title"
-                aria-describedby="alert-dialog-description"
-            >
-                <DialogTitle id="alert-dialog-title" style={{ fontFamily: 'Poppins', fontWeight: 600, fontSize: 20, color: '#2C7FB2' }}>{"Edit Details"}
-                    <IconButton edge="start" color="inherit" onClick={handleCloseEditmodal} aria-label="close" style={{ float: 'right', color: '#2C7FB2', backgroundColor: '#F0F0F0' }}>
-                        <CloseIcon />
-                    </IconButton>
-                </DialogTitle>
-                <DialogContent>
-                    <DialogContentText id="alert-dialog-description">
-                        <Grid container>
-                            <Grid item xs={12} sm={6} style={{ borderRight: '1px solid #F0F0F0' }}>
-                                <center>
-                                    <div style={{ paddingTop: 10 }}>
-                                        <TextField className={classes.inputFields} value={firstnm} onChange={(e) => {
-                                            const re = /^[A-Za-z]+$/;
-                                            if (e.target.value === '' || re.test(e.target.value)) {
-                                                setfirstnm(e.target.value)
-                                            }
-                                        }} id="outlined-basic" size="small" label="First Name" variant="outlined" />
-                                        <TextField className={classes.inputFields} value={lastnm} onChange={(e) => {
-                                            const re = /^[A-Za-z]+$/;
-                                            if (e.target.value === '' || re.test(e.target.value)) {
-                                                setlastnm(e.target.value)
-                                            }
-                                        }} id="outlined-basic" size="small" label="Last Name" variant="outlined" />
-                                        <TextField className={classes.inputFields} value={mobile} onChange={(e) => {
-                                            const re = /^[0-9\b]+$/;
-                                            if (e.target.value === '' || re.test(e.target.value)) {
-                                                setmobile(e.target.value)
-                                            }
-                                        }} onInput={(e) => {
-                                            e.target.value = Math.max(0, parseInt(e.target.value)).toString().slice(0, 10)
-                                        }} id="outlined-basic" type="number" size="small" label="Mobile Number" variant="outlined" />
-                                        <TextField className={classes.inputFields} value={email} onChange={(e) => setemail(e.target.value)} id="outlined-basic" type="email" size="small" placeholder="Email Id" variant="outlined" style={{ marginLeft: 30 }} />
-                                        <span style={{ position: 'relative', top: 50, right: 290, fontSize: 13 }}>DOB</span>
-                                        <TextField className={classes.inputFields} style={{ marginLeft: 3 }} defaultValue={new Date()} value={dob} onChange={(e) => setdob(e.target.value)} id="outlined-basic" type="date" size="small" variant="outlined" />
-                                        <FormControl variant="outlined" size='small' className={classes.formControl}  >
-                                            <Select
-                                                className={classes.inputFields}
-                                                native
-                                                size='small'
-                                                value={gender}
-                                                onChange={(e) => setgender(e.target.value)}
-                                                label="Gender"
-                                                inputProps={{
-                                                    name: 'gender',
-                                                    id: 'outlined-gender-native-simple',
-                                                }}
-
-                                            >
-                                                <option aria-label="None" value="" >Gender</option>
-                                                <option value='Male'>Male</option>
-                                                <option value='Female'>Female</option>
-
-                                            </Select>
-                                        </FormControl>
-                                    </div>
-                                </center>
-                            </Grid>
-
-                            <Grid item xs={12} sm={6}>
-                                <center>
-                                    <div style={{ paddingTop: 10 }}>
-                                        <TextField className={classes.inputFields} value={country} onChange={(e) => {
-                                            const re = /^[A-Za-z]+$/;
-                                            if (e.target.value === '' || re.test(e.target.value)) {
-                                                setcountry(e.target.value)
-                                            }
-                                        }} id="outlined-basic" size="small" label="Country" variant="outlined" />
-                                        <TextField className={classes.inputFields} value={state} onChange={(e) => {
-                                            const re = /^[A-Za-z]+$/;
-                                            if (e.target.value === '' || re.test(e.target.value)) {
-                                                setstate(e.target.value)
-                                            }
-                                        }} id="outlined-basic" size="small" label="State" variant="outlined" />
-                                        <TextField className={classes.inputFields} value={city} onChange={(e) => {
-                                            const re = /^[A-Za-z]+$/;
-                                            if (e.target.value === '' || re.test(e.target.value)) {
-                                                setcity(e.target.value)
-                                            }
-                                        }} id="outlined-basic" size="small" label="City" variant="outlined" />
-                                        <TextField className={classes.inputFields} multiline value={address} onChange={(e) => setaddress(e.target.value)}
-                                            rows={2}
-                                            rowsMax={5} id="outlined-basic" size="small" label="Address" variant="outlined"
-                                        />
-
-                                        <TextField className={classes.inputFields} value={pincode} onChange={(e) => {
-                                            const re = /^[0-9\b]+$/;
-                                            if (e.target.value === '' || re.test(e.target.value)) {
-                                                setpincode(e.target.value)
-                                            }
-                                        }} id="outlined-basic" size="small" label="Pincode" variant="outlined" />
-
-                                        <Grid container>
-                                            <Grid item xs={12} sm={6}>
-                                                <center>
-                                                    <TextField className={classes.inputFields} value={height}
-                                                        onChange={(e) => {
-                                                            const re = /^[0-9-.\b]+$/;
-                                                            if (e.target.value === '' || re.test(e.target.value)) {
-                                                                setheight(e.target.value)
-                                                            }
-                                                        }}
-                                                        InputProps={{
-                                                            inputProps: { min: 0 }
-                                                        }}
-                                                        id="outlined-basic" size="small" type="number" label="Height" variant="outlined" style={{ width: 150, float: 'right', marginRight: 5 }} />
-                                                </center>
-                                            </Grid>
-                                            <Grid item xs={12} sm={6}>
-                                                <center>
-                                                    <TextField
-                                                        className={classes.inputFields}
-                                                        value={weight}
-                                                        InputProps={{
-                                                            inputProps: { min: 0 }
-                                                        }}
-                                                        onChange={(e) => setweight(e.target.value)}
-                                                        id="outlined-basic" size="small"
-                                                        type="number"
-                                                        label="Weight" variant="outlined"
-                                                        style={{ width: 150, float: 'left', }} />
-                                                </center>
-                                            </Grid>
-                                        </Grid>
-                                    </div>
-                                </center>
-                            </Grid>
-
-                            <Grid container>
-                                <Grid xs={12} sm={6}>
-                                    <Button className={classes.btnCancle} onClick={handleCloseEditmodal} style={{ float: 'right', marginRight: 20 }}>
-                                        Cancel
-                                    </Button>
-                                </Grid>
-                                <Grid xs={12} sm={6}>
-                                    <Button className={classes.btnregister} onClick={EditDetails} style={{ float: 'left', marginLeft: 20 }}>
-                                        Update
-                                    </Button>
-                                </Grid>
-                            </Grid>
-                        </Grid>
-                    </DialogContentText>
-                </DialogContent>
-            </Dialog>
-        </>
-    );
-}

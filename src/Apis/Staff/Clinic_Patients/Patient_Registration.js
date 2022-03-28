@@ -11,3 +11,18 @@ export const Register_Patient = async (obj) => {
         return JSON.stringify(error.response.data);
     }
 }
+
+export const Country = async () => {
+    const country = await axios.post(ip + 'Web_GetCountries');
+    return country?.data?.Country;
+}
+
+export const State = async () => {
+    const state = await axios.post(ip + 'Web_GetStates');
+    return state?.data?.State;
+}
+
+export const City = async (obj) => {
+    const city = await axios.post(ip + 'Web_GetCities', obj);
+    return city?.data?.City;
+}

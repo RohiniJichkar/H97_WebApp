@@ -167,14 +167,12 @@ const App = () => {
             <Route exact path="/DoctorEditAppointment" element={<DoctorEditAppointment />}></Route>
 
 
-
             <Route exact path="/AdminHome" element={<AdminHome />}></Route>
             <Route exact path="/AdminDashboard" element={<AdminDashboard />}></Route>
             <Route exact path="/AdminAddClinic" element={<AdminAddClinic />}></Route>
             <Route exact path="/AdminClinicDetails" element={<AdminClinicDetails />}></Route>
             <Route exact path="/AdminDoctorDetails" element={<AdminDoctorDetails />}></Route>
             <Route exact path="/AdminClinicDoctors" element={<AdminClinicDoctors />}></Route>
-
 
 
             <Route exact path="/Staff_Home" element={<Staff_Home />}></Route>

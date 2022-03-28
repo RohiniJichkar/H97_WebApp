@@ -422,24 +422,14 @@ export default function DoctorAddServices() {
                                 Add Details
                             </Typography>
 
-
                             <div style={{ paddingTop: 10 }}>
                                 <center>
-                                    <TextField className={classes.textField} id="outlined-basic" value={serviceName} onChange={(e) => {
-                                        const re = /^[A-Za-z]+$/;
-                                        if (e.target.value === '' || re.test(e.target.value)) {
-                                            setserviceName(e.target.value)
-                                        }
-                                    }} size="small" label="Service Name" variant="outlined" /> <span style={{ position: 'relative', top: 10, left: '-7px', fontSize: 14, color: 'red' }}> *</span>
+                                    <TextField className={classes.textField} id="outlined-basic" value={serviceName} onChange={(e) => setserviceName(e.target.value)} size="small" label="Service Name" variant="outlined" /> <span style={{ position: 'relative', top: 10, left: '-7px', fontSize: 14, color: 'red' }}> *</span>
                                 </center>
                                 <center>
                                     <TextField className={classes.textField} id="outlined-basic" value={category}
-                                        onChange={(e) => {
-                                            const re = /^[A-Za-z]+$/;
-                                            if (e.target.value === '' || re.test(e.target.value)) {
-                                                setcategory(e.target.value)
-                                            }
-                                        }} size="small" label="Category" variant="outlined" /> <span style={{ position: 'relative', top: 10, left: '-7px', fontSize: 14, color: 'red' }}> *</span>
+                                        onChange={(e) => setcategory(e.target.value)}
+                                        size="small" label="Category" variant="outlined" /> <span style={{ position: 'relative', top: 10, left: '-7px', fontSize: 14, color: 'red' }}> *</span>
                                 </center>
                                 <center>
                                     <TextField className={classes.textField} id="outlined-basic" value={price}

@@ -4,6 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import { Dialog, DialogContent, DialogContentText, DialogTitle, TextField, Slide, Select, FormControl, Button, IconButton, Grid, Paper, Link } from "@material-ui/core";
 import CloseIcon from '@material-ui/icons/Close';
 import { EditPatient } from '../../../Apis/Clinic_Patients/Edit_Patient';
+import { Country, State, City } from '../../../Apis/Clinic_Patients/Patient_Registration';
 
 const drawerWidth = 240;
 const useStyles = makeStyles((theme) => ({
@@ -214,12 +215,39 @@ export default function Edit_Patient({ show, data, handleCloseEditmodal }) {
     const [dob, setdob] = useState(obj ? obj.DOB : '');
     const [gender, setgender] = useState(obj ? obj?.Gender : '');
     const [address, setaddress] = useState(obj ? obj?.Address : '');
-    const [city, setcity] = useState(obj ? obj?.City : '');
+    const [city, setcity] = useState(obj.City);
     const [pincode, setpincode] = useState(obj ? obj?.Pincode : '');
     const [state, setstate] = useState(obj ? obj?.State : '');
     const [country, setcountry] = useState(obj ? obj?.Country : '');
     const [height, setheight] = useState(obj ? obj?.Height : '');
     const [weight, setweight] = useState(obj ? obj?.Weight : '');
+    const [countryData, setcountryData] = useState([]);
+    const [stateData, setstateData] = useState([]);
+    const [cityData, setcityData] = useState([]);
+
+    const fetchCountry = async () => {
+        const countries = await Country();
+        setcountryData(countries);
+    }
+
+    const fetchState = async () => {
+        const statess = await State();
+        setstateData(statess);
+    }
+
+    const fetchCity = async () => {
+        const obj ={
+            StateName: state
+        }
+        const cities = await City(obj);
+        setcityData(cities);
+    }
+
+    useEffect(() => {
+        fetchCountry();
+        fetchState();
+    }, []);
+
 
     const EditDetails = async () => {
         var cdata = await localStorage.getItem("userdata");
@@ -348,27 +376,86 @@ export default function Edit_Patient({ show, data, handleCloseEditmodal }) {
                             <Grid item xs={12} sm={6}>
                                 <center>
                                     <div style={{ paddingTop: 10 }}>
-                                        <TextField className={classes.inputFields} value={country} onChange={(e) => {
-                                            const re = /^[A-Za-z]+$/;
-                                            if (e.target.value === '' || re.test(e.target.value)) {
-                                                setcountry(e.target.value)
-                                            }
-                                        }} id="outlined-basic" size="small" label="Country" variant="outlined" />
-                                        <TextField className={classes.inputFields} value={state} onChange={(e) => {
-                                            const re = /^[A-Za-z]+$/;
-                                            if (e.target.value === '' || re.test(e.target.value)) {
-                                                setstate(e.target.value)
-                                            }
-                                        }} id="outlined-basic" size="small" label="State" variant="outlined" />
-                                        <TextField className={classes.inputFields} value={city} onChange={(e) => {
-                                            const re = /^[A-Za-z]+$/;
-                                            if (e.target.value === '' || re.test(e.target.value)) {
-                                                setcity(e.target.value)
-                                            }
-                                        }} id="outlined-basic" size="small" label="City" variant="outlined" />
+                                    <FormControl variant="outlined" size="small"  className={classes.formControl} style={{ marginLeft: 43, width: '75%', fontWeight: 600 }} >
+                                            <Select
+                                                className={classes.textFieldForm}
+                                                size='large'
+                                                native
+                                                value={country}
+                                                key={country}
+                                                onChange={(e) => { setcountry(e.target.value) }}
+                                                defaultChecked='India'
+                                                label="Country"
+                                                inputProps={{
+                                                    name: 'Country',
+                                                    id: 'outlined-end-time-native-simple',
+                                                }}
+                                                style={{ width: '90%', fontSize: 14, fontWeight: 600, color: '#707070' }}
+                                            >
+                                                <option aria-label="None" value="">Country</option>
+                                                {countryData.map(v => {
+                                                    return (
+                                                        <>
+                                                            <option key={v.id} value={v.Name}>{v.Name}</option>
+                                                        </>
+                                                    )
+                                                })}
+                                            </Select>
+                                        </FormControl>
+
+                                        <FormControl variant="outlined" size="small" onClick={()=> fetchCity()} className={classes.formControl} style={{ marginLeft: 43, width: '75%', fontWeight: 600 }} >
+                                            <Select
+                                                className={classes.textFieldForm}
+                                                size='large'
+                                                native
+                                                value={state}
+                                                onChange={(e) => setstate(e.target.value)}
+                                                label="State"
+                                                inputProps={{
+                                                    name: 'State',
+                                                    id: 'outlined-end-time-native-simple',
+                                                }}
+                                                style={{ width: '90%', fontSize: 14, fontWeight: 600, color: '#707070' }}
+                                            >
+                                                <option aria-label="None" value="">State</option>
+                                                {stateData.map(v => {
+                                                    return (
+                                                        <>
+                                                            <option value={v.StateName}>{v.StateName}</option>
+                                                        </>
+                                                    )
+                                                })}
+                                            </Select>
+                                        </FormControl>
+
+                                        <FormControl variant="outlined" size="small" className={classes.formControl} style={{ marginLeft: 43, width: '75%', fontWeight: 600 }} >
+                                            <Select
+                                                className={classes.textFieldForm}
+                                                size='large'
+                                                native
+                                                value={city}
+                                                onChange={(e) => setcity(e.target.value)}
+                                                label="City"
+                                                inputProps={{
+                                                    name: 'City',
+                                                    id: 'outlined-end-time-native-simple',
+                                                }}
+                                                style={{ width: '90%', fontSize: 14, fontWeight: 600,color: '#707070' }}
+                                            >
+                                                 <option aria-label="None" value="">City</option>
+                                                {cityData.map(v => {
+                                                    return (
+                                                        <>
+                                                            <option value={v.CityName}>{v.CityName}</option>
+                                                        </>
+                                                    )
+                                                })}
+                                            </Select>
+                                        </FormControl>
+
                                         <TextField className={classes.inputFields} multiline value={address} onChange={(e) => setaddress(e.target.value)}
                                             rows={2}
-                                            rowsMax={5} id="outlined-basic" size="small" label="Address" variant="outlined"
+                                            rowsMax={5} id="outlined-basic" size="small" label="Address" variant="outlined" style={{marginTop: 10}}
                                         />
                                         <TextField className={classes.inputFields} value={pincode} onChange={(e) => {
                                             const re = /^[0-9\b]+$/;

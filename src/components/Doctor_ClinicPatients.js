@@ -2,25 +2,22 @@ import React, { useState, useEffect } from 'react';
 import clsx from 'clsx';
 import { makeStyles, useTheme, alpha } from '@material-ui/core/styles';
 import { useNavigate } from 'react-router-dom';
-import { Container, Avatar, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, TextField, Slide, Select, FormControl, InputLabel, Typography, Button, Table, TableContainer, TableBody, TableCell, TableHead, InputBase, TableRow, TablePagination, Drawer, Divider, MenuItem, Menu, ListItem, ListItemIcon, ListItemText, List, IconButton, Grid, Paper, Link } from "@material-ui/core";
-import { Redirect } from 'react-router-dom';
+import { Avatar, Slide, Typography, Button, InputBase, Divider, ListItem, ListItemText, IconButton, Grid, Paper } from "@material-ui/core";
 import DoctorNavbar from './Doctor_Navbar';
 import SearchIcon from '@material-ui/icons/Search';
-import { FixedSizeList } from 'react-window';
 import PropTypes from 'prop-types';
 import ArrowBackIcon from '@material-ui/icons/ArrowBack';
-import CloseIcon from '@material-ui/icons/Close';
-import AccountCircleIcon from '@material-ui/icons/AccountCircle';
 import axios from 'axios';
 import { DataGrid } from '@material-ui/data-grid';
-import { Register_Patient } from '../Apis/Clinic_Patients/Patient_Registration';
 import Edit_Patient from './Clinic_Patients/Edit_Patient/index';
 import Delete_Patient from './Clinic_Patients/Delete_Patient/index';
 import Add_Patinet from './Clinic_Patients/Add_Patient/index';
+import Add_Family_Member from './Clinic_Patients/Add_Family_Member/index';
 
 const getPatientDataApi = 'http://13.233.217.107:8080/api/Web_GetPatients';
 const getPatientDetailsApi = 'http://13.233.217.107:8080/api/ShowPatientDetailUsingId';
 const getPatientSearchApi = 'http://13.233.217.107:8080/api/Web_SearchPatients';
+const getPatientsCount = 'http://13.233.217.107:8080/api/Web_GetNoOfPatientCount';
 
 
 const drawerWidth = 240;
@@ -87,16 +84,15 @@ export default function DoctorClinicPatients() {
     const theme = useTheme();
     const navigate = useNavigate();
     const [open, setOpen] = React.useState(false);
-    const [page, setPage] = React.useState(0);
-    const [rowsPerPage, setRowsPerPage] = React.useState(9);
-    const [counterbtn, setCounterBtn] = React.useState(0);
     const [maxWidth, setMaxWidth] = React.useState('md');
     const [openmodal, setOpenmodal] = React.useState(false);
     const [patientData, setpatientData] = useState([]);
     const [patientDetails, setpatientDetails] = useState([]);
     const [openeditmodal, setOpenEditmodal] = React.useState(false);
     const [opendeletemodal, setOpenDeletemodal] = React.useState(false);
+    const [openFamilyMemberModal, setopenFamilyMemberModal] = React.useState(false);
     const [patientsearch, setpatientsearch] = useState([]);
+    const [patientcountData, setpatientcountData] = useState([]);
 
     const fetchPatientData = async () => {
         var data = await localStorage.getItem("userdata");
@@ -104,6 +100,14 @@ export default function DoctorClinicPatients() {
         let clinicid = parsed.ClinicId;
         const patientInfo = await axios.post(getPatientDataApi, { ClinicId: clinicid });
         setpatientData(patientInfo?.data?.Patients);
+    }
+
+    const fetchPatientsCount = async () => {
+        var data = await localStorage.getItem("userdata");
+        let parsed = JSON.parse(data);
+        let clinicid = parsed.ClinicId;
+        const patientInfo = await axios.post(getPatientsCount, { ClinicId: clinicid });
+        setpatientcountData(patientInfo?.data?.Patients);
     }
 
     const searchPatient = async (patientsearch) => {
@@ -121,6 +125,7 @@ export default function DoctorClinicPatients() {
 
     useEffect(() => {
         fetchPatientData();
+        fetchPatientsCount();
     }, [])
 
     const handleCellClick = async (userid) => {
@@ -138,6 +143,15 @@ export default function DoctorClinicPatients() {
             setOpenEditmodal(true);
         } else {
             alert('Please Select Patient from List');
+        }
+    };
+
+
+    const handleOpenAddFamilyMemberModal = () => {
+        if (patientDetails != '') {
+            setopenFamilyMemberModal(true);
+        } else {
+            alert('Please Select Family Head Member from List');
         }
     };
 
@@ -178,6 +192,7 @@ export default function DoctorClinicPatients() {
                         <Button style={{ marginLeft: '-20px', backgroundColor: 'white', color: '#2C7FB2', fontSize: '12px' }}> <ArrowBackIcon onClick={handleGoBack} />  </Button>
                         Clinic Patients
                         <Button className={classes.btnregister} onClick={() => setOpenmodal(true)} style={{ float: 'right', marginRight: 20, width: '150px', fontFamily: 'Poppins', fontSize: 12.5, fontWeight: 400 }}>New Registration</Button>
+                        <Button className={classes.btnregister} onClick={() => handleOpenAddFamilyMemberModal()} style={{ float: 'right', marginRight: 20, width: '150px', fontFamily: 'Poppins', fontSize: 12.5, fontWeight: 400 }}>Add Family Member</Button>
                     </Typography>
                 </Grid>
 
@@ -204,22 +219,26 @@ export default function DoctorClinicPatients() {
                             <Grid item xs={12} sm={6}>
                                 <Button className={classes.btnview} onClick={() => searchPatient(patientsearch)} size="small" style={{ fontSize: 12 }}>View</Button>
                             </Grid>
-
                         </Grid>
 
-
                         <DataGrid
-                            style={{ height: 370, marginTop: 20, fontSize: 13, fontFamily: 'Poppins', fontWeight: 600, color: '#2C7FB2', cursor: 'pointer' }}
+                            style={{ height: 350, marginTop: 20, fontSize: 13, fontFamily: 'Poppins', fontWeight: 600, color: '#2C7FB2', cursor: 'pointer' }}
                             rows={patientData}
                             rowHeight={30}
                             columns={columns}
                             columnWidth={10}
                             pageSize={10}
                             onRowClick={(newSelection) => {
-                               handleCellClick(newSelection.row.UserId);   
+                                handleCellClick(newSelection.row.UserId);
                             }}
                         />
 
+                        <Typography variant="h6" noWrap={true} style={{
+                            fontSize: 12, color: '#2C7FB2', fontFamily: 'Poppins',
+                            fontStyle: 'normal',
+                        }}>
+                            Total Number of Patients : {patientcountData[0].Count}
+                        </Typography>
                     </Paper>
 
                 </Grid>
@@ -230,7 +249,6 @@ export default function DoctorClinicPatients() {
                         <Typography variant="h6" noWrap={true} style={{
                             fontSize: 18, color: '#2C7FB2', fontFamily: 'Poppins', textDecorationLine: 'underline', textUnderlineOffset: '1px', textDecorationThickness: '1px',
                             fontStyle: 'normal',
-
                         }}>
                             Profile
                         </Typography>
@@ -291,7 +309,7 @@ export default function DoctorClinicPatients() {
                                         Age
                                     </Typography>
                                     <Typography variant="h6" noWrap={true} style={{ paddingTop: 5, fontSize: 14, color: '#707070', fontFamily: 'Poppins', }}>
-                                        {patientDetails.Age ? patientDetails.Age : 'NA'} years 
+                                        {patientDetails.Age ? patientDetails.Age : 'NA'} years
                                     </Typography>
                                 </Grid>
                             </Grid>
@@ -350,6 +368,10 @@ export default function DoctorClinicPatients() {
 
                 {opendeletemodal ? <Delete_Patient show={opendeletemodal} data={patientDetails} handleclose={() => setOpenDeletemodal(false)} /> : null}
 
+
+                {/* for Family Member */}
+
+                {openFamilyMemberModal ? <Add_Family_Member show={openFamilyMemberModal} data={patientDetails} handleclose={() => setopenFamilyMemberModal(false)} /> : null}
 
 
             </Grid> {/* main grid */}

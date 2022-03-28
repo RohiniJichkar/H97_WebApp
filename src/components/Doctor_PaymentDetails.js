@@ -36,6 +36,26 @@ function DoctorPaymentDetails() {
   const dispatch = useDispatch();
   const selectedMedicine = useSelector(state => state.reducer);
 
+
+  const handlePreviewPDF = async () => {
+    try {
+      const request = await getPrescription(details.id)
+      let response = JSON.parse(request);
+
+      if (response) {
+        setpdf(response.PdfPrescription)
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  }
+  console.log(pdf);
+
+  useEffect(() => {
+    handlePreviewPDF();
+  }, []);
+
+
   const handlePaymentDetails = async () => {
     var sessiondata = await localStorage.getItem("userdata");
     let parsed = JSON.parse(sessiondata);
@@ -59,7 +79,7 @@ function DoctorPaymentDetails() {
     try {
       const request = await paymentDetails(obj);
       let response = JSON.parse(request);
-      if (response.success === "200") {
+      if (response.success == "200") {
         alert(response.message);
         dispatch({ type: 'RESET_MEDICINE_ITEM' });
         navigate('/DoctorDashboard');
@@ -76,29 +96,11 @@ function DoctorPaymentDetails() {
       return;
     }
 
-    handlePaymentDetails().then(data => {
+    await handlePaymentDetails().then(data => {
       window.open(pdf, "PRINT", "height=400,width=600");
     })
   }
 
-  const handlePreviewPDF = async (id) => {
-    try {
-      const request = await getPrescription(details.id)
-      let response = JSON.parse(request);
-
-      if (response) {
-        setpdf(response.PdfPrescription)
-      }
-    } catch (error) {
-      console.log(error);
-    }
-  }
-
-
-
-  useEffect(() => {
-    handlePreviewPDF();
-  }, []);
 
   const handleGoBack = () => {
     dispatch({ type: 'RESET_MEDICINE_ITEM' });
@@ -151,7 +153,7 @@ function DoctorPaymentDetails() {
                     {details.ProfileImage ?
                       <Avatar style={{ borderRadius: 200, height: 90, width: 90, marginTop: 20 }} src={details.ProfileImage} /> :
                       <Avatar style={{ borderRadius: 200, height: 90, width: 90, marginTop: 20 }} />}
-                    <Typography style={{ color: '#707070', fontFamily: 'Poppins', fontWeight: 600 }}>Age - {details.Age ? details.Age : 'NA'}</Typography>
+                    <Typography style={{ color: '#707070', fontFamily: 'Poppins', fontWeight: 600, fontSize: 14 }}>PID- {details.PatientId}</Typography>
                   </center>
                 </Grid>
 
@@ -175,7 +177,7 @@ function DoctorPaymentDetails() {
                         marginTop: 10,
                         marginBottom: 10,
                       }}>
-                        PID- {details.PatientId}
+                        Age- {details.Age}
                       </Typography>
                     </center>
                   </Grid>
