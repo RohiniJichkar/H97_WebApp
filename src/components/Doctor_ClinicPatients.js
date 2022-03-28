@@ -237,7 +237,7 @@ export default function DoctorClinicPatients() {
                             fontSize: 12, color: '#2C7FB2', fontFamily: 'Poppins',
                             fontStyle: 'normal',
                         }}>
-                            Total Number of Patients : {patientcountData[0].Count}
+                            Total Number of Patients : {patientcountData ? patientcountData[0].Count : null}
                         </Typography>
                     </Paper>
 
