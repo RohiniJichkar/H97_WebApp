@@ -89,6 +89,16 @@ function DoctorGeneratePrescription() {
             let parsed = JSON.parse(data);
             let clinicid = parsed.ClinicId;
             let doctorid = parsed.userid;
+
+            if (counterbtn == 0) {
+                alert('Please Select Dose Days');
+                return;
+            }
+            else if(counterbtn2 == 0){
+                alert('Please Select Dose Times');
+                return;
+            }
+
             setdefaultarray(defaultarray + 1);
             const obj = {
                 'id': defaultarray,

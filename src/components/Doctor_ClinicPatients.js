@@ -98,16 +98,24 @@ export default function DoctorClinicPatients() {
         var data = await localStorage.getItem("userdata");
         let parsed = JSON.parse(data);
         let clinicid = parsed.ClinicId;
-        const patientInfo = await axios.post(getPatientDataApi, { ClinicId: clinicid });
-        setpatientData(patientInfo?.data?.Patients);
+        try {
+            const patientInfo = await axios.post(getPatientDataApi, { ClinicId: clinicid });
+            setpatientData(patientInfo?.data?.Patients);
+        } catch (e) {
+            console.log(e);
+        }
     }
 
     const fetchPatientsCount = async () => {
         var data = await localStorage.getItem("userdata");
         let parsed = JSON.parse(data);
         let clinicid = parsed.ClinicId;
-        const patientInfo = await axios.post(getPatientsCount, { ClinicId: clinicid });
-        setpatientcountData(patientInfo?.data?.Patients);
+        try {
+            const patientInfo = await axios.post(getPatientsCount, { ClinicId: clinicid });
+            setpatientcountData(patientInfo?.data?.Patients);
+        } catch (e) {
+            console.log(e);
+        }
     }
 
     const searchPatient = async (patientsearch) => {
@@ -202,7 +210,7 @@ export default function DoctorClinicPatients() {
                             <Grid item xs={12} sm={6}>
                                 <SearchIcon className={classes.searchIcon} />
                                 <InputBase
-                                    placeholder="Search by Name"
+                                    placeholder="Search by Name/Mobile Number"
                                     classes={{
                                         root: classes.inputRoot,
                                         input: classes.inputInput,
@@ -237,7 +245,7 @@ export default function DoctorClinicPatients() {
                             fontSize: 12, color: '#2C7FB2', fontFamily: 'Poppins',
                             fontStyle: 'normal',
                         }}>
-                            Total Number of Patients : {patientcountData ? patientcountData[0].Count : null}
+                            Total Number of Patients : {patientcountData[0] ? patientcountData[0].Count : null}
                         </Typography>
                     </Paper>
 

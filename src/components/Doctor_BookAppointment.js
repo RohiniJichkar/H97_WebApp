@@ -163,6 +163,10 @@ export default function DoctorBookAppointment() {
       alert("Please enter title")
       return;
     }
+    else if (appDate == '') {
+      alert("Please Select Appointment Date");
+      return;
+    }
     else if (appDate < tdate) {
       alert("You cannot set appointment for previous date");
       return
@@ -317,7 +321,7 @@ export default function DoctorBookAppointment() {
                 <Grid item xs={6}>
                   <center> <SearchIcon className={classes.searchIcon} />
                     <InputBase
-                      placeholder="Search by Name"
+                      placeholder="Search by Name/Mobile Number"
 
                       onChange={(e) => setpatientsearch(e.target.value)}
                       value={patientsearch}

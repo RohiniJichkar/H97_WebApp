@@ -12,6 +12,7 @@ import axios from 'axios';
 import { DataGrid } from '@material-ui/data-grid';
 import { useDispatch, connect, useSelector } from 'react-redux';
 import { paymentDetails, getPrescription } from '../Apis/PatientInQueue/Generate_Prescription/Medicines_Table/index';
+import ip from '../ipaddress/ip';
 
 const drawerWidth = 240;
 
@@ -31,28 +32,29 @@ function DoctorPaymentDetails() {
   const [fees, setfees] = useState('');
   const [details, setdetails] = useState(location.state.detail);
   const [pdf, setpdf] = useState('');
+  const [prescriptionData, setprescriptionData] = useState('');
   const [costcode, setcostcode] = useState('');
 
   const dispatch = useDispatch();
   const selectedMedicine = useSelector(state => state.reducer);
 
-
   const handlePreviewPDF = async () => {
     try {
-      const request = await getPrescription(details.id)
-      let response = JSON.parse(request);
-
-      if (response) {
-        setpdf(response.PdfPrescription)
-      }
+      const request = await axios.post(ip + 'Web_GetAppointmentById', { id: details.id });
+      setpdf(request?.data?.Appointment?.PdfPrescription);
     } catch (error) {
       console.log(error);
     }
   }
+
   console.log(pdf);
 
   useEffect(() => {
+    const interval = setInterval(() => {
+      handlePreviewPDF();
+    }, 1000);
     handlePreviewPDF();
+    return () => clearInterval(interval);
   }, []);
 
 

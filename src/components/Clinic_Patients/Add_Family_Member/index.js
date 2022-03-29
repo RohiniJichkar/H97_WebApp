@@ -108,7 +108,7 @@ export default function Add_Family_Member({ show, data, handleclose }) {
             if (parse.success === "200") {
                 alert(parse.message);
                 handleclose();
-                // window.location.reload();
+                window.location.reload();
             } else {
                 alert(parse.message);
             }
@@ -230,6 +230,7 @@ export default function Add_Family_Member({ show, data, handleclose }) {
                                                 <option value='Daughter'>Daughter</option>
                                                 <option value='Son'>Son</option>
                                                 <option value='Siblings'>Siblings</option>
+                                                <option value='Other'>Other</option>
                                             </Select>
                                         </FormControl>
 

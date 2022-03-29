@@ -161,7 +161,7 @@ function Login(props) {
           window.localStorage.setItem("userdata", JSON.stringify(Json?.data));
           let responseData = Json.data;
           if (responseData.success == '200') {
-            navigate('/AdminAddClinic');
+            navigate('/AdminDashboard');
           }
           if (state) {
             setWithExpiry("rememberme", Json?.data?.token, dateString, mobile, password, state, selectedValue)

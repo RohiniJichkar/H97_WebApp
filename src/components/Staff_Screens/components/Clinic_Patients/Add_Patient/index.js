@@ -122,7 +122,7 @@ const Add_Patinet = ({ show, handleclose }) => {
             if (parse.success === "200") {
                 alert(parse.message);
                 handleclose();
-                // window.location.reload()
+                window.location.reload()
             } else {
                 alert(parse.message);
             }

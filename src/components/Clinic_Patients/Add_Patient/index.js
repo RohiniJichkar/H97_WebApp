@@ -129,7 +129,7 @@ const Add_Patinet = ({ show, handleclose }) => {
                 alert(parse.message);
                 handleclose();
                 // setOpenmodal(false);
-                // window.location.reload()
+                window.location.reload()
             } else {
                 alert(parse.message);
             }

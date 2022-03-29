@@ -162,6 +162,10 @@ export default function Staff_Book_Appointment() {
             alert("Please enter title")
             return;
         }
+        else if (appDate == '') {
+            alert("Please Select Appointment Date");
+            return;
+        }
         else if (appDate < tdate) {
             alert("You cannot set appointment for previous date");
             return
@@ -208,7 +212,7 @@ export default function Staff_Book_Appointment() {
             if (parse.success === "200") {
                 alert(parse.message);
                 navigate('/Staff_Dashboard');
-            }else{
+            } else {
                 alert(parse.message);
             }
         } catch (error) {
@@ -785,7 +789,7 @@ export default function Staff_Book_Appointment() {
                                                 value={height}
                                                 InputProps={{
                                                     inputProps: { min: 0 }
-                                                  }}
+                                                }}
                                                 onChange={(e) => {
                                                     const re = /^[0-9-.\b]+$/;
                                                     if (e.target.value === '' || re.test(e.target.value)) {
@@ -805,7 +809,7 @@ export default function Staff_Book_Appointment() {
                                                 value={weight}
                                                 InputProps={{
                                                     inputProps: { min: 0 }
-                                                  }}
+                                                }}
                                                 onChange={(e) => {
                                                     const re = /^[0-9-.\b]+$/;
                                                     if (e.target.value === '' || re.test(e.target.value)) {

@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { makeStyles, useTheme, alpha } from '@material-ui/core/styles';
 import { useNavigate } from 'react-router-dom';
-import { Dialog, DialogContent, DialogContentText, DialogTitle, TextField, Slide, Select, FormControl, Button, IconButton, Grid, Paper, Link } from "@material-ui/core";
+import { Dialog, DialogContent, DialogContentText, DialogTitle, TextField, Slide, Select, FormControl, Button, IconButton, Grid, Paper } from "@material-ui/core";
 import CloseIcon from '@material-ui/icons/Close';
 import { AddFamilyMember } from '../../../../../Apis/Staff/Clinic_Patients/Add_Family_Member';
 import { Country, State, City } from '../../../../../Apis/Staff/Clinic_Patients/Patient_Registration';
@@ -108,7 +108,7 @@ export default function Add_Family_Member({ show, data, handleclose }) {
             if (parse.success === "200") {
                 alert(parse.message);
                 handleclose();
-                // window.location.reload();
+                window.location.reload();
             } else {
                 alert(parse.message);
             }
@@ -230,6 +230,7 @@ export default function Add_Family_Member({ show, data, handleclose }) {
                                                 <option value='Daughter'>Daughter</option>
                                                 <option value='Son'>Son</option>
                                                 <option value='Siblings'>Siblings</option>
+                                                <option value='Other'>Other</option>
                                             </Select>
                                         </FormControl>
 

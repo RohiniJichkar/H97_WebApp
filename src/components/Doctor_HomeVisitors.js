@@ -554,23 +554,23 @@ export default function DoctorHomeVisitors() {
                                         </Grid>
                                         <div>
                                             <Grid item xs={6} >
-                                                <FormControl variant="outlined" className={classes.formControlForm}  >
+                                                <FormControl variant="outlined" className={classes.formControlForm} style={{ marginTop: 40, width: 182 }} >
                                                     <TextField className={classes.textFieldForm} value={mobile}
                                                         onChange={(e) => {
                                                             const re = /^[0-9\b]+$/;
                                                             if (e.target.value === '' || re.test(e.target.value)) {
                                                                 setmobile(e.target.value)
                                                             }
-                                                        }} id="outlined-basic" type='number' label="Mobile No" variant="outlined" size="small" style={{ width: '185%', marginLeft: 45, position: 'relative', top: 38 }}
+                                                        }} id="outlined-basic" type='number' label="Mobile No" variant="outlined" size="small" style={{ width: '185%', marginLeft: 40, }}
                                                         onInput={(e) => {
                                                             e.target.value = Math.max(0, parseInt(e.target.value)).toString().slice(0, 10)
 
                                                         }} />
-                                                </FormControl><span style={{ position: 'relative', left: 382, bottom: 23, fontSize: 20, color: 'red' }}> *</span>
+                                                </FormControl><span style={{ position: 'relative', left: 382, bottom: 60, fontSize: 20, color: 'red', }}> *</span>
 
                                                 <div>
-                                                    <FormControl variant="outlined" className={classes.formControlForm} style={{ marginTop: -35 }}>
-                                                        <TextField className={classes.textFieldForm} onChange={(e) => setemail(e.target.value)} id="outlined-basic" type='email' label="Email ID" variant="outlined" size="small" style={{ width: '185%', marginTop: 51, marginLeft: 43 }} />
+                                                    <FormControl variant="outlined" className={classes.formControlForm} style={{ marginTop: -35, width: 185 }}>
+                                                        <TextField className={classes.textFieldForm} onChange={(e) => setemail(e.target.value)} id="outlined-basic" type='email' label="Email ID" variant="outlined" size="small" style={{ width: '180%', marginTop: 12, marginLeft: 43 }} />
                                                     </FormControl>
                                                 </div>
 
