@@ -16,6 +16,7 @@ import Box from '@material-ui/core/Box';
 import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles, withStyles } from '@material-ui/core/styles';
+import VideoPlayer from "react-background-video-player";
 import Radio from '@material-ui/core/Radio';
 import { green } from '@material-ui/core/colors';
 import FacebookIcon from '@material-ui/icons/Facebook';
@@ -23,10 +24,6 @@ import InstagramIcon from '@material-ui/icons/Instagram';
 import TwitterIcon from '@material-ui/icons/Twitter';
 import LinkedInIcon from '@material-ui/icons/LinkedIn';
 import FormGroup from '@material-ui/core/FormGroup';;
-import VideoPlayer from "react-background-video-player";
-
-
-
 
 const loginapi = 'http://13.233.217.107:8080/api/Login';
 const adminlogin = 'http://13.233.217.107:8080/api/AdminLogin';
