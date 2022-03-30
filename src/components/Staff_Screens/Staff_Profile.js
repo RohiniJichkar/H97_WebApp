@@ -391,7 +391,7 @@ export default function Staff_Profile() {
                                                 color: '#707070',
                                                 fontWeight: 600
                                             }}>
-                                                {doctordata.MorningStartTime != null ? doctordata.MorningStartTime : 'NA'} - {doctordata.MorningEndTime != null ? doctordata.MorningEndTime : 'NA'}
+                                                {doctordata.MorningStartTime ? doctordata.MorningStartTime : 'NA'} - {doctordata.MorningEndTime ? doctordata.MorningEndTime : 'NA'}
                                             </Typography>
                                         </Grid>
                                         <Grid item xs={6} style={{ marginTop: 10 }}>

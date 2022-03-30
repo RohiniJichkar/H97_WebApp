@@ -134,7 +134,7 @@ export default function DoctorEditClinicDetails() {
                         <Button className={classes.btnregister} onClick={handledetailOpenEditmodal} style={{ float: 'right', marginRight: 20, fontFamily: 'Poppins', fontSize: 12, width: 180 }}>Change Clinic Logo</Button>
 
                     </Typography>
-                  
+
                     {editdetails ? <ClinicDetails show={editdetails} handleCloseEditmodal={() => seteditdetails(false)} /> : null}
                 </Grid>
                 <Grid item xs={12} >
@@ -279,9 +279,10 @@ export default function DoctorEditClinicDetails() {
                                                     setClinicMobileNo(e.target.value)
                                                 }
                                             }}
-                                            onInput={(e) => {
-                                                e.target.value = Math.max(0, parseInt(e.target.value)).toString(0,10).slice(0, 10)}}
-                                                 id="outlined-basic" size="small" variant="outlined" style={{ width: '150%' }} />
+                                                onInput={(e) => {
+                                                    e.target.value = Math.max(0, parseInt(e.target.value)).toString(0, 10).slice(0, 10)
+                                                }}
+                                                id="outlined-basic" size="small" variant="outlined" style={{ width: '150%' }} />
                                         </FormControl>
                                     </center>
                                 </Grid>
@@ -375,7 +376,11 @@ export default function DoctorEditClinicDetails() {
                                 <Grid item xs={4}>
                                     <center>
                                         <FormControl variant="outlined" className={classes.formControlForm}  >
-                                            <TextField className={classes.textFieldForm} value={NoOfStaff} onChange={(e) => setNoOfStaff(e.target.value)} id="outlined-basic" size="small" placeholder="Number of Staff" variant="outlined" style={{ width: '150%' }} />
+                                            <TextField className={classes.textFieldForm}
+                                                InputProps={{
+                                                    inputProps: { min: 0 }
+                                                }}
+                                                type='number' value={NoOfStaff} onChange={(e) => setNoOfStaff(e.target.value)} id="outlined-basic" size="small" placeholder="Number of Staff" variant="outlined" style={{ width: '150%' }} />
                                         </FormControl>
                                     </center>
                                 </Grid>
@@ -409,12 +414,16 @@ export default function DoctorEditClinicDetails() {
                                         <Grid item xs={6}>
                                             <center>
                                                 <FormControl variant="outlined" className={classes.formControlForm}  >
-                                                    <TextField className={classes.textFieldForm} value={ClinicPincode} onChange={(e) => {
-                                                        const re = /^[0-9\b]+$/;
-                                                        if (e.target.value === '' || re.test(e.target.value)) {
-                                                            setClinicPincode(e.target.value)
-                                                        }
-                                                    }} id="outlined-basic" size="small" placeholder="Pincode" variant="outlined" style={{ width: '70%' }} />
+                                                    <TextField className={classes.textFieldForm} value={ClinicPincode}
+                                                        onInput={(e) => {
+                                                            e.target.value = Math.max(0, parseInt(e.target.value)).toString().slice(0, 6)
+                                                        }}
+                                                        onChange={(e) => {
+                                                            const re = /^[0-9\b]+$/;
+                                                            if (e.target.value === '' || re.test(e.target.value)) {
+                                                                setClinicPincode(e.target.value)
+                                                            }
+                                                        }} id="outlined-basic" size="small" placeholder="Pincode" variant="outlined" style={{ width: '70%' }} />
                                                 </FormControl>
                                             </center>
                                         </Grid>

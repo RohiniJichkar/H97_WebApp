@@ -474,7 +474,7 @@ const useStyles = makeStyles((theme) => ({
     paper: {
         padding: theme.spacing(1),
         color: '#78B088',
-        fontFamily: '"Poppins", san-serif;',
+        fontFamily: 'Poppins',
         fontStyle: 'normal',
         fontWeight: 800,
         overflow: 'hidden',

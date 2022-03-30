@@ -23,6 +23,9 @@ import InstagramIcon from '@material-ui/icons/Instagram';
 import TwitterIcon from '@material-ui/icons/Twitter';
 import LinkedInIcon from '@material-ui/icons/LinkedIn';
 import FormGroup from '@material-ui/core/FormGroup';;
+import VideoPlayer from "react-background-video-player";
+
+
 
 
 const loginapi = 'http://13.233.217.107:8080/api/Login';
@@ -51,12 +54,31 @@ const GreenCheckbox = withStyles({
   checked: {},
 })((props) => <Checkbox color="default" {...props} />);
 
+const GreenRadio = withStyles({
+  root: {
+    color: '#2C7FB2',
+    '&$checked': {
+      color: '#2C7FB2',
+    },
+  },
+  checked: {},
+})((props) => <Radio color="default" {...props} />);
+
 const useStyles = makeStyles((theme) => ({
   root: {
     height: '100vh',
   },
+  notchedOutline: {
+    borderWidth: "1.5px",
+    borderColor: "black !important",
+    color: 'black'
+  },
+  input: {
+    color: "#2C7FB2",
+    borderWidth: "1px",
+    borderColor: "yellow !important"
+  },
   image: {
-    backgroundImage: "url('Login2.png')",
     backgroundRepeat: 'no-repeat',
     backgroundColor:
       theme.palette.type === 'light' ? theme.palette.grey[50] : theme.palette.grey[900],
@@ -64,10 +86,11 @@ const useStyles = makeStyles((theme) => ({
     backgroundPosition: 'center',
   },
   paper: {
-    margin: theme.spacing(0, 10, 4),
+    margin: theme.spacing(0, 17, 6),
     display: 'flex',
     flexDirection: 'column',
     alignItems: 'center',
+    color: '#2C7FB2'
 
   },
   avatar: {
@@ -80,7 +103,9 @@ const useStyles = makeStyles((theme) => ({
   },
   submit: {
     margin: theme.spacing(3, 0, 2),
+    background: 'linear-gradient(90deg, rgba(15,106,162,1) 1%, rgba(44,127,178,1) 38%, rgba(120,176,136,1) 76%)'
   },
+ 
 }));
 
 
@@ -216,9 +241,27 @@ function Login(props) {
 
   return (
 
-    <Grid container component="main" className={classes.root} style={{ backgroundColor: '#fff' }}>
+    <Grid container component="main" className={classes.root} style={{}}>
       <CssBaseline />
-      <Grid item xs={12} sm={6} className={classes.image} />
+      <div>
+        <VideoPlayer
+          className="video"
+          src={
+            'clinic (1).mp4'
+          }
+          autoPlay={true}
+          muted={true}
+        />
+        <div className="mainInput">
+          <input
+            className="input"
+            type="text"
+            name="name"
+            placeholder="Where to?"
+          />
+        </div>
+      </div>
+      {/* <Grid item xs={12} sm={6} className={classes.image} />
 
       <Grid item xs={12} md={1} style={{ alignSelf: 'center', flex: 1, backgroundColor: '#fff', borderRight: '1px solid white', padding: 10 }}>
         <Grid item xs={12} style={{ paddingBottom: 10 }}>
@@ -233,22 +276,23 @@ function Login(props) {
         <Grid item xs={12} style={{ paddingBottom: 10 }}>
           <center><a href="https://www.linkedin.com/company/health97/"> <LinkedInIcon style={{ color: 'gray', fontSize: '30px' }} /> </a> </center>
         </Grid>
-      </Grid>
-      <Grid item xs={12} sm={5} component={Paper} elevation={0} square style={{ backgroundColor: '#fff' }}>
+      </Grid> */}
+      <Grid item xs={12} sm={5} component={Paper} elevation={0} square style={{ position: 'relative', backgroundColor: 'transparent', marginLeft: -260, height: 360, marginTop: 90 }} >
         <div className={classes.paper}>
           <div>
-            <img src="h97 logo potrait-01.png" height='150'></img>
+            <img src="H97_Logo_Login.png" height='130' style={{ position: 'relative', marginTop: -100, }}></img>
           </div>
-          <Typography component="h1" variant="h5" style={{ fontFamily: 'Poppins', fontWeight: 400, fontSize: 18, marginTop: '-10px' }}>
+          {/* <Typography component="h1" variant="h5" style={{ fontFamily: 'Poppins', fontWeight: 400, fontSize: 18, marginTop: '-10px' }}>
             Login Account
           </Typography>
           <Typography align="center">
             <p style={{ fontFamily: 'Poppins', fontSize: 12 }}> This is a secure system and you will need to provide your login details to access this site.</p>
-          </Typography>
+          </Typography> */}
 
-          <form className={classes.form} noValidate>
+          <form className={classes.form} noValidate style={{ position: 'relative', color: 'black' }}>
 
             <TextField
+
               variant="outlined"
               margin="normal"
               fullWidth
@@ -258,10 +302,20 @@ function Login(props) {
               type='number'
               size='small'
               value={mobile}
+              InputLabelProps={{
+                style: { color: 'black' },
+              }}
+              InputProps={{
+                classes: {
+                  input: classes.input,
+                  notchedOutline: classes.notchedOutline
+                }
+              }}
               onInput={(e) => {
                 e.target.value = Math.max(0, parseInt(e.target.value)).toString().slice(0, 10)
               }}
               onChange={(e) => setMobileNo(e)}
+
             />
 
             <TextField
@@ -275,13 +329,21 @@ function Login(props) {
               type={showPassword ? 'text' : 'password'}
               size='small'
               onChange={(e) => setPassword(e)}
+              InputLabelProps={{
+                style: { color: 'black' },
+              }}
               InputProps={{
+                classes: {
+                  input: classes.input,
+                  notchedOutline: classes.notchedOutline
+                },
                 endAdornment: (
                   <InputAdornment position="end">
                     <IconButton
                       aria-label="toggle password visibility"
                       onClick={handleClickShowPassword}
                       onMouseDown={handleMouseDownPassword}
+
                     >
                       {showPassword ? <Visibility /> : <VisibilityOff />}
                     </IconButton>
@@ -292,15 +354,16 @@ function Login(props) {
 
 
             <div>
-              <Radio
+              <GreenRadio
                 checked={selectedValue === 'Doctor'}
                 color='primary'
                 onChange={handleChange}
                 value="Doctor"
                 name="radio-button-demo"
                 inputProps={{ 'aria-label': 'Doctor' }}
+                classes={{root: classes.radio, checked: classes.checked}}
               />Doctor
-              <Radio
+              <GreenRadio
                 checked={selectedValue === 'Receptionist'}
                 onChange={handleChange}
                 value="Receptionist"
@@ -308,7 +371,7 @@ function Login(props) {
                 name="radio-button-demo"
                 inputProps={{ 'aria-label': 'Receptionist' }}
               />Receptionist
-              <Radio
+              <GreenRadio
                 checked={selectedValue === 'Admin'}
                 color='primary'
                 onChange={handleChange}
@@ -319,11 +382,12 @@ function Login(props) {
             </div>
 
             <Grid container style={{ paddingTop: '15px' }}>
-              <Grid item sm={6} align="left" style={{ marginTop: '-10px', fontSize: '80px' }}>
+              <Grid item sm={6} align="left" style={{ marginTop: '-10px', }}>
                 <FormGroup  >
                   <FormControlLabel
                     control={<GreenCheckbox checked={state.checked} onChange={handleChangeCheckBox} />}
-                    label="Remember Me"
+                    label={<Typography style={{ fontSize: 14, fontWeight: 400 }}>Remember Me</Typography>}
+
                   />
                 </FormGroup>
 
@@ -335,35 +399,33 @@ function Login(props) {
                 /> */}
               </Grid>
               <Grid item sm={6} align="right" >
-                <Link onClick={() => handleClickForgotPass()}  variant="body2" style={{ color: '#78B088', cursor: 'pointer' }}>
+                <Link onClick={() => handleClickForgotPass()} variant="body2" style={{ color: 'black', cursor: 'pointer' }}>
                   Forgot password?
                 </Link>
               </Grid>
               <Button
                 fullWidth
                 className={classes.submit}
-                style={{ color: '#fff', backgroundColor: '#78B088', borderRadius: 20 }}
+                style={{ color: '#fff', backgroundColor: 'linear-gradient(90deg, rgba(15,106,162,1) 1%, rgba(44,127,178,1) 38%, rgba(120,176,136,1) 76%)', borderRadius: 20 }}
                 onClick={handleSubmit}
               >
                 Sign In
               </Button>
 
             </Grid>
-            <Typography component="h1">
+            {/* <Typography component="h1">
               <Box mt={2}>
                 {/* <Copyright /> */}
-                To request an account just <a href="https://rajyugsolutions.com/contact" style={{ color: '#78B088' }}> email us </a>
-                <a onClick={() => handleClickSignUp()} style={{ color: '#78B088', float: 'right', fontFamily: 'Poppins', fontSize: 14, textDecoration: 'underline', cursor: 'pointer' }}> Sign Up</a>
-                {/* <Button
+            {/* To request an account just <a href="https://rajyugsolutions.com/contact" style={{ color: '#78B088' }}> email us </a>
+                <a onClick={() => handleClickSignUp()} style={{ color: 'brown', float: 'right', fontFamily: 'Poppins', fontSize: 14, textDecoration: 'underline', cursor: 'pointer' }}> Sign Up</a> */}
+            {/* <Button
                 style={{ color: '#fff', fontSize: 12, fontFamily: 'Poppins', backgroundColor: '#78B088', float: 'right' }}   
               >
                 Sign Up
               </Button> */}
-              </Box>
-              <Box mt={2}>
+            {/* </Box>  */}
 
-              </Box>
-            </Typography>
+            {/* </Typography> */}
 
           </form>
         </div>

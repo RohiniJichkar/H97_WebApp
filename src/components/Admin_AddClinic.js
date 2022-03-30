@@ -1009,7 +1009,7 @@ export default function AdminAddClinic() {
                                 </Grid>
 
 
-                                <Grid item xs={2} style={{ marginTop: '-20px' }}>
+                                <Grid item xs={2} style={{ marginTop: '-7px' }}>
                                     <Typography variant="h6" noWrap={true} style={{
                                         fontSize: 16,
                                         fontFamily: 'Poppins',
@@ -1021,7 +1021,7 @@ export default function AdminAddClinic() {
                                         Mobile No:
                                     </Typography>
                                 </Grid>
-                                <Grid item xs={4} style={{ marginTop: '-20px' }}>
+                                <Grid item xs={4} style={{ marginTop: '-7px' }}>
                                     <center>
                                         <FormControl variant="outlined" className={classes.formControlForm} style={{marginLeft: 12}}  >
                                             <TextField className={classes.textFieldForm} onChange={(e) => {
@@ -1078,7 +1078,7 @@ export default function AdminAddClinic() {
                                     </Grid>
                                 </Grid>
 
-                                <Grid item xs={2} style={{ marginTop: '-20px' }}>
+                                <Grid item xs={2} style={{ marginTop: '-10px' }}>
                                     <Typography variant="h6" noWrap={true} style={{
                                         fontSize: 16,
                                         fontFamily: 'Poppins',
@@ -1089,7 +1089,7 @@ export default function AdminAddClinic() {
                                         Degree:
                                     </Typography>
                                 </Grid>
-                                <Grid item xs={4} style={{ marginTop: '-20px' }}>
+                                <Grid item xs={4} style={{ marginTop: '-10px' }}>
                                     <center>
                                         <FormControl variant="outlined" className={classes.formControlForm} style={{marginLeft: 12}} >
                                             <TextField className={classes.textFieldForm} onChange={(e) => seteducation(e.target.value)} id="outlined-basic" size="small" label="Degree" variant="outlined" style={{ width: '150%' }} />
@@ -1126,7 +1126,7 @@ export default function AdminAddClinic() {
                                         </Grid>
                                     </Grid>
                                 </Grid>
-                                <Grid item xs={2} style={{ marginTop: '-20px' }}>
+                                <Grid item xs={2} style={{ marginTop: '-10px' }}>
                                     <Typography variant="h6" noWrap={true} style={{
                                         fontSize: 16,
                                         fontFamily: 'Poppins',
@@ -1137,7 +1137,7 @@ export default function AdminAddClinic() {
                                         Category:
                                     </Typography>
                                 </Grid>
-                                <Grid item xs={4} style={{ marginTop: '-20px' }}>
+                                <Grid item xs={4} style={{ marginTop: '-10px' }}>
                                     <center>
                                         <FormControl variant="outlined" size="small" className={classes.formControl} style={{ marginLeft: 12, width: '85%', fontWeight: 600 }} >
                                             <Select
@@ -1184,7 +1184,7 @@ export default function AdminAddClinic() {
                                     </center>
                                 </Grid>
 
-                                <Grid item xs={2} style={{ marginTop: '-20px' }}>
+                                <Grid item xs={2} style={{ marginTop: '-10px' }}>
                                     <Typography variant="h6" noWrap={true} style={{
                                         fontSize: 16,
                                         fontFamily: 'Poppins',
@@ -1195,7 +1195,7 @@ export default function AdminAddClinic() {
                                         Date of Birth:
                                     </Typography>
                                 </Grid>
-                                <Grid item xs={4} style={{ marginTop: '-20px' }}>
+                                <Grid item xs={4} style={{ marginTop: '-10px' }}>
                                     <Grid container>
                                         <Grid item xs={6}>
                                             <FormControl variant="outlined" className={classes.formControlForm}  >

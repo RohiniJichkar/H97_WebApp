@@ -160,9 +160,9 @@ export default function DoctorEditProfile() {
                                 {editmodal ? <EditImage show={editmodal} data={doctordata} handleCloseEditmodal={() => seteditmodal(false)} /> : null}
                                 <center>
                                     <div style={{ paddingBottom: 10 }}>
-                                       {doctordata[0].ProfileImage ?  <Avatar src={doctordata[0].ProfileImage}  style={{ borderRadius: '50%', height: 80, width: 80 }} />  :
-                                       <Avatar style={{ borderRadius: '50%', height: 80, width: 80 }} />
-                                       }
+                                        {doctordata[0].ProfileImage ? <Avatar src={doctordata[0].ProfileImage} style={{ borderRadius: '50%', height: 80, width: 80 }} /> :
+                                            <Avatar style={{ borderRadius: '50%', height: 80, width: 80 }} />
+                                        }
                                         <div style={{ marginTop: '-15px', marginRight: '-60px' }}>
                                             <CreateIcon size='small' onClick={handleclickOpenEditmodal} style={{ borderRadius: '50%', backgroundColor: '#707070', color: '#fff', padding: 2, cursor: 'pointer' }} />
                                         </div>
@@ -194,7 +194,11 @@ export default function DoctorEditProfile() {
                                 <Grid item xs={12} style={{ paddingTop: 5 }}>
                                     <center>
                                         <FormControl variant="outlined" className={classes.formControl}  >
-                                            <TextField className={classes.textField} id="outlined-basic" type='number' placeholder="Experience (Yrs)" onChange={(e) => setExperience(e.target.value)} value={Experience ? Experience : doctordata.Experience} variant="outlined" size="small" />
+                                            <TextField className={classes.textField}
+                                                InputProps={{
+                                                    inputProps: { min: 0 }
+                                                }}
+                                                id="outlined-basic" type='number' placeholder="Experience (Yrs)" onChange={(e) => setExperience(e.target.value)} value={Experience ? Experience : doctordata.Experience} variant="outlined" size="small" />
                                         </FormControl>
                                     </center>
                                 </Grid>
@@ -307,7 +311,7 @@ export default function DoctorEditProfile() {
                                     </div>
                                     <div>
                                         <FormControl variant="outlined" className={classes.formControlForm}  >
-                                            <TextField className={classes.textFieldForm} id="outlined-basic"  value={DOB} onChange={(e) => setDOB(e.target.value)} type="date" variant="outlined" size="small" style={{ width: '150%' }} />
+                                            <TextField className={classes.textFieldForm} id="outlined-basic" value={DOB} onChange={(e) => setDOB(e.target.value)} type="date" variant="outlined" size="small" style={{ width: '150%' }} />
                                         </FormControl>
 
                                     </div>
@@ -500,7 +504,7 @@ export default function DoctorEditProfile() {
                                 <Grid item xs={12} style={{ marginTop: 1 }}>
                                     <center>
                                         <FormControl variant="outlined" className={classes.formControl}  >
-                                            <TextField className={classes.textField} multiline rows={2.5} rowsMax={2.5} id="outlined-basic" size="small" label="Address" value={Address} onChange={(e) => setAddress(e.target.value)} variant="outlined" style={{ width: '182%'}} />
+                                            <TextField className={classes.textField} multiline rows={2.5} rowsMax={2.5} id="outlined-basic" size="small" label="Address" value={Address} onChange={(e) => setAddress(e.target.value)} variant="outlined" style={{ width: '182%' }} />
                                         </FormControl>
                                     </center>
                                 </Grid>
