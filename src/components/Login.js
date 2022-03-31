@@ -711,8 +711,6 @@ function Login(props) {
 
 
 
-
-
       {/* Footer */}
 
       <footer id='contactdiv' class="ftco-footer ftco-bg-dark ftco-section" style={{ marginTop: '40px', background: '#191919', height: '50%', padding: '6em 0', fontSize: 16 }} >
