@@ -663,7 +663,7 @@ function Login(props) {
                 <div class="post-media wow fadeIn">
                   <a data-rel="prettyPhoto[gal]" class="hoverbutton global-radius"><i
                     class="flaticon-unlink"></i></a>
-                  <img src="ambulance.png" alt="" class="img-responsive" width="109%" height="200px"
+                  <img src="ambulance.PNG" alt="" class="img-responsive" width="109%" height="200px"
                     style={{ position: 'relative', bottom: '134%' }} />
                 </div>
                 <h5 style={{ marginLeft: '70px' }}>24/7 Ambulance Booking Service</h5>
@@ -686,7 +686,7 @@ function Login(props) {
                 <div class="post-media wow fadeIn">
                   <a data-rel="prettyPhoto[gal]" class="hoverbutton global-radius"><i
                     class="flaticon-unlink"></i></a>
-                  <img src="home visit.png" alt="" class="img-responsive" width="115%" height="200px" />
+                  <img src="home visit.PNG" alt="" class="img-responsive" width="115%" height="200px" />
                 </div>
                 <h5 style={{ marginLeft: '70px' }}>Doctor Home Visit</h5>
               </div>
@@ -697,7 +697,7 @@ function Login(props) {
                 <div class="post-media wow fadeIn">
                   <a data-rel="prettyPhoto[gal]" class="hoverbutton global-radius"><i
                     class="flaticon-unlink"></i></a>
-                  <img src="patienthistory1.png" alt="" class="img-responsive" width="115%" height="200px"
+                  <img src="patienthistory1.PNG" alt="" class="img-responsive" width="115%" height="200px"
                     style={{ position: 'relative', left: '4%' }} />
                 </div>
                 <h5 style={{ marginLeft: '90px' }}>Online Patient History Lifetime</h5>
