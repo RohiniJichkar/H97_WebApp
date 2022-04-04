@@ -247,6 +247,11 @@ export default function AdminNavbar() {
       icon: LocalHospitalIcon,
       onClick: () => navigate("/AdminAddClinic"),
     },
+    {
+      text: 'Referral Doctors',
+      icon: SupervisorAccountIcon,
+      onClick: () => navigate("/AdminReferralDoctors"),
+    },
 
   ];
 

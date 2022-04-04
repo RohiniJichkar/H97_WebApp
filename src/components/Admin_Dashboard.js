@@ -178,6 +178,8 @@ export default function AdminDashboard() {
                                     whiteSpace: 'nowrap',
                                     textOverflow: 'ellipsis',
                                     color: '#78B088',
+                                    fontWeight: 600,
+                                    fontSize: 17
 
                                 }}
                             >
@@ -206,8 +208,10 @@ export default function AdminDashboard() {
                                     whiteSpace: 'nowrap',
                                     textOverflow: 'ellipsis',
                                     color: '#78B088',
+                                    fontWeight: 600,
+                                    fontSize: 17
                                 }}>
-                                Completed Appointments
+                                COMPLETED APPOINTMENTS
                             </Typography>
                         </div>
                         <div className="row" style={{ padding: theme.spacing(0), color: '#00318B' }}>
@@ -230,7 +234,8 @@ export default function AdminDashboard() {
                                     whiteSpace: 'nowrap',
                                     textOverflow: 'ellipsis',
                                     color: '#78B088',
-
+                                    fontWeight: 600,
+                                    fontSize: 17
                                 }}
                             >
                                 TODAY'S REGISTRATION
@@ -255,7 +260,8 @@ export default function AdminDashboard() {
                                     whiteSpace: 'nowrap',
                                     textOverflow: 'ellipsis',
                                     color: '#78B088',
-
+                                    fontWeight: 600,
+                                    fontSize: 17
                                 }}>
                                 MONTHLY APPOINTMENTS
                             </Typography>
@@ -356,7 +362,8 @@ export default function AdminDashboard() {
                                         whiteSpace: 'nowrap',
                                         textOverflow: 'ellipsis',
                                         color: '#78B088',
-
+                                        fontWeight: 600,
+                                        fontSize: 17
                                     }}
                                 >
                                     TOTAL APPOINTMENTS
@@ -384,8 +391,10 @@ export default function AdminDashboard() {
                                         whiteSpace: 'nowrap',
                                         textOverflow: 'ellipsis',
                                         color: '#78B088',
+                                        fontWeight: 600,
+                                        fontSize: 17
                                     }}>
-                                    Completed Appointments
+                                    COMPLETED APPOINTMENTS
                                 </Typography>
                             </div>
                             <div className="row" style={{ padding: theme.spacing(0), color: '#00318B' }}>
@@ -408,6 +417,8 @@ export default function AdminDashboard() {
                                         whiteSpace: 'nowrap',
                                         textOverflow: 'ellipsis',
                                         color: '#78B088',
+                                        fontWeight: 600,
+                                        fontSize: 17
                                     }}
                                 >
                                     TOTAL REGISTRATIONS
@@ -433,6 +444,8 @@ export default function AdminDashboard() {
                                         whiteSpace: 'nowrap',
                                         textOverflow: 'ellipsis',
                                         color: '#78B088',
+                                        fontWeight: 600,
+                                        fontSize: 17
 
                                     }}>
                                     MONTHLY APPOINTMENTS

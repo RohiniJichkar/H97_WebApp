@@ -167,6 +167,7 @@ function Login(props) {
   const [mobile, setmobile] = useState('');
   const [password, setpassword] = useState('');
   const [showPassword, setshowPassword] = useState(false);
+  const [open, setOpen] = React.useState(false);
 
   const handleChangeCheckBox = (event) => {
     setState(true);
@@ -292,7 +293,9 @@ function Login(props) {
     <>
        <div className={classes.root} style={{ backgroundColor: '#ffffff' }}>
        <Grid container spacing={2}
-       
+        className={clsx(classes.grid, {
+          [classes.gridShift]: open,
+        })}
         direction="row"
       >
  <Grid item xs={12} sm={12} lg={3}>
@@ -458,11 +461,12 @@ function Login(props) {
                   inputProps={{ 'aria-label': 'primary checkbox' }}
                 /> */}
                 </Grid>
-                <Grid item sm={10} align="right"  >
-                  <Link onClick={() => handleClickForgotPass()} variant="body2" style={{ color: 'black', cursor: 'pointer',marginRight:'1850px' }}>
+                <Grid item sm={3} style={{ marginLeft: -15 }} >
+                  <Link onClick={() => handleClickForgotPass()} variant="body2" style={{ color: 'black', cursor: 'pointer', }}>
                     Forgot password?
                   </Link>
                 </Grid>
+                <Grid item xs={12}>
                 <Button           
                   className={classes.submit}
                   style={{ color: '#fff', backgroundColor: 'linear-gradient(90deg, rgba(15,106,162,1) 1%, rgba(44,127,178,1) 38%, rgba(120,176,136,1) 76%)', borderRadius: 20 }}
@@ -470,7 +474,7 @@ function Login(props) {
                 >
                   Sign In
                 </Button>
-
+                </Grid>
               </Grid>
           
             </form>
@@ -480,9 +484,9 @@ function Login(props) {
        
 <Grid  container style={{position: 'relative'}}>
            <Grid item xs={12} sm={12}>
-      <div  id='doctordiv' style={{ backgroundImage: 'linear-gradient(to right, #4ca2cd, #67b26f)', display: 'block', width: '110%', height: '10px',marginTop:'45px' }} > </div>
+      <div  id='doctordiv' style={{ backgroundImage: 'linear-gradient(to right, #4ca2cd, #67b26f)', display: 'block',  height: '10px',marginTop:'45px' }} > </div>
       <p  style={{ textAlign: 'center', color: '#2C7FB2', fontSize: '36px', fontWeight: 'bold',  overflow: 'hidden', whiteSpace: 'pre-wrap', overflowWrap: 'break-word',}}>425+ DOCTORS REGISTERED</p>
-      <div style={{ backgroundImage: 'linear-gradient(to right, #4ca2cd, #67b26f)', display: 'block', width: '110%', height: '10px',marginTop:'8px'  }}> </div>
+      <div style={{ backgroundImage: 'linear-gradient(to right, #4ca2cd, #67b26f)', display: 'block', height: '10px',marginTop:'8px'  }}> </div>
 </Grid>
 </Grid>
 
@@ -612,11 +616,11 @@ function Login(props) {
 
 
 <Grid id= 'patientdiv' item xs={12} >
-      <div style={{ backgroundImage: 'linear-gradient(to right, #4ca2cd, #67b26f)', display: 'block', width: '150%', height: '10px',marginTop:'-8px', marginLeft: -8 , marginRight: 10}} > </div>
+      <div style={{ backgroundImage: 'linear-gradient(to right, #4ca2cd, #67b26f)', display: 'block', height: '10px',marginTop:'-8px', marginLeft: -8 , marginRight: 10}} > </div>
       <Grid item xs={12}>
       <p style={{ textAlign: 'center', color: '#2C7FB2', fontSize: '36px', fontWeight: 'bold', overflow: 'auto', whiteSpace: 'pre-wrap', overflowWrap: 'break-word', }}>24000+ PATIENTS REGISTERED</p>
       </Grid>
-      <div style={{ backgroundImage: 'linear-gradient(to right, #4ca2cd, #67b26f)', display: 'block',  width: '150%', height: '10px',marginTop:'5px', marginLeft: -8 }}> </div>
+      <div style={{ backgroundImage: 'linear-gradient(to right, #4ca2cd, #67b26f)', display: 'block', height: '10px',marginTop:'5px', marginLeft: -8 }}> </div>
 
 </Grid>
 
@@ -757,7 +761,7 @@ function Login(props) {
           </p>
           <Grid item xs={12} noWrap={true}>
           <p style={{ color: '#496cbd', fontWeight: 'bold', textAlign: 'center', 
-         overflow: "auto",
+         overflow: "hidden",
          whiteSpace: 'pre-wrap',
          overflowWrap: 'break-word',
           }}>We offer more than many services out of
@@ -771,7 +775,7 @@ function Login(props) {
                 <div class="post-media wow fadeIn">
                   <a data-rel="prettyPhoto[gal]" class="hoverbutton global-radius"><i
                     class="flaticon-unlink"></i></a>
-                  <img src="ambulance.PNG" alt="" class="img-responsive" width="109%" height="200px" />
+                  <img src="ambulance.PNG" alt="" class="img-responsive" width="100%" height="200px" />
                 </div>
                 <h5 style={{ textAlign: 'center' }}>24/7 Ambulance Booking Service</h5>
               </div>
@@ -783,7 +787,7 @@ function Login(props) {
                 <div class="post-media wow fadeIn">
                   <a data-rel="prettyPhoto[gal]" class="hoverbutton global-radius"><i
                     class="flaticon-unlink"></i></a>
-                  <img src="Appointment.png" alt="" class="img-responsive" width="120%" height="200px" />
+                  <img src="Appointment.png" alt="" class="img-responsive" width="100%" height="200px" />
                 </div>
                 <h5 style={{ textAlign: 'center' }}>Online Appointment Booking</h5>
               </div>
@@ -795,7 +799,7 @@ function Login(props) {
                 <div class="post-media wow fadeIn">
                   <a data-rel="prettyPhoto[gal]" class="hoverbutton global-radius"><i
                     class="flaticon-unlink"></i></a>
-                  <img src="home visit.PNG" alt="" class="img-responsive" width="115%" height="200px" />
+                  <img src="home visit.PNG" alt="" class="img-responsive" width="100%" height="200px" />
                 </div>
                 <h5 style={{ textAlign: 'center' }}>Doctor Home Visit</h5>
               </div>
@@ -807,7 +811,7 @@ function Login(props) {
                 <div class="post-media wow fadeIn">
                   <a data-rel="prettyPhoto[gal]" class="hoverbutton global-radius"><i
                     class="flaticon-unlink"></i></a>
-                  <img src="patienthistory1.PNG" alt="" class="img-responsive" width="115%" height="200px"
+                  <img src="patienthistory1.PNG" alt="" class="img-responsive" width="100%" height="200px"
                     />
                 </div>
                 <h5 style={{ textAlign: 'center' }}>Online Patient History Lifetime</h5>
@@ -836,7 +840,7 @@ function Login(props) {
       <Grid item xs={12}  sm={4}>
        
               <div class="ftco-footer-widget" style={{marginLeft:'20px'}}>
-                <img src="h97 logo horizontal-01.png" alt="Health97" height="60px" width="230px"
+                <img src="h97 logo horizontal-01.png" alt="Health97" height="60px"
                   style={{ textTransform: 'uppercase', letterSpacing: '.1em' }}></img>
                 <p style={{ color: 'white', fontSize: '17px', overflow: "auto",
          whiteSpace: 'pre-wrap',
@@ -856,7 +860,7 @@ function Login(props) {
                   fontWeight: 400
                 }}>Office</h2>
                 
-                  <ul style={{ marginLeft: '0px',color:'white' }}>
+                  <ul style={{color:'white' }}>
                     <li><span class="text" style={{ fontSize: '18px',color:'white', overflow: "auto",
         whiteSpace: 'pre-wrap',
         overflowWrap: 'break-word', }}>Office 812, City
