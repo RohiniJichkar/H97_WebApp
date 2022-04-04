@@ -357,7 +357,7 @@ export default function DoctorBookAppointment() {
                     // backgroundColor: '#78B088',
                     // color: '#fff
                     fontSize: 15,
-                    marginLeft: 10
+                    
                   },
                 }}
               >

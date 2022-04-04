@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import Button from '@material-ui/core/Button';
+import VideoPlayer from "react-background-video-player";
 import CssBaseline from '@material-ui/core/CssBaseline';
 import TextField from '@material-ui/core/TextField';
 import { useNavigate } from 'react-router-dom';
@@ -24,7 +25,6 @@ import InstagramIcon from '@material-ui/icons/Instagram';
 import TwitterIcon from '@material-ui/icons/Twitter';
 import LinkedInIcon from '@material-ui/icons/LinkedIn';
 import FormGroup from '@material-ui/core/FormGroup';;
-import VideoPlayer from "react-background-video-player";
 
 const drawerWidth = 0;
 
@@ -164,7 +164,6 @@ function Login(props) {
   const classes = useStyles();
   const [selectedValue, setSelectedValue] = useState('');
   const [state, setState] = useState(false);
-
   const [mobile, setmobile] = useState('');
   const [password, setpassword] = useState('');
   const [showPassword, setshowPassword] = useState(false);
@@ -293,9 +292,7 @@ function Login(props) {
     <>
        <div className={classes.root} style={{ backgroundColor: '#ffffff' }}>
        <Grid container spacing={2}
-        className={clsx(classes.grid, {
-          [classes.gridShift]: open,
-        })}
+       
         direction="row"
       >
  <Grid item xs={12} sm={12} lg={3}>
