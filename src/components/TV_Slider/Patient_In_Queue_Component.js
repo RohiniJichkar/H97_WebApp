@@ -7,50 +7,54 @@ import { get_patientinqueue } from '../../Apis/TV_Advertisements/index';
 
 const drawerWidth = 240;
 
-export default function Patient_In_Queue_TV_Component({data}) {
+export default function Patient_In_Queue_TV_Component({ data }) {
   const classes = useStyles();
   const navigate = useNavigate();
   const theme = useTheme();
-  
+
   console.log(data);
 
- 
+
   // if (patientIn.length !== 0) {
 
   return (
     <>
       {data.map((item) => {
-        return(<>
-       
-        <Grid item xs={2} style={{ paddingTop: 10, marginLeft: '-40px' }}>
-          <div>
-            <center>
-              <Avatar style={{ borderRadius: 50, height: 55, width: 55 }} />
-            </center>
-          </div>
-          <Paper className={classes.paper} elevation={4} style={{ marginRight: 25, marginLeft: 25, justifyContent: 'center', alignItems: 'center', marginTop: '-40px', borderRadius: 20, fontFamily: '"Poppins", san-serif;', fontStyle: 'normal', fontWeight: 400, }}>
-            <Grid item xs={12} style={{
-              color: '#2C7FB2', textAlign: 'center', paddingTop: 40, fontWeight: 600, fontSize: '13px', overflow: 'hidden',
-              whiteSpace: 'nowrap',
-              textOverflow: 'ellipsis', width: 120,
-              marginTop: '-5px'
-            }}>
-             {item.FirstName} {item.LastName}
-            </Grid>
-            <Grid item xs={12} style={{ textAlign: 'center', color: '#2C7FB2' }}>
-              {item.AppointmentTime}
-            </Grid>
-            <Grid item xs={12} noWrap style={{ textAlign: 'center', color: '#2C7FB2', overflow: 'hidden',
-              whiteSpace: 'nowrap',
-              textOverflow: 'ellipsis', paddingBottom: 10 }}>
-              Ref: Dr.{item.DFName} {item.DLName}
-            </Grid>
-          </Paper>
+        return (<>
 
-        </Grid>
+          <Grid item xs={2} style={{ paddingTop: 10, marginLeft: '-40px' }}>
+            <div>
+              <center>
+                {item.Gender == 'Female' ? <Avatar style={{ borderRadius: 50, height: 55, width: 55, border: '1px solid lightgray' }} src='femaleicon.png' /> :
+                  <Avatar style={{ borderRadius: 50, height: 55, width: 55, border: '1px solid lightgray' }} src='maleicon.png' />}
+                {/* <Avatar style={{ borderRadius: 50, height: 55, width: 55 }} /> */}
+              </center>
+            </div>
+            <Paper className={classes.paper} elevation={4} style={{ marginRight: 25, marginLeft: 25, justifyContent: 'center', alignItems: 'center', marginTop: '-40px', borderRadius: 20, fontFamily: '"Poppins", san-serif;', fontStyle: 'normal', fontWeight: 400, }}>
+              <Grid item xs={12} style={{
+                color: '#2C7FB2', textAlign: 'center', paddingTop: 40, fontWeight: 600, fontSize: '13px', overflow: 'hidden',
+                whiteSpace: 'nowrap',
+                textOverflow: 'ellipsis', width: 120,
+                marginTop: '-5px'
+              }}>
+                {item.FirstName} {item.LastName}
+              </Grid>
+              <Grid item xs={12} style={{ textAlign: 'center', color: '#2C7FB2' }}>
+                {item.AppointmentTime}
+              </Grid>
+              <Grid item xs={12} noWrap style={{
+                textAlign: 'center', color: '#2C7FB2', overflow: 'hidden',
+                whiteSpace: 'nowrap',
+                textOverflow: 'ellipsis', paddingBottom: 10
+              }}>
+                Ref: Dr.{item.DFName} {item.DLName}
+              </Grid>
+            </Paper>
+
+          </Grid>
         </>);
-      } 
-      ) }
+      }
+      )}
     </>
   ); //return close
 

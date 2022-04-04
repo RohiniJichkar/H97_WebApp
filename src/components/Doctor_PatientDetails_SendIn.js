@@ -169,9 +169,11 @@ export default function DoctorPatientDetails_SendIn() {
                         <Paper className={classes.paper} elevation={6} style={{ marginRight: 20 }} >
                             <center>
                                 <div style={{ paddingBottom: 20 }}>
-                                    {details.ProfileImage ?
+                                    {details.ProfileImage ? <Avatar style={{ borderRadius: 50, height: 100, width: 100 }} src={details.ProfileImage} /> : details.Gender == 'Female' ? <Avatar style={{ borderRadius: 50, height: 100, width: 100,  }} src='femaleicon.png' /> :
+                                        <Avatar style={{ borderRadius: 50, height: 100, width: 100 }} src='maleicon.png' />}
+                                    {/* {details.ProfileImage ?
                                         <Avatar style={{ borderRadius: 50, height: 100, width: 100 }} src={details.ProfileImage} /> :
-                                        <Avatar style={{ borderRadius: 50, height: 100, width: 100 }} />}
+                                        <Avatar style={{ borderRadius: 50, height: 100, width: 100 }} />} */}
                                 </div>
 
                                 <Typography variant="h6" noWrap={true} style={{
@@ -371,7 +373,7 @@ export default function DoctorPatientDetails_SendIn() {
 
                         </Paper>
                     </Grid>
-                    {deleteModal ? <Cancel_Appointment show={deleteModal} data={details} handleclose={()=>setDeleteModal(false)} /> : null}
+                    {deleteModal ? <Cancel_Appointment show={deleteModal} data={details} handleclose={() => setDeleteModal(false)} /> : null}
                 </Grid>
 
             </Grid > {/* main grid */}

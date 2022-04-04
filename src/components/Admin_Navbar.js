@@ -238,7 +238,7 @@ export default function AdminNavbar() {
       onClick: () => navigate("/AdminDashboard"),
     },
     {
-      text: 'Dashboard',
+      text: 'Clinics',
       icon: HomeIcon,
       onClick: () => navigate("/AdminClinicDoctors"),
     },

@@ -1,8 +1,8 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, Fragment } from 'react';
 import clsx from 'clsx';
 import { makeStyles, useTheme, alpha } from '@material-ui/core/styles';
 import { useNavigate } from 'react-router-dom';
-import { Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, TextField, Slide, Select, FormControl, InputLabel, Typography, Button, Table, TableContainer, TableBody, TableCell, TableHead, InputBase, TableRow, TablePagination, Drawer, Divider, MenuItem, Menu, ListItem, ListItemIcon, ListItemText, List, IconButton, Grid, Paper, Link } from "@material-ui/core";
+import { Dialog, DialogContent, DialogContentText, DialogTitle, TextField, Slide, Select, FormControl, InputLabel, Typography, Button, Table, TableContainer, TableBody, TableCell, TableHead, InputBase, TableRow, TablePagination, Drawer, Divider, MenuItem, Menu, ListItem, ListItemIcon, ListItemText, List, IconButton, Grid, Paper, Link } from "@material-ui/core";
 import { Redirect } from 'react-router-dom';
 import CloseIcon from '@material-ui/icons/Close';
 import Visibility from '@material-ui/icons/Visibility';
@@ -10,6 +10,11 @@ import VisibilityOff from '@material-ui/icons/VisibilityOff';
 import InputAdornment from '@material-ui/core/InputAdornment';
 import { Register_Patient, Country, State, City } from '../../../Apis/Clinic_Patients/Patient_Registration';
 import GeoLocation from '../../GeoLocation';
+import DateFnsUtils from '@date-io/date-fns';
+import {
+    MuiPickersUtilsProvider,
+    KeyboardDatePicker,
+} from '@material-ui/pickers';
 
 const drawerWidth = 240;
 
@@ -23,9 +28,10 @@ const Add_Patinet = ({ show, handleclose }) => {
     const [lastnm, setlastnm] = useState('');
     const [mobile, setmobile] = useState('');
     const [email, setemail] = useState('');
-    const [dob, setdob] = useState('');
+    const [dob, setdob] = useState(new Date());
     const [password, setpassword] = useState('');
     const [gender, setgender] = useState('');
+    const [title, settitle] = useState('');
     const [address, setaddress] = useState('');
     const [city, setcity] = useState('');
     const [pincode, setpincode] = useState('');
@@ -57,60 +63,44 @@ const Add_Patinet = ({ show, handleclose }) => {
         setcityData(cities);
     }
 
-    console.log(cityData);
+    console.log(dob);
 
     useEffect(() => {
         fetchCountry();
         fetchState();
     }, []);
 
-    const PatientRegistration = async (firstnm, lastnm, mobile, password, email, dob, gender, address, city, pincode, state, country, height, weight) => {
+    const PatientRegistration = async (title, firstnm, lastnm, mobile, password, email, dob, gender, address, city, pincode, state, country, height, weight) => {
         var data = await localStorage.getItem("userdata");
         let parsed = JSON.parse(data);
         let clinicid = parsed.ClinicId;
         const date = new Date();
         const now = date.toISOString().split('T')[0];
 
-        if (firstnm.trim() == '' || lastnm.trim() == '' || mobile.trim() == '' || password.trim() == '' || dob.trim() == '' || gender.trim() == '') {
+        // let Dob = dob.toISOString().split('T')[0];
+        // console.log(Dob)
+
+        if (title.trim() == '' || firstnm.trim() == '' || lastnm.trim() == '' || mobile.trim() == '' || password.trim() == '' || dob == '' || gender.trim() == '') {
             alert('Please Enter Mandatory fields')
             return;
         }
-        else if (dob > now) {
-            alert('Invalid Date of Birth');
-            return;
-        }
+        // else if (dob > now) {
+        //     alert('Invalid Date of Birth');
+        //     return;
+        // }
 
         var FirstNm = firstnm.split(/\s/).join('');
 
-        let dobstr = dob;
-
-        let birth_year = Number(dobstr.substring(0, 4));
-        let birth_month = Number(dobstr.substring(5, 2));
-        let birth_day = Number(dobstr.substring(8, 2));
-
-        let today_year = date.getFullYear();
-        let today_month = date.getMonth();
-        let today_day = date.getDate();
-        let age = today_year - birth_year;
-
-        if (today_month < (birth_month - 1)) {
-            age--;
-            return age;
-        }
-        if (((birth_month - 1) == today_month) && (today_day < birth_day)) {
-            age--;
-            return age;
-        }
-
         const obj = {
             ClinicId: clinicid,
+            NmTitle: title,
             FirstName: FirstNm,
             LastName: lastnm,
             MobileNo: mobile,
             Password: password,
             Email: email,
             DOB: dob,
-            Age: age,
+            // Age: age,
             Gender: gender,
             Address: address,
             City: city,
@@ -165,7 +155,50 @@ const Add_Patinet = ({ show, handleclose }) => {
                             <Grid item xs={12} sm={6} style={{ borderRight: '1px solid #F0F0F0' }}>
                                 <center>
                                     <div>
-                                        <TextField className={classes.inputFields} value={firstnm}
+                                        <Grid container style={{ marginBottom: -30 }}>
+                                            <Grid item xs={2}>
+                                                <center>
+                                                    <FormControl variant="outlined" size='small' className={classes.formControl}  >
+                                                        <Select
+                                                            className={classes.inputFields}
+                                                            native
+                                                            size='small'
+                                                            value={title}
+                                                            label="title"
+                                                            onChange={(e) => settitle(e.target.value)}
+
+                                                            inputProps={{
+                                                                name: 'title',
+                                                                id: 'outlined-title-native-simple',
+                                                            }}
+                                                            style={{ marginLeft: 68, width: 78, marginTop: 2 }}
+                                                        >
+                                                            <option aria-label="None" value="" >Title</option>
+                                                            <option value='Mr.'>Mr.</option>
+                                                            <option value='Mrs.'>Mrs.</option>
+                                                            <option value='Ms.'>Ms.</option>
+                                                            <option value='Miss.'>Miss.</option>
+                                                        </Select>
+                                                    </FormControl> <span style={{ fontSize: 20, color: 'red', marginLeft: '207%', top: -80, position: 'relative' }}> *</span>
+                                                </center>
+                                            </Grid>
+                                            <Grid item xs={8}>
+                                                <center>
+                                                    <TextField className={classes.inputFields} value={firstnm}
+                                                        onChange={(e) => {
+                                                            const re = /^[a-z ,.'-]+$/i;
+                                                            // if value is not blank, then test the regex
+                                                            if (e.target.value == '' || re.test(e.target.value)) {
+                                                                setfirstnm(e.target.value)
+                                                            }
+                                                        }} style={{ marginLeft: 90, width: 210, marginTop: 10 }}
+                                                        id="outlined-basic" size="small" placeholder="First Name" variant="outlined" />
+                                                    <span style={{ fontSize: 20, color: 'red', marginLeft: '102%', top: -70, position: 'relative' }}> *</span>
+                                                </center>
+                                            </Grid>
+                                        </Grid>
+
+                                        {/* <TextField className={classes.inputFields} value={firstnm}
                                             onChange={(e) => {
                                                 const re = /^[a-z ,.'-]+$/i;
                                                 // if value is not blank, then test the regex
@@ -174,7 +207,7 @@ const Add_Patinet = ({ show, handleclose }) => {
                                                 }
                                             }} style={{ marginLeft: 13 }}
                                             id="outlined-basic" size="small" placeholder="First Name" variant="outlined" />
-                                        <span style={{ position: 'relative', bottom: 8, fontSize: 20, color: 'red' }}> *</span>
+                                        <span style={{ position: 'relative', bottom: 8, fontSize: 20, color: 'red' }}> *</span> */}
                                         <TextField className={classes.inputFields} value={lastnm}
                                             onChange={(e) => {
                                                 const re = /^[a-z ,.'-]+$/i;
@@ -184,7 +217,7 @@ const Add_Patinet = ({ show, handleclose }) => {
                                                 if (e.target.value == '' || re.test(e.target.value)) {
                                                     setlastnm(e.target.value)
                                                 }
-                                            }} style={{ marginLeft: 13 }} id="outlined-basic" size="small" placeholder="Last Name" variant="outlined" />
+                                            }} style={{ marginLeft: 13, marginTop: -6 }} id="outlined-basic" size="small" placeholder="Last Name" variant="outlined" />
                                         <span style={{ position: 'relative', bottom: 8, fontSize: 20, color: 'red' }}> *</span>
                                         <TextField
                                             className={classes.inputFields}
@@ -224,9 +257,27 @@ const Add_Patinet = ({ show, handleclose }) => {
                                                     </InputAdornment>
                                                 ),
                                             }} />  <span style={{ position: 'relative', bottom: 8, fontSize: 20, color: 'red' }}> *</span>
-                                        <TextField className={classes.inputFields} value={email} onChange={(e) => setemail(e.target.value)} id="outlined-basic" type="email" size="small" placeholder="Email Id" variant="outlined" style={{ marginLeft: 30 }} />
-                                        <span style={{ position: 'relative', top: 50, right: 290, fontSize: 13 }}>DOB</span>
-                                        <TextField className={classes.inputFields} style={{ marginLeft: 13 }} defaultValue={new Date()} value={dob} onChange={(e) => setdob(e.target.value)} id="outlined-basic" type="date" size="small" variant="outlined" />
+
+
+
+
+                                        <TextField className={classes.inputFields} value={email} onChange={(e) => setemail(e.target.value)} id="outlined-basic" type="email" size="small" placeholder="Email Id" variant="outlined" style={{ marginLeft: -5 }} />
+
+                                        <MuiPickersUtilsProvider utils={DateFnsUtils}>
+                                            <KeyboardDatePicker
+                                                autoOk
+                                                className={classes.inputFields}
+                                                size='small'
+                                                value={dob}
+                                                onChange={setdob}
+                                                inputVariant="outlined"
+                                                label="DOB"
+                                                format='dd/MM/yyyy'
+                                                style={{ marginLeft: 10 }}
+                                            />
+                                        </MuiPickersUtilsProvider>
+                                        {/* <span style={{ position: 'relative', top: 50, right: 290, fontSize: 13 }}>DOB</span>
+                                        <TextField className={classes.inputFields} style={{ marginLeft: 13 }} format='dd/MM/yyyy' defaultValue={new Date()} value={dob} onChange={(e) => setdob(e.target.value)} id="outlined-basic" type="date" size="small" variant="outlined" /> */}
                                         <span style={{ position: 'relative', bottom: 8, fontSize: 20, color: 'red' }}> *</span>
                                         <FormControl variant="outlined" size='small' className={classes.formControl}  >
                                             <Select
@@ -241,7 +292,7 @@ const Add_Patinet = ({ show, handleclose }) => {
                                                     name: 'gender',
                                                     id: 'outlined-gender-native-simple',
                                                 }}
-                                                style={{ marginLeft: 14 }}
+                                                style={{ marginLeft: 10, marginTop: -10 }}
                                             >
                                                 <option aria-label="None" value="" >Gender*</option>
                                                 <option value='Male'>Male</option>
@@ -427,14 +478,14 @@ const Add_Patinet = ({ show, handleclose }) => {
                                 </center>
                             </Grid>
 
-                            <Grid container>
+                            <Grid container style={{ marginTop: -10, marginBottom: -10 }}>
                                 <Grid xs={12} sm={6}>
                                     <Button className={classes.btnCancle} onClick={handleclose} style={{ float: 'right', marginRight: 20 }}>
                                         Cancel
                                     </Button>
                                 </Grid>
                                 <Grid xs={12} sm={6}>
-                                    <Button className={classes.btnregister} onClick={() => PatientRegistration(firstnm, lastnm, mobile, password, email, dob, gender, address, city, pincode, state, country, height, weight)} autoFocus style={{ float: 'left', marginLeft: 20 }}>
+                                    <Button className={classes.btnregister} onClick={() => PatientRegistration(title, firstnm, lastnm, mobile, password, email, dob, gender, address, city, pincode, state, country, height, weight)} autoFocus style={{ float: 'left', marginLeft: 20 }}>
                                         Register
                                     </Button>
                                 </Grid>

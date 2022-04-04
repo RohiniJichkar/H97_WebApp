@@ -11,6 +11,7 @@ import { PatientInQueue, BookedAppointments, SendIn } from '../../Apis/PatientIn
 import { PatientInueue_List } from './components/Dasboard_Component/Staff/PatientInQueue';
 import { BookedAppointment_List } from './components/Dasboard_Component/Staff/BookedAppointment';
 import Skeleton from '@material-ui/lab/Skeleton';
+import ArrowBackIcon from '@material-ui/icons/ArrowBack';
 
 const drawerWidth = 240;
 
@@ -104,6 +105,10 @@ export default function Staff_Dashboard() {
         navigate("/Staff_Monthly_Appointment");
     };
 
+    const handleGoBack = () => {
+        navigate("/Staff_Home");
+    };
+
     return (
         <div className={classes.root} style={{ backgroundColor: '#ffffff' }}>
             <DoctorNavbar />
@@ -126,20 +131,21 @@ export default function Staff_Dashboard() {
                                 style={{
                                     fontFamily: 'Poppins',
                                     fontStyle: 'normal',
-                                    fontWeight: 500,
+                                    fontWeight: 600,
                                     overflow: 'hidden',
                                     whiteSpace: 'nowrap',
                                     textOverflow: 'ellipsis',
                                     color: '#78B088',
-
+                                    fontSize: 16
                                 }}
                             >
+                                <Button style={{ marginLeft: '-30px', backgroundColor: 'white', color: '#2C7FB2', borderRadius: 105, fontSize: '12px' }}> <ArrowBackIcon onClick={handleGoBack} />  </Button>
                                 TODAY'S APPOINTMENTS
                             </Typography>
                         </div>
                         <div className="row" style={{ padding: theme.spacing(0), color: '#00318B' }}>
                             {
-                                <Typography variant="h5" noWrap={true}>
+                                <Typography variant="h5" noWrap={true} style={{marginLeft: 35}}>
                                     {(appointments.DailyAppointment !== null || appointments.DailyAppointment != 0) ? appointments.DailyAppointment : 0}
                                 </Typography>
                             }
@@ -153,11 +159,12 @@ export default function Staff_Dashboard() {
                                 style={{
                                     fontFamily: '"Poppins", san-serif;',
                                     fontStyle: 'normal',
-                                    fontWeight: 500,
+                                    fontWeight: 600,
                                     overflow: 'hidden',
                                     whiteSpace: 'nowrap',
                                     textOverflow: 'ellipsis',
                                     color: '#78B088',
+                                    fontSize: 16
                                 }}>
                                 PATIENT IN QUEUE
                             </Typography>
@@ -176,11 +183,12 @@ export default function Staff_Dashboard() {
                                 style={{
                                     fontFamily: 'Poppins',
                                     fontStyle: 'normal',
-                                    fontWeight: 500,
+                                    fontWeight: 600,
                                     overflow: 'hidden',
                                     whiteSpace: 'nowrap',
                                     textOverflow: 'ellipsis',
                                     color: '#78B088',
+                                    fontSize: 16
                                 }}
                             >
                                 TODAY'S REGISTRATION
@@ -200,11 +208,12 @@ export default function Staff_Dashboard() {
                                 style={{
                                     fontFamily: '"Poppins", san-serif;',
                                     fontStyle: 'normal',
-                                    fontWeight: 500,
+                                    fontWeight: 600,
                                     overflow: 'hidden',
                                     whiteSpace: 'nowrap',
                                     textOverflow: 'ellipsis',
                                     color: '#78B088',
+                                    fontSize: 16
 
                                 }}>
                                 MONTHLY COMPLETED APPOINTMENTS

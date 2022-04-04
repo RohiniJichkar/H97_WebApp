@@ -34,9 +34,12 @@ export function BookedAppointment_List({ data }) {
                             <Grid item xs={2} style={{ paddingTop: 10, marginLeft: '-30px' }}>
                                 <div>
                                     <center>
-                                        {item.ProfileImage ?
+                                    {item.ProfileImage ? <Avatar style={{ borderRadius: 50, height: 55, width: 55, }} src={item.ProfileImage} /> : item.Gender == 'Female' ? <Avatar style={{ borderRadius: 50, height: 55, width: 55, border: '1px solid lightgray' }} src='femaleicon.png' /> :
+                                    <Avatar style={{ borderRadius: 50, height: 55, width: 55, border: '1px solid lightgray' }} src='maleicon.png' />
+                                }
+                                        {/* {item.ProfileImage ?
                                             <Avatar style={{ borderRadius: 50, height: 55, width: 55 }} src={item.ProfileImage} /> :
-                                            <Avatar style={{ borderRadius: 50, height: 55, width: 55 }} />}
+                                            <Avatar style={{ borderRadius: 50, height: 55, width: 55 }} />} */}
                                     </center>
                                 </div>
                                 <Paper className={classes.paper} elevation={4} style={{ marginRight: 25, marginLeft: 25, justifyContent: 'center', alignItems: 'center', marginTop: '-40px', borderRadius: 20, fontFamily: '"Poppins", san-serif;', fontStyle: 'normal', fontWeight: 400, }}>

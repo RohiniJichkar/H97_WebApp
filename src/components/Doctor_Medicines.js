@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import clsx from 'clsx';
 import { makeStyles, useTheme, alpha } from '@material-ui/core/styles';
 import { useNavigate } from 'react-router-dom';
-import { Container, FormControl, InputLabel, TextField, Typography, Button, Slide, Dialog, Select, DialogContent, DialogContentText, DialogTitle, Table, TableContainer, TableBody, TableCell, TableHead, InputBase, TableRow, TablePagination, Drawer, Divider, MenuItem, Menu, ListItem, ListItemIcon, ListItemText, List, IconButton, Grid, Paper, Link } from "@material-ui/core";
+import { Container, FormControl, InputLabel, TextField, Typography, Button, Slide, Dialog, Box, Select, DialogContent, DialogContentText, DialogTitle, Table, TableContainer, TableBody, TableCell, TableHead, InputBase, TableRow, TablePagination, Drawer, Divider, MenuItem, Menu, ListItem, ListItemIcon, ListItemText, List, IconButton, Grid, Paper, Link } from "@material-ui/core";
 import { Redirect } from 'react-router-dom';
 import DoctorNavbar from './Doctor_Navbar';
 import SearchIcon from '@material-ui/icons/Search';
@@ -14,7 +14,11 @@ import { DataGrid } from '@material-ui/data-grid';
 import { Services, Search_service } from '../Apis/Clinic_Services/index';
 import Edit_Service_Details from './Clinic_Services/Edit_Services/index'
 import Clinic_Service_Image from './Clinic_Services/Image_Upload/index';
-
+import DateFnsUtils from '@date-io/date-fns';
+import {
+    MuiPickersUtilsProvider,
+    KeyboardDatePicker,
+} from '@material-ui/pickers';
 import { Add_Medicine, Search_Medicine } from '../Apis/Medicines/index';
 import Edit_Medicine from './Medicines/Edit_Medicine/index';
 import Delete_Medicine from './Medicines/Delete_Medicine/index';
@@ -27,18 +31,21 @@ const columns = [
     {
         field: 'MedicineId',
         headerName: 'Id',
+        headerClassName: 'super-app-theme--header',
         width: 100,
         editable: false,
     },
     {
         field: 'MedicineName',
         headerName: 'Name',
+        headerClassName: 'super-app-theme--header',
         width: 150,
         editable: true,
     },
     {
         field: 'Strength',
         headerName: 'Strength',
+        headerClassName: 'super-app-theme--header',
         width: 120,
         editable: true,
     },
@@ -314,8 +321,8 @@ export default function DoctorMedicines() {
     const [mType, setmType] = useState('');
     const [mStrength, setmStrength] = useState('');
     const [mQuantity, setmQuantity] = useState('');
-    const [mStartDate, setmStartDate] = useState('');
-    const [mExpiryDate, setmExpiryDate] = useState('');
+    const [mStartDate, setmStartDate] = useState(new Date());
+    const [mExpiryDate, setmExpiryDate] = useState(new Date());
     const [openAddModal, setopenAddModal] = React.useState(false);
     const [openeditmodal, setopeneditmodal] = useState(false);
     const [opendeletemodal, setOpenDeletemodal] = useState(false);
@@ -371,6 +378,9 @@ export default function DoctorMedicines() {
         let clinicid = parsed.ClinicId;
         let doctorid = parsed.userid;
 
+        let startDate = mStartDate.toISOString().split('T')[0];
+        let expirtyDate = mExpiryDate.toISOString().split('T')[0];
+
         if (mName == '') {
             alert("Please Enter Medicine Name")
             return;
@@ -393,8 +403,8 @@ export default function DoctorMedicines() {
             Strength: mStrength,
             MedicineType: mType,
             Quantity: mQuantity,
-            StartDate: mStartDate,
-            ExpiryDate: mExpiryDate
+            StartDate: startDate,
+            ExpiryDate: expirtyDate
         }
 
         try {
@@ -485,17 +495,28 @@ export default function DoctorMedicines() {
 
                             </Grid>
 
-                            <DataGrid
-                                style={{ height: 325, marginTop: 20, fontSize: 12, fontFamily: 'Poppins', fontWeight: 600, color: '#2C7FB2', cursor: 'pointer' }}
-                                rows={medicines}
-                                rowHeight={40}
-                                columns={columns}
-                                columnWidth={10}
-                                pageSize={10}
-                                onRowClick={(newSelection) => {
-                                    handleCellClick(newSelection.row.id);
+                            <Box
+                                sx={{
+                                    '& .super-app-theme--header': {
+                                        // backgroundColor: '#78B088',
+                                        // color: '#fff
+                                        fontSize: 15,
+                                        marginLeft: 10
+                                    },
                                 }}
-                            />
+                            >
+                                <DataGrid
+                                    style={{ height: 325, marginTop: 20, fontSize: 12, fontFamily: 'Poppins', fontWeight: 600, color: '#2C7FB2', cursor: 'pointer' }}
+                                    rows={medicines}
+                                    rowHeight={40}
+                                    columns={columns}
+                                    columnWidth={10}
+                                    pageSize={10}
+                                    onRowClick={(newSelection) => {
+                                        handleCellClick(newSelection.row.id);
+                                    }}
+                                />
+                            </Box>
 
                         </Paper>
                     </Grid>
@@ -673,7 +694,6 @@ export default function DoctorMedicines() {
                                     </center>
                                     <center>
                                         <FormControl variant="outlined" size="small" className={classes.formControl} style={{ width: '65%', marginLeft: '20px' }} >
-
                                             <Select
                                                 className={classes.textFieldForm}
                                                 size='large'
@@ -726,10 +746,34 @@ export default function DoctorMedicines() {
                                             </center>
                                         </Grid>
                                         <Grid item xs={6} style={{ marginTop: 10 }}>
-                                            <TextField className={classes.inputFields} onChange={(e) => setmStartDate(e.target.value)} id="outlined-basic" type='date' variant="outlined" size="small" style={{ width: '130px', float: 'right', marginRight: 15 }} />
+                                            <MuiPickersUtilsProvider utils={DateFnsUtils}>
+                                                <KeyboardDatePicker
+                                                    autoOk
+                                                    size='small'
+                                                    value={mStartDate}
+                                                    onChange={setmStartDate}
+                                                    inputVariant="outlined"
+                                                    label="Start Date"
+                                                    format='dd/MM/yyyy'
+                                                    style={{ marginTop: 5, float: 'right', width: '130px', marginRight: 15 }}
+                                                />
+                                            </MuiPickersUtilsProvider>
+                                            {/* <TextField className={classes.inputFields} onChange={(e) => setmStartDate(e.target.value)} id="outlined-basic" type='date' variant="outlined" size="small" style={{ width: '130px', float: 'right', marginRight: 15 }} /> */}
                                         </Grid>
                                         <Grid item xs={6} style={{ marginTop: 10 }}>
-                                            <TextField className={classes.inputFields} onChange={(e) => setmExpiryDate(e.target.value)} id="outlined-basic" type='date' variant="outlined" size="small" style={{ width: '130px', marginLeft: 15 }} />
+                                            <MuiPickersUtilsProvider utils={DateFnsUtils}>
+                                                <KeyboardDatePicker
+                                                    autoOk
+                                                    size='small'
+                                                    value={mExpiryDate}
+                                                    onChange={setmExpiryDate}
+                                                    inputVariant="outlined"
+                                                    label="Expiry Date"
+                                                    format='dd/MM/yyyy'
+                                                    style={{ marginTop: 5, float: 'left', width: '130px', marginLeft: 15 }}
+                                                />
+                                            </MuiPickersUtilsProvider>
+                                            {/* <TextField className={classes.inputFields} onChange={(e) => setmExpiryDate(e.target.value)} id="outlined-basic" type='date' variant="outlined" size="small" style={{ width: '130px', marginLeft: 15 }} /> */}
                                         </Grid>
                                     </Grid>
 

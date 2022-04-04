@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import clsx from 'clsx';
 import { makeStyles, useTheme } from '@material-ui/core/styles';
 import { useNavigate } from 'react-router-dom';
-import { Typography, Button, Grid, Slide } from "@material-ui/core";
+import { Typography, Button, Grid, FormControl, Select, Box } from "@material-ui/core";
 import DoctorNavbar from './Doctor_Navbar';
 import ArrowBackIcon from '@material-ui/icons/ArrowBack';
 import Tab from '@material-ui/core/Tab';
@@ -11,6 +11,11 @@ import { DataGrid } from '@material-ui/data-grid';
 import Show_pdf_data from './Pdf_Viewer/Modal/index';
 import { HVDoctors } from '../Apis/Book_Appointment/index';
 import { HV_Appointments_by_date } from '../Apis/Home_Visitors/Home_Visitor_History/index'
+import DateFnsUtils from '@date-io/date-fns';
+import {
+    MuiPickersUtilsProvider,
+    KeyboardDatePicker,
+} from '@material-ui/pickers';
 
 const drawerWidth = 240;
 
@@ -19,13 +24,17 @@ var columns = [
         field: 'UserId',
         headerName: 'Patient ID',
         width: 140,
+        headerClassName: 'super-app-theme--header',
         editable: true,
+        align: 'center'
     },
     {
         field: 'fullName',
         headerName: 'Full name',
         sortable: false,
         width: 150,
+        headerClassName: 'super-app-theme--header',
+        align: 'center',
         valueGetter: (params) =>
             `${params.getValue(params.id, 'FirstName') || ''} ${params.getValue(params.id, 'LastName') || ''
             }`,
@@ -34,43 +43,57 @@ var columns = [
         field: 'AppointmentDate',
         headerName: 'Date',
         width: 140,
+        headerClassName: 'super-app-theme--header',
         editable: true,
+        align: 'center'
     },
     {
         field: 'AppointmentTime',
         headerName: 'Time',
         width: 120,
+        headerClassName: 'super-app-theme--header',
         editable: true,
+        align: 'center'
     },
     {
         field: 'AppointmentStatus',
         headerName: 'Status',
         width: 130,
+        headerClassName: 'super-app-theme--header',
         editable: true,
+        align: 'center',
+        
     },
     {
         field: 'HomeVisitReason',
         headerName: 'Reason',
         width: 150,
-        editable: true,
+        headerClassName: 'super-app-theme--header',
+        align: 'center'
     },
     {
         field: 'Address',
         headerName: 'Address',
         width: 180,
+        headerClassName: 'super-app-theme--header',
         editable: true,
+        align: 'right'
     },
     {
         field: 'PaymentMode',
         headerName: 'Mode',
         width: 130,
+        headerClassName: 'super-app-theme--header',
         editable: true,
+        align: 'center'
     },
     {
         field: 'TotalAmount',
         headerName: 'Total',
-        width: 100,
+        width: 120,
+        headerClassName: 'super-app-theme--header',
         editable: true,
+        align: 'center'
     },
 ];
 
@@ -147,14 +170,15 @@ export default function DoctorHomeVisitHistory() {
     const classes = useStyles();
     const [open, setOpen] = React.useState(false);
     const [appointmentlist, setappointmentlist] = useState([]);
-    const [startdate, setstartdate] = useState('');
-    const [endDate, setendDate] = useState('');
+    const [startdate, setstartdate] = useState(new Date());
+    const [endDate, setendDate] = useState(new Date());
     const [doctorData, setdoctorData] = useState([]);
     const [doctor, setdoctor] = useState('');
     const [norecords, setnorecords] = useState('15');
     const [view, setview] = useState(false);
 
     console.log(appointmentlist)
+   
     const handleGoBack = () => {
         navigate("/DoctorHomeVisitors");
     };
@@ -171,8 +195,11 @@ export default function DoctorHomeVisitHistory() {
 
 
     const Show_appointmentsbydate = async (startdate, endDate, doctor) => {
+        let startDate = startdate.toISOString().split('T')[0];
+        let enddate = endDate.toISOString().split('T')[0];
+
         try {
-            const request = await HV_Appointments_by_date(startdate, endDate, doctor);
+            const request = await HV_Appointments_by_date(startDate, enddate, doctor);
             if (request.success === "200") {
                 setappointmentlist(request.Report)
                 console.log(request.Report)
@@ -180,7 +207,7 @@ export default function DoctorHomeVisitHistory() {
             else {
                 alert(request.message);
             }
-        }catch(e){
+        } catch (e) {
             console.log(e);
         }
     }
@@ -215,7 +242,18 @@ export default function DoctorHomeVisitHistory() {
                         <div className='row' style={{ display: 'flex', marginTop: 20 }}>
                             <div className='col-3'>
                                 <label style={{ fontFamily: 'Poppins', fontWeight: 600, color: '#707070' }}>From</label>
-                                <input
+                                <MuiPickersUtilsProvider utils={DateFnsUtils}>
+                                    <KeyboardDatePicker
+                                        autoOk
+                                        size='small'
+                                        value={startdate}
+                                        onChange={setstartdate}
+                                        inputVariant="outlined"
+                                        format='dd/MM/yyyy'
+                                        style={{ marginTop: -5, marginLeft: 15, width: 190 }}
+                                    />
+                                </MuiPickersUtilsProvider>
+                                {/* <input
                                     id="fromdate"
                                     type="date"
                                     value={startdate}
@@ -231,20 +269,48 @@ export default function DoctorHomeVisitHistory() {
                                             color: '#707070'
                                         }
                                     }
-                                />
+                                /> */}
                             </div>
                             <div className='col-3'>
                                 <label style={{ fontFamily: 'Poppins', fontWeight: 600, color: '#707070' }}>To</label>
-                                <input id="fromdate" type="date" value={endDate} onChange={(e) => {
+                                <MuiPickersUtilsProvider utils={DateFnsUtils}>
+                                    <KeyboardDatePicker
+                                        autoOk
+                                        size='small'
+                                        value={endDate}
+                                        onChange={setendDate}
+                                        inputVariant="outlined"
+                                        format='dd/MM/yyyy'
+                                        style={{ marginTop: -5, marginLeft: 15, width: 190 }}
+                                    />
+                                </MuiPickersUtilsProvider>
+                                {/* <input id="fromdate" type="date" value={endDate} onChange={(e) => {
                                     setendDate(e.target.value)
-                                }} style={{ border: '1px solid #F0F0F0', height: 30, fontFamily: 'Poppins', color: '#707070', paddingLeft: 15 }} />
+                                }} style={{ border: '1px solid #F0F0F0', height: 30, fontFamily: 'Poppins', color: '#707070', paddingLeft: 15 }} /> */}
                             </div>
                             <div className='col-2'>
                                 <label style={{ fontFamily: 'Poppins', fontWeight: 600, color: '#707070' }}>Doctor</label>
-                                <select id="dropdown" value={doctor} onChange={(e) => setdoctor(e.target.value)} style={{ height: 30, border: '1px solid #F0F0F0', fontFamily: 'Poppins', paddingLeft: 15, width: '100%' }}>
+                                <FormControl variant="outlined" size="small" className={classes.formControl} style={{ width: '65%', marginLeft: '20px', marginTop: -2 }} >
+                                    <Select
+                                        className={classes.textFieldForm}
+                                        size='large'
+                                        native
+                                        value={doctor}
+                                        onChange={(e) => setdoctor(e.target.value)}
+                                        inputProps={{
+                                            name: 'doctor',
+                                            id: 'outlined-doctor-native-simple',
+                                        }}
+                                        style={{ width: '120%', fontSize: 14, marginTop: -3 }}
+                                    >
+                                        <option aria-label="None" value="" >Select Doctor</option>
+                                        {doctorData.map(v => (<option value={v.UserId}>Dr. {v.FirstName} {v.LastName}</option>))}
+                                    </Select>
+                                </FormControl>
+                                {/* <select id="dropdown" value={doctor} onChange={(e) => setdoctor(e.target.value)} style={{ height: 30, border: '1px solid #F0F0F0', fontFamily: 'Poppins', paddingLeft: 15, width: '100%' }}>
                                     <option value="" >Select Doctor</option>
                                     {doctorData.map(v => (<option value={v.UserId}>Dr. {v.FirstName} {v.LastName}</option>))}
-                                </select>
+                                </select> */}
                             </div>
                             <div className='col-1'>
                                 <Button
@@ -255,7 +321,7 @@ export default function DoctorHomeVisitHistory() {
                                         color: '#fff',
                                         fontFamily: 'Poppins',
                                         height: 30,
-                                        marginLeft: 40
+                                        marginLeft: 50
                                     }}
                                     onClick={() => Show_appointmentsbydate(startdate, endDate, doctor)}
                                 >
@@ -263,7 +329,30 @@ export default function DoctorHomeVisitHistory() {
                                 </Button>
                             </div>
                             <div className='col-1'>
-                                <select id="dropdown" value={norecords} onChange={(e) => setnorecords(e.target.value)} style={{ width: 80, height: 30, border: '1px solid #F0F0F0', fontFamily: 'Poppins', paddingLeft: 15, marginLeft: 30 }}>
+                                <FormControl variant="outlined" size="small" className={classes.formControl} style={{ width: '65%', marginLeft: '20px' }} >
+                                    <Select
+                                        className={classes.textFieldForm}
+                                        size='large'
+                                        native
+                                        value={norecords}
+                                        onChange={(e) => setnorecords(e.target.value)}
+                                        inputProps={{
+                                            name: 'doctor',
+                                            id: 'outlined-doctor-native-simple',
+                                        }}
+                                        style={{ width: '115%', fontSize: 14, marginTop: -3, marginLeft: 15 }}
+                                    >
+                                        <option value="5">5</option>
+                                        <option value="10">10</option>
+                                        <option value="15">15</option>
+                                        <option value="20">20</option>
+                                        <option value="25">25</option>
+                                        <option value="30">30</option>
+                                        <option value="35">35</option>
+                                        <option value="40">40</option>
+                                    </Select>
+                                </FormControl>
+                                {/* <select id="dropdown" value={norecords} onChange={(e) => setnorecords(e.target.value)} style={{ width: 80, height: 30, border: '1px solid #F0F0F0', fontFamily: 'Poppins', paddingLeft: 15, marginLeft: 30 }}>
                                     <option value="5">5</option>
                                     <option value="10">10</option>
                                     <option value="15">15</option>
@@ -272,10 +361,22 @@ export default function DoctorHomeVisitHistory() {
                                     <option value="30">30</option>
                                     <option value="35">35</option>
                                     <option value="40">40</option>
-                                </select>
+                                </select> */}
                             </div>
                         </div>
+
+
                         <Grid item xs={12} >
+
+                        <Box
+                            sx={{
+                                '& .super-app-theme--header': {
+                                    // backgroundColor: '#78B088',
+                                    // color: '#fff
+                                    fontSize: 14,
+                                },
+                            }}
+                        >
                             <DataGrid
                                 style={{ height: 350, fontSize: 13, fontFamily: 'Poppins', fontWeight: 600, color: '#2C7FB2', marginTop: 20, marginRight: 20 }}
                                 rows={appointmentlist}
@@ -284,6 +385,7 @@ export default function DoctorHomeVisitHistory() {
                                 columnWidth={5}
                                 pageSize={norecords}
                             />
+                            </Box>
                         </Grid>
                         <Grid item xs={12} style={{ marginRight: 20 }} >
                             {/* <Button

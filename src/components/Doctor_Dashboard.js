@@ -11,6 +11,7 @@ import { PatientInQueue, BookedAppointments, SendIn } from '../Apis/PatientInQue
 import { PatientInueue_List } from './Dasboard_Component/Doctor/PatientInQueue';
 import { BookedAppointment_List } from './Dasboard_Component/Doctor/BookedAppointment';
 import Skeleton from '@material-ui/lab/Skeleton';
+import ArrowBackIcon from '@material-ui/icons/ArrowBack';
 
 const drawerWidth = 240;
 
@@ -107,12 +108,16 @@ export default function DoctorDashboard() {
         navigate("/DoctorPatientDetails_SendIn");
     };
 
+    const handleGoBack = () => {
+        navigate("/DoctorHome");
+    };
+
     return (
         <div className={classes.root} style={{ backgroundColor: '#ffffff' }}>
             <DoctorNavbar />
 
             {/* main grid */}
-            <Grid container spacing={2}
+            <Grid container spacing={4}
                 className={clsx(classes.grid, {
                     [classes.gridShift]: open,
                 })}
@@ -123,31 +128,36 @@ export default function DoctorDashboard() {
 
                 {/* Reports Grid Start */}
                 <Grid item className={classes.griditem} xs={12} sm={3} style={{ borderRight: '1px solid gray' }}>
-                    <Paper className={classes.paper} elevation={0} >
-                        <div className="row" style={{ padding: theme.spacing(0), color: '#78B088' }}>
-                            <Typography variant="h7" noWrap={true}
-                                style={{
-                                    fontFamily: 'Poppins',
-                                    fontStyle: 'normal',
-                                    fontWeight: 500,
-                                    overflow: 'hidden',
-                                    whiteSpace: 'nowrap',
-                                    textOverflow: 'ellipsis',
-                                    color: '#78B088',
 
-                                }}
-                            >
-                                TODAY'S APPOINTMENTS
+                    <Button style={{ marginLeft: '-40px', color: '#2C7FB2', fontSize: '16px',  }}> <ArrowBackIcon onClick={handleGoBack} />  </Button>
+
+                    <div className="row" style={{ padding: theme.spacing(0), color: '#78B088' }}>
+                        <Typography variant="h7" noWrap={true}
+                            style={{
+                                fontFamily: 'Poppins',
+                                fontStyle: 'normal',
+                                fontWeight: 600,
+                                overflow: 'hidden',
+                                whiteSpace: 'nowrap',
+                                textOverflow: 'ellipsis',
+                                color: '#78B088',
+                                marginLeft: 16,
+                                marginTop: -27,
+                                fontSize: 16
+                            }}
+                        >
+
+                            TODAY'S APPOINTMENTS
+                        </Typography>
+                    </div>
+                    <div className="row" style={{ padding: theme.spacing(0), color: '#00318B' }}>
+                        {
+                            <Typography variant="h5" noWrap={true} style={{ marginLeft: 15 }}>
+                                {(appointments.DailyAppointment !== null || appointments.DailyAppointment != 0) ? appointments.DailyAppointment : 0}
                             </Typography>
-                        </div>
-                        <div className="row" style={{ padding: theme.spacing(0), color: '#00318B' }}>
-                            {
-                                <Typography variant="h5" noWrap={true}>
-                                    {(appointments.DailyAppointment !== null || appointments.DailyAppointment != 0) ? appointments.DailyAppointment : 0}
-                                </Typography>
-                            }
-                        </div>
-                    </Paper>
+                        }
+                    </div>
+
                 </Grid>
                 <Grid item className={classes.griditem} xs={12} sm={3} style={{ borderRight: '1px solid gray' }}>
                     <Paper className={classes.paper} elevation={0} >
@@ -156,11 +166,12 @@ export default function DoctorDashboard() {
                                 style={{
                                     fontFamily: '"Poppins", san-serif;',
                                     fontStyle: 'normal',
-                                    fontWeight: 500,
+                                    fontWeight: 600,
                                     overflow: 'hidden',
                                     whiteSpace: 'nowrap',
                                     textOverflow: 'ellipsis',
                                     color: '#78B088',
+                                    fontSize: 16
                                 }}>
                                 PATIENT IN QUEUE
                             </Typography>
@@ -179,11 +190,12 @@ export default function DoctorDashboard() {
                                 style={{
                                     fontFamily: 'Poppins',
                                     fontStyle: 'normal',
-                                    fontWeight: 500,
+                                    fontWeight: 600,
                                     overflow: 'hidden',
                                     whiteSpace: 'nowrap',
                                     textOverflow: 'ellipsis',
                                     color: '#78B088',
+                                    fontSize: 16
                                 }}
                             >
                                 TODAY'S REGISTRATION
@@ -203,11 +215,12 @@ export default function DoctorDashboard() {
                                 style={{
                                     fontFamily: '"Poppins", san-serif;',
                                     fontStyle: 'normal',
-                                    fontWeight: 500,
+                                    fontWeight: 600,
                                     overflow: 'hidden',
                                     whiteSpace: 'nowrap',
                                     textOverflow: 'ellipsis',
                                     color: '#78B088',
+                                    fontSize: 16
 
                                 }}>
                                 MONTHLY COMPLETED APPOINTMENTS

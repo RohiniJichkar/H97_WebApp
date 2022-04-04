@@ -152,9 +152,11 @@ function DoctorPaymentDetails() {
               <Grid container>
                 <Grid item xs={12} sm={4} style={{ border: '1px solid lightgray', borderLeft: '0px', borderTop: '0px' }}>
                   <center>
-                    {details.ProfileImage ?
+                  {details.ProfileImage ? <Avatar style={{ borderRadius: 50, height: 90, width: 90, marginTop: 20 }} src={details.ProfileImage} /> : details.Gender == 'Female' ? <Avatar style={{ borderRadius: 50, height: 90, width: 90, marginTop: 20,  }} src='femaleicon.png' /> :
+                                        <Avatar style={{ borderRadius: 50, height: 90, width: 90, marginTop: 20 }} src='maleicon.png' />}
+                    {/* {details.ProfileImage ?
                       <Avatar style={{ borderRadius: 200, height: 90, width: 90, marginTop: 20 }} src={details.ProfileImage} /> :
-                      <Avatar style={{ borderRadius: 200, height: 90, width: 90, marginTop: 20 }} />}
+                      <Avatar style={{ borderRadius: 200, height: 90, width: 90, marginTop: 20 }} />} */}
                     <Typography style={{ color: '#707070', fontFamily: 'Poppins', fontWeight: 600, fontSize: 14 }}>PID- {details.PatientId}</Typography>
                   </center>
                 </Grid>

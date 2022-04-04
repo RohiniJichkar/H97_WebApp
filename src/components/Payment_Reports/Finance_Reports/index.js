@@ -6,7 +6,11 @@ import Button from '@material-ui/core/Button';
 import Box from '@material-ui/core/Box';
 import { DataGrid } from '@material-ui/data-grid';
 import Show_pdf_data from '../../Pdf_Viewer/Modal';
-
+import DateFnsUtils from '@date-io/date-fns';
+import {
+    MuiPickersUtilsProvider,
+    KeyboardDatePicker,
+} from '@material-ui/pickers';
 //apis
 import { Finance_Analysis_Details_by_date } from '../../../Apis/payment_reports_apis/index';
 import { Doctors } from '../../../Apis/Book_Appointment/index';
@@ -17,6 +21,7 @@ const columns = [
         headerName: 'Full name',
         sortable: false,
         width: 200,
+        headerClassName: 'super-app-theme--header',
         valueGetter: (params) =>
             `${params.getValue(params.id, 'PFName') || ''} ${params.getValue(params.id, 'PLName') || ''
             }`,
@@ -26,6 +31,7 @@ const columns = [
         headerName: 'Doctor',
         sortable: false,
         width: 200,
+        headerClassName: 'super-app-theme--header',
         valueGetter: (params) =>
             `${params.getValue(params.id, 'DFName') || ''} ${params.getValue(params.id, 'DLName') || ''
             }`,
@@ -34,23 +40,27 @@ const columns = [
         field: 'AppointmentDate',
         headerName: 'Date',
         width: 160,
+        headerClassName: 'super-app-theme--header',
         editable: true,
     },
     {
         field: 'AppointmentStatus',
         headerName: 'Status',
+        headerClassName: 'super-app-theme--header',
         width: 160,
     },
     {
         field: 'cash',
         headerName: 'Cash',
         width: 150,
+        headerClassName: 'super-app-theme--header',
         align: 'center'
     },
     {
         field: 'online',
         headerName: 'Online',
         width: 150,
+        headerClassName: 'super-app-theme--header',
         align: 'center'
     },
 ];
@@ -62,8 +72,8 @@ const Finance_Analysis_reports = () => {
 
     const [value, setValue] = useState(0);
     const [appointmen, setappointlist] = useState([]);
-    const [startdate, setstartdate] = useState('');
-    const [endDate, setendDate] = useState('');
+    const [startdate, setstartdate] = useState(new Date());
+    const [endDate, setendDate] = useState(new Date());
     const [doctor, setDoctor] = React.useState('');
     const [status, setstatus] = useState('');
     const [appStatus, setappStatus] = useState([]);
@@ -88,8 +98,11 @@ const Finance_Analysis_reports = () => {
     }
 
     const Show_appointmentsbydate = async (startdate, endDate, status) => {
+        let sDate = startdate.toISOString().split('T')[0];
+        let eDate = endDate.toISOString().split('T')[0];
+
         try {
-            const request = await Finance_Analysis_Details_by_date(startdate, endDate, status);
+            const request = await Finance_Analysis_Details_by_date(sDate, eDate, status);
             if (request.success === "200") {
                 setappointlist(request.Report)
                 const countTotal = (items) => items.reduce((acc, curr) => acc + parseInt(curr.online), 0);
@@ -147,7 +160,18 @@ const Finance_Analysis_reports = () => {
                 <div className='row' style={{ display: 'flex' }}>
                     <div className='col-3'>
                         <label style={{ fontFamily: 'Poppins', fontWeight: 600, color: '#707070' }}>From</label>
-                        <input
+                        <MuiPickersUtilsProvider utils={DateFnsUtils}>
+                            <KeyboardDatePicker
+                                autoOk
+                                size='small'
+                                value={startdate}
+                                onChange={setstartdate}
+                                inputVariant="outlined"
+                                format='dd/MM/yyyy'
+                                style={{ marginTop: -5, marginLeft: 15, width: 190 }}
+                            />
+                        </MuiPickersUtilsProvider>
+                        {/* <input
                             id="fromdate"
                             type="date"
                             value={startdate}
@@ -163,33 +187,74 @@ const Finance_Analysis_reports = () => {
                                     color: '#707070'
                                 }
                             }
-                        />
+                        /> */}
                     </div>
                     <div className='col-3'>
-                        <label style={{ fontFamily: 'Poppins', fontWeight: 600, color: '#707070',marginLeft:20 }}>To</label>
-                        <input id="fromdate" type="date" value={endDate} onChange={(e) => {
+                        <label style={{ fontFamily: 'Poppins', fontWeight: 600, color: '#707070', marginLeft: 20 }}>To</label>
+                        <MuiPickersUtilsProvider utils={DateFnsUtils}>
+                            <KeyboardDatePicker
+                                autoOk
+                                size='small'
+                                value={endDate}
+                                onChange={setendDate}
+                                inputVariant="outlined"
+                                format='dd/MM/yyyy'
+                                style={{ marginTop: -5, marginLeft: 15, width: 190 }}
+                            />
+                        </MuiPickersUtilsProvider>
+                        {/* <input id="fromdate" type="date" value={endDate} onChange={(e) => {
                             setendDate(e.target.value)
-                        }} style={{ border: '1px solid #F0F0F0', height: 30, fontFamily: 'Poppins', color: '#707070', paddingLeft: 15 }} />
+                        }} style={{ border: '1px solid #F0F0F0', height: 30, fontFamily: 'Poppins', color: '#707070', paddingLeft: 15 }} /> */}
                     </div>
                     <div className='col-3'>
                         <label style={{ fontFamily: 'Poppins', fontWeight: 600, color: '#707070' }}>Doctor</label>
-                        <select id="dropdown" value={status} onChange={(e) => setstatus(e.target.value)} style={{ height: 30, border: '1px solid #F0F0F0', fontFamily: 'Poppins', paddingLeft: 5 }}>
+                        <FormControl variant="outlined" size="small" className={classes.formControl} style={{ width: '65%', marginLeft: '20px', marginTop: -3 }} >
+                            <Select
+                                className={classes.textFieldForm}
+                                size='large'
+                                native
+                                value={status}
+                                onChange={(e) => setstatus(e.target.value)}
+                                inputProps={{
+                                    name: 'doctor',
+                                    id: 'outlined-doctor-native-simple',
+                                }}
+                                style={{ width: '120%', fontSize: 14, marginLeft: -10 }}
+                            >
+                                <option value="N/A">Select</option>
+                                {appStatus.map(v => (<option value={v.DoctorId}>{v.FirstName} {v.LastName}</option>))}
+                            </Select>
+                        </FormControl>
+                        {/* <select id="dropdown" value={status} onChange={(e) => setstatus(e.target.value)} style={{ height: 30, border: '1px solid #F0F0F0', fontFamily: 'Poppins', paddingLeft: 5 }}>
                             <option value="N/A">Select</option>
                             {appStatus.map(v => (<option value={v.DoctorId}>{v.FirstName} {v.LastName}</option>))}
-                        </select>
+                        </select> */}
                     </div>
                     <div className='col-2'>
-                    <label style={{ fontFamily: 'Poppins', fontWeight: 600, color: '#707070'}}>Pages</label>
-                        <select id="dropdown" value={norecords} onChange={(e) => setnorecords(e.target.value)} style={{ width: 80, height: 30, border: '1px solid #F0F0F0', fontFamily: 'Poppins', paddingLeft: 15}}>
-                            <option value="5">5</option>
-                            <option value="10">10</option>
-                            <option value="15">15</option>
-                            <option value="20">20</option>
-                            <option value="25">25</option>
-                            <option value="30">30</option>
-                            <option value="35">35</option>
-                            <option value="40">40</option>
-                        </select>
+                        <label style={{ fontFamily: 'Poppins', fontWeight: 600, color: '#707070' }}>Pages</label>
+                        <FormControl variant="outlined" size="small" className={classes.formControl} style={{ width: '65%', marginLeft: '20px', marginTop: -3 }} >
+                            <Select
+                                className={classes.textFieldForm}
+                                size='large'
+                                native
+                                value={norecords}
+                                onChange={(e) => setnorecords(e.target.value)}
+                                inputProps={{
+                                    name: 'doctor',
+                                    id: 'outlined-doctor-native-simple',
+                                }}
+                                style={{ width: '90%', fontSize: 14, marginTop: -25, marginLeft: 40 }}
+                            >
+                                <option value="5">5</option>
+                                <option value="10">10</option>
+                                <option value="15">15</option>
+                                <option value="20">20</option>
+                                <option value="25">25</option>
+                                <option value="30">30</option>
+                                <option value="35">35</option>
+                                <option value="40">40</option>
+                            </Select>
+                        </FormControl>
                     </div>
                     <div className='col-1'>
                         <Button
@@ -200,7 +265,7 @@ const Finance_Analysis_reports = () => {
                                 color: '#fff',
                                 fontFamily: 'Poppins',
                                 height: 30,
-                                marginLeft:5
+                                marginLeft: 5
                             }}
                             onClick={() => Show_appointmentsbydate(startdate, endDate, status)}
                         >
@@ -221,6 +286,16 @@ const Finance_Analysis_reports = () => {
                     </div> */}
                 </div>
                 <Grid item xs={12} >
+                <Box
+                        sx={{
+                            '& .super-app-theme--header': {
+                                // backgroundColor: '#78B088',
+                                // color: '#fff
+                                fontSize: 14,
+
+                            },
+                        }}
+                    >
                     <DataGrid
                         style={{ height: 350, fontSize: 13, fontFamily: 'Poppins', fontWeight: 600, color: '#2C7FB2', marginTop: 20 }}
                         rows={appointmen}
@@ -229,6 +304,7 @@ const Finance_Analysis_reports = () => {
                         columnWidth={5}
                         pageSize={20}
                     />
+                    </Box>
                 </Grid>
                 <Grid item xs={12} >
                     <label style={{ fontFamily: 'Poppins', fontWeight: 600, color: '#2C7FB2' }}>Total</label>
@@ -248,11 +324,11 @@ const Finance_Analysis_reports = () => {
                                 marginTop: 15,
                             }}
                             onClick={() => {
-                                if (appointmen.length==0) {
+                                if (appointmen.length == 0) {
                                     alert('Please find some record first')
                                     return;
                                 }
-                                else{
+                                else {
                                     setOpen(true)
                                 }
                             }}
@@ -262,7 +338,7 @@ const Finance_Analysis_reports = () => {
                         <Button
                             variant="contained"
                             color="#2C7FB2"
-                            onClick={()=>{
+                            onClick={() => {
                                 setstartdate('');
                                 setendDate('');
                                 setstatus('');
@@ -274,7 +350,7 @@ const Finance_Analysis_reports = () => {
                                 fontFamily: 'Poppins',
                                 height: 30,
                                 float: 'right',
-                                marginTop: 15, 
+                                marginTop: 15,
                                 marginRight: 15
                             }}
                         >

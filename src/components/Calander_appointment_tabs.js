@@ -9,6 +9,7 @@ import Tab from '@material-ui/core/Tab';
 import { Typography, Button, IconButton, Grid, Paper } from "@material-ui/core";
 import DoctorNavbar from './Doctor_Navbar';
 import Box from '@material-ui/core/Box';
+import ArrowBackIcon from '@material-ui/icons/ArrowBack';
 
 //components
 import DoctorTodaysAppointment from './Doctor_TodaysAppointment';
@@ -50,11 +51,16 @@ function a11yProps(index) {
 const Calander_appointment_tabs = () => {
     const classes = useStyles();
     const theme = useTheme();
+    const navigate = useNavigate();
     const [value, setValue] = useState(0);
     const [catsKey, setCatsKey] = React.useState(0);
 
     const handleChange = (event, newValue) => {
         setValue(newValue);
+    };
+
+    const handleGoBack = () => {
+        navigate(-1);
     };
 
     return (
@@ -73,18 +79,22 @@ const Calander_appointment_tabs = () => {
                             TabIndicatorProps={{
                                 style: {
                                     backgroundColor: "#78B088",
-                                    
+
                                 }
                             }}
                             style={{
                                 backgroundColor: 'white',
-                                color:'#2C7FB2'
+                                color: '#2C7FB2'
                             }}
                         >
                             {/* <Tab label="Todays Appointment" {...a11yProps(0)} style={{ fontWeight: 600,
                                 fontFamily: 'Poppins'}} /> */}
-                            <Tab label="Calender" {...a11yProps(1)} style={{ fontWeight: 600,
-                                fontFamily: 'Poppins'}} />
+                            <Tab label="Calender" {...a11yProps(1)} style={{
+                                fontWeight: 600, marginLeft: 10,
+                                fontFamily: 'Poppins', fontSize: '18px'
+                            }} />
+                            <Button style={{ marginLeft: '-185px', color: '#2C7FB2', borderRadius: 105, fontSize: '12px' }}> <ArrowBackIcon onClick={handleGoBack} />  </Button>
+
                         </Tabs>
                     </AppBar>
                     {/* <TabPanel value={value} index={0}>

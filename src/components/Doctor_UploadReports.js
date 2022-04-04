@@ -205,7 +205,7 @@ const useStyles = makeStyles((theme) => ({
         textAlign: 'center',
         borderRadius: 28,
         width: 120,
-        marginTop: 50,
+        marginTop:150,
         fontSize: '12px'
     },
     textField: {
@@ -373,7 +373,7 @@ function DoctorUploadReports() {
                                     </FormControl>
 
                                 </div>
-                                <div style={{ paddingTop: 100 }}>
+                                <div style={{ paddingTop: 130 }}>
                                     <Divider style={{ border: ' 1px solid #F0F0F0' }} />
                                     <Grid container spacing={2} style={{ paddingTop: 10, paddingBottom: 10 }}>
                                         <Grid item xs={12} sm={6}>
@@ -392,14 +392,14 @@ function DoctorUploadReports() {
 
 
                     <Grid item xs={8} spacing={2} >
-                        <Paper elevation={6} style={{ padding: 20, marginLeft: 25, marginRight: 20, height: 370, overflowY: 'scroll' }}>
+                        <Paper elevation={6} style={{ padding: 20, marginLeft: 25, marginRight: 20, height: 380, overflowY: 'scroll' }}>
                             <Grid item xs={12}>
                                 {imageData.length != 0 ?
                                     <Grid container xs={12} spacing={2} style={{}}>
                                         {imageData.map((item) => {
                                             return (
                                                 <Grid item sm={2} >
-                                                    <Paper elevation={3} className={classes.groupreports} style={{marginBottom: 45}}>
+                                                    <Paper elevation={3} className={classes.groupreports} style={{ marginBottom: 45 }}>
                                                         <center>
                                                             {item.base64image ? <img src={item.base64image} onClick={() => openImageInNewTab(item.base64image)} style={{ height: '120px', width: '100%', borderRadius: 10, cursor: 'pointer' }} onError={({ currentTarget }) => {
                                                                 currentTarget.onerror = null; // prevents looping
@@ -415,7 +415,7 @@ function DoctorUploadReports() {
 
                                     </Grid>
                                     :
-                                    <Grid container spacing={2} style={{ paddingTop: 20, height: 355, overflowY: 'auto' }}>
+                                    <Grid container spacing={2} style={{ paddingTop: 20, height: 380, overflowY: 'auto' }}>
                                         <Grid item sm={2} >
                                             <Paper elevation={3} className={classes.groupreports} >
                                                 <center>

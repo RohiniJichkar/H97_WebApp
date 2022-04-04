@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import clsx from 'clsx';
 import { makeStyles, useTheme, alpha } from '@material-ui/core/styles';
 import { useNavigate } from 'react-router-dom';
-import { Dialog, DialogTitle, DialogContentText, DialogActions, DialogContent, Typography, Button, IconButton, Grid, Paper, InputBase, Avatar, TextField, FormControl, Select, Slide } from "@material-ui/core";
+import { Dialog, DialogTitle, DialogContentText, DialogActions, DialogContent, Typography, Button, IconButton, Box, Grid, Paper, InputBase, Avatar, TextField, FormControl, Select, Slide } from "@material-ui/core";
 import DoctorNavbar from './Staff_Navbar';
 import SearchIcon from '@material-ui/icons/Search';
 import DateRangeIcon from '@material-ui/icons/DateRange';
@@ -28,6 +28,7 @@ const columns = [
         headerName: 'Full name',
         sortable: false,
         width: 200,
+        headerClassName: 'super-app-theme--header',
         valueGetter: (params) =>
             `${params.getValue(params.id, 'FirstName') || ''} ${params.getValue(params.id, 'LastName') || ''
             }`,
@@ -36,6 +37,7 @@ const columns = [
         field: 'MobileNo',
         headerName: 'Contact No',
         width: 160,
+        headerClassName: 'super-app-theme--header',
         editable: true,
     },
 ];
@@ -423,18 +425,28 @@ export default function Staff_Home_Visit_Request() {
 
                             </Grid>
 
-                            <DataGrid
-                                style={{ height: 364, marginTop: 20, fontSize: 13, fontFamily: 'Poppins', fontWeight: 600, color: '#2C7FB2', cursor: 'pointer' }}
-                                rows={requestData}
-                                rowHeight={30}
-                                columns={columns}
-                                columnWidth={10}
-                                pageSize={5}
-                                onRowClick={(newSelection) => {
-                                    handleRowClick(newSelection.row);
+                            <Box
+                                sx={{
+                                    '& .super-app-theme--header': {
+                                        // backgroundColor: '#78B088',
+                                        // color: '#fff
+                                        fontSize: 15,
+                                        marginLeft: 10
+                                    },
                                 }}
-                            />
-
+                            >
+                                <DataGrid
+                                    style={{ height: 364, marginTop: 20, fontSize: 13, fontFamily: 'Poppins', fontWeight: 600, color: '#2C7FB2', cursor: 'pointer' }}
+                                    rows={requestData}
+                                    rowHeight={30}
+                                    columns={columns}
+                                    columnWidth={10}
+                                    pageSize={5}
+                                    onRowClick={(newSelection) => {
+                                        handleRowClick(newSelection.row);
+                                    }}
+                                />
+                            </Box>
                         </Paper>
                     </Grid>
 
@@ -450,9 +462,11 @@ export default function Staff_Home_Visit_Request() {
                             <div><Button style={{ position: 'relative', marginTop: -55, left: 700, fontWeight: 'normal', color: '#707070' }} onClick={handlesContinue}><DeleteIcon /></Button> </div>
                             <center>
                                 <div style={{ paddingBottom: 5, marginTop: '-20px' }}>
-                                    {requestorDetails.ProfileImage ?
+                                    {requestorDetails.ProfileImage ? <Avatar style={{ borderRadius: 50, height: 80, width: 80 }} src={requestorDetails.ProfileImage} /> : requestorDetails.Gender == 'Female' ? <Avatar style={{ borderRadius: 50, height: 80, width: 80, }} src='femaleicon.png' /> :
+                                        <Avatar style={{ borderRadius: 50, height: 80, width: 80 }} src='maleicon.png' />}
+                                    {/* {requestorDetails.ProfileImage ?
                                         <Avatar style={{ borderRadius: 50, height: 80, width: 80 }} src={requestorDetails.ProfileImage} /> :
-                                        <Avatar style={{ borderRadius: 50, height: 80, width: 80 }} />}
+                                        <Avatar style={{ borderRadius: 50, height: 80, width: 80 }} />} */}
                                 </div>
 
                                 <Typography variant="h6" noWrap={true} style={{
@@ -462,7 +476,7 @@ export default function Staff_Home_Visit_Request() {
                                     color: '#707070',
                                     fontWeight: 600
                                 }}>
-                                    {requestorDetails.FirstName ? requestorDetails.FirstName : "NA"} {requestorDetails.LastName ? requestorDetails.LastName : ""}
+                                   {requestorDetails.NmTitle ? requestorDetails.NmTitle : ""} {requestorDetails.FirstName ? requestorDetails.FirstName : "NA"} {requestorDetails.LastName ? requestorDetails.LastName : ""}
                                 </Typography>
                                 <Typography variant="h6" noWrap={true} style={{
                                     fontSize: 14,

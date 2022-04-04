@@ -184,9 +184,11 @@ export default function DoctorTreatPatient() {
                         <Paper className={classes.paper} elevation={6} style={{ marginRight: 20 }} >
                             <center>
                                 <div style={{ paddingBottom: 20 }}>
-                                    {details.ProfileImage ?
+                                    {details.ProfileImage ? <Avatar style={{ borderRadius: 50, height: 100, width: 100 }} src={details.ProfileImage} /> : details.Gender == 'Female' ? <Avatar style={{ borderRadius: 50, height: 100, width: 100, }} src='femaleicon.png' /> :
+                                        <Avatar style={{ borderRadius: 50, height: 100, width: 100 }} src='maleicon.png' />}
+                                    {/* {details.ProfileImage ?
                                         <Avatar style={{ borderRadius: 50, height: 100, width: 100 }} src={details.ProfileImage} /> :
-                                        <Avatar style={{ borderRadius: 50, height: 100, width: 100 }} />}
+                                        <Avatar style={{ borderRadius: 50, height: 100, width: 100 }} />} */}
                                 </div>
 
                                 <Typography variant="h6" noWrap={true} style={{
@@ -259,30 +261,30 @@ export default function DoctorTreatPatient() {
                             </Typography>
 
                             <Grid container xs={12} >
-                                
-                            <Grid item xs={12}>
-                                    <TextField  multiline
+
+                                <Grid item xs={12}>
+                                    <TextField multiline
                                         rows={8}
                                         rowsMax={8} id="outlined-basic" onChange={(e) => setprescriptionnote(e.target.value)} label="Diagnosis/Prescription" variant="outlined"
                                         style={{ width: 750, height: 200 }}
                                     />
                                 </Grid>
-                                
-                                </Grid>
-                                {/* <Grid item xs={12} sm={6} >
+
+                            </Grid>
+                            {/* <Grid item xs={12} sm={6} >
                                     <TextField className={classes.textField} onChange={(e) => setcostcode(e.target.value)} id="outlined-basic" label="Cost Code" type='number' size="small" variant="outlined" style={{ float: 'right' }} />
                                 </Grid> */}
-                                <Grid container style={{marginTop: 15}}>
-                              <Grid item xs={2} >
-                                   <Typography style={{ fontSize: 17, color: '#2C7FB2', textDecoration: 'underline', fontWeight: 600, textUnderlineOffset: '1px' }} >Followup Date</Typography>
+                            <Grid container style={{ marginTop: 15 }}>
+                                <Grid item xs={2} >
+                                    <Typography style={{ fontSize: 17, color: '#2C7FB2', textDecoration: 'underline', fontWeight: 600, textUnderlineOffset: '1px' }} >Followup Date</Typography>
                                 </Grid>
                                 <Grid item xs={6}>
-                                    <TextField className={classes.textField} onChange={(e) => setfollowupDate(e.target.value)} 
-                                    id="outlined-basic" type="date" size="small" variant="outlined"
-                                    style={{  }} />
+                                    <TextField className={classes.textField} onChange={(e) => setfollowupDate(e.target.value)}
+                                        id="outlined-basic" type="date" size="small" variant="outlined"
+                                        style={{}} />
                                 </Grid>
-                                </Grid>
-                     
+                            </Grid>
+
 
 
                             <Grid container>

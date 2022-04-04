@@ -7,6 +7,11 @@ import { Redirect } from 'react-router-dom';
 import CloseIcon from '@material-ui/icons/Close';
 import { Time } from '../../../../../Apis/Staff/Dashboard/Edit_Appointment_From_PatientIn/index';
 import { AddHomeVisitorRequest } from '../../../../../Apis/Staff/HomeVisitorRequest/AddHVRequest/index';
+import DateFnsUtils from '@date-io/date-fns';
+import {
+    MuiPickersUtilsProvider,
+    KeyboardDatePicker,
+} from '@material-ui/pickers';
 
 import axios from 'axios';
 const drawerWidth = 240;
@@ -24,7 +29,7 @@ const Add_HV_Request = ({ show, data, handleclose }) => {
     const [slots, setslots] = useState([]);
     const [requestfor, setrequestfor] = useState('');
     const [MobileNo, setMobileNo] = useState('');
-    const [date, setdate] = useState('');
+    const [date, setdate] = useState(new Date());
     const [time, setTime] = useState('');
     const [Address, setAddress] = useState('');
     const [text, settext] = useState('');
@@ -77,7 +82,9 @@ const Add_HV_Request = ({ show, data, handleclose }) => {
         var data = await localStorage.getItem("userdata");
         let parsed = JSON.parse(data);
         let ClinicId = parsed.ClinicId;
-        
+
+        let Date = date.toISOString().split('T')[0];
+
         if (PatientUserid == '') {
             alert('Please Select Patient');
             return;
@@ -103,7 +110,7 @@ const Add_HV_Request = ({ show, data, handleclose }) => {
             return;
         }
         try {
-            const registration = await AddHomeVisitorRequest(PatientUserid, hvuserid, ClinicId, "Pending", MobileNo, Address, time, date, requestfor);
+            const registration = await AddHomeVisitorRequest(PatientUserid, hvuserid, ClinicId, "Pending", MobileNo, Address, time, Date, requestfor);
             let parse = JSON.parse(registration);
             if (parse.success === "200") {
                 alert(parse.message);
@@ -172,7 +179,7 @@ const Add_HV_Request = ({ show, data, handleclose }) => {
                                 placeholder="Requesting For*"
                                 variant="outlined"
                                 style={{ marginTop: '20px' }}
-                            /><span style={{ position: 'relative', top: 10, fontSize: 20, color: 'red' }}> *</span>
+                            /> <span style={{ position: 'relative', top: 10, fontSize: 20, color: 'red' }}> *</span>
 
                             <TextField
                                 className={classes.inputFields}
@@ -191,7 +198,7 @@ const Add_HV_Request = ({ show, data, handleclose }) => {
                                 onInput={(e) => {
                                     e.target.value = Math.max(0, parseInt(e.target.value)).toString().slice(0, 10)
                                 }}
-                            /><span style={{ position: 'relative', bottom: 8, fontSize: 20, color: 'red' }}> *</span>
+                            /> <span style={{ position: 'relative', bottom: 8, fontSize: 20, color: 'red' }}> *</span>
                         </Grid>
 
                         <Grid item xs={6} >
@@ -216,8 +223,24 @@ const Add_HV_Request = ({ show, data, handleclose }) => {
                                     {/* {time.map(v => (<option value={v.ActualTime}>{v.DisplayTime}</option>))} */}
                                 </Select>
 
-                            </FormControl>     <span style={{ position: 'relative', bottom: 8, fontSize: 20, color: 'red' }}> *</span>
-                            <TextField
+                            </FormControl>  <span style={{ position: 'relative', bottom: 8, fontSize: 20, color: 'red' }}> *</span>
+
+                            <MuiPickersUtilsProvider utils={DateFnsUtils}>
+
+                                <KeyboardDatePicker
+                                    autoOk
+                                    className={classes.inputFields}
+                                    size='small'
+                                    value={date}
+                                    onChange={setdate}
+                                    inputVariant="outlined"
+                                    label="Date"
+                                    format='dd/MM/yyyy'
+                                    style={{ marginTop: 20 }}
+                                />
+                            </MuiPickersUtilsProvider><span style={{ position: 'relative', top: 10, fontSize: 20, color: 'red' }}> *</span>
+
+                            {/* <TextField
                                 className={classes.inputFields}
                                 id="outlined-basic"
                                 size="small"
@@ -226,7 +249,7 @@ const Add_HV_Request = ({ show, data, handleclose }) => {
                                 type='date'
                                 variant="outlined"
                                 style={{ marginTop: '20px' }}
-                            /><span style={{ position: 'relative', top: 10, fontSize: 20, color: 'red' }}> *</span>
+                            /> <span style={{ position: 'relative', top: 10, fontSize: 20, color: 'red' }}> *</span> */}
                             <FormControl variant="outlined" size="small" className={classes.formControl}>
                                 <Select
                                     className={classes.textField}
@@ -247,7 +270,7 @@ const Add_HV_Request = ({ show, data, handleclose }) => {
                                     {/* {time.map(v => (<option value={v.ActualTime}>{v.DisplayTime}</option>))} */}
                                 </Select>
 
-                            </FormControl><span style={{ position: 'relative', bottom: 8, fontSize: 20, color: 'red' }}> *</span>
+                            </FormControl> <span style={{ position: 'relative', bottom: 8, fontSize: 20, color: 'red' }}> *</span>
                         </Grid>
 
                         <Grid item xs={12}>

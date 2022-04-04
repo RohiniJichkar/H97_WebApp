@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import clsx from 'clsx';
 import { makeStyles, useTheme, alpha } from '@material-ui/core/styles';
 import { useNavigate } from 'react-router-dom';
-import { FormControl, FormControlLabel, Switch, Select, TextField, Typography, Button, Avatar, InputBase, Divider, ListItem, ListItemText, Grid, Paper } from "@material-ui/core";
+import { FormControl, FormControlLabel, Switch, Select, TextField, Typography, Button, Avatar, Box, InputBase, Divider, ListItem, ListItemText, Grid, Paper } from "@material-ui/core";
 import DoctorNavbar from './Staff_Navbar';
 import SearchIcon from '@material-ui/icons/Search';
 import PropTypes from 'prop-types';
@@ -25,7 +25,8 @@ const columns = [
         field: 'fullName',
         headerName: 'Full name',
         sortable: false,
-        width: 200,
+        width: 180,
+        headerClassName: 'super-app-theme--header',
         valueGetter: (params) =>
             `${params.getValue(params.id, 'FirstName') || ''} ${params.getValue(params.id, 'LastName') || ''
             }`,
@@ -33,6 +34,7 @@ const columns = [
     {
         field: 'MobileNo',
         headerName: 'Contact No',
+        headerClassName: 'super-app-theme--header',
         width: 160,
         editable: true,
     },
@@ -327,18 +329,28 @@ export default function Staff_Book_Appointment() {
 
                             </Grid>
 
-
-                            <DataGrid
-                                style={{ height: 250, marginTop: 20, fontSize: 13, fontFamily: 'Poppins', fontWeight: 600, color: '#2C7FB2', cursor: 'pointer' }}
-                                rows={patientData}
-                                rowHeight={30}
-                                columns={columns}
-                                columnWidth={10}
-                                pageSize={5}
-                                onRowClick={(newSelection) => {
-                                    handleRowClick(newSelection.row.UserId);
+                            <Box
+                                sx={{
+                                    '& .super-app-theme--header': {
+                                        // backgroundColor: '#78B088',
+                                        // color: '#fff
+                                        fontSize: 15,
+                                        marginLeft: 10
+                                    },
                                 }}
-                            />
+                            >
+                                <DataGrid
+                                    style={{ height: 250, marginTop: 20, fontSize: 13, fontFamily: 'Poppins', fontWeight: 600, color: '#2C7FB2', cursor: 'pointer' }}
+                                    rows={patientData}
+                                    rowHeight={30}
+                                    columns={columns}
+                                    columnWidth={10}
+                                    pageSize={5}
+                                    onRowClick={(newSelection) => {
+                                        handleRowClick(newSelection.row.UserId);
+                                    }}
+                                />
+                            </Box>
 
                             <Divider style={{ padding: '5px', borderTop: '1px solid #F0F0F0', backgroundColor: '#fff', paddingBottom: 10 }} />
 
@@ -408,7 +420,7 @@ export default function Staff_Book_Appointment() {
                                             fontSize: 12,
                                         }}
                                         >
-                                            {patientDetails.Address ? patientDetails.Address : 'NA'} {patientDetails.City} {patientDetails.State} {patientDetails.Pincode} {patientDetails.Country}
+                                            {patientDetails.Address ? `${patientDetails.Address}` : "NA"}{patientDetails.City ? `, ${patientDetails.City}` : ""}{patientDetails.State ? `, ${patientDetails.State}` : ""}{patientDetails.Country ? `, ${patientDetails.Country}` : ""}{patientDetails.Pincode ? `, ${patientDetails.Pincode}` : ""}
                                         </Typography>
                                         <Divider style={{ paddingTop: '10px', backgroundColor: '#fff' }} />
                                         Contact: <Typography variant="h7" noWrap={true} style={{

@@ -3,7 +3,7 @@ import clsx from 'clsx';
 import { makeStyles, useTheme, alpha } from '@material-ui/core/styles';
 import { useLocation } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
-import { Slide, Typography, FormControl, Select, TextField, Button, InputBase, Grid, Paper, Dialog, DialogContent, DialogContentText, DialogTitle, Avatar } from "@material-ui/core";
+import { Slide, Typography, FormControl, Select, TextField, Button, InputBase, Grid, Paper, Box, Dialog, DialogContent, DialogContentText, DialogTitle, Avatar } from "@material-ui/core";
 import DoctorNavbar from './Staff_Navbar';
 import SearchIcon from '@material-ui/icons/Search';
 import ArrowBackIcon from '@material-ui/icons/ArrowBack';
@@ -27,6 +27,7 @@ const columns = [
         headerName: 'Full name',
         sortable: false,
         width: 200,
+        headerClassName: 'super-app-theme--header',
         valueGetter: (params) =>
             `${params.getValue(params.id, 'FirstName') || ''} ${params.getValue(params.id, 'LastName') || ''
             }`,
@@ -34,8 +35,9 @@ const columns = [
     {
         field: 'MobileNo',
         headerName: 'Contact No',
+        headerClassName: 'super-app-theme--header',
         width: 160,
-        editable: true,
+        editable: false,
     },
 ];
 
@@ -190,7 +192,7 @@ export default function Staff_Assign_Home_Visitor() {
     const handleRowClick = async (id) => {
         sethvDoctorDetails(id);
     }
-    const handleAssign=()=>{
+    const handleAssign = () => {
         navigate('/Staff_Home_Visit_Request');
     }
 
@@ -307,18 +309,29 @@ export default function Staff_Assign_Home_Visitor() {
                                 </Grid>
 
                             </Grid>
-                            <DataGrid
-                                style={{ height: 350, marginTop: 20, fontSize: 13, fontFamily: 'Poppins', fontWeight: 600, color: '#2C7FB2' }}
-                                rows={hvDoctorData}
-                                rowHeight={30}
-                                columns={columns}
-                                columnWidth={10}
-                                pageSize={5}
-                                onRowClick={(data) => {
-                                    handleRowClick(data.row);
-                                }}
-                            />
 
+                            <Box
+                                sx={{
+                                    '& .super-app-theme--header': {
+                                        // backgroundColor: '#78B088',
+                                        // color: '#fff
+                                        fontSize: 15,
+                                        marginLeft: 10
+                                    },
+                                }}
+                            >
+                                <DataGrid
+                                    style={{ height: 350, marginTop: 20, fontSize: 13, fontFamily: 'Poppins', fontWeight: 600, color: '#2C7FB2', cursor: 'pointer' }}
+                                    rows={hvDoctorData}
+                                    rowHeight={30}
+                                    columns={columns}
+                                    columnWidth={10}
+                                    pageSize={5}
+                                    onRowClick={(data) => {
+                                        handleRowClick(data.row);
+                                    }}
+                                />
+                            </Box>
                         </Paper>
                     </Grid>
 
@@ -347,7 +360,7 @@ export default function Staff_Assign_Home_Visitor() {
                                     color: '#707070',
                                     fontWeight: 600
                                 }}>
-                                    {hvDoctorDetails.FirstName ? hvDoctorDetails.FirstName : 'NA'} {hvDoctorDetails.LastName ? hvDoctorDetails.LastName : ''}
+                                  {hvDoctorDetails.NmTitle ? hvDoctorDetails.NmTitle : ''} {hvDoctorDetails.FirstName ? hvDoctorDetails.FirstName : 'NA'} {hvDoctorDetails.LastName ? hvDoctorDetails.LastName : ''}
                                 </Typography>
                                 <Typography variant="h6" noWrap={true} style={{
                                     fontSize: 14,

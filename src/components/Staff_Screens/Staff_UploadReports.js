@@ -206,7 +206,7 @@ const useStyles = makeStyles((theme) => ({
         textAlign: 'center',
         borderRadius: 28,
         width: 120,
-        marginTop: 150,
+        marginTop: 160,
         fontSize: '12px'
     },
     textField: {
@@ -387,7 +387,7 @@ function Staff_Upload_Reports() {
 
 
                     <Grid item xs={8} spacing={2} >
-                        <Paper elevation={6} style={{ padding: 20, marginLeft: 25, marginRight: 20, height: 350 }}>
+                        <Paper elevation={6} style={{ padding: 20, marginLeft: 25, marginRight: 20, height: 355 }}>
 
                             {imageData.length != 0 ?
                                 <Grid container xs={12} spacing={2}>

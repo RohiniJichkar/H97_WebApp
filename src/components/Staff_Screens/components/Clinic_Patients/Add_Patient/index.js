@@ -7,6 +7,11 @@ import Visibility from '@material-ui/icons/Visibility';
 import VisibilityOff from '@material-ui/icons/VisibilityOff';
 import InputAdornment from '@material-ui/core/InputAdornment';
 import { Register_Patient, Country, State, City } from '../../../../../Apis/Staff/Clinic_Patients/Patient_Registration';
+import DateFnsUtils from '@date-io/date-fns';
+import {
+    MuiPickersUtilsProvider,
+    KeyboardDatePicker,
+} from '@material-ui/pickers';
 
 const drawerWidth = 240;
 
@@ -20,7 +25,7 @@ const Add_Patinet = ({ show, handleclose }) => {
     const [lastnm, setlastnm] = useState('');
     const [mobile, setmobile] = useState('');
     const [email, setemail] = useState('');
-    const [dob, setdob] = useState('');
+    const [dob, setdob] = useState(new Date());
     const [password, setpassword] = useState('');
     const [gender, setgender] = useState('');
     const [address, setaddress] = useState('');
@@ -34,6 +39,7 @@ const Add_Patinet = ({ show, handleclose }) => {
     const [countryData, setcountryData] = useState([]);
     const [stateData, setstateData] = useState([]);
     const [cityData, setcityData] = useState([]);
+    const [title, settitle] = useState('');
 
     const fetchCountry = async () => {
         const countries = await Country();
@@ -59,52 +65,56 @@ const Add_Patinet = ({ show, handleclose }) => {
         fetchState();
     }, []);
 
-    const PatientRegistration = async (firstnm, lastnm, mobile, password, email, dob, gender, address, city, pincode, state, country, height, weight) => {
+    const PatientRegistration = async (title, firstnm, lastnm, mobile, password, email, dob, gender, address, city, pincode, state, country, height, weight) => {
         var data = await localStorage.getItem("userdata");
         let parsed = JSON.parse(data);
         let clinicid = parsed.ClinicId;
         const date = new Date();
         const now = date.toISOString().split('T')[0];
-        if (firstnm.trim() == '' || lastnm.trim() == '' || mobile.trim() == '' || password.trim() == '' || dob.trim() == '' || gender.trim() == '') {
+
+        // let Dob = dob.toISOString().split('T')[0];
+
+        if (title.trim() == '' || firstnm.trim() == '' || lastnm.trim() == '' || mobile.trim() == '' || password.trim() == '' || dob == '' || gender.trim() == '') {
             alert('Please Enter Mandatory fields')
             return;
         }
-        else if (dob > now) {
-            alert('Invalid Date of Birth');
-            return;
-        }
+        // else if (dob > now) {
+        //     alert('Invalid Date of Birth');
+        //     return;
+        // }
 
         var FirstNm = firstnm.split(/\s/).join('');
 
-        let dobstr = dob;
+        // let dobstr = Dob;
 
-        let birth_year = Number(dobstr.substring(0, 4));
-        let birth_month = Number(dobstr.substring(5, 2));
-        let birth_day = Number(dobstr.substring(8, 2));
+        // let birth_year = Number(dobstr.substring(0, 4));
+        // let birth_month = Number(dobstr.substring(5, 2));
+        // let birth_day = Number(dobstr.substring(8, 2));
 
-        let today_year = date.getFullYear();
-        let today_month = date.getMonth();
-        let today_day = date.getDate();
-        let age = today_year - birth_year;
+        // let today_year = date.getFullYear();
+        // let today_month = date.getMonth();
+        // let today_day = date.getDate();
+        // let age = today_year - birth_year;
 
-        if (today_month < (birth_month - 1)) {
-            age--;
-            return age;
-        }
-        if (((birth_month - 1) == today_month) && (today_day < birth_day)) {
-            age--;
-            return age;
-        }
+        // if (today_month < (birth_month - 1)) {
+        //     age--;
+        //     return age;
+        // }
+        // if (((birth_month - 1) == today_month) && (today_day < birth_day)) {
+        //     age--;
+        //     return age;
+        // }
 
         const obj = {
             ClinicId: clinicid,
+            NmTitle: title,
             FirstName: FirstNm,
             LastName: lastnm,
             MobileNo: mobile,
             Password: password,
             Email: email,
             DOB: dob,
-            Age: age,
+            // Age: age,
             Gender: gender,
             Address: address,
             City: city,
@@ -158,28 +168,69 @@ const Add_Patinet = ({ show, handleclose }) => {
                             <Grid item xs={12} sm={6} style={{ borderRight: '1px solid #F0F0F0' }}>
                                 <center>
                                     <div>
-                                        <TextField className={classes.inputFields} value={firstnm}
+                                        <Grid container style={{ marginBottom: -30 }}>
+                                            <Grid item xs={2}>
+                                                <center>
+                                                    <FormControl variant="outlined" size='small' className={classes.formControl}  >
+                                                        <Select
+                                                            className={classes.inputFields}
+                                                            native
+                                                            size='small'
+                                                            value={title}
+                                                            label="title"
+                                                            onChange={(e) => settitle(e.target.value)}
+
+                                                            inputProps={{
+                                                                name: 'title',
+                                                                id: 'outlined-title-native-simple',
+                                                            }}
+                                                            style={{ marginLeft: 75, width: 78, marginTop: 10 }}
+                                                        >
+                                                            <option aria-label="None" value="" >Title</option>
+                                                            <option value='Mr.'>Mr.</option>
+                                                            <option value='Mrs.'>Mrs.</option>
+                                                            <option value='Ms.'>Ms.</option>
+                                                            <option value='Miss.'>Miss.</option>
+                                                        </Select>
+                                                    </FormControl> <span style={{ fontSize: 20, color: 'red', marginLeft: '207%', top: -70, position: 'relative' }}> *</span>
+                                                </center>
+                                            </Grid>
+                                            <Grid item xs={8}>
+                                                <center>
+                                                    <TextField className={classes.inputFields} value={firstnm}
+                                                        onChange={(e) => {
+                                                            const re = /^[a-z ,.'-]+$/i;
+                                                            // if value is not blank, then test the regex
+                                                            if (e.target.value == '' || re.test(e.target.value)) {
+                                                                setfirstnm(e.target.value)
+                                                            }
+                                                        }} style={{ marginLeft: 90, width: 210, marginTop: 10 }}
+                                                        id="outlined-basic" size="small" placeholder="First Name" variant="outlined" />
+                                                    <span style={{ fontSize: 20, color: 'red', marginLeft: '101%', top: -70, position: 'relative' }}> *</span>
+                                                </center>
+                                            </Grid>
+                                        </Grid>
+
+                                        {/* <TextField className={classes.inputFields} value={firstnm}
                                             onChange={(e) => {
-                                                const re = /^[A-Za-z]+$/;
-
+                                                const re = /^[a-z ,.'-]+$/i;
                                                 // if value is not blank, then test the regex
-
-                                                if (e.target.value === '' || re.test(e.target.value)) {
+                                                if (e.target.value == '' || re.test(e.target.value)) {
                                                     setfirstnm(e.target.value)
                                                 }
-                                            }} style={{ marginLeft: 14 }}
+                                            }} style={{ marginLeft: 13 }}
                                             id="outlined-basic" size="small" placeholder="First Name" variant="outlined" />
-                                        <span style={{ position: 'relative', bottom: 8, fontSize: 20, color: 'red' }}> *</span>
+                                        <span style={{ position: 'relative', bottom: 8, fontSize: 20, color: 'red' }}> *</span> */}
                                         <TextField className={classes.inputFields} value={lastnm}
                                             onChange={(e) => {
-                                                const re = /^[A-Za-z]+$/;
+                                                const re = /^[a-z ,.'-]+$/i;
 
                                                 // if value is not blank, then test the regex
 
-                                                if (e.target.value === '' || re.test(e.target.value)) {
+                                                if (e.target.value == '' || re.test(e.target.value)) {
                                                     setlastnm(e.target.value)
                                                 }
-                                            }} style={{ marginLeft: 14 }} id="outlined-basic" size="small" placeholder="Last Name" variant="outlined" />
+                                            }} style={{ marginLeft: 13, marginTop: -6 }} id="outlined-basic" size="small" placeholder="Last Name" variant="outlined" />
                                         <span style={{ position: 'relative', bottom: 8, fontSize: 20, color: 'red' }}> *</span>
                                         <TextField
                                             className={classes.inputFields}
@@ -189,22 +240,23 @@ const Add_Patinet = ({ show, handleclose }) => {
 
                                                 // if value is not blank, then test the regex
 
-                                                if (e.target.value === '' || re.test(e.target.value)) {
+                                                if (e.target.value == '' || re.test(e.target.value)) {
                                                     setmobile(e.target.value)
                                                 }
-                                            }}
+                                            }} style={{ marginLeft: 13 }}
                                             id="outlined-basic"
                                             type="number"
                                             size="small"
-                                            placeholder="Mobile Number*"
+                                            placeholder="Mobile Number"
                                             variant="outlined"
                                             onInput={(e) => {
                                                 e.target.value = Math.max(0, parseInt(e.target.value)).toString().slice(0, 10)
-                                            }} style={{ marginLeft: 14 }}
-                                        /><span style={{ position: 'relative', bottom: 8, fontSize: 20, color: 'red' }}> *</span>
-                                        <TextField className={classes.inputFields} style={{ marginLeft: 14 }} value={password} onChange={(e) => setpassword(e.target.value)} id="outlined-basic"
-                                            type={showPassword ? 'text' : 'password'}
-                                            size="small" placeholder="Password" variant="outlined"
+                                            }}
+                                        /> <span style={{ position: 'relative', bottom: 8, fontSize: 20, color: 'red' }}> *</span>
+
+                                        <TextField className={classes.inputFields} value={password} onChange={(e) => setpassword(e.target.value)}
+                                            id="outlined-basic" type={showPassword ? 'text' : 'password'} size="small" placeholder="Password" variant="outlined"
+                                            style={{ marginLeft: 12 }}
                                             InputProps={{
                                                 endAdornment: (
                                                     <InputAdornment position="end">
@@ -217,10 +269,28 @@ const Add_Patinet = ({ show, handleclose }) => {
                                                         </IconButton>
                                                     </InputAdornment>
                                                 ),
-                                            }} /><span style={{ position: 'relative', bottom: 8, fontSize: 20, color: 'red' }}> *</span>
-                                        <TextField className={classes.inputFields} value={email} onChange={(e) => setemail(e.target.value)} id="outlined-basic" type="email" size="small" placeholder="Email Id" variant="outlined" style={{ marginLeft: 30 }} />
-                                        <span style={{ position: 'relative', top: 50, right: 290, fontSize: 13 }}>DOB</span>
-                                        <TextField className={classes.inputFields} style={{ marginLeft: 13 }} defaultValue={new Date()} value={dob} onChange={(e) => setdob(e.target.value)} id="outlined-basic" type="date" size="small" variant="outlined" />
+                                            }} />  <span style={{ position: 'relative', bottom: 8, fontSize: 20, color: 'red' }}> *</span>
+
+
+
+
+                                        <TextField className={classes.inputFields} value={email} onChange={(e) => setemail(e.target.value)} id="outlined-basic" type="email" size="small" placeholder="Email Id" variant="outlined" style={{ marginLeft: -5 }} />
+
+                                        <MuiPickersUtilsProvider utils={DateFnsUtils}>
+                                            <KeyboardDatePicker
+                                                autoOk
+                                                className={classes.inputFields}
+                                                size='small'
+                                                value={dob}
+                                                onChange={setdob}
+                                                inputVariant="outlined"
+                                                label="DOB"
+                                                format='dd/MM/yyyy'
+                                                style={{ marginLeft: 10 }}
+                                            />
+                                        </MuiPickersUtilsProvider>
+                                        {/* <span style={{ position: 'relative', top: 50, right: 290, fontSize: 13 }}>DOB</span>
+                                        <TextField className={classes.inputFields} style={{ marginLeft: 13 }} format='dd/MM/yyyy' defaultValue={new Date()} value={dob} onChange={(e) => setdob(e.target.value)} id="outlined-basic" type="date" size="small" variant="outlined" /> */}
                                         <span style={{ position: 'relative', bottom: 8, fontSize: 20, color: 'red' }}> *</span>
                                         <FormControl variant="outlined" size='small' className={classes.formControl}  >
                                             <Select
@@ -230,16 +300,19 @@ const Add_Patinet = ({ show, handleclose }) => {
                                                 value={gender}
                                                 label="Gender"
                                                 onChange={(e) => setgender(e.target.value)}
+
                                                 inputProps={{
                                                     name: 'gender',
                                                     id: 'outlined-gender-native-simple',
-                                                }} style={{ marginLeft: 14 }}
+                                                }}
+                                                style={{ marginLeft: 10,  }}
                                             >
-                                                <option aria-label="None" value="" >Gender</option>
+                                                <option aria-label="None" value="" >Gender*</option>
                                                 <option value='Male'>Male</option>
                                                 <option value='Female'>Female</option>
+
                                             </Select>
-                                        </FormControl><span style={{ position: 'relative', bottom: 7, fontSize: 20, color: 'red' }}> *</span>
+                                        </FormControl> <span style={{ position: 'relative', bottom: 12, fontSize: 20, right: 1, color: 'red' }}> *</span>
                                     </div>
                                 </center>
                             </Grid>
@@ -247,6 +320,7 @@ const Add_Patinet = ({ show, handleclose }) => {
                             <Grid item xs={12} sm={6}>
                                 <center>
                                     <div>
+
                                         <FormControl variant="outlined" size="small" className={classes.formControl} style={{ marginLeft: 43, width: '75%', fontWeight: 600 }} >
                                             <Select
                                                 className={classes.textFieldForm}
@@ -261,7 +335,7 @@ const Add_Patinet = ({ show, handleclose }) => {
                                                     name: 'Country',
                                                     id: 'outlined-end-time-native-simple',
                                                 }}
-                                                style={{ width: '88%', fontSize: 14, fontWeight: 600, color: '#707070' }}
+                                                style={{ width: '87%', fontSize: 14, fontWeight: 600, color: '#707070', marginTop: 10 }}
                                             >
                                                 <option aria-label="None" value="">Country</option>
                                                 {countryData.map(v => {
@@ -274,7 +348,7 @@ const Add_Patinet = ({ show, handleclose }) => {
                                             </Select>
                                         </FormControl>
 
-                                        <FormControl variant="outlined" size="small" onClick={() => fetchCity()} className={classes.formControl} style={{ marginLeft: 43, width: '75%', fontWeight: 600, marginTop: 20 }} >
+                                        <FormControl variant="outlined" size="small" onClick={() => fetchCity()} className={classes.formControl} style={{ marginLeft: 43, width: '75%', fontWeight: 600 }} >
                                             <Select
                                                 disabled={country ? false : true}
                                                 className={classes.textFieldForm}
@@ -287,7 +361,7 @@ const Add_Patinet = ({ show, handleclose }) => {
                                                     name: 'State',
                                                     id: 'outlined-end-time-native-simple',
                                                 }}
-                                                style={{ width: '88%', fontSize: 14, fontWeight: 600, color: '#707070' }}
+                                                style={{ width: '87%', fontSize: 14, fontWeight: 600, color: '#707070', marginTop: 14 }}
                                             >
                                                 <option aria-label="None" value="">State</option>
                                                 {stateData.map(v => {
@@ -300,7 +374,7 @@ const Add_Patinet = ({ show, handleclose }) => {
                                             </Select>
                                         </FormControl>
 
-                                        <FormControl variant="outlined" size="small" className={classes.formControl} style={{ marginLeft: 43, width: '75%', fontWeight: 600, marginTop: 20 }} >
+                                        <FormControl variant="outlined" size="small" className={classes.formControl} style={{ marginLeft: 43, width: '75%', fontWeight: 600 }} >
                                             <Select
                                                 disabled={country ? false : true}
                                                 className={classes.textFieldForm}
@@ -313,7 +387,7 @@ const Add_Patinet = ({ show, handleclose }) => {
                                                     name: 'City',
                                                     id: 'outlined-end-time-native-simple',
                                                 }}
-                                                style={{ width: '88%', fontSize: 14, fontWeight: 600, color: '#707070' }}
+                                                style={{ width: '87%', fontSize: 14, fontWeight: 600, color: '#707070', marginTop: 14 }}
                                             >
                                                 <option aria-label="None" value="">City</option>
                                                 {cityData.map(v => {
@@ -326,32 +400,69 @@ const Add_Patinet = ({ show, handleclose }) => {
                                             </Select>
                                         </FormControl>
 
+                                        {/* <TextField className={classes.inputFields} value={country}
+                                            onChange={(e) => {
+                                                const re = /^[A-Za-z]+$/;
+
+                                                // if value is not blank, then test the regex
+
+                                                if (e.target.value === '' || re.test(e.target.value)) {
+                                                    setcountry(e.target.value)
+                                                }
+                                            }} id="outlined-basic" size="small" placeholder="Country" variant="outlined" />
+
+
+                                        <TextField className={classes.inputFields} value={state}
+                                            onChange={(e) => {
+                                                const re = /^[A-Za-z]+$/;
+
+                                                // if value is not blank, then test the regex
+
+                                                if (e.target.value === '' || re.test(e.target.value)) {
+                                                    setstate(e.target.value)
+                                                }
+                                            }}
+                                            id="outlined-basic" size="small" placeholder="State" variant="outlined" />
+                                        <TextField
+                                            className={classes.inputFields}
+                                            value={city}
+                                            onChange={(e) => {
+                                                const re = /^[A-Za-z]+$/;
+
+                                                // if value is not blank, then test the regex
+
+                                                if (e.target.value === '' || re.test(e.target.value)) {
+                                                    setcity(e.target.value)
+                                                }
+                                            }}
+                                            id="outlined-basic"
+                                            size="small"
+                                            placeholder="City"
+                                            variant="outlined"
+                                        /> */}
                                         <TextField className={classes.inputFields} multiline
                                             onChange={(e) => {
                                                 setaddress(e.target.value)
                                             }}
-                                            rows={1.2}
+                                            rows={2}
                                             rowsMax={2} id="outlined-basic" size="small" label="Address" variant="outlined"
-                                            style={{marginTop: 20}}
+                                            style={{ marginTop: 12 }}
                                         />
 
-                                        <TextField
-                                            className={classes.inputFields}
+                                        <TextField className={classes.inputFields}
                                             value={pincode}
                                             type='number'
                                             onInput={(e) => {
                                                 e.target.value = Math.max(0, parseInt(e.target.value)).toString().slice(0, 6)
                                             }}
                                             onChange={(e) => setpincode(e.target.value)}
-                                            id="outlined-basic"
-                                            size="small"
+                                            id="outlined-basic" size="small"
                                             placeholder="Pincode"
                                             variant="outlined" />
 
                                         <TextField
                                             className={classes.inputFields}
                                             value={height}
-                                            type='number'
                                             InputProps={{
                                                 inputProps: { min: 0 }
                                             }}
@@ -367,31 +478,27 @@ const Add_Patinet = ({ show, handleclose }) => {
                                             variant="outlined"
                                         />
 
-                                        <TextField className={classes.inputFields}
-                                            type='number'
+                                        <TextField
                                             InputProps={{
                                                 inputProps: { min: 0 }
                                             }}
-                                            value={weight}
-                                            onChange={(e) => setweight(e.target.value)}
-                                            id="outlined-basic"
-                                            size="small"
-                                            placeholder="Weight"
-                                            variant="outlined"
-                                        />
+                                            className={classes.inputFields}
+                                            value={weight} onChange={(e) => setweight(e.target.value)}
+                                            id="outlined-basic" size="small" placeholder="Weight"
+                                            variant="outlined" />
 
                                     </div>
                                 </center>
                             </Grid>
 
-                            <Grid container>
+                            <Grid container style={{ marginTop: -10, marginBottom: -10 }}>
                                 <Grid xs={12} sm={6}>
                                     <Button className={classes.btnCancle} onClick={handleclose} style={{ float: 'right', marginRight: 20 }}>
                                         Cancel
                                     </Button>
                                 </Grid>
                                 <Grid xs={12} sm={6}>
-                                    <Button className={classes.btnregister} onClick={() => PatientRegistration(firstnm, lastnm, mobile, password, email, dob, gender, address, city, pincode, state, country, height, weight)} autoFocus style={{ float: 'left', marginLeft: 20 }}>
+                                    <Button className={classes.btnregister} onClick={() => PatientRegistration(title, firstnm, lastnm, mobile, password, email, dob, gender, address, city, pincode, state, country, height, weight)} autoFocus style={{ float: 'left', marginLeft: 20 }}>
                                         Register
                                     </Button>
                                 </Grid>

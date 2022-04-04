@@ -50,14 +50,15 @@ export default function DoctorEditProfile() {
     const [Gender, setGender] = useState(doctordata[0].Gender);
     const [times, setTimes] = useState([]);
     const [doctorCategory, setdoctorCategory] = useState([]);
+    const [NmTitle, setNmTitle] = useState(doctordata[0].NmTitle);
 
-    const Edit_DoctorData = async (FirstName, LastName, MobileNo, Email, Address, Category, City, Pincode, State, Country, Education, DOB, MorningStartTime, MorningEndTime, EveningStartTime, EveningEndTime, Experience, Gender) => {
+    const Edit_DoctorData = async (NmTitle, FirstName, LastName, MobileNo, Email, Address, Category, City, Pincode, State, Country, Education, DOB, MorningStartTime, MorningEndTime, EveningStartTime, EveningEndTime, Experience, Gender) => {
         var cdata = await localStorage.getItem("userdata");
         let parsed = JSON.parse(cdata);
         let DoctorId = parsed.userid;
         let clinicid = parsed.ClinicId;
         try {
-            const editDoctorRequest = await EditDoctordata(DoctorId, clinicid, FirstName, LastName, MobileNo, Email, Address, Category, City, Pincode, State, Country, Education, DOB, MorningStartTime, MorningEndTime, EveningStartTime, EveningEndTime, Experience, Gender);
+            const editDoctorRequest = await EditDoctordata(DoctorId, clinicid, NmTitle, FirstName, LastName, MobileNo, Email, Address, Category, City, Pincode, State, Country, Education, DOB, MorningStartTime, MorningEndTime, EveningStartTime, EveningEndTime, Experience, Gender);
             let response = JSON.parse(editDoctorRequest);
             if (response.success == '200') {
                 alert(response.message);
@@ -272,304 +273,343 @@ export default function DoctorEditProfile() {
                             <Grid item xs={4}>
                                 <center>
                                     <div style={{ paddingTop: 5 }}>
-                                        <FormControl variant="outlined" className={classes.formControlForm}  >
-                                            <TextField className={classes.textFieldForm} id="outlined-basic" size="small" value={FirstName} label="First Name" onChange={(e) => {
-                                                const re = /^[A-Za-z]+$/;
-                                                if (e.target.value === '' || re.test(e.target.value)) {
-                                                    setFirstName(e.target.value)
-                                                }
-                                            }} variant="outlined" style={{ width: '130%' }} />
-                                        </FormControl>
-                                    </div>
-                                    <div>
-                                        <FormControl variant="outlined" className={classes.formControlForm}  >
-                                            <TextField className={classes.textFieldForm} id="outlined-basic" label="Last Name" value={LastName} onChange={(e) => {
-                                                const re = /^[A-Za-z]+$/;
-                                                if (e.target.value === '' || re.test(e.target.value)) {
-                                                    setLastName(e.target.value)
-                                                }
-                                            }} variant="outlined" size="small" style={{ width: '130%' }} />
-                                        </FormControl>
+                                        <Grid container style={{  }}>
+                                            <Grid item xs={2}>
+                                                <center>
+                                                    <FormControl variant="outlined" size='small' className={classes.formControl}  >
+                                                        <Select
+                                                            className={classes.inputFields}
+                                                            native
+                                                            size='small'
+                                                            value={NmTitle}
+                                                            label="title"
+                                                            onChange={(e) => setNmTitle(e.target.value)}
 
-                                    </div>
-                                    <div>
-                                        <FormControl variant="outlined" className={classes.formControlForm}  >
-                                            <TextField className={classes.textFieldForm} disabled id="outlined-basic" type='number' label="Mobile No" value={MobileNo} onChange={(e) => {
-                                                const re = /^[0-9\b]+$/;
-                                                if (e.target.value === '' || re.test(e.target.value)) {
-                                                    setMobileNo(e.target.value)
-                                                }
-                                            }} onInput={(e) => {
-                                                e.target.value = Math.max(0, parseInt(e.target.value)).toString().slice(0, 10)
-                                            }} variant="outlined" size="small" style={{ width: '130%' }} />
-                                        </FormControl>
-                                    </div>
-                                    <div>
-                                        <FormControl variant="outlined" className={classes.formControlForm}  >
-                                            <TextField className={classes.textFieldForm} id="outlined-basic" type='email' label="Email ID" value={Email} onChange={(e) => setEmail(e.target.value)} variant="outlined" size="small" style={{ width: '130%' }} />
-                                        </FormControl>
-                                    </div>
-                                    <div>
-                                        <FormControl variant="outlined" className={classes.formControlForm}  >
-                                            <TextField className={classes.textFieldForm} id="outlined-basic" value={DOB} onChange={(e) => setDOB(e.target.value)} type="date" variant="outlined" size="small" style={{ width: '150%' }} />
-                                        </FormControl>
+                                                            inputProps={{
+                                                                name: 'title',
+                                                                id: 'outlined-title-native-simple',
+                                                            }}
+                                                            style={{ marginLeft: 55, width: 78, marginTop: 10 , fontFamily: 'Poppins', fontWeight: 400}}
+                                                        >
+                                                            <option aria-label="None" value="" >Title</option>
+                                                            <option value='Dr.'>Dr.</option>
+                                                            <option value='Mr.'>Mr.</option>
+                                                            <option value='Mrs.'>Mrs.</option>
+                                                            <option value='Ms.'>Ms.</option>
+                                                            <option value='Miss.'>Miss.</option>
+                                                        </Select>
+                                                    </FormControl> 
+                                                </center>
+                                            </Grid>
+                                            <Grid item xs={8}>
+                                                <center>
+                                                    <TextField className={classes.inputFields} value={FirstName} label="First Name" onChange={(e) => {
+                                                        const re = /^[A-Za-z]+$/;
+                                                        if (e.target.value === '' || re.test(e.target.value)) {
+                                                            setFirstName(e.target.value)
+                                                        }
+                                                    }} style={{ marginLeft: 70, width: 206 }}
+                                                        id="outlined-basic" size="small" placeholder="First Name" variant="outlined" />
+                                                   
+                                                </center>
+                                            </Grid>
+                                        </Grid>
+                                    
+                                    {/* <FormControl variant="outlined" className={classes.formControlForm}  >
+                                        <TextField className={classes.textFieldForm} id="outlined-basic" size="small" value={FirstName} label="First Name" onChange={(e) => {
+                                            const re = /^[A-Za-z]+$/;
+                                            if (e.target.value === '' || re.test(e.target.value)) {
+                                                setFirstName(e.target.value)
+                                            }
+                                        }} variant="outlined" style={{ width: '130%' }} />
+                                    </FormControl> */}
+                                </div>
+                                <div>
+                                    <FormControl variant="outlined" className={classes.formControlForm}  >
+                                        <TextField className={classes.textFieldForm} id="outlined-basic" label="Last Name" value={LastName} onChange={(e) => {
+                                            const re = /^[A-Za-z]+$/;
+                                            if (e.target.value === '' || re.test(e.target.value)) {
+                                                setLastName(e.target.value)
+                                            }
+                                        }} variant="outlined" size="small" style={{ width: '130%' }} />
+                                    </FormControl>
 
-                                    </div>
-                                    <div>
-                                        <FormControl variant="outlined" size="small" className={classes.formControl} style={{ width: '73%', }} >
-                                            <InputLabel htmlFor="outlined-age-native-simple" onChange={(e) => setGender(e.target.value)} value={Gender ? Gender : doctordata.Gender}  ></InputLabel>
-                                            <Select
-                                                className={classes.textFieldForm}
-                                                size='medium'
-                                                native
-                                                value={Gender ? Gender : doctordata.Gender} onChange={(e) => setGender(e.target.value)}
-                                                // label="Gender"
-                                                inputProps={{
-                                                    name: 'gender',
-                                                    id: 'outlined-gender-native-simple',
-                                                }}
+                                </div>
+                                <div>
+                                    <FormControl variant="outlined" className={classes.formControlForm}  >
+                                        <TextField className={classes.textFieldForm} disabled id="outlined-basic" type='number' label="Mobile No" value={MobileNo} onChange={(e) => {
+                                            const re = /^[0-9\b]+$/;
+                                            if (e.target.value === '' || re.test(e.target.value)) {
+                                                setMobileNo(e.target.value)
+                                            }
+                                        }} onInput={(e) => {
+                                            e.target.value = Math.max(0, parseInt(e.target.value)).toString().slice(0, 10)
+                                        }} variant="outlined" size="small" style={{ width: '130%' }} />
+                                    </FormControl>
+                                </div>
+                                <div>
+                                    <FormControl variant="outlined" className={classes.formControlForm}  >
+                                        <TextField className={classes.textFieldForm} id="outlined-basic" type='email' label="Email ID" value={Email} onChange={(e) => setEmail(e.target.value)} variant="outlined" size="small" style={{ width: '130%' }} />
+                                    </FormControl>
+                                </div>
+                                <div>
+                                    <FormControl variant="outlined" className={classes.formControlForm}  >
+                                        <TextField className={classes.textFieldForm} id="outlined-basic" value={DOB} onChange={(e) => setDOB(e.target.value)} type="date" variant="outlined" size="small" style={{ width: '150%' }} />
+                                    </FormControl>
+
+                                </div>
+                                <div>
+                                    <FormControl variant="outlined" size="small" className={classes.formControl} style={{ width: '73%', }} >
+                                        <InputLabel htmlFor="outlined-age-native-simple" onChange={(e) => setGender(e.target.value)} value={Gender ? Gender : doctordata.Gender}  ></InputLabel>
+                                        <Select
+                                            className={classes.textFieldForm}
+                                            size='medium'
+                                            native
+                                            value={Gender ? Gender : doctordata.Gender} onChange={(e) => setGender(e.target.value)}
+                                            // label="Gender"
+                                            inputProps={{
+                                                name: 'gender',
+                                                id: 'outlined-gender-native-simple',
+                                            }}
+                                            style={{ width: '100%', fontSize: 14 }}
+                                        >
+                                            <option value={1}>Male</option>
+                                            <option value={2}>Female</option>
+                                        </Select>
+                                    </FormControl>
+                                </div>
+                            </center>
+                        </Grid>
 
 
-                                                style={{ width: '100%', fontSize: 14 }}
-                                            >
-                                                <option value={1}>Male</option>
-                                                <option value={2}>Female</option>
-
-                                            </Select>
-                                        </FormControl>
-                                    </div>
+                        <Grid item xs={5}>
+                            <Grid item xs={12}>
+                                <center>
+                                    <Typography variant="h6" noWrap={true} style={{ fontSize: 14, marginTop: -10, color: '#707070', fontWeight: 600, fontFamily: 'Poppins' }}>
+                                        OPD Morning Time
+                                    </Typography>
                                 </center>
                             </Grid>
 
-
-                            <Grid item xs={5}>
-                                <Grid item xs={12}>
+                            <Grid container style={{ padding: 5 }}>
+                                <Grid item xs={6}>
                                     <center>
-                                        <Typography variant="h6" noWrap={true} style={{ fontSize: 14, marginTop: -10, color: '#707070', fontWeight: 600, fontFamily: 'Poppins' }}>
-                                            OPD Morning Time
+                                        <Typography variant="h6" noWrap={true} style={{ fontSize: 13, color: '#707070', fontWeight: 600, fontFamily: 'Poppins' }}>
+                                            Start Time
                                         </Typography>
                                     </center>
                                 </Grid>
-
-                                <Grid container style={{ padding: 5 }}>
-                                    <Grid item xs={6}>
-                                        <center>
-                                            <Typography variant="h6" noWrap={true} style={{ fontSize: 13, color: '#707070', fontWeight: 600, fontFamily: 'Poppins' }}>
-                                                Start Time
-                                            </Typography>
-                                        </center>
-                                    </Grid>
-                                    <Grid item xs={6}>
-                                        <center>
-                                            <Typography variant="h6" noWrap={true} style={{ fontSize: 13, color: '#707070', fontWeight: 600, fontFamily: 'Poppins' }}>
-                                                End Time
-                                            </Typography>
-                                        </center>
-                                    </Grid>
-                                </Grid>
-
-                                <Grid container>
-                                    <Grid item xs={6}>
-                                        <center>
-                                            <FormControl variant="outlined" size="small" className={classes.formControl} style={{ width: '55%' }} >
-                                                <InputLabel htmlFor="outlined-age-native-simple"></InputLabel>
-                                                <Select
-                                                    className={classes.textFieldForm}
-                                                    size='large'
-                                                    native
-                                                    value={MorningStartTime}
-                                                    onChange={(e) => setMorningStartTime(e.target.value)}
-                                                    inputProps={{
-                                                        name: 'start time',
-                                                        id: 'outlined-start-time-native-simple',
-                                                    }}
-                                                    style={{ width: '90%', fontSize: 14 }}
-                                                >
-                                                    {times.map((item) => {
-                                                        return (
-                                                            <option value={item.ActualTime}>{item.DisplayTime}</option>
-                                                        )
-                                                    })}
-
-                                                </Select>
-                                            </FormControl>
-                                        </center>
-                                    </Grid>
-
-                                    <Grid item xs={6}>
-                                        <center>
-                                            <FormControl variant="outlined" size="small" className={classes.formControl} style={{ width: '55%' }} >
-                                                <InputLabel htmlFor="outlined-age-native-simple"></InputLabel>
-                                                <Select
-                                                    className={classes.textFieldForm}
-                                                    size='large'
-                                                    native
-                                                    onChange={(e) => setMorningEndTime(e.target.value)} value={MorningEndTime}
-                                                    inputProps={{
-                                                        name: 'end time',
-                                                        id: 'outlined-end-time-native-simple',
-                                                    }}
-                                                    style={{ width: '90%', fontSize: 14 }}
-                                                >
-                                                    {times.map((item) => {
-                                                        return (
-                                                            <option value={item.ActualTime}>{item.DisplayTime}</option>
-                                                        )
-                                                    })}
-                                                </Select>
-                                            </FormControl>
-                                        </center>
-                                    </Grid>
-                                </Grid>
-
-
-                                <Grid item xs={12} style={{ marginTop: '-12px' }}>
+                                <Grid item xs={6}>
                                     <center>
-                                        <Typography variant="h6" noWrap={true} style={{ fontSize: 14, color: '#707070', fontWeight: 600, fontFamily: 'Poppins' }}>
-                                            OPD Evening Time
+                                        <Typography variant="h6" noWrap={true} style={{ fontSize: 13, color: '#707070', fontWeight: 600, fontFamily: 'Poppins' }}>
+                                            End Time
                                         </Typography>
                                     </center>
-                                </Grid>
-
-                                <Grid container style={{ padding: 5 }}>
-                                    <Grid item xs={6}>
-                                        <center>
-                                            <Typography variant="h6" value={EveningStartTime} onChange={(e) => setEveningStartTime(e.target.value)} noWrap={true} style={{ fontSize: 13, marginTop: -5, color: '#707070', fontWeight: 600, fontFamily: 'Poppins' }}>
-                                                Start Time
-                                            </Typography>
-                                        </center>
-                                    </Grid>
-                                    <Grid item xs={6}>
-                                        <center>
-                                            <Typography variant="h6" value={EveningEndTime} onChange={(e) => setEveningEndTime(e.target.value)} noWrap={true} style={{ fontSize: 13, marginTop: -5, color: '#707070', fontWeight: 600, fontFamily: 'Poppins' }}>
-                                                End Time
-                                            </Typography>
-                                        </center>
-                                    </Grid>
-                                </Grid>
-
-                                <Grid container >
-                                    <Grid item xs={6}>
-                                        <center>
-                                            <FormControl variant="outlined" size="small" className={classes.formControl} style={{ width: '55%' }} >
-                                                <InputLabel htmlFor="outlined-age-native-simple"></InputLabel>
-                                                <Select
-                                                    className={classes.textFieldForm}
-                                                    size='large'
-                                                    native
-                                                    onChange={(e) => setEveningStartTime(e.target.value)} value={EveningStartTime}
-                                                    inputProps={{
-                                                        name: 'start time',
-                                                        id: 'outlined-start-time-native-simple',
-                                                    }}
-                                                    style={{ width: '90%', fontSize: 14 }}
-                                                >
-                                                    {times.map((item) => {
-                                                        return (
-                                                            <option value={item.ActualTime}>{item.DisplayTime}</option>
-                                                        )
-                                                    })}
-
-                                                </Select>
-                                            </FormControl>
-                                        </center>
-                                    </Grid>
-
-                                    <Grid item xs={6}>
-                                        <center>
-                                            <FormControl variant="outlined" size="small" className={classes.formControl} style={{ width: '55%' }} >
-                                                <InputLabel htmlFor="outlined-age-native-simple"></InputLabel>
-                                                <Select
-                                                    className={classes.textFieldForm}
-                                                    size='large'
-                                                    native
-                                                    onChange={(e) => setEveningEndTime(e.target.value)} value={EveningEndTime}
-                                                    inputProps={{
-                                                        name: 'end time',
-                                                        id: 'outlined-end-time-native-simple',
-                                                    }}
-                                                    style={{ width: '90%', fontSize: 14 }}
-                                                >
-                                                    {times.map((item) => {
-                                                        return (
-                                                            <option value={item.ActualTime}>{item.DisplayTime}</option>
-                                                        )
-                                                    })}
-                                                </Select>
-                                            </FormControl>
-                                        </center>
-                                    </Grid>
-                                </Grid>
-
-                                <Grid item xs={12} style={{ marginTop: 1 }}>
-                                    <center>
-                                        <FormControl variant="outlined" className={classes.formControl}  >
-                                            <TextField className={classes.textField} multiline rows={2.5} rowsMax={2.5} id="outlined-basic" size="small" label="Address" value={Address} onChange={(e) => setAddress(e.target.value)} variant="outlined" style={{ width: '182%' }} />
-                                        </FormControl>
-                                    </center>
-                                </Grid>
-
-                                <Grid container xs={12} style={{ marginTop: 30 }}>
-                                    <Grid item xs={6}>
-                                        <FormControl variant="outlined" className={classes.formControl} style={{ float: 'right', marginLeft: 40 }}>
-                                            <TextField className={classes.textField} id="outlined-basic" size="small" label="City" value={City} onChange={(e) => { setCity(e.target.value) }}
-                                                variant="outlined" />
-                                        </FormControl>
-                                    </Grid>
-                                    <Grid item xs={6}>
-                                        <FormControl variant="outlined" className={classes.formControl} style={{ marginRight: 40 }}>
-                                            <TextField className={classes.textField} id="outlined-basic" size="small" label="Pincode" value={Pincode} onChange={(e) => {
-                                                const re = /^[0-9\b]+$/;
-                                                if (e.target.value === '' || re.test(e.target.value)) {
-                                                    setPincode(e.target.value)
-                                                }
-                                            }} variant="outlined" />
-                                        </FormControl>
-                                    </Grid>
-                                </Grid>
-
-                                <Grid container xs={12} style={{ marginTop: 3 }}>
-                                    <Grid item xs={6}>
-                                        <FormControl variant="outlined" className={classes.formControl} style={{ float: 'right', marginLeft: 40 }}>
-                                            <TextField className={classes.textField} id="outlined-basic" size="small" label="State" value={State} onChange={(e) => {
-                                                const re = /^[A-Za-z]+$/;
-                                                if (e.target.value === '' || re.test(e.target.value)) {
-                                                    setState(e.target.value)
-                                                }
-                                            }} variant="outlined" />
-                                        </FormControl>
-                                    </Grid>
-                                    <Grid item xs={6}>
-                                        <FormControl variant="outlined" className={classes.formControl} style={{ marginRight: 40 }}>
-                                            <TextField className={classes.textField} id="outlined-basic" size="small" label="Country" value={Country} onChange={(e) => {
-                                                const re = /^[A-Za-z]+$/;
-                                                if (e.target.value === '' || re.test(e.target.value)) {
-                                                    setCountry(e.target.value)
-                                                }
-                                            }} variant="outlined" />
-                                        </FormControl>
-                                    </Grid>
                                 </Grid>
                             </Grid>
-                            <Grid container >
-                                <Grid xs={12} sm={6}>
-                                    <Button className={classes.btnCancle} onClick={() => handleGoBack(false)} style={{ float: 'right', marginRight: 20 }}>
-                                        Cancel
-                                    </Button>
+
+                            <Grid container>
+                                <Grid item xs={6}>
+                                    <center>
+                                        <FormControl variant="outlined" size="small" className={classes.formControl} style={{ width: '55%' }} >
+                                            <InputLabel htmlFor="outlined-age-native-simple"></InputLabel>
+                                            <Select
+                                                className={classes.textFieldForm}
+                                                size='large'
+                                                native
+                                                value={MorningStartTime}
+                                                onChange={(e) => setMorningStartTime(e.target.value)}
+                                                inputProps={{
+                                                    name: 'start time',
+                                                    id: 'outlined-start-time-native-simple',
+                                                }}
+                                                style={{ width: '90%', fontSize: 14 }}
+                                            >
+                                                {times.map((item) => {
+                                                    return (
+                                                        <option value={item.ActualTime}>{item.DisplayTime}</option>
+                                                    )
+                                                })}
+
+                                            </Select>
+                                        </FormControl>
+                                    </center>
                                 </Grid>
-                                <Grid xs={12} sm={6}>
-                                    <Button className={classes.btnCancle} onClick={() => Edit_DoctorData(FirstName, LastName, MobileNo, Email, Address, Category, City, Pincode, State, Country, Education, DOB, MorningStartTime, MorningEndTime, EveningStartTime, EveningEndTime, Experience, Gender)} style={{ float: 'left', marginLeft: 20 }}>
-                                        Submit
-                                    </Button>
+
+                                <Grid item xs={6}>
+                                    <center>
+                                        <FormControl variant="outlined" size="small" className={classes.formControl} style={{ width: '55%' }} >
+                                            <InputLabel htmlFor="outlined-age-native-simple"></InputLabel>
+                                            <Select
+                                                className={classes.textFieldForm}
+                                                size='large'
+                                                native
+                                                onChange={(e) => setMorningEndTime(e.target.value)} value={MorningEndTime}
+                                                inputProps={{
+                                                    name: 'end time',
+                                                    id: 'outlined-end-time-native-simple',
+                                                }}
+                                                style={{ width: '90%', fontSize: 14 }}
+                                            >
+                                                {times.map((item) => {
+                                                    return (
+                                                        <option value={item.ActualTime}>{item.DisplayTime}</option>
+                                                    )
+                                                })}
+                                            </Select>
+                                        </FormControl>
+                                    </center>
+                                </Grid>
+                            </Grid>
+
+
+                            <Grid item xs={12} style={{ marginTop: '-12px' }}>
+                                <center>
+                                    <Typography variant="h6" noWrap={true} style={{ fontSize: 14, color: '#707070', fontWeight: 600, fontFamily: 'Poppins' }}>
+                                        OPD Evening Time
+                                    </Typography>
+                                </center>
+                            </Grid>
+
+                            <Grid container style={{ padding: 5 }}>
+                                <Grid item xs={6}>
+                                    <center>
+                                        <Typography variant="h6" value={EveningStartTime} onChange={(e) => setEveningStartTime(e.target.value)} noWrap={true} style={{ fontSize: 13, marginTop: -5, color: '#707070', fontWeight: 600, fontFamily: 'Poppins' }}>
+                                            Start Time
+                                        </Typography>
+                                    </center>
+                                </Grid>
+                                <Grid item xs={6}>
+                                    <center>
+                                        <Typography variant="h6" value={EveningEndTime} onChange={(e) => setEveningEndTime(e.target.value)} noWrap={true} style={{ fontSize: 13, marginTop: -5, color: '#707070', fontWeight: 600, fontFamily: 'Poppins' }}>
+                                            End Time
+                                        </Typography>
+                                    </center>
+                                </Grid>
+                            </Grid>
+
+                            <Grid container >
+                                <Grid item xs={6}>
+                                    <center>
+                                        <FormControl variant="outlined" size="small" className={classes.formControl} style={{ width: '55%' }} >
+                                            <InputLabel htmlFor="outlined-age-native-simple"></InputLabel>
+                                            <Select
+                                                className={classes.textFieldForm}
+                                                size='large'
+                                                native
+                                                onChange={(e) => setEveningStartTime(e.target.value)} value={EveningStartTime}
+                                                inputProps={{
+                                                    name: 'start time',
+                                                    id: 'outlined-start-time-native-simple',
+                                                }}
+                                                style={{ width: '90%', fontSize: 14 }}
+                                            >
+                                                {times.map((item) => {
+                                                    return (
+                                                        <option value={item.ActualTime}>{item.DisplayTime}</option>
+                                                    )
+                                                })}
+
+                                            </Select>
+                                        </FormControl>
+                                    </center>
+                                </Grid>
+
+                                <Grid item xs={6}>
+                                    <center>
+                                        <FormControl variant="outlined" size="small" className={classes.formControl} style={{ width: '55%' }} >
+                                            <InputLabel htmlFor="outlined-age-native-simple"></InputLabel>
+                                            <Select
+                                                className={classes.textFieldForm}
+                                                size='large'
+                                                native
+                                                onChange={(e) => setEveningEndTime(e.target.value)} value={EveningEndTime}
+                                                inputProps={{
+                                                    name: 'end time',
+                                                    id: 'outlined-end-time-native-simple',
+                                                }}
+                                                style={{ width: '90%', fontSize: 14 }}
+                                            >
+                                                {times.map((item) => {
+                                                    return (
+                                                        <option value={item.ActualTime}>{item.DisplayTime}</option>
+                                                    )
+                                                })}
+                                            </Select>
+                                        </FormControl>
+                                    </center>
+                                </Grid>
+                            </Grid>
+
+                            <Grid item xs={12} style={{ marginTop: 1 }}>
+                                <center>
+                                    <FormControl variant="outlined" className={classes.formControl}  >
+                                        <TextField className={classes.textField} multiline rows={2.5} rowsMax={2.5} id="outlined-basic" size="small" label="Address" value={Address} onChange={(e) => setAddress(e.target.value)} variant="outlined" style={{ width: '182%' }} />
+                                    </FormControl>
+                                </center>
+                            </Grid>
+
+                            <Grid container xs={12} style={{ marginTop: 33 }}>
+                                <Grid item xs={6}>
+                                    <FormControl variant="outlined" className={classes.formControl} style={{ float: 'right', marginLeft: 40 }}>
+                                        <TextField className={classes.textField} id="outlined-basic" size="small" label="City" value={City} onChange={(e) => { setCity(e.target.value) }}
+                                            variant="outlined" />
+                                    </FormControl>
+                                </Grid>
+                                <Grid item xs={6}>
+                                    <FormControl variant="outlined" className={classes.formControl} style={{ marginRight: 40 }}>
+                                        <TextField className={classes.textField} id="outlined-basic" size="small" label="Pincode" value={Pincode} onChange={(e) => {
+                                            const re = /^[0-9\b]+$/;
+                                            if (e.target.value === '' || re.test(e.target.value)) {
+                                                setPincode(e.target.value)
+                                            }
+                                        }} variant="outlined" />
+                                    </FormControl>
+                                </Grid>
+                            </Grid>
+
+                            <Grid container xs={12} style={{ marginTop: 3 }}>
+                                <Grid item xs={6}>
+                                    <FormControl variant="outlined" className={classes.formControl} style={{ float: 'right', marginLeft: 40 }}>
+                                        <TextField className={classes.textField} id="outlined-basic" size="small" label="State" value={State} onChange={(e) => {
+                                            const re = /^[A-Za-z]+$/;
+                                            if (e.target.value === '' || re.test(e.target.value)) {
+                                                setState(e.target.value)
+                                            }
+                                        }} variant="outlined" />
+                                    </FormControl>
+                                </Grid>
+                                <Grid item xs={6}>
+                                    <FormControl variant="outlined" className={classes.formControl} style={{ marginRight: 40 }}>
+                                        <TextField className={classes.textField} id="outlined-basic" size="small" label="Country" value={Country} onChange={(e) => {
+                                            const re = /^[A-Za-z]+$/;
+                                            if (e.target.value === '' || re.test(e.target.value)) {
+                                                setCountry(e.target.value)
+                                            }
+                                        }} variant="outlined" />
+                                    </FormControl>
                                 </Grid>
                             </Grid>
                         </Grid>
-                    </Paper>
+                        <Grid container >
+                            <Grid xs={12} sm={6}>
+                                <Button className={classes.btnCancle} onClick={() => handleGoBack(false)} style={{ float: 'right', marginRight: 20 }}>
+                                    Cancel
+                                </Button>
+                            </Grid>
+                            <Grid xs={12} sm={6}>
+                                <Button className={classes.btnCancle} onClick={() => Edit_DoctorData(NmTitle, FirstName, LastName, MobileNo, Email, Address, Category, City, Pincode, State, Country, Education, DOB, MorningStartTime, MorningEndTime, EveningStartTime, EveningEndTime, Experience, Gender)} style={{ float: 'left', marginLeft: 20 }}>
+                                    Submit
+                                </Button>
+                            </Grid>
+                        </Grid>
                 </Grid>
+            </Paper>
+        </Grid>
 
-            </Grid> {/* main grid */}
+            </Grid > {/* main grid */ }
 
-            {/* {editmodal? <EditImage show={editmodal} data={doctordata} handleCloseEditmodal ={()=>seteditmodal(false)}/>:null} */}
+    {/* {editmodal? <EditImage show={editmodal} data={doctordata} handleCloseEditmodal ={()=>seteditmodal(false)}/>:null} */ }
 
         </div >
 

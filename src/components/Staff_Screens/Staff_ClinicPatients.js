@@ -2,11 +2,10 @@ import React, { useState, useEffect } from 'react';
 import clsx from 'clsx';
 import { makeStyles, useTheme, alpha } from '@material-ui/core/styles';
 import { useNavigate } from 'react-router-dom';
-import { Avatar, Slide, STypography, Button, InputBase, Divider, ListItem, ListItemText, IconButton, Typography, Grid, Paper, Link } from "@material-ui/core";
+import { Avatar, Slide, STypography, Button, InputBase, Divider, ListItem, ListItemText, Box, Typography, Grid, Paper, Link } from "@material-ui/core";
 import { Redirect } from 'react-router-dom';
 import DoctorNavbar from './Staff_Navbar';
 import SearchIcon from '@material-ui/icons/Search';
-
 import PropTypes from 'prop-types';
 import ArrowBackIcon from '@material-ui/icons/ArrowBack';
 
@@ -32,6 +31,7 @@ const columns = [
         headerName: 'Full name',
         sortable: false,
         width: 200,
+        headerClassName: 'super-app-theme--header',
         valueGetter: (params) =>
             `${params.getValue(params.id, 'FirstName') || ''} ${params.getValue(params.id, 'LastName') || ''
             }`,
@@ -41,6 +41,8 @@ const columns = [
         headerName: 'Contact No',
         width: 160,
         editable: true,
+       
+        headerClassName: 'super-app-theme--header',
     },
 ];
 
@@ -292,18 +294,28 @@ export default function Staff_ClinicPatients() {
 
                         </Grid>
 
-
-                        <DataGrid
-                            style={{ height: 350, marginTop: 20, fontSize: 13, fontFamily: 'Poppins', fontWeight: 600, color: '#2C7FB2', cursor: 'pointer' }}
-                            rows={patientData}
-                            rowHeight={30}
-                            columns={columns}
-                            columnWidth={10}
-                            pageSize={10}
-                            onRowClick={(newSelection) => {
-                                handleCellClick(newSelection.row.UserId);
+                        <Box
+                            sx={{
+                                '& .super-app-theme--header': {
+                                    // backgroundColor: '#78B088',
+                                    // color: '#fff
+                                    fontSize: 15,
+                                    marginLeft: 10
+                                },
                             }}
-                        />
+                        >
+                            <DataGrid
+                                style={{ height: 350, marginTop: 20, fontSize: 13, fontFamily: 'Poppins', fontWeight: 600, color: '#2C7FB2', cursor: 'pointer' }}
+                                rows={patientData}
+                                rowHeight={30}
+                                columns={columns}
+                                columnWidth={10}
+                                pageSize={10}
+                                onRowClick={(newSelection) => {
+                                    handleCellClick(newSelection.row.UserId);
+                                }}
+                            />
+                        </Box>
                         <Typography variant="h6" noWrap={true} style={{
                             fontSize: 12, color: '#2C7FB2', fontFamily: 'Poppins',
                             fontStyle: 'normal',
@@ -326,9 +338,9 @@ export default function Staff_ClinicPatients() {
                         </Typography>
                         <center>
                             <div style={{ paddingBottom: 10 }}>
-                                {patientDetails.ProfileImage ?
-                                    <Avatar style={{ borderRadius: 50, height: 100, width: 100 }} src={patientDetails.ProfileImage} /> :
-                                    <Avatar style={{ borderRadius: 50, height: 100, width: 100 }} />}
+                                {patientDetails.ProfileImage ? <Avatar style={{ borderRadius: 50, height: 100, width: 100 }} src={patientDetails.ProfileImage} /> : patientDetails.Gender == 'Female' ? <Avatar style={{ borderRadius: 50, height: 100, width: 100 }} src='femaleicon.png' /> :
+                                    <Avatar style={{ borderRadius: 50, height: 100, width: 100 }} src='maleicon.png' />
+                                }
                                 {/* <img src="Pallavi Kale.jpg" style={{ borderRadius: 50, height: 100 }}></img> */}
                             </div>
 
@@ -339,7 +351,7 @@ export default function Staff_ClinicPatients() {
                                 color: '#707070',
                                 fontWeight: 600
                             }}>
-                                {patientDetails.FirstName ? patientDetails.FirstName : "NA"}   {patientDetails.LastName ? patientDetails.LastName : ""}
+                              {patientDetails.NmTitle ? patientDetails.NmTitle : ''} {patientDetails.FirstName ? patientDetails.FirstName : "NA"}   {patientDetails.LastName ? patientDetails.LastName : ""}
 
                             </Typography>
                             <Typography variant="h6" noWrap={true} style={{
@@ -389,18 +401,26 @@ export default function Staff_ClinicPatients() {
                             <Grid container xs={12}>
                                 <Grid item xs={3} style={{ border: '1px solid #F0F0F0', borderTop: '0px', paddingBottom: 20 }}>
                                     <Typography variant="h6" noWrap={true} style={{ paddingTop: 10, fontSize: 14, color: '#707070', fontWeight: 600, fontFamily: 'Poppins', }}>
+                                        Alternate Number
+                                    </Typography>
+                                    <Typography variant="h6" noWrap={true} style={{ paddingTop: 5, fontSize: 14, color: '#707070', fontFamily: 'Poppins', }}>
+                                        {patientDetails.AlternateMobileNo ? patientDetails.AlternateMobileNo : 'NA'}
+                                    </Typography>
+                                </Grid>
+                                <Grid item xs={3} style={{ border: '1px solid #F0F0F0', borderTop: '0px', paddingBottom: 20 }}>
+                                    <Typography variant="h6" noWrap={true} style={{ paddingTop: 10, fontSize: 14, color: '#707070', fontWeight: 600, fontFamily: 'Poppins', }}>
                                         Gender
                                     </Typography>
                                     <Typography variant="h6" noWrap={true} style={{ paddingTop: 5, fontSize: 14, color: '#707070', fontFamily: 'Poppins', }}>
                                         {patientDetails.Gender ? patientDetails.Gender : 'NA'}
                                     </Typography>
                                 </Grid>
-                                <Grid item xs={9} style={{ border: '1px solid #F0F0F0', borderLeft: '0px', borderTop: '0px', paddingBottom: 20 }}>
+                                <Grid item xs={6} style={{ border: '1px solid #F0F0F0', borderLeft: '0px', borderTop: '0px', paddingBottom: 20 }}>
                                     <Typography variant="h6" noWrap={true} style={{ paddingTop: 10, fontSize: 14, color: '#707070', fontWeight: 600, fontFamily: 'Poppins', }}>
                                         Address
                                     </Typography>
                                     <Typography variant="h6" noWrap={true} style={{ paddingTop: 5, fontSize: 14, color: '#707070', fontFamily: 'Poppins', marginLeft: 10, marginRight: 10 }}>
-                                        {patientDetails.Address ? patientDetails.Address : 'NA'} {patientDetails.City} {patientDetails.State} {patientDetails.Country} {patientDetails.Pincode}
+                                        {patientDetails.Address ? `${patientDetails.Address}` : 'NA'}{patientDetails.City ? `, ${patientDetails.City}` : ''}{patientDetails.State ? `, ${patientDetails.State}` : ''}{patientDetails.Country ? `, ${patientDetails.Country},` : ''}{patientDetails.Pincode}
                                     </Typography>
                                 </Grid>
                                 {/* <Grid item xs={3} style={{ border: '1px solid #F0F0F0', borderLeft: '0px', borderTop: '0px', paddingBottom: 20 }}>

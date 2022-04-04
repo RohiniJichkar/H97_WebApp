@@ -6,6 +6,11 @@ import CloseIcon from '@material-ui/icons/Close';
 import { edit_Medicine } from '../../../Apis/Medicines/index';
 import axios from 'axios';
 import ip from '../../../ipaddress/ip';
+import DateFnsUtils from '@date-io/date-fns';
+import {
+    MuiPickersUtilsProvider,
+    KeyboardDatePicker,
+} from '@material-ui/pickers';
 
 const drawerWidth = 240;
 
@@ -21,8 +26,8 @@ export default function Edit_Medicine({ show, data, handleEditModal }) {
     const [mType, setmType] = useState(data.MedicineType);
     const [mStrength, setmStrength] = useState(data.Strength);
     const [mQuantity, setmQuantity] = useState(data.Quantity);
-    const [mStartDate, setmStartDate] = useState(data.StartDate);
-    const [mExpiryDate, setmExpiryDate] = useState(data.ExpiryDate);
+    const [mStartDate, setmStartDate] = useState(data.StartDate ? data.StartDate : new Date());
+    const [mExpiryDate, setmExpiryDate] = useState(data.ExpiryDate ? data.ExpiryDate : new Date());
     const [medicineTypes, setmedicineTypes] = useState([]);
 
     const fetchmedicinetypes = async () => {
@@ -39,6 +44,10 @@ export default function Edit_Medicine({ show, data, handleEditModal }) {
         let parsed = JSON.parse(sessiondata);
         let clinicid = parsed.ClinicId;
         let doctorid = parsed.userid;
+
+        // let startDate = mStartDate.toISOString().split('T')[0];
+        // let expirtyDate = mExpiryDate.toISOString().split('T')[0];
+
         const obj = {
             id: data.id,
             ClinicId: clinicid,
@@ -121,7 +130,7 @@ export default function Edit_Medicine({ show, data, handleEditModal }) {
                                                 inputProps: { min: 0 }
                                             }}
                                             value={mQuantity} onChange={(e) => setmQuantity(e.target.value)} id="outlined-basic" type="number" size="small" label="Quantity" variant="outlined" />
-                                        <Grid container >
+                                        <Grid container style={{marginTop: -10}}>
                                             <Grid item xs={6}>
                                                 <center>
                                                     <Typography variant="h6" noWrap={true} style={{ fontSize: 14, color: '#707070', fontWeight: 600, fontFamily: 'Poppins', marginLeft: 80 }}>
@@ -136,11 +145,36 @@ export default function Edit_Medicine({ show, data, handleEditModal }) {
                                                     </Typography>
                                                 </center>
                                             </Grid>
-                                            <Grid item xs={6} style={{ marginTop: 5 }}>
-                                                <TextField className={classes.inputFields} value={mStartDate} onChange={(e) => setmStartDate(e.target.value)} id="outlined-basic" type='date' variant="outlined" size="small" style={{ width: '130px', float: 'right', marginRight: 20 }} />
+                                            <Grid item xs={6} style={{ marginTop: 10 }}>
+                                                <MuiPickersUtilsProvider utils={DateFnsUtils}>
+                                                    <KeyboardDatePicker
+                                                        autoOk
+                                                        size='small'
+                                                        value={mStartDate}
+                                                        onChange={setmStartDate}
+                                                        inputVariant="outlined"
+                                                        label="Start Date"
+                                                        format='dd/MM/yyyy'
+                                                        style={{float: 'right', width: '130px', marginRight: 20 }}
+                                                    />
+                                                </MuiPickersUtilsProvider>
+
+                                                {/* <TextField className={classes.inputFields} value={mStartDate} onChange={(e) => setmStartDate(e.target.value)} id="outlined-basic" type='date' variant="outlined" size="small" style={{ width: '130px', float: 'right', marginRight: 20 }} /> */}
                                             </Grid>
                                             <Grid item xs={6} style={{ marginTop: 5 }}>
-                                                <TextField className={classes.inputFields} value={mExpiryDate} onChange={(e) => setmExpiryDate(e.target.value)} id="outlined-basic" type='date' variant="outlined" size="small" style={{ width: '130px', float: 'left', marginLeft: 20 }} />
+                                                <MuiPickersUtilsProvider utils={DateFnsUtils}>
+                                                    <KeyboardDatePicker
+                                                        autoOk
+                                                        size='small'
+                                                        value={mExpiryDate}
+                                                        onChange={setmExpiryDate}
+                                                        inputVariant="outlined"
+                                                        label="Expiry Date"
+                                                        format='dd/MM/yyyy'
+                                                        style={{  float: 'left', width: '130px', marginLeft: 20 }}
+                                                    />
+                                                </MuiPickersUtilsProvider>
+                                                {/* <TextField className={classes.inputFields} value={mExpiryDate} onChange={(e) => setmExpiryDate(e.target.value)} id="outlined-basic" type='date' variant="outlined" size="small" style={{ width: '130px', float: 'left', marginLeft: 20 }} /> */}
                                             </Grid>
                                         </Grid>
                                     </div>

@@ -9,9 +9,11 @@ import SearchIcon from '@material-ui/icons/Search';
 import DeleteIcon from '@material-ui/icons/Delete';
 import EditIcon from '@material-ui/icons/Edit';
 import { DataGrid, GridColDef, GridApi, GridCellValue, GridCellParams } from '@material-ui/data-grid';
-import { GetMorningSlots, GetEveningSlots,  Todays_Appointment } from '../Apis/Home_Visitors/Home_Visitor_History/index';
+import { GetMorningSlots, GetEveningSlots, Todays_Appointment } from '../Apis/Home_Visitors/Home_Visitor_History/index';
 import { Edit_Appointment_From_TodaysApp } from './Todays_Appointments/Slots/Edit_Appointment/index';
 import Delete_Appointment from './Todays_Appointments/Slots/Delete_Appointment/index';
+import ArrowBackIcon from '@material-ui/icons/ArrowBack';
+
 
 const drawerWidth = 240;
 
@@ -392,6 +394,9 @@ export default function DoctorTodaysHVAppDiary() {
         setSelectedValue(event.target.value);
     };
 
+    const handleGoBack = () => {
+        navigate(-1);
+    };
 
     return (
         <div className={classes.root} style={{ backgroundColor: '#ffffff' }}>
@@ -415,6 +420,7 @@ export default function DoctorTodaysHVAppDiary() {
                             color: '#2C7FB2',
 
                         }}>
+                        <Button style={{ marginLeft: '-20px', backgroundColor: 'white', color: '#2C7FB2', borderRadius: 105, fontSize: '12px' }}> <ArrowBackIcon onClick={handleGoBack} />  </Button>
                         Morning Slots
                     </Typography>
 
@@ -478,7 +484,7 @@ export default function DoctorTodaysHVAppDiary() {
                     })}
                 </Grid>
 
-             
+
 
                 <Grid item xs={12} >
 

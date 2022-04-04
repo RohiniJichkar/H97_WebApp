@@ -21,7 +21,7 @@ export const Show_Send_In_Details = ({ show, data, handlemodal }) => {
                 fullWidth={fullWidth}
                 maxWidth={maxWidth}
                 open={show}
-                style={{alignItems:'center',justifyContent:'center'}}
+                style={{ alignItems: 'center', justifyContent: 'center' }}
                 // BackdropProps={{ invisible: true }}
                 // PaperProps={{
                 //     style: {
@@ -33,13 +33,15 @@ export const Show_Send_In_Details = ({ show, data, handlemodal }) => {
             >
                 <DialogContent>
                     <DialogContentText id="alert-dialog-description">
-                        <div style={{marginTop:150}}>
+                        <div style={{ marginTop: 150 }}>
                             <Slider dots={true} autoplay={true}>
                                 {data.length != 0 ?
                                     data.map((item) => (
                                         <center>
                                             <div key={item.id}>
-                                                <Avatar style={{ borderRadius: 150, height: 70, width: 70 }} />
+                                                {item.Gender == 'Female' ? <Avatar style={{  borderRadius: 150, height: 250, width: 250, border: '1px solid lightgray' }} src='femaleicon.png' /> :
+                                                    <Avatar style={{  borderRadius: 150, height: 300, width: 300, border: '1px solid lightgray' }} src='maleicon.png' />}
+                                                {/* <Avatar style={{ borderRadius: 150, height: 300, width: 300 }} /> */}
                                             </div>
                                             <Grid item xs={12}
                                                 style={{
@@ -49,9 +51,10 @@ export const Show_Send_In_Details = ({ show, data, handlemodal }) => {
                                                 <center>
                                                     <h1 style={{
                                                         fontFamily: "Poppins",
-                                                        color: '#78B088',
-                                                        fontWeight: 600
-                                                    }}>{item.FirstName} {item.LastName}</h1>
+                                                        color: 'black',
+                                                        fontWeight: 600,
+                                                        fontSize: 115
+                                                    }}>{item.NmTitle ? item.NmTitle : ''} {item.FirstName} {item.LastName}</h1>
                                                 </center>
                                             </Grid>
                                             <Grid item xs={12}
@@ -64,14 +67,16 @@ export const Show_Send_In_Details = ({ show, data, handlemodal }) => {
                                                         style={{
                                                             fontFamily: "Poppins",
                                                             color: '#2C7FB2',
+                                                            fontSize: 60
                                                         }}
                                                     >Now it's your turn please visit</h3>
                                                     <h3
                                                         style={{
-                                                            marginTop:50,
+                                                            marginTop: 50,
                                                             fontFamily: "Poppins",
                                                             color: '#2C7FB2',
-                                                            fontWeight:600
+                                                            fontWeight: 600,
+                                                            fontSize: 80
                                                         }}
                                                     >Dr.{item.DFName} {item.DLName}</h3>
                                                 </center>

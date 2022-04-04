@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import clsx from 'clsx';
 import { makeStyles, useTheme, alpha } from '@material-ui/core/styles';
 import { useNavigate } from 'react-router-dom';
-import { Container, FormControl, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, Slide, Switch, FormControlLabel, Select, InputLabel, TextField, Typography, Button, Avatar, Table, TableContainer, TableBody, TableCell, TableHead, InputBase, TableRow, TablePagination, Drawer, Divider, MenuItem, Menu, ListItem, ListItemIcon, ListItemText, List, IconButton, Grid, Paper, Link } from "@material-ui/core";
+import { Container, FormControl, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, Box, Slide, Switch, FormControlLabel, Select, InputLabel, TextField, Typography, Button, Avatar, Table, TableContainer, TableBody, TableCell, TableHead, InputBase, TableRow, TablePagination, Drawer, Divider, MenuItem, Menu, ListItem, ListItemIcon, ListItemText, List, IconButton, Grid, Paper, Link } from "@material-ui/core";
 import { Redirect } from 'react-router-dom';
 import DoctorNavbar from './Staff_Navbar';
 import SearchIcon from '@material-ui/icons/Search';
@@ -60,6 +60,7 @@ export default function Staff_Home_Visitors() {
     const [doctorCategory, setdoctorCategory] = useState([]);
     const [homevisitorsearch, sethomevisitorsearch] = useState([]);
     const [showPassword, setshowPassword] = useState(false)
+    const [title, settitle] = useState('');
 
     const handlemonday = () => {
         setmonday(previousState => !previousState);
@@ -138,8 +139,17 @@ export default function Staff_Home_Visitors() {
         var data = await localStorage.getItem("userdata");
         let parsed = JSON.parse(data);
         let clinicid = parsed.ClinicId;
+        if (title == '') {
+            alert('Please Select Title');
+            return;
+        }
+        else if (address == '') {
+            alert('Please Enter Address');
+            return;
+        }
         const obj = {
             ClinicId: clinicid,
+            NmTitle: title,
             FirstName: firstName,
             LastName: lastName,
             Password: password,
@@ -186,16 +196,12 @@ export default function Staff_Home_Visitors() {
     }
 
     const handleContinue = async () => {
-
         if (homevisitorDetails.length > 0) {
             setOpendeletemodal(true)
         }
-
-
         else {
             alert('Please select Home visitors from list');
         }
-
     };
 
     useEffect(() => {
@@ -284,18 +290,28 @@ export default function Staff_Home_Visitors() {
                                 </Grid>
                             </Grid>
 
-                            <DataGrid
-                                style={{ height: 350, marginTop: 20, fontSize: 13, fontFamily: 'Poppins', fontWeight: 600, color: '#2C7FB2', cursor: 'pointer' }}
-                                rows={homevisitorData}
-                                rowHeight={30}
-                                columns={columns}
-                                columnWidth={10}
-                                pageSize={5}
-                                onRowClick={(newSelection) => {
-                                    handleRowClick(newSelection.row.UserId);
+                            <Box
+                                sx={{
+                                    '& .super-app-theme--header': {
+                                        // backgroundColor: '#78B088',
+                                        // color: '#fff
+                                        fontSize: 15,
+                                        marginLeft: 10
+                                    },
                                 }}
-                            />
-
+                            >
+                                <DataGrid
+                                    style={{ height: 350, marginTop: 20, fontSize: 13, fontFamily: 'Poppins', fontWeight: 600, color: '#2C7FB2', cursor: 'pointer' }}
+                                    rows={homevisitorData}
+                                    rowHeight={30}
+                                    columns={columns}
+                                    columnWidth={10}
+                                    pageSize={5}
+                                    onRowClick={(newSelection) => {
+                                        handleRowClick(newSelection.row.UserId);
+                                    }}
+                                />
+                            </Box>
                         </Paper>
                     </Grid>
 
@@ -322,7 +338,7 @@ export default function Staff_Home_Visitors() {
                                     color: '#707070',
                                     fontWeight: 600
                                 }}>
-                                    {homevisitorDetails[0] ? homevisitorDetails[0].FirstName : "NA"} {homevisitorDetails[0] ? homevisitorDetails[0].LastName : null}
+                                    {homevisitorDetails[0] ? homevisitorDetails[0].NmTitle : ""} {homevisitorDetails[0] ? homevisitorDetails[0].FirstName : "NA"} {homevisitorDetails[0] ? homevisitorDetails[0].LastName : null}
                                 </Typography>
                                 <Typography variant="h6" noWrap={true} style={{
                                     fontSize: 14,
@@ -496,7 +512,52 @@ export default function Staff_Home_Visitors() {
                                             </Typography>
 
                                             <div style={{ marginTop: 13 }}>
-                                                <FormControl variant="outlined" className={classes.formControlForm}  >
+
+                                                <Grid container style={{ marginBottom: -35 }}>
+                                                    <Grid item xs={2}>
+                                                        <center>
+                                                            <FormControl variant="outlined" size='small' className={classes.formControl}  >
+                                                                <Select
+                                                                    className={classes.inputFields}
+                                                                    native
+                                                                    size='small'
+                                                                    value={title}
+                                                                    label="title"
+                                                                    onChange={(e) => settitle(e.target.value)}
+                                                                    inputProps={{
+                                                                        name: 'title',
+                                                                        id: 'outlined-title-native-simple',
+                                                                    }}
+                                                                    style={{ marginLeft: -7, width: 78, marginTop: -9 }}
+                                                                >
+                                                                    <option aria-label="None" value="" >Title</option>
+                                                                    <option value='Dr.'>Dr.</option>
+                                                                    <option value='Mr.'>Mr.</option>
+                                                                    <option value='Mrs.'>Mrs.</option>
+                                                                    <option value='Ms.'>Ms.</option>
+                                                                    <option value='Miss.'>Miss.</option>
+                                                                </Select>
+                                                            </FormControl> <span style={{ fontSize: 20, color: 'red', marginLeft: '120%', top: -60, position: 'relative' }}> *</span>
+                                                        </center>
+                                                    </Grid>
+                                                    <Grid item xs={8}>
+                                                        <center>
+                                                            <TextField className={classes.inputFields} value={firstName}
+                                                                onChange={(e) => {
+                                                                    const re = /^[A-Za-z]+$/;
+                                                                    // if value is not blank, then test the regex
+                                                                    if (e.target.value === '' || re.test(e.target.value)) {
+                                                                        setfirstName(e.target.value)
+                                                                    }
+                                                                }
+                                                                } style={{ width: 242 }}
+                                                                id="outlined-basic" size="small" placeholder="First Name" variant="outlined" />
+                                                            <span style={{ fontSize: 20, color: 'red', marginLeft: '86%', top: -50, position: 'relative' }}> *</span>
+                                                        </center>
+                                                    </Grid>
+                                                </Grid>
+
+                                                {/* <FormControl variant="outlined" className={classes.formControlForm}  >
                                                     <TextField className={classes.textFieldForm} value={firstName}
                                                         onChange={(e) => {
                                                             const re = /^[A-Za-z]+$/;
@@ -508,8 +569,7 @@ export default function Staff_Home_Visitors() {
                                                             }
                                                         }
                                                         } id="outlined-basic" size="small" label="First Name" variant="outlined" style={{ width: '155%', position: 'relative', top: 3 }} />
-
-                                                </FormControl><span style={{ position: 'relative', left: 120, bottom: 8, fontSize: 20, color: 'red' }}> *</span>
+                                                </FormControl><span style={{ position: 'relative', left: 120, bottom: 8, fontSize: 20, color: 'red' }}> *</span> */}
                                             </div>
                                             <div>
                                                 <FormControl variant="outlined" className={classes.formControlForm}  >
@@ -535,36 +595,35 @@ export default function Staff_Home_Visitors() {
                                                         if (e.target.value === '' || re.test(e.target.value)) {
                                                             seteducation(e.target.value)
                                                         }
-                                                    }} id="outlined-basic" type="text" label="Education" variant="outlined" size="small" style={{ width: '155%', position: 'relative', top: 25 }} />
-                                                </FormControl>
+                                                    }} id="outlined-basic" type="text" label="Education" variant="outlined" size="small" style={{ width: '155%', position: 'relative', top: 20 }} />
+                                                </FormControl><span style={{ position: 'relative', left: 120, top: 10, fontSize: 20, color: 'red' }}> *</span>
                                             </div>
+
                                             <div>
                                                 <FormControl variant="outlined" className={classes.formControlForm} >
-                                                    <TextField className={classes.textFieldForm} value={address} onChange={(e) => setaddress(e.target.value)} multiline rows={1} rowsMax={1} id="outlined-basic" type="text" label="Address" variant="outlined" size="small" style={{ width: '167%', top: 30 }} />
-                                                </FormControl>
+                                                    <TextField className={classes.textFieldForm} value={address} onChange={(e) => setaddress(e.target.value)} multiline rows={1} rowsMax={1} id="outlined-basic" type="text" label="Address" variant="outlined" size="small" style={{ width: '169%', top: 30 }} />
+                                                </FormControl><span style={{ position: 'relative', left: 137, top: 20, fontSize: 20, color: 'red' }}> *</span>
                                             </div>
                                         </Grid>
                                         <div>
                                             <Grid item xs={6} >
-
-                                                <FormControl variant="outlined" className={classes.formControlForm}  >
+                                                <FormControl variant="outlined" className={classes.formControlForm} style={{ marginTop: 40, width: 182 }} >
                                                     <TextField className={classes.textFieldForm} value={mobile}
                                                         onChange={(e) => {
                                                             const re = /^[0-9\b]+$/;
                                                             if (e.target.value === '' || re.test(e.target.value)) {
                                                                 setmobile(e.target.value)
                                                             }
-                                                        }} id="outlined-basic" type='number' label="Mobile No" variant="outlined" size="small" style={{ width: '185%', marginLeft: 45, position: 'relative', top: 38 }}
+                                                        }} id="outlined-basic" type='number' label="Mobile No" variant="outlined" size="small" style={{ width: '185%', marginLeft: 42, }}
                                                         onInput={(e) => {
                                                             e.target.value = Math.max(0, parseInt(e.target.value)).toString().slice(0, 10)
 
                                                         }} />
-                                                </FormControl><span style={{ position: 'relative', left: '211%', bottom: 23, fontSize: 20, color: 'red' }}> *</span>
-
+                                                </FormControl><span style={{ position: 'relative', left: 382, bottom: 60, fontSize: 20, color: 'red', }}> *</span>
 
                                                 <div>
-                                                    <FormControl variant="outlined" className={classes.formControlForm}  >
-                                                        <TextField className={classes.textFieldForm} onChange={(e) => setemail(e.target.value)} id="outlined-basic" type='email' label="Email ID" variant="outlined" size="small" style={{ width: '185%', marginTop: 15, marginLeft: 43 }} />
+                                                    <FormControl variant="outlined" className={classes.formControlForm} style={{ marginTop: -35, width: 185 }}>
+                                                        <TextField className={classes.textFieldForm} onChange={(e) => setemail(e.target.value)} id="outlined-basic" type='email' label="Email ID" variant="outlined" size="small" style={{ width: '180%', marginTop: 10, marginLeft: 43 }} />
                                                     </FormControl>
                                                 </div>
 
@@ -582,7 +641,7 @@ export default function Staff_Home_Visitors() {
                                                             name: 'category',
                                                             id: 'outlined-category-native-simple',
                                                         }}
-                                                        style={{ width: '188%', fontSize: 14, marginTop: '5px', marginLeft: 67 }}
+                                                        style={{ width: '186%', fontSize: 14, marginLeft: 67 }}
                                                     >
                                                         <option aria-label="None" value="">Category</option>
                                                         {doctorCategory.map((item) => {
@@ -606,7 +665,7 @@ export default function Staff_Home_Visitors() {
                                                             name: 'gender',
                                                             id: 'outlined-gender-native-simple',
                                                         }}
-                                                        style={{ width: '188%', fontSize: 14, marginTop: '5px', marginLeft: 67 }}
+                                                        style={{ width: '186%', fontSize: 14, marginTop: '5px', marginLeft: 67 }}
                                                     >
 
                                                         <option aria-label="None" value="" >Gender</option>
@@ -614,30 +673,36 @@ export default function Staff_Home_Visitors() {
                                                         <option value='Female'>Female</option>
                                                     </Select>
                                                 </FormControl>
-
                                             </Grid>
                                         </div>
 
                                     </Grid>
                                     {/* <Grid container>
-                                        <Grid item xs={12}>
+                                        <Grid item xs={6}>
                                             <div>
                                                 <FormControl variant="outlined" className={classes.formControlForm}  >
-                                                    <TextField className={classes.textFieldForm} onChange={(e) => setaddress(e.target.value)} multiline rows={2} rowsMax={4} id="outlined-basic" type='text' label="Address" variant="outlined" size="small" style={{ width: '405%', position: 'relative', top: 15, left: 10 }} />
+                                                    <TextField className={classes.textFieldForm} onChange={(e) => setaddress(e.target.value)} multiline rows={2} rowsMax={4} id="outlined-basic" type='text' label="Address" variant="outlined" size="small" style={{ width: '100%', top: 15, left: 10 }} />
+                                                </FormControl>
+                                            </div>
+                                        </Grid>
+                                        <Grid item xs={6}>
+                                            <div>
+                                                <FormControl variant="outlined" className={classes.formControlForm}  >
+                                                    <TextField className={classes.textFieldForm} onChange={(e) => setaddress(e.target.value)} multiline rows={2} rowsMax={4} id="outlined-basic" type='text' label="Address" variant="outlined" size="small" style={{ width: '100%', top: 15, left: 10 }} />
                                                 </FormControl>
                                             </div>
                                         </Grid>
                                     </Grid> */}
-                                    <Grid container style={{ marginTop: 0 }}>
-                                        <Grid item xs={6} style={{ marginTop: -25 }}>
+                                    <Grid container >
+                                        <Grid item xs={6} style={{ marginTop: -35 }}>
 
                                             <div>
                                                 <Typography variant="h6" noWrap={true} style={{
                                                     fontSize: 14, color: '#707070', fontFamily: 'Poppins',
                                                     fontStyle: 'normal',
                                                     fontWeight: 600,
-                                                    marginTop: 30
-
+                                                    marginTop: 30,
+                                                    marginLeft: 10
                                                 }}>
                                                     From
                                                 </Typography>
@@ -692,7 +757,7 @@ export default function Staff_Home_Visitors() {
                                                             name: 'totime',
                                                             id: 'outlined-to-time-native-simple',
                                                         }}
-                                                        style={{ width: '50%', fontSize: 12, marginLeft: 220, marginTop: -27 }}
+                                                        style={{ width: '52%', fontSize: 12, marginLeft: 220, marginTop: -27 }}
                                                     >
                                                         <option aria-label="None" value='' >To</option>
 
@@ -719,7 +784,7 @@ export default function Staff_Home_Visitors() {
                                                         label="Password"
                                                         type={showPassword ? 'text' : 'password'}
                                                         size='small'
-                                                        style={{ width: '103%', marginLeft: 53, marginTop: 5 }}
+                                                        style={{ width: '100%', marginLeft: 53, marginTop: -10 }}
                                                         onChange={(e) => setpassword(e.target.value)}
                                                         InputProps={{
                                                             endAdornment: (
@@ -735,7 +800,7 @@ export default function Staff_Home_Visitors() {
                                                             ),
                                                         }}
                                                     />
-                                                </FormControl><span style={{ position: 'relative', left: 60, top: 5, fontSize: 20, color: 'red' }}> *</span>
+                                                </FormControl><span style={{ position: 'relative', left: 53, top: -17, fontSize: 20, color: 'red' }}> *</span>
                                             </div>
 
                                         </Grid>
@@ -1021,6 +1086,7 @@ export default function Staff_Home_Visitors() {
                 </Dialog>
 
 
+
                 {/* For Edit Visitor Details */}
                 {openeditmodal ? <Edit_Home_Visitor show={openeditmodal} data={homevisitorDetails} handleCloseEditmodal={() => setOpenEditmodal(false)} /> : null}
 
@@ -1040,6 +1106,7 @@ const columns = [
         headerName: 'Full name',
         sortable: false,
         width: 200,
+        headerClassName: 'super-app-theme--header',
         valueGetter: (params) =>
             `${params.getValue(params.id, 'FirstName') || ''} ${params.getValue(params.id, 'LastName') || ''
             }`,
@@ -1048,6 +1115,7 @@ const columns = [
         field: 'MobileNo',
         headerName: 'Contact No',
         width: 160,
+        headerClassName: 'super-app-theme--header',
         editable: true,
     },
 ];
@@ -1182,9 +1250,9 @@ const useStyles = makeStyles((theme) => ({
         width: 130,
     },
     inputFields: {
-        [`& fieldset`]: {
-            borderRadius: 25,
-        },
+        // [`& fieldset`]: {
+        //     borderRadius: 25,
+        // },
         width: 300,
         fontFamily: 'Poppins',
         fontStyle: 'normal',

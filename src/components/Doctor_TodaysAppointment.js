@@ -2,14 +2,19 @@ import React, { useState, useEffect } from 'react';
 import clsx from 'clsx';
 import { makeStyles, useTheme, alpha } from '@material-ui/core/styles';
 import { useNavigate } from 'react-router-dom';
-import { Typography, Button, IconButton, Grid, Paper } from "@material-ui/core";
+import { Typography, Button, IconButton, Grid, Paper, Box } from "@material-ui/core";
 import DoctorNavbar from './Doctor_Navbar';
 import AccountCircle from '@material-ui/icons/AccountCircle';
 import SearchIcon from '@material-ui/icons/Search';
 import DeleteIcon from '@material-ui/icons/Delete';
 import EditIcon from '@material-ui/icons/Edit';
-import { GetMorningSlots, GetEveningSlots, Todays_Appointment, Todays_Appointment_By_Date } from '../Apis/Todays_Appointments/index';
+import { GetMorningSlots, GetEveningSlots, Todays_Appointment, Todays_Appointment_By_Date, GetAppByTimeWise } from '../Apis/Todays_Appointments/index';
 import { DataGrid, GridColDef, GridApi, GridCellValue, GridCellParams } from '@material-ui/data-grid';
+import DateFnsUtils from '@date-io/date-fns';
+import {
+    MuiPickersUtilsProvider,
+    KeyboardDatePicker,
+} from '@material-ui/pickers';
 
 import { Edit_Appointment_From_TodaysApp } from './Todays_Appointments/Slots/Edit_Appointment/index';
 import Delete_Appointment from './Todays_Appointments/Slots/Delete_Appointment/index';
@@ -21,51 +26,59 @@ const columns = [
         field: 'fullName',
         headerName: 'Full name',
         sortable: false,
-        width: 200,
+        width: 150,
+        headerClassName: 'super-app-theme--header',
         valueGetter: (params) =>
             `${params.getValue(params.id, 'FirstName') || ''} ${params.getValue(params.id, 'LastName') || ''
             }`,
     },
-    // {
-    //     field: 'MobileNo',
-    //     headerName: 'Contact No',
-    //     width: 160,
-    //     editable: true,
-    // },
+    {
+        field: 'MobileNo',
+        headerName: 'Contact No',
+        width: 160,
+        headerClassName: 'super-app-theme--header',
+        editable: true,
+    },
     {
         field: 'AppointmentReason',
         headerName: 'Appointment Reason',
-        width: 220,
+        width: 210,
+        headerClassName: 'super-app-theme--header',
         editable: true,
     },
     {
         field: 'AppointmentDate',
         headerName: 'Date',
-        width: 160,
+        width: 120,
+        headerClassName: 'super-app-theme--header',
         editable: true,
     },
     {
         field: 'AppointmentTime',
         headerName: 'Time',
-        width: 160,
+        width: 120,
+        headerClassName: 'super-app-theme--header',
         editable: true,
     },
     {
         field: 'AppointmentType',
         headerName: 'Type',
-        width: 160,
+        width: 120,
+        headerClassName: 'super-app-theme--header',
         editable: true,
     },
     {
         field: 'AppointmentChannel',
         headerName: 'Channel',
-        width: 180,
+        width: 140,
+        headerClassName: 'super-app-theme--header',
         editable: true,
     },
     {
         field: 'AppointmentTime',
         headerName: 'Time',
         width: 160,
+        headerClassName: 'super-app-theme--header',
         editable: true,
     },
     {
@@ -91,8 +104,8 @@ const columns = [
             let currentDate = new Date();
             let t_date = currentDate.toISOString().split('T')[0];
             return (
-                <>  
-                <Button size='small' href='/DoctorEditAppointment' style={{fontFamily: 'Poppins', fontWeight: 600, fontSize: 14, color: '#2C7FB2', cursor: 'pointer'}}>Edit</Button>
+                <>
+                    <Button size='small' href='/DoctorEditAppointment' style={{ fontFamily: 'Poppins', fontWeight: 600, fontSize: 14, color: '#2C7FB2', cursor: 'pointer' }}>Edit</Button>
                     {/* {params.row.AppointmentDate >= t_date ? <IconButton onClick={() => setopeneditmodal(true)} style={{ color: '#2C7FB2' }}>
                         <EditIcon />
                     </IconButton> : null} */}
@@ -302,8 +315,8 @@ export default function DoctorTodaysAppointment() {
     const [times, settimes] = useState([]);
     const [eveningtimes, seteveningtimes] = useState([]);
     const [appointmentlist, setappointmentlist] = useState([]);
-    const [startdate, setstartdate] = useState('');
-    const [endDate, setendDate] = useState('');
+    const [startdate, setstartdate] = useState(new Date());
+    const [endDate, setendDate] = useState(new Date());
     const [morningcount, setmorningcount] = useState([]);
     const [eveningcount, seteveningcount] = useState([]);
     const [openeditmodal, setopeneditmodal] = useState(false);
@@ -311,7 +324,7 @@ export default function DoctorTodaysAppointment() {
 
     let currentDate = new Date();
     let t_date = currentDate.toISOString().split('T')[0];
-    
+
     const fetchAppointments = async () => {
         const appointments = await Todays_Appointment();
         setappointmentlist(appointments);
@@ -343,12 +356,34 @@ export default function DoctorTodaysAppointment() {
         setSelectedValue(event.target.value);
     };
 
+    const fetchAppTimeWise = async (val) => {
+        var data = await localStorage.getItem("userdata");
+        let parsed = JSON.parse(data);
+        let clinicid = parsed.ClinicId;
+        let docid = parsed.userid;
+
+        const obj = {
+            ClinicId: clinicid,
+            Slot: val,
+            DoctorId: docid
+        }
+        try {
+            const appointmentInfo = await GetAppByTimeWise(obj);
+            setappointmentlist(appointmentInfo);
+        } catch (e) {
+            console.log(e);
+        }
+    }
+
     const Appointmentbydate = async (startdate, endDate) => {
         var data = localStorage.getItem("userdata");
         let parsed = JSON.parse(data);
         let Clinicid = parsed.ClinicId;
+
+        let sDate = startdate.toISOString().split('T')[0];
+        let eDate = endDate.toISOString().split('T')[0];
         try {
-            let request = await Todays_Appointment_By_Date(Clinicid, startdate, endDate)
+            let request = await Todays_Appointment_By_Date(Clinicid, sDate, eDate)
             setappointmentlist(request)
         } catch (e) {
             console.log(e)
@@ -388,10 +423,10 @@ export default function DoctorTodaysAppointment() {
                                         {item.Count}
                                     </div>
                                     <div>
-                                        {item.Count == '0' ? <Button variant="contained" className={classes.btn} style={{ marginTop: '-8px' }}>
+                                        {item.Count == '0' ? <Button variant="contained" onClick={(val) => fetchAppTimeWise(item.ActualTime)} className={classes.btn} style={{ marginTop: '-8px' }}>
                                             {item.ActualTime}
                                         </Button> :
-                                            <Button variant="contained" className={classes.btn} style={{ marginTop: '-8px', backgroundColor: '#2C7FB2', color: '#fff' }}>
+                                            <Button variant="contained" className={classes.btn} onClick={(val) => fetchAppTimeWise(item.ActualTime)} style={{ marginTop: '-8px', backgroundColor: '#2C7FB2', color: '#fff' }}>
                                                 {item.ActualTime}
                                             </Button>}
                                     </div>
@@ -424,10 +459,10 @@ export default function DoctorTodaysAppointment() {
                                         {item.Count}
                                     </div>
                                     <div>
-                                        {item.Count == '0' ? <Button variant="contained" className={classes.btn} style={{ marginTop: '-8px' }}>
+                                        {item.Count == '0' ? <Button variant="contained" onClick={(val) => fetchAppTimeWise(item.ActualTime)} className={classes.btn} style={{ marginTop: '-8px' }}>
                                             {item.ActualTime}
                                         </Button> :
-                                            <Button variant="contained" className={classes.btn} style={{ marginTop: '-8px', backgroundColor: '#2C7FB2', color: '#fff' }}>
+                                            <Button variant="contained" onClick={(val) => fetchAppTimeWise(item.ActualTime)} className={classes.btn} style={{ marginTop: '-8px', backgroundColor: '#2C7FB2', color: '#fff' }}>
                                                 {item.ActualTime}
                                             </Button>
                                         }
@@ -458,16 +493,39 @@ export default function DoctorTodaysAppointment() {
                         From
                     </Typography>
 
-                    <input id="fromdate" type="date" value={startdate} onChange={(e) => {
+                    <MuiPickersUtilsProvider utils={DateFnsUtils}>
+                        <KeyboardDatePicker
+                            autoOk
+                            size='small'
+                            value={startdate}
+                            onChange={setstartdate}
+                            inputVariant="outlined"
+                            format='dd/MM/yyyy'
+                            style={{ marginTop: -5, marginLeft: 15, width: 190 }}
+                        />
+                    </MuiPickersUtilsProvider>
+
+                    {/* <input id="fromdate" type="date" value={startdate} onChange={(e) => {
                         setstartdate(e.target.value)
-                    }} style={{ border: '1px solid #F0F0F0', height: 35 }} />
+                    }} style={{ border: '1px solid #F0F0F0', height: 35 }} /> */}
 
                     <Typography variant="h8" noWrap={true} style={{ paddingLeft: 40, paddingRight: 20 }}>
                         To
                     </Typography>
-                    <input id="fromdate" type="date" value={endDate} onChange={(e) => {
+                    <MuiPickersUtilsProvider utils={DateFnsUtils}>
+                        <KeyboardDatePicker
+                            autoOk
+                            size='small'
+                            value={endDate}
+                            onChange={setendDate}
+                            inputVariant="outlined"
+                            format='dd/MM/yyyy'
+                            style={{ marginTop: -5, marginLeft: 15, width: 190 }}
+                        />
+                    </MuiPickersUtilsProvider>
+                    {/* <input id="fromdate" type="date" value={endDate} onChange={(e) => {
                         setendDate(e.target.value)
-                    }} style={{ border: '1px solid #F0F0F0', height: 35 }} />
+                    }} style={{ border: '1px solid #F0F0F0', height: 35 }} /> */}
 
                     <Button className={classes.btnview} onClick={() => Appointmentbydate(startdate, endDate)} >View</Button>
 
@@ -475,16 +533,26 @@ export default function DoctorTodaysAppointment() {
 
                 <Grid item xs={12} >
 
-                    <DataGrid
-                        style={{ height: 300, fontSize: 13, fontFamily: 'Poppins', fontWeight: 600, color: '#2C7FB2' }}
-                        rows={appointmentlist}
-                        rowHeight={30}
-                        columns={columns}
-                        columnWidth={5}
-                        pageSize={10}
-                    // onCellClick={currentlySelected}
-                    />
-
+                    <Box
+                        sx={{
+                            '& .super-app-theme--header': {
+                                // backgroundColor: '#78B088',
+                                // color: '#fff
+                                fontSize: 14,
+                               
+                            },
+                        }}
+                    >
+                        <DataGrid
+                            style={{ height: 300, fontSize: 13, fontFamily: 'Poppins', fontWeight: 600, color: '#2C7FB2' }}
+                            rows={appointmentlist}
+                            rowHeight={30}
+                            columns={columns}
+                            columnWidth={5}
+                            pageSize={10}
+                        // onCellClick={currentlySelected}
+                        />
+                    </Box>
                 </Grid>
             </Grid> {/* main grid */}
 

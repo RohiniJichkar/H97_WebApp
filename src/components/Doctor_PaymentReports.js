@@ -9,6 +9,7 @@ import Tab from '@material-ui/core/Tab';
 import { Typography, Button, IconButton, Grid, Paper } from "@material-ui/core";
 import DoctorNavbar from './Doctor_Navbar';
 import Box from '@material-ui/core/Box';
+import ArrowBackIcon from '@material-ui/icons/ArrowBack';
 
 //components
 import AppointmentReports from './Payment_Reports/Appointment_Reports/index';
@@ -54,10 +55,15 @@ const PaymentReports = () => {
     const theme = useTheme();
     const [value, setValue] = useState(0);
     const [catsKey, setCatsKey] = React.useState(0);
+    const navigate = useNavigate();
 
     const handleChange = (event, newValue) => {
         setValue(newValue);
     };
+
+    const handleGoBack = () => {
+        navigate(-1);
+      };
 
     return (
         <>
@@ -65,6 +71,7 @@ const PaymentReports = () => {
                 <DoctorNavbar />
                 <div className={classes.root2}>
                     <AppBar position="static" color="default">
+
                         <Tabs
                             value={value}
                             onChange={handleChange}
@@ -82,8 +89,9 @@ const PaymentReports = () => {
                                 color: '#2C7FB2',
                             }}
                         >
+
                             <Tab label="Appointment Report" {...a11yProps(0)} style={{ fontWeight: 600,
-                                fontFamily: 'Poppins'}}/>
+                                fontFamily: 'Poppins', marginLeft:'35px'}}/>
                             <Tab label="Home Visitor Report" {...a11yProps(1)} style={{ fontWeight: 600,
                                 fontFamily: 'Poppins'}} />
                             <Tab label="Finance Report" {...a11yProps(2)} style={{ fontWeight: 600,
@@ -91,8 +99,10 @@ const PaymentReports = () => {
                             {/* <Tab label="Patient Visit Report" {...a11yProps(3)} /> */}
                             <Tab label="Staff Report" {...a11yProps(3)} style={{ fontWeight: 600,
                                 fontFamily: 'Poppins'}} />
+                                 <Button style={{   color: '#2C7FB2', borderRadius: 105, fontSize: '12px', marginLeft: '-741px',   }}> <ArrowBackIcon onClick={handleGoBack} />  </Button>
                         </Tabs>
                     </AppBar>
+
                     <TabPanel value={value} index={0}>
                         <AppointmentReports />
                     </TabPanel>

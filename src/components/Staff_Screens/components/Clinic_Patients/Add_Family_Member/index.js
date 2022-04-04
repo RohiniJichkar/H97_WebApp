@@ -5,6 +5,11 @@ import { Dialog, DialogContent, DialogContentText, DialogTitle, TextField, Slide
 import CloseIcon from '@material-ui/icons/Close';
 import { AddFamilyMember } from '../../../../../Apis/Staff/Clinic_Patients/Add_Family_Member';
 import { Country, State, City } from '../../../../../Apis/Staff/Clinic_Patients/Patient_Registration';
+import DateFnsUtils from '@date-io/date-fns';
+import {
+    MuiPickersUtilsProvider,
+    KeyboardDatePicker,
+} from '@material-ui/pickers';
 
 const drawerWidth = 240;
 
@@ -25,7 +30,7 @@ export default function Add_Family_Member({ show, data, handleclose }) {
     const [mobile, setmobile] = useState(obj ? obj.MobileNo : '');
     const [alternatemobile, setalternatemobile] = useState('');
     const [email, setemail] = useState();
-    const [dob, setdob] = useState();
+    const [dob, setdob] = useState(new Date());
     const [gender, setgender] = useState();
     const [bloodrelation, setbloodrelation] = useState('');
     const [address, setaddress] = useState(obj ? obj?.Address : '');
@@ -38,6 +43,7 @@ export default function Add_Family_Member({ show, data, handleclose }) {
     const [countryData, setcountryData] = useState([]);
     const [stateData, setstateData] = useState([]);
     const [cityData, setcityData] = useState([]);
+    const [title, settitle] = useState('');
 
     const fetchCountry = async () => {
         const countries = await Country();
@@ -65,6 +71,12 @@ export default function Add_Family_Member({ show, data, handleclose }) {
         const date = new Date();
         const now = date.toISOString().split('T')[0];
 
+        let Dob = dob.toISOString().split('T')[0];
+
+        if (title == '') {
+            alert('Please Select Title');
+            return;
+        }
         if (firstnm == '') {
             alert('Please Enter First Name');
             return;
@@ -88,7 +100,7 @@ export default function Add_Family_Member({ show, data, handleclose }) {
             LastName: lastnm,
             MobileNo: obj.MobileNo,
             Email: email,
-            DOB: dob,
+            DOB: Dob,
             // Age: age,
             Gender: gender,
             Address: address,
@@ -145,13 +157,55 @@ export default function Add_Family_Member({ show, data, handleclose }) {
                             <Grid item xs={12} sm={6} style={{ borderRight: '1px solid #F0F0F0' }}>
                                 <center>
                                     <div style={{ paddingTop: 10 }}>
-                                        <TextField className={classes.inputFields} value={firstnm} onChange={(e) => {
+                                        <Grid container style={{ marginBottom: -35 }}>
+                                            <Grid item xs={2}>
+                                                <center>
+                                                    <FormControl variant="outlined" size='small' className={classes.formControl}  >
+                                                        <Select
+                                                            className={classes.inputFields}
+                                                            native
+                                                            size='small'
+                                                            value={title}
+                                                            label="title"
+                                                            onChange={(e) => settitle(e.target.value)}
+
+                                                            inputProps={{
+                                                                name: 'title',
+                                                                id: 'outlined-title-native-simple',
+                                                            }}
+                                                            style={{ marginLeft: 68, width: 78, marginTop: -9 }}
+                                                        >
+                                                            <option aria-label="None" value="" >Title</option>
+                                                            <option value='Mr.'>Mr.</option>
+                                                            <option value='Mrs.'>Mrs.</option>
+                                                            <option value='Ms.'>Ms.</option>
+                                                            <option value='Miss.'>Miss.</option>
+                                                        </Select>
+                                                    </FormControl> <span style={{ fontSize: 20, color: 'red', marginLeft: '207%', top: -80, position: 'relative' }}> *</span>
+                                                </center>
+                                            </Grid>
+                                            <Grid item xs={8}>
+                                                <center>
+                                                    <TextField className={classes.inputFields} value={firstnm}
+                                                        onChange={(e) => {
+                                                            const re = /^[a-z ,.'-]+$/i;
+                                                            // if value is not blank, then test the regex
+                                                            if (e.target.value == '' || re.test(e.target.value)) {
+                                                                setfirstnm(e.target.value)
+                                                            }
+                                                        }} style={{ marginLeft: 90, width: 210 }}
+                                                        id="outlined-basic" size="small" placeholder="First Name" variant="outlined" />
+                                                    <span style={{ fontSize: 20, color: 'red', marginLeft: '102%', top: -70, position: 'relative' }}> *</span>
+                                                </center>
+                                            </Grid>
+                                        </Grid>
+                                        {/* <TextField className={classes.inputFields} value={firstnm} onChange={(e) => {
                                             const re = /^[A-Za-z]+$/;
                                             if (e.target.value === '' || re.test(e.target.value)) {
                                                 setfirstnm(e.target.value)
                                             }
                                         }} id="outlined-basic" size="small" label="First Name" variant="outlined" style={{ marginLeft: 12 }} />
-                                        <span style={{ position: 'relative', bottom: 8, fontSize: 20, color: 'red' }}> *</span>
+                                        <span style={{ position: 'relative', bottom: 8, fontSize: 20, color: 'red' }}> *</span> */}
                                         <TextField className={classes.inputFields} value={lastnm} onChange={(e) => {
                                             const re = /^[A-Za-z]+$/;
                                             if (e.target.value === '' || re.test(e.target.value)) {
@@ -177,9 +231,23 @@ export default function Add_Family_Member({ show, data, handleclose }) {
                                             e.target.value = Math.max(0, parseInt(e.target.value)).toString().slice(0, 10)
                                         }} id="outlined-basic" type="number" size="small" label="Alternate Mobile Number" variant="outlined" />
 
-                                        <TextField className={classes.inputFields} value={email} onChange={(e) => setemail(e.target.value)} id="outlined-basic" type="email" size="small" label="Email Id" variant="outlined" style={{ marginLeft: 25 }} />
-                                        <span style={{ position: 'relative', top: 50, right: 270, fontSize: 13 }}>DOB</span>
-                                        <TextField className={classes.inputFields} defaultValue={new Date()} value={dob} onChange={(e) => setdob(e.target.value)} id="outlined-basic" type="date" size="small" variant="outlined" style={{ marginLeft: 10 }} /><span style={{ position: 'relative', bottom: 8, fontSize: 20, color: 'red' }}> *</span>
+                                        <TextField className={classes.inputFields} value={email} onChange={(e) => setemail(e.target.value)} id="outlined-basic" type="email" size="small" label="Email Id" variant="outlined" />
+
+                                        <MuiPickersUtilsProvider utils={DateFnsUtils}>
+                                            <KeyboardDatePicker
+                                                autoOk
+                                                className={classes.inputFields}
+                                                size='small'
+                                                value={dob}
+                                                onChange={setdob}
+                                                inputVariant="outlined"
+                                                label="DOB"
+                                                format='dd/MM/yyyy'
+                                                style={{ marginLeft: 10 }}
+                                            /><span style={{ position: 'relative', bottom: 8, fontSize: 20, color: 'red' }}> *</span>
+                                        </MuiPickersUtilsProvider>
+                                        {/* <span style={{ position: 'relative', top: 50, right: 270, fontSize: 13 }}>DOB</span>
+                                        <TextField className={classes.inputFields} defaultValue={new Date()} value={dob} onChange={(e) => setdob(e.target.value)} id="outlined-basic" type="date" size="small" variant="outlined" style={{ marginLeft: 10 }} /><span style={{ position: 'relative', bottom: 8, fontSize: 20, color: 'red' }}> *</span> */}
                                         <FormControl variant="outlined" size='small' className={classes.formControl}  >
                                             <Select
                                                 className={classes.inputFields}
@@ -360,7 +428,7 @@ export default function Add_Family_Member({ show, data, handleclose }) {
                                 </center>
                             </Grid>
 
-                            <Grid container>
+                            <Grid container style={{ marginTop: -10 }}>
                                 <Grid xs={12} sm={6}>
                                     <Button className={classes.btnCancle} onClick={handleclose} style={{ float: 'right', marginRight: 20 }}>
                                         Cancel

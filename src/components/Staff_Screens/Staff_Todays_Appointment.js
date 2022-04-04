@@ -4,16 +4,16 @@ import { makeStyles, useTheme, alpha } from '@material-ui/core/styles';
 import { useNavigate } from 'react-router-dom';
 import { Typography, Button, IconButton, Grid, Paper, FormControl, Select } from "@material-ui/core";
 import DoctorNavbar from './Staff_Navbar';
-import AccountCircle from '@material-ui/icons/AccountCircle';
-import SearchIcon from '@material-ui/icons/Search';
-import DeleteIcon from '@material-ui/icons/Delete';
-import EditIcon from '@material-ui/icons/Edit';
 import { GetMorningSlots, GetEveningSlots, Todays_Appointment, Todays_Appointment_By_Date, GetAppByTimeWise } from '../../Apis/Staff/Todays_Appointments/index';
 import { DataGrid } from '@material-ui/data-grid';
-import { Edit_Appointment_From_TodaysApp } from './components/Todays_Appointments/Slots/Edit_Appointment/index';
-import Delete_Appointment from './components/Todays_Appointments/Slots/Delete_Appointment/index';
-import { Time, App_Channels, App_Types, Doctors, Book_Appointment, Note_for_Doctor } from '../../Apis/Staff/Book_Appointment/index';
+import { Doctors } from '../../Apis/Staff/Book_Appointment/index';
 import moment from 'moment';
+import DateFnsUtils from '@date-io/date-fns';
+import {
+    MuiPickersUtilsProvider,
+    KeyboardDatePicker,
+} from '@material-ui/pickers';
+import ArrowBackIcon from '@material-ui/icons/ArrowBack';
 
 const drawerWidth = 240;
 
@@ -27,40 +27,40 @@ const columns = [
             `${params.getValue(params.id, 'FirstName') || ''} ${params.getValue(params.id, 'LastName') || ''
             }`,
     },
-    // {
-    //     field: 'MobileNo',
-    //     headerName: 'Contact No',
-    //     width: 160,
-    //     editable: true,
-    // },
     {
-        field: 'Title',
-        headerName: 'Appointment Title',
-        width: 220,
+        field: 'MobileNo',
+        headerName: 'Contact No',
+        width: 160,
+        editable: true,
+    },
+    {
+        field: 'AppointmentReason',
+        headerName: 'Appointment Reason',
+        width: 210,
         editable: true,
     },
     {
         field: 'AppointmentDate',
         headerName: 'Date',
-        width: 160,
+        width: 120,
         editable: true,
     },
     {
         field: 'AppointmentTime',
         headerName: 'Time',
-        width: 160,
+        width: 120,
         editable: true,
     },
     {
         field: 'AppointmentType',
         headerName: 'Type',
-        width: 160,
+        width: 140,
         editable: true,
     },
     {
         field: 'AppointmentChannel',
         headerName: 'Channel',
-        width: 180,
+        width: 140,
         editable: true,
     },
     {
@@ -309,8 +309,8 @@ export default function Staff_Todays_Appointment() {
     const [times, settimes] = useState([]);
     const [eveningtimes, seteveningtimes] = useState([]);
     const [appointmentlist, setappointmentlist] = useState([]);
-    const [startdate, setstartdate] = useState('');
-    const [endDate, setendDate] = useState('');
+    const [startdate, setstartdate] = useState(new Date());
+    const [endDate, setendDate] = useState(new Date());
     const [morningcount, setmorningcount] = useState([]);
     const [eveningcount, seteveningcount] = useState([]);
     const [docid, setdocid] = useState('');
@@ -353,7 +353,7 @@ export default function Staff_Todays_Appointment() {
     const fetchMorningCount = async (doctorid, currDate) => {
         var currDate = moment().format('YYYY-MM-DD');
         try {
-            
+
             const count = await GetMorningSlots(doctorid, currDate);
             setmorningcount(count);
         }
@@ -403,13 +403,19 @@ export default function Staff_Todays_Appointment() {
         var data = localStorage.getItem("userdata");
         let parsed = JSON.parse(data);
         let Clinicid = parsed.ClinicId;
+        let sDate = startdate.toISOString().split('T')[0];
+        let eDate = endDate.toISOString().split('T')[0];
         try {
-            let request = await Todays_Appointment_By_Date(Clinicid, startdate, endDate)
+            let request = await Todays_Appointment_By_Date(Clinicid, sDate, eDate)
             setappointmentlist(request)
         } catch (e) {
             console.log(e)
         }
     }
+
+    const handleGoBack = () => {
+        navigate(-1);
+    };
 
 
     return (
@@ -424,6 +430,8 @@ export default function Staff_Todays_Appointment() {
                 direction="row"
             >
                 <Grid item xs={12} style={{ paddingTop: 15 }}>
+                    <Button style={{ marginLeft: '-20px', backgroundColor: 'white', color: '#2C7FB2', fontSize: '12px' }}> <ArrowBackIcon onClick={handleGoBack} />  </Button>
+
                     <FormControl variant="outlined" size="small" className={classes.formControl} >
                         <Select
                             className={classes.textField}
@@ -521,20 +529,40 @@ export default function Staff_Todays_Appointment() {
                     })}
                 </Grid>
                 <Grid item xs={12} style={{ paddingTop: 15 }}>
-                    <Typography variant="h8" noWrap={true} style={{ paddingLeft: 5, paddingRight: 20 }}>
+                    <Typography variant="h8" noWrap={true} style={{ paddingLeft: 5, paddingRight: 20, fontSize: 15, color: '#707070', fontWeight: 600, fontFamily: 'Poppins' }}>
                         From
                     </Typography>
 
-                    <input id="fromdate" type="date" value={startdate} onChange={(e) => {
-                        setstartdate(e.target.value)
-                    }} style={{ border: '1px solid #F0F0F0', height: 35 }} />
+                    <MuiPickersUtilsProvider utils={DateFnsUtils}>
+                        <KeyboardDatePicker
+                            autoOk
+                            size='small'
+                            value={startdate}
+                            onChange={setstartdate}
+                            inputVariant="outlined"
+                            format='dd/MM/yyyy'
+                            style={{ marginTop: -5, marginLeft: 15, width: 190 }}
+                        />
+                    </MuiPickersUtilsProvider>
 
-                    <Typography variant="h8" noWrap={true} style={{ paddingLeft: 40, paddingRight: 20 }}>
+                    {/* <input id="fromdate" type="date" value={startdate} onChange={(e) => {
+                        setstartdate(e.target.value)
+                    }} style={{ border: '1px solid #F0F0F0', height: 35 }} /> */}
+
+                    <Typography variant="h8" noWrap={true} style={{ paddingLeft: 40, paddingRight: 20, fontSize: 15, color: '#707070', fontWeight: 600, fontFamily: 'Poppins' }}>
                         To
                     </Typography>
-                    <input id="fromdate" type="date" value={endDate} onChange={(e) => {
-                        setendDate(e.target.value)
-                    }} style={{ border: '1px solid #F0F0F0', height: 35 }} />
+                    <MuiPickersUtilsProvider utils={DateFnsUtils}>
+                        <KeyboardDatePicker
+                            autoOk
+                            size='small'
+                            value={endDate}
+                            onChange={setendDate}
+                            inputVariant="outlined"
+                            format='dd/MM/yyyy'
+                            style={{ marginTop: -5, marginLeft: 15, width: 190 }}
+                        />
+                    </MuiPickersUtilsProvider>
 
                     <Button className={classes.btnview} onClick={() => Appointmentbydate(startdate, endDate)} >View</Button>
 

@@ -8,6 +8,7 @@ import { Times, Doctor_Category } from '../../../Apis/Home_Visitors/index';
 import axios from 'axios';
 const getHomevisitors = 'http://13.233.217.107:8080/api/GetHomeVisitorDoctorsforClinic';
 const drawerWidth = 240;
+
 const useStyles = makeStyles((theme) => ({
     root: {
         display: 'flex',
@@ -138,9 +139,6 @@ const useStyles = makeStyles((theme) => ({
         width: 130,
     },
     inputFields: {
-        [`& fieldset`]: {
-            borderRadius: 25,
-        },
         width: 300,
         fontFamily: 'Poppins',
         fontStyle: 'normal',
@@ -263,6 +261,7 @@ export default function EditHomeVisitors({ show, data, handleCloseEditmodal }) {
     const [Experience, setExperience] = useState('');
     const [times, setTimes] = useState([]);
     const [doctorCategory, setdoctorCategory] = useState([]);
+    const [title, settitle] = useState(parse[0].NmTitle);
 
     const handlemonday = () => {
         setmonday(previousState => !previousState);
@@ -304,6 +303,7 @@ export default function EditHomeVisitors({ show, data, handleCloseEditmodal }) {
         const obje = {
             ClinicId: clinicid,
             UserId: data[0].UserId,
+            NmTitle: title,
             FirstName: firstName,
             LastName: lastName,
             MobileNo: mobileno,
@@ -396,29 +396,66 @@ export default function EditHomeVisitors({ show, data, handleCloseEditmodal }) {
                                 </Typography>
 
                                 <div style={{ marginTop: 13 }}>
-                                    <FormControl variant="outlined" className={classes.formControlForm}  >
+                                    <Grid container style={{ }}>
+                                        <Grid item xs={2}>
+                                            <center>
+                                                <FormControl variant="outlined" size='small' className={classes.formControl}  >
+                                                    <Select
+                                                        className={classes.inputFields}
+                                                        native
+                                                        size='small'
+                                                        value={title}
+                                                        label="title"
+                                                        onChange={(e) => settitle(e.target.value)}
+                                                        inputProps={{
+                                                            name: 'title',
+                                                            id: 'outlined-title-native-simple',
+                                                        }}
+                                                        style={{ marginLeft: -7, width: 78, marginTop: -9, fontWeight: 400 }}
+                                                    >
+                                                        <option aria-label="None" value="" >Title</option>
+                                                        <option value='Dr.'>Dr.</option>
+                                                        <option value='Mr.'>Mr.</option>
+                                                        <option value='Mrs.'>Mrs.</option>
+                                                        <option value='Ms.'>Ms.</option>
+                                                        <option value='Miss.'>Miss.</option>
+                                                    </Select>
+                                                </FormControl> 
+                                            </center>
+                                        </Grid>
+                                        <Grid item xs={8}>
+                                            <center>
+                                                <TextField className={classes.inputFields} value={firstName}
+                                                    onChange={(e) => {
+                                                        const re = /^[A-Za-z]+$/;
+                                                        if (e.target.value === '' || re.test(e.target.value)) {
+                                                            setfirstName(e.target.value)
+                                                        }
+                                                    }
+                                                    } style={{ width: 265, marginLeft: 30 }}
+                                                    id="outlined-basic" size="small" placeholder="First Name" variant="outlined" />
+                                                
+                                            </center>
+                                        </Grid>
+                                    </Grid>
+                                    {/* <FormControl variant="outlined" className={classes.formControlForm}  >
                                         <TextField className={classes.textFieldForm} id="outlined-basic" size="small" label="First Name"
                                             value={firstName}
                                             onChange={(e) => {
                                                 const re = /^[A-Za-z]+$/;
-
-
-
                                                 if (e.target.value === '' || re.test(e.target.value)) {
                                                     setfirstName(e.target.value)
                                                 }
                                             }
                                             } variant="outlined" style={{ width: '160%' }} />
-                                    </FormControl>
+                                    </FormControl> */}
                                 </div>
                                 <div>
                                     <FormControl variant="outlined" className={classes.formControlForm}  >
                                         <TextField className={classes.textFieldForm} id="outlined-basic" label="Last Name"
                                             value={lastName} onChange={(e) => {
                                                 const re = /^[A-Za-z]+$/;
-
                                                 // if value is not blank, then test the regex
-
                                                 if (e.target.value === '' || re.test(e.target.value)) {
                                                     setlastName(e.target.value)
                                                 }
@@ -431,9 +468,7 @@ export default function EditHomeVisitors({ show, data, handleCloseEditmodal }) {
                                         <TextField className={classes.textFieldForm} id="outlined-basic" type="text" label="Education"
                                             value={education} onChange={(e) => {
                                                 const re = /^[A-Za-z]+$/;
-
                                                 // if value is not blank, then test the regex
-
                                                 if (e.target.value === '' || re.test(e.target.value)) {
                                                     seteducation(e.target.value)
                                                 }
@@ -511,7 +546,6 @@ export default function EditHomeVisitors({ show, data, handleCloseEditmodal }) {
                                         }}
                                         style={{ width: '80%', height: 40, fontSize: 14, marginTop: '-7px', marginLeft: 34 }}
                                     >
-
                                         <option aria-label="None" value="" >Gender</option>
                                         <option value='Male'>Male</option>
                                         <option value='Female'>Female</option>
@@ -539,7 +573,7 @@ export default function EditHomeVisitors({ show, data, handleCloseEditmodal }) {
                                             fontSize: 14, color: '#707070', fontFamily: 'Poppins',
                                             fontStyle: 'normal',
                                             fontWeight: 600,
-                                            marginLeft: 22
+                                            marginLeft: 10
                                         }}>
                                             From
                                         </Typography>

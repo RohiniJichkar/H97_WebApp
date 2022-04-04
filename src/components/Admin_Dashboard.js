@@ -359,7 +359,7 @@ export default function AdminDashboard() {
 
                                     }}
                                 >
-                                    TODAY'S APPOINTMENTS
+                                    TOTAL APPOINTMENTS
                                 </Typography>
                             </div>
                             <div className="row" style={{ padding: theme.spacing(0), color: '#00318B' }}>
@@ -410,7 +410,7 @@ export default function AdminDashboard() {
                                         color: '#78B088',
                                     }}
                                 >
-                                    TODAY'S REGISTRATION
+                                    TOTAL REGISTRATIONS
                                 </Typography>
                             </div>
                             <div className="row" style={{ padding: theme.spacing(0), color: '#00318B' }}>

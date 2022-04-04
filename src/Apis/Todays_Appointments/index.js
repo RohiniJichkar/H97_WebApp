@@ -90,3 +90,15 @@ export const Todays = async (clinicid, StartDate, EndDate, userid) => {
         return error;
     }
 }
+
+
+
+export const GetAppByTimeWise = async (obj) => {
+    try {
+        const getAppInfo = await axios.post(ip + 'Web_GetTimeWiseAppointments', obj);
+        return getAppInfo?.data?.Appointment
+    }
+    catch (error) {
+        console.log(error);
+    }
+}

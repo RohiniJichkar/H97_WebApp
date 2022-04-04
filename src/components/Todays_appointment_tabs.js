@@ -9,6 +9,7 @@ import Tab from '@material-ui/core/Tab';
 import { Typography, Button, IconButton, Grid, Paper } from "@material-ui/core";
 import DoctorNavbar from './Doctor_Navbar';
 import Box from '@material-ui/core/Box';
+import ArrowBackIcon from '@material-ui/icons/ArrowBack';
 
 //components
 import DoctorTodaysAppointment from './Doctor_TodaysAppointment';
@@ -52,11 +53,16 @@ const Todays_appointment_Tabs = () => {
     const theme = useTheme();
     const [value, setValue] = useState(0);
     const [catsKey, setCatsKey] = React.useState(0);
+    const navigate = useNavigate();
 
     const handleChange = (event, newValue) => {
         setValue(newValue);
     };
 
+    const handleGoBack = () => {
+        navigate("/DoctorHome");
+    };
+    
     return (
         <>
             <div className={classes.root} style={{ backgroundColor: '#ffffff' }}>
@@ -73,16 +79,19 @@ const Todays_appointment_Tabs = () => {
                             TabIndicatorProps={{
                                 style: {
                                     backgroundColor: "#78B088",
-                                    
+
                                 }
                             }}
                             style={{
                                 backgroundColor: 'white',
-                                color:'#2C7FB2'
+                                color: '#2C7FB2'
                             }}
                         >
-                            <Tab label="Today's Appointment" {...a11yProps(0)} style={{ fontWeight: 600,
-                                fontFamily: 'Poppins'}} />
+                            <Tab label="Today's Appointment" {...a11yProps(0)} style={{
+                                fontWeight: 600,
+                                fontFamily: 'Poppins', marginLeft: '45px', fontSize: '18px'
+                            }} />
+                            <Button style={{ marginLeft: '-295px', color: '#2C7FB2', borderRadius: 105, fontSize: '12px' }}> <ArrowBackIcon onClick={handleGoBack} />  </Button>
                             {/* <Tab label="Calender" {...a11yProps(1)} style={{ fontWeight: 600,
                                 fontFamily: 'Poppins'}} /> */}
                         </Tabs>

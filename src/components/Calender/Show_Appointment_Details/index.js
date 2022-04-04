@@ -142,6 +142,42 @@ export const Show_Appointment_details = ({ show, data, handlemodal }) => {
                                     </Typography>
                                 </center>
                             </Grid>
+                            <Grid item xs={12} sm={6}>
+                                <center>
+                                    <Typography variant="h5" noWrap={true}
+                                        style={{
+                                            fontFamily: '"Poppins", san-serif;',
+                                            fontStyle: 'normal',
+                                            fontWeight: 500,
+                                            overflow: 'hidden',
+                                            whiteSpace: 'nowrap',
+                                            textOverflow: 'ellipsis',
+                                            color: '#707070',
+                                            fontSize: 16,
+                                            marginTop: 10
+                                        }}>
+                                        Mobile Number: 
+                                    </Typography>
+                                </center>
+                            </Grid>
+                            <Grid item xs={12} sm={6}>
+                                <center>
+                                    <Typography variant="h5" noWrap={true}
+                                        style={{
+                                            fontFamily: '"Poppins", san-serif;',
+                                            fontStyle: 'normal',
+                                            fontWeight: 500,
+                                            overflow: 'hidden',
+                                            whiteSpace: 'nowrap',
+                                            textOverflow: 'ellipsis',
+                                            color: '#707070',
+                                            fontSize: 16,
+                                            marginTop: 10
+                                        }}>
+                                        {data.items.MobileNo}
+                                    </Typography>
+                                </center>
+                            </Grid>
                             <Grid item xs={12} sm={6} style={{ marginTop: 10 }}>
                                 <center>
                                     <Typography variant="h5" noWrap={true}

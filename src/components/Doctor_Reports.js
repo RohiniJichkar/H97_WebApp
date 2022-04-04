@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import clsx from 'clsx';
 import { makeStyles, useTheme, alpha } from '@material-ui/core/styles';
 import { useNavigate } from 'react-router-dom';
-import { Typography, Button, InputBase, Divider, Grid, Paper, IconButton } from "@material-ui/core";
+import { Typography, Button, InputBase, Divider, Grid, Paper, IconButton, Box } from "@material-ui/core";
 import DoctorNavbar from './Doctor_Navbar';
 import SearchIcon from '@material-ui/icons/Search';
 import ArrowBackIcon from '@material-ui/icons/ArrowBack';
@@ -22,6 +22,7 @@ const columns = [
         field: 'fullName',
         headerName: 'Full name',
         sortable: false,
+        headerClassName: 'super-app-theme--header',
         width: 200,
         valueGetter: (params) =>
             `${params.getValue(params.id, 'FirstName') || ''} ${params.getValue(params.id, 'LastName') || ''
@@ -31,6 +32,7 @@ const columns = [
         field: 'MobileNo',
         headerName: 'Contact No',
         width: 160,
+        headerClassName: 'super-app-theme--header',
         editable: true,
     },
 ];
@@ -136,7 +138,7 @@ export default function DoctorReports() {
                                 <center>
                                     <SearchIcon className={classes.searchIcon} />
                                     <InputBase
-                                        placeholder="Search by Name/Email"
+                                        placeholder="Search by Name/Mobile No"
                                         onChange={(e) => setpatientsearch(e.target.value)}
                                         value={patientsearch}
                                         classes={{
@@ -153,17 +155,26 @@ export default function DoctorReports() {
                             </Grid>
                         </Grid>
 
-
-                        <DataGrid
-                            style={{ height: 270, marginTop: 20, fontSize: 13, fontFamily: 'Poppins', fontWeight: 600, color: '#2C7FB2', cursor: 'pointer' }}
-                            rows={patientData}
-                            rowHeight={30}
-                            columns={columns}
-                            columnWidth={10}
-                            pageSize={6}
-                            onRowClick={(newSelection) => handleRowClick(newSelection.row.UserId)}
-                        />
-
+                        <Box
+                            sx={{
+                                '& .super-app-theme--header': {
+                                    // backgroundColor: '#78B088',
+                                    // color: '#fff
+                                    fontSize: 15,
+                                    marginLeft: 10
+                                },
+                            }}
+                        >
+                            <DataGrid
+                                style={{ height: 270, marginTop: 20, fontSize: 13, fontFamily: 'Poppins', fontWeight: 600, color: '#2C7FB2', cursor: 'pointer' }}
+                                rows={patientData}
+                                rowHeight={30}
+                                columns={columns}
+                                columnWidth={10}
+                                pageSize={6}
+                                onRowClick={(newSelection) => handleRowClick(newSelection.row.UserId)}
+                            />
+                        </Box>
                         <Divider />
                         <Grid container xs={12} style={{ paddingTop: 20 }}>
                             <Grid item xs={12}>

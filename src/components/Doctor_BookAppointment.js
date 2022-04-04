@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import clsx from 'clsx';
 import { makeStyles, useTheme, alpha } from '@material-ui/core/styles';
 import { useNavigate } from 'react-router-dom';
-import { FormControl, FormControlLabel, Switch, Select, TextField, Typography, Button, Avatar, InputBase, Divider, ListItem, ListItemText, Grid, Paper } from "@material-ui/core";
+import { FormControl, FormControlLabel, Switch, Select, TextField, Typography, Button, Box, Avatar, InputBase, Divider, ListItem, ListItemText, Grid, Paper } from "@material-ui/core";
 import DoctorNavbar from './Doctor_Navbar';
 import SearchIcon from '@material-ui/icons/Search';
 import PropTypes from 'prop-types';
@@ -10,7 +10,12 @@ import ArrowBackIcon from '@material-ui/icons/ArrowBack';
 import axios from 'axios';
 import { DataGrid } from '@material-ui/data-grid';
 import { Time, App_Channels, App_Types, Doctors, Book_Appointment, Note_for_Doctor } from '../Apis/Book_Appointment/index';
-import moment from 'moment';
+import DateFnsUtils from '@date-io/date-fns';
+import {
+  MuiPickersUtilsProvider,
+  KeyboardDatePicker,
+} from '@material-ui/pickers';
+
 
 const getClinicPatients = 'http://13.233.217.107:8080/api/Web_GetPatients';
 const getPatientDetails = 'http://13.233.217.107:8080/api/ShowPatientDetailUsingId';
@@ -27,6 +32,7 @@ const columns = [
     headerName: 'Full name',
     sortable: false,
     width: 200,
+    headerClassName: 'super-app-theme--header',
     valueGetter: (params) =>
       `${params.getValue(params.id, 'FirstName') || ''} ${params.getValue(params.id, 'LastName') || ''
       }`,
@@ -34,6 +40,7 @@ const columns = [
   {
     field: 'MobileNo',
     headerName: 'Contact No',
+    headerClassName: 'super-app-theme--header',
     width: 160,
     editable: true,
   },
@@ -67,7 +74,7 @@ export default function DoctorBookAppointment() {
   const [weight, setWeight] = useState('');
   const [plus, setPlus] = useState('');
   const [spo2, setSpo2] = useState('');
-  const [appDate, setappDate] = useState('');
+  const [appDate, setappDate] = useState(new Date());
   const [notefordoctor, setnotefordoctor] = useState([]);
   const [patientsearch, setpatientsearch] = useState([]);
 
@@ -151,6 +158,8 @@ export default function DoctorBookAppointment() {
     let systemTime = currentTime.toTimeString();
     let tdate = currentTime.toISOString().split('T')[0];
 
+    let AppDate = appDate.toISOString().split('T')[0];
+
     if (patientDetails == '') {
       alert("Please select patient from list")
       return;
@@ -167,7 +176,7 @@ export default function DoctorBookAppointment() {
       alert("Please Select Appointment Date");
       return;
     }
-    else if (appDate < tdate) {
+    else if (AppDate < tdate) {
       alert("You cannot set appointment for previous date");
       return
     }
@@ -191,7 +200,7 @@ export default function DoctorBookAppointment() {
       LastName: patientDetails.LastName,
       DoctorId: doctor,
       ClinicId: clinicid,
-      AppointmentDate: appDate,
+      AppointmentDate: AppDate,
       BookedDate: date,
       AppointmentTime: timeselected,
       AppointmentType: apptypeselected,
@@ -342,19 +351,29 @@ export default function DoctorBookAppointment() {
 
               </Grid>
 
-
-              <DataGrid
-                style={{ height: 250, marginTop: 20, fontSize: 13, fontFamily: 'Poppins', fontWeight: 600, color: '#2C7FB2', cursor: 'pointer' }}
-                rows={patientData}
-                rowHeight={30}
-                columns={columns}
-                columnWidth={10}
-                pageSize={5}
-                onRowClick={(newSelection) => {
-                  handleRowClick(newSelection.row.UserId);
+              <Box
+                sx={{
+                  '& .super-app-theme--header': {
+                    // backgroundColor: '#78B088',
+                    // color: '#fff
+                    fontSize: 15,
+                    marginLeft: 10
+                  },
                 }}
-              />
-
+              >
+                <DataGrid
+                  style={{ height: 250, marginTop: 20, fontSize: 13, fontFamily: 'Poppins', fontWeight: 600, color: '#2C7FB2', cursor: 'pointer' }}
+                  rows={patientData}
+                  rowHeight={30}
+                  columns={columns}
+                  columnWidth={10}
+                  pageSize={5}
+                  onRowClick={(newSelection) => {
+                    handleRowClick(newSelection.row.UserId);
+                  }}
+                />
+              </Box>
+              
               <Divider style={{ padding: '5px', borderTop: '1px solid #F0F0F0', backgroundColor: '#fff', paddingBottom: 10 }} />
 
               <Typography variant="h7" noWrap={true} style={{
@@ -423,7 +442,7 @@ export default function DoctorBookAppointment() {
                       fontSize: 12,
                     }}
                     >
-                      {patientDetails.Address ? patientDetails.Address : 'NA'} {patientDetails.City} {patientDetails.State} {patientDetails.Pincode} {patientDetails.Country}
+                      {patientDetails.Address ? `${patientDetails.Address}` : "NA"}{patientDetails.City ? `, ${patientDetails.City}` : ""}{patientDetails.State ? `, ${patientDetails.State}` : ""}{patientDetails.Country ? `, ${patientDetails.Country}` : ""}{patientDetails.Pincode ? `, ${patientDetails.Pincode}` : ""}
                     </Typography>
                     <Divider style={{ paddingTop: '10px', backgroundColor: '#fff' }} />
                     Contact: <Typography variant="h7" noWrap={true} style={{
@@ -691,7 +710,22 @@ export default function DoctorBookAppointment() {
                       }
                     </Grid>
                     <Grid item xs={12} sm={6} >
-                      <FormControl variant="outlined" size="small" className={classes.formControl} style={{ paddingRight: 20, bottom: 3 }}>
+
+                      <MuiPickersUtilsProvider utils={DateFnsUtils}>
+
+                        <KeyboardDatePicker
+                          autoOk
+                          size='small'
+                          value={appDate}
+                          onChange={setappDate}
+                          inputVariant="outlined"
+                          label="Date"
+                          format='dd/MM/yyyy'
+                          style={{ marginRight: 7, marginTop: 5 }}
+                        />
+                      </MuiPickersUtilsProvider>
+
+                      {/* <FormControl variant="outlined" size="small" className={classes.formControl} style={{ paddingRight: 20, bottom: 3 }}>
                         <TextField
                           variant="outlined"
                           onChange={(e) => setappDate(e.target.value)}
@@ -701,7 +735,7 @@ export default function DoctorBookAppointment() {
                           size="small"
                           style={{ width: '85%', fontSize: 12 }}
                         />
-                      </FormControl>
+                      </FormControl> */}
                     </Grid>
                   </Grid>
 

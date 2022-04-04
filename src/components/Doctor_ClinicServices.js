@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import clsx from 'clsx';
 import { makeStyles, useTheme, alpha } from '@material-ui/core/styles';
 import { useNavigate } from 'react-router-dom';
-import { Container, FormControl, InputLabel, TextField, Typography, Button, Slide, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, Table, TableContainer, TableBody, TableCell, TableHead, InputBase, TableRow, TablePagination, Drawer, Divider, MenuItem, Menu, ListItem, ListItemIcon, ListItemText, List, IconButton, Grid, Paper, Link } from "@material-ui/core";
+import { Container, FormControl, InputLabel, TextField, Typography, Button, Slide, Dialog, Box, DialogActions, DialogContent, DialogContentText, DialogTitle, Table, TableContainer, TableBody, TableCell, TableHead, InputBase, TableRow, TablePagination, Drawer, Divider, MenuItem, Menu, ListItem, ListItemIcon, ListItemText, List, IconButton, Grid, Paper, Link } from "@material-ui/core";
 import { Redirect } from 'react-router-dom';
 import DoctorNavbar from './Doctor_Navbar';
 import SearchIcon from '@material-ui/icons/Search';
@@ -25,19 +25,22 @@ const columns = [
     {
         field: 'ServiceName',
         headerName: 'Service Name',
-        width: 160,
+        width: 150,
+        headerClassName: 'super-app-theme--header',
         editable: true,
     },
     {
         field: 'Price',
         headerName: 'Price',
-        width: 120,
+        width: 110,
+        headerClassName: 'super-app-theme--header',
         editable: true,
     },
     {
         field: 'Discount',
         headerName: 'Discount',
-        width: 120,
+        width: 110,
+        headerClassName: 'super-app-theme--header',
         editable: true,
     },
 ];
@@ -415,18 +418,28 @@ export default function DoctorClinicServices() {
 
                             </Grid>
 
-                            <DataGrid
-                                style={{ height: 325, marginTop: 20, fontSize: 12, fontFamily: 'Poppins', fontWeight: 600, color: '#2C7FB2', cursor: 'pointer' }}
-                                rows={serviceData}
-                                rowHeight={40}
-                                columns={columns}
-                                columnWidth={10}
-                                pageSize={10}
-                                onRowClick={(newSelection) => {
-                                    handleCellClick(newSelection.row.id);
+                            <Box
+                                sx={{
+                                    '& .super-app-theme--header': {
+                                        // backgroundColor: '#78B088',
+                                        // color: '#fff
+                                        fontSize: 15,
+                                        
+                                    },
                                 }}
-                            />
-
+                            >
+                                <DataGrid
+                                    style={{ height: 325, marginTop: 20, fontSize: 12, fontFamily: 'Poppins', fontWeight: 600, color: '#2C7FB2', cursor: 'pointer' }}
+                                    rows={serviceData}
+                                    rowHeight={40}
+                                    columns={columns}
+                                    columnWidth={10}
+                                    pageSize={10}
+                                    onRowClick={(newSelection) => {
+                                        handleCellClick(newSelection.row.id);
+                                    }}
+                                />
+                            </Box>
                         </Paper>
                     </Grid>
 
@@ -477,7 +490,7 @@ export default function DoctorClinicServices() {
                                 <Grid item sm={6} >
                                     <Grid container>
                                         <Grid item xs={12} sm={4}>
-                                            <Typography variant="h6" noWrap={true} className={classes.facilitiesTitle}>Name</Typography> 
+                                            <Typography variant="h6" noWrap={true} className={classes.facilitiesTitle}>Name</Typography>
                                             <Typography variant="h6" noWrap={true} className={classes.facilitiesTitle}>Discount</Typography>
                                             <Typography variant="h6" noWrap={true} className={classes.facilitiesTitle}>Price</Typography>
                                             <Typography variant="h6" noWrap={true} className={classes.facilitiesTitle}>Total Price</Typography>

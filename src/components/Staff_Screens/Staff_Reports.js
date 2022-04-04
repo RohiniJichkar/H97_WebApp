@@ -3,7 +3,7 @@ import React, { useState, useEffect } from 'react';
 import clsx from 'clsx';
 import { makeStyles, useTheme, alpha } from '@material-ui/core/styles';
 import { useNavigate } from 'react-router-dom';
-import { Typography, Button, InputBase, Divider, Grid, Paper, IconButton } from "@material-ui/core";
+import { Typography, Button, InputBase, Divider, Grid, Paper, IconButton, Box } from "@material-ui/core";
 import DoctorNavbar from './Staff_Navbar';
 import SearchIcon from '@material-ui/icons/Search';
 import ArrowBackIcon from '@material-ui/icons/ArrowBack';
@@ -24,6 +24,7 @@ const columns = [
         headerName: 'Full name',
         sortable: false,
         width: 200,
+        headerClassName: 'super-app-theme--header',
         valueGetter: (params) =>
             `${params.getValue(params.id, 'FirstName') || ''} ${params.getValue(params.id, 'LastName') || ''
             }`,
@@ -31,6 +32,7 @@ const columns = [
     {
         field: 'MobileNo',
         headerName: 'Contact No',
+        headerClassName: 'super-app-theme--header',
         width: 160,
         editable: true,
     },
@@ -154,17 +156,27 @@ export default function Staff_Reports() {
                             </Grid>
                         </Grid>
 
-
-                        <DataGrid
-                            style={{ height: 270, marginTop: 20, fontSize: 13, fontFamily: 'Poppins', fontWeight: 600, color: '#2C7FB2', cursor: 'pointer' }}
-                            rows={patientData}
-                            rowHeight={30}
-                            columns={columns}
-                            columnWidth={10}
-                            pageSize={6}
-                            onRowClick={(newSelection) => handleRowClick(newSelection.row.UserId)}
-                        />
-
+                        <Box
+                            sx={{
+                                '& .super-app-theme--header': {
+                                    // backgroundColor: '#78B088',
+                                    // color: '#fff
+                                    fontSize: 15,
+                                    marginLeft: 10
+                                },
+                            }}
+                        >
+                            <DataGrid
+                                style={{ height: 270, marginTop: 20, fontSize: 13, fontFamily: 'Poppins', fontWeight: 600, color: '#2C7FB2', cursor: 'pointer' }}
+                                rows={patientData}
+                                rowHeight={30}
+                                columns={columns}
+                                columnWidth={10}
+                                pageSize={6}
+                                onRowClick={(newSelection) => handleRowClick(newSelection.row.UserId)}
+                            />
+                        </Box>
+                        
                         <Divider />
                         <Grid container xs={12} style={{ paddingTop: 20 }}>
                             <Grid item xs={12}>

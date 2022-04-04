@@ -169,9 +169,8 @@ export default function Staff_Patient_Details_SendIn() {
                         <Paper className={classes.paper} elevation={6} style={{ marginRight: 20 }} >
                             <center>
                                 <div style={{ paddingBottom: 20 }}>
-                                    {details.ProfileImage ?
-                                        <Avatar style={{ borderRadius: 50, height: 100, width: 100 }} src={details.ProfileImage} /> :
-                                        <Avatar style={{ borderRadius: 50, height: 100, width: 100 }} />}
+                                    {details.ProfileImage ? <Avatar style={{ borderRadius: 50, height: 100, width: 100 }} src={details.ProfileImage} /> : details.Gender == 'Female' ? <Avatar style={{ borderRadius: 50, height: 100, width: 100, }} src='femaleicon.png' /> :
+                                        <Avatar style={{ borderRadius: 50, height: 100, width: 100 }} src='maleicon.png' />}
                                 </div>
 
                                 <Typography variant="h6" noWrap={true} style={{
@@ -356,7 +355,7 @@ export default function Staff_Patient_Details_SendIn() {
                                 </Grid>
                             </Grid>
 
-                            <Grid container xs={12} style={{ color: '#707070',height:65 }}>
+                            <Grid container xs={12} style={{ color: '#707070', height: 65 }}>
                                 <Grid item xs={12} >
                                     {/* <center>
                                         <Button variant="contained" onClick={handleGoBack} className={classes.btnCancle} style={{ marginRight: 40 }}  >
@@ -371,7 +370,7 @@ export default function Staff_Patient_Details_SendIn() {
 
                         </Paper>
                     </Grid>
-                    {deleteModal ? <Cancel_Appointment show={deleteModal} data={details} handleclose={()=>setDeleteModal(false)} /> : null}
+                    {deleteModal ? <Cancel_Appointment show={deleteModal} data={details} handleclose={() => setDeleteModal(false)} /> : null}
                 </Grid>
 
             </Grid > {/* main grid */}

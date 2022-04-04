@@ -23,6 +23,7 @@ import FeaturedVideoIcon from '@material-ui/icons/FeaturedVideo';
 import ip from '../ipaddress/ip';
 import axios from 'axios';
 import CloseIcon from '@material-ui/icons/Close';
+import MedicalServicesIcon from '@mui/icons-material/MedicalServices';
 
 const drawerWidth = 240;
 
@@ -424,7 +425,7 @@ export default function DoctorNavbar() {
     },
     {
       text: "Clinic Services",
-      icon: SettingsIcon,
+      icon: MedicalServicesIcon,
       onClick: () => navigate("/DoctorClinicServices"),
     },
     {

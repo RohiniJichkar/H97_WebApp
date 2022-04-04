@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import clsx from 'clsx';
 import { makeStyles, useTheme, alpha } from '@material-ui/core/styles';
 import { useNavigate } from 'react-router-dom';
-import { Dialog, DialogTitle, DialogContentText, DialogActions, DialogContent, Typography, Button, IconButton, Grid, Paper, InputBase, Avatar, TextField, FormControl, Select, Slide } from "@material-ui/core";
+import { Dialog, DialogTitle, DialogContentText, DialogActions, DialogContent, Box, Typography, Button, IconButton, Grid, Paper, InputBase, Avatar, TextField, FormControl, Select, Slide } from "@material-ui/core";
 import DoctorNavbar from './Doctor_Navbar';
 import SearchIcon from '@material-ui/icons/Search';
 import DateRangeIcon from '@material-ui/icons/DateRange';
@@ -27,6 +27,7 @@ const columns = [
     {
         field: 'fullName',
         headerName: 'Full name',
+        headerClassName: 'super-app-theme--header',
         sortable: false,
         width: 200,
         valueGetter: (params) =>
@@ -36,6 +37,7 @@ const columns = [
     {
         field: 'MobileNo',
         headerName: 'Contact No',
+        headerClassName: 'super-app-theme--header',
         width: 160,
         editable: true,
     },
@@ -300,7 +302,7 @@ export default function DoctorHomeVisitRequest() {
         setrequestorDetails(id);
     }
 
-    useEffect(() => {       
+    useEffect(() => {
         fetchRequestData();
     }, []);
 
@@ -419,18 +421,28 @@ export default function DoctorHomeVisitRequest() {
 
                             </Grid>
 
-                            <DataGrid
-                                style={{ height: 350, marginTop: 20, fontSize: 13, fontFamily: 'Poppins', fontWeight: 600, color: '#2C7FB2', cursor: 'pointer' }}
-                                rows={requestData}
-                                rowHeight={30}
-                                columns={columns}
-                                columnWidth={10}
-                                pageSize={5}
-                                onRowClick={(newSelection) => {
-                                    handleRowClick(newSelection.row);
+                            <Box
+                                sx={{
+                                    '& .super-app-theme--header': {
+                                        // backgroundColor: '#78B088',
+                                        // color: '#fff
+                                        fontSize: 15,
+                                        marginLeft: 10
+                                    },
                                 }}
-                            />
-
+                            >
+                                <DataGrid
+                                    style={{ height: 350, marginTop: 20, fontSize: 13, fontFamily: 'Poppins', fontWeight: 600, color: '#2C7FB2', cursor: 'pointer' }}
+                                    rows={requestData}
+                                    rowHeight={30}
+                                    columns={columns}
+                                    columnWidth={10}
+                                    pageSize={5}
+                                    onRowClick={(newSelection) => {
+                                        handleRowClick(newSelection.row);
+                                    }}
+                                />
+                            </Box>
                         </Paper>
                     </Grid>
 
@@ -445,10 +457,10 @@ export default function DoctorHomeVisitRequest() {
                             </Typography>
                             <div><Button style={{ position: 'relative', marginTop: -55, left: 700, fontWeight: 'normal', color: '#707070' }} onClick={handlesContinue}><DeleteIcon /></Button> </div>
                             <center>
-                                <div style={{paddingBottom:10,height:50,position:'relative',bottom:15 }}>
+                                <div style={{ paddingBottom: 10, height: 50, position: 'relative', bottom: 15 }}>
                                     {requestorDetails.ProfileImage ?
-                                        <Avatar style={{ borderRadius: 50, height: 80, width: 80,position:'relative',bottom:12 }} src={requestorDetails.ProfileImage} /> :
-                                        <Avatar style={{ borderRadius: 50, height: 80, width: 80,position:'relative',bottom:12 }} />}
+                                        <Avatar style={{ borderRadius: 50, height: 80, width: 80, position: 'relative', bottom: 12 }} src={requestorDetails.ProfileImage} /> :
+                                        <Avatar style={{ borderRadius: 50, height: 80, width: 80, position: 'relative', bottom: 12 }} />}
                                 </div>
 
                                 <Typography variant="h6" noWrap={true} style={{
@@ -458,7 +470,7 @@ export default function DoctorHomeVisitRequest() {
                                     color: '#707070',
                                     fontWeight: 600
                                 }}>
-                                    {requestorDetails.FirstName ? requestorDetails.FirstName : "NA"} {requestorDetails.LastName ? requestorDetails.LastName : ""}
+                                    {requestorDetails.NmTitle ? requestorDetails.NmTitle : ""} {requestorDetails.FirstName ? requestorDetails.FirstName : "NA"} {requestorDetails.LastName ? requestorDetails.LastName : ""}
                                 </Typography>
                                 <Typography variant="h6" noWrap={true} style={{
                                     fontSize: 14,
@@ -468,7 +480,7 @@ export default function DoctorHomeVisitRequest() {
                                     fontWeight: 400
                                 }}>
                                     Requester Id: {requestorDetails.RequesterId ? requestorDetails.RequesterId : "NA"}
-                                    <div><span style={{position:'relative',left:3}}>Request for Dr. </span> <span> {requestorDetails.HFName?requestorDetails.HFName:'NA'} {requestorDetails.HLName}</span>
+                                    <div><span style={{ position: 'relative', left: 3 }}>Request for Dr. </span> <span> {requestorDetails.HFName ? requestorDetails.HFName : 'NA'} {requestorDetails.HLName}</span>
                                     </div>
                                 </Typography>
                                 <Grid container xs={12} style={{ paddingTop: 15 }}>
@@ -531,7 +543,7 @@ export default function DoctorHomeVisitRequest() {
                                 <Grid container xs={12} style={{ marginTop: 20 }}>
                                     {!loading ? <>
                                         <Grid item sm={6} >
-                                            <Button className={classes.btnregister} onClick={handleGoBack}style={{ float: 'right', marginRight: 20 }}>Cancel</Button>
+                                            <Button className={classes.btnregister} onClick={handleGoBack} style={{ float: 'right', marginRight: 20 }}>Cancel</Button>
                                         </Grid>
                                         <Grid item sm={6} >
                                             <Button className={classes.btnregister} disabled={loading} onClick={() => handleContinue(requestorDetails)} style={{ float: 'left', marginLeft: 20 }}>Continue</Button>

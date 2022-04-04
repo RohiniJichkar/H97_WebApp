@@ -9,6 +9,11 @@ import DeleteIcon from '@material-ui/icons/Delete';
 import EditIcon from '@material-ui/icons/Edit';
 import axios from 'axios';
 import Show_pdf_data from '../../Pdf_Viewer/Modal';
+import DateFnsUtils from '@date-io/date-fns';
+import {
+    MuiPickersUtilsProvider,
+    KeyboardDatePicker,
+} from '@material-ui/pickers';
 //apis
 import { Staff_Analysis_Details_by_date } from '../../../Apis/payment_reports_apis/index';
 
@@ -17,6 +22,7 @@ const columns = [
         field: 'DoctorfullName',
         headerName: 'Staff Name',
         sortable: false,
+        headerClassName: 'super-app-theme--header',
         width: 200,
         valueGetter: (params) =>
             `${params.getValue(params.id, 'DFName') || ''} ${params.getValue(params.id, 'DLName') || ''
@@ -25,6 +31,7 @@ const columns = [
     {
         field: 'AppointmentDate',
         headerName: 'Date',
+        headerClassName: 'super-app-theme--header',
         width: 160,
         editable: true,
     },
@@ -37,16 +44,19 @@ const columns = [
     {
         field: 'AppointmentStatus',
         headerName: 'Status',
+        headerClassName: 'super-app-theme--header',
         width: 160,
     },
     {
         field: 'cash',
         headerName: 'Cash',
+        headerClassName: 'super-app-theme--header',
         width: 150,
     },
     {
         field: 'online',
         headerName: 'Online',
+        headerClassName: 'super-app-theme--header',
         width: 150,
     },
 ];
@@ -58,8 +68,8 @@ const Staff_Analysis_reports = () => {
 
     const [value, setValue] = useState(0);
     const [appointmen, setappointlist] = useState([]);
-    const [startdate, setstartdate] = useState('');
-    const [endDate, setendDate] = useState('');
+    const [startdate, setstartdate] = useState(new Date());
+    const [endDate, setendDate] = useState(new Date());
     const [doctor, setDoctor] = React.useState('');
     const [status, setstatus] = useState('');
     const [appStatus, setappStatus] = useState([]);
@@ -85,8 +95,11 @@ const Staff_Analysis_reports = () => {
     }
 
     const Show_appointmentsbydate = async (startdate, endDate, status) => {
+        let sDate = startdate.toISOString().split('T')[0];
+        let eDate = endDate.toISOString().split('T')[0];
+
         try {
-            const request = await Staff_Analysis_Details_by_date(startdate, endDate, status);
+            const request = await Staff_Analysis_Details_by_date(sDate, eDate, status);
             if (request.success === "200") {
                 setappointlist(request.Report)
                 console.log(request)
@@ -95,7 +108,7 @@ const Staff_Analysis_reports = () => {
                 alert(request.message);
             }
         }
-        catch(e) {
+        catch (e) {
             console.log(e);
         }
     }
@@ -136,7 +149,18 @@ const Staff_Analysis_reports = () => {
                 <div className='row' style={{ display: 'flex' }}>
                     <div className='col-3'>
                         <label style={{ fontFamily: 'Poppins', fontWeight: 600, color: '#707070' }}>From</label>
-                        <input
+                        <MuiPickersUtilsProvider utils={DateFnsUtils}>
+                            <KeyboardDatePicker
+                                autoOk
+                                size='small'
+                                value={startdate}
+                                onChange={setstartdate}
+                                inputVariant="outlined"
+                                format='dd/MM/yyyy'
+                                style={{ marginTop: -5, marginLeft: 15, width: 190 }}
+                            />
+                        </MuiPickersUtilsProvider>
+                        {/* <input
                             id="fromdate"
                             type="date"
                             value={startdate}
@@ -152,33 +176,74 @@ const Staff_Analysis_reports = () => {
                                     color: '#707070'
                                 }
                             }
-                        />
+                        /> */}
                     </div>
                     <div className='col-3'>
                         <label style={{ fontFamily: 'Poppins', fontWeight: 600, color: '#707070' }}>To</label>
-                        <input id="fromdate" type="date" value={endDate} onChange={(e) => {
+                        <MuiPickersUtilsProvider utils={DateFnsUtils}>
+                            <KeyboardDatePicker
+                                autoOk
+                                size='small'
+                                value={endDate}
+                                onChange={setendDate}
+                                inputVariant="outlined"
+                                format='dd/MM/yyyy'
+                                style={{ marginTop: -5, marginLeft: 15, width: 190 }}
+                            />
+                        </MuiPickersUtilsProvider>
+                        {/* <input id="fromdate" type="date" value={endDate} onChange={(e) => {
                             setendDate(e.target.value)
-                        }} style={{ border: '1px solid #F0F0F0', height: 30, fontFamily: 'Poppins', color: '#707070', paddingLeft: 15 }} />
+                        }} style={{ border: '1px solid #F0F0F0', height: 30, fontFamily: 'Poppins', color: '#707070', paddingLeft: 15 }} /> */}
                     </div>
                     <div className='col-3'>
                         <label style={{ fontFamily: 'Poppins', fontWeight: 600, color: '#707070' }}>Staff</label>
-                        <select id="dropdown" value={status} onChange={(e) => setstatus(e.target.value)} style={{ height: 30, border: '1px solid #F0F0F0', fontFamily: 'Poppins', paddingLeft: 5 }}>
+                        <FormControl variant="outlined" size="small" className={classes.formControl} style={{ width: '65%', marginLeft: '20px', marginTop: -3 }} >
+                            <Select
+                                className={classes.textFieldForm}
+                                size='large'
+                                native
+                                value={status}
+                                onChange={(e) => setstatus(e.target.value)}
+                                inputProps={{
+                                    name: 'doctor',
+                                    id: 'outlined-doctor-native-simple',
+                                }}
+                                style={{ width: '120%', fontSize: 14, marginLeft: -10 }}
+                            >
+                                <option value="N/A">Select</option>
+                                {appStatus.map(v => (<option value={v.DoctorId}>{v.FirstName} {v.LastName}</option>))}
+                            </Select>
+                        </FormControl>
+                        {/* <select id="dropdown" value={status} onChange={(e) => setstatus(e.target.value)} style={{ height: 30, border: '1px solid #F0F0F0', fontFamily: 'Poppins', paddingLeft: 5 }}>
                             <option value="N/A">Select</option>
                             {appStatus.map(v => (<option value={v.UserId}>{v.FirstName} {v.LastName}</option>))}
-                        </select>
+                        </select> */}
                     </div>
                     <div className='col-2'>
-                    <label style={{ fontFamily: 'Poppins', fontWeight: 600, color: '#707070' }}>Pages</label>
-                        <select id="dropdown" value={norecords} onChange={(e) => setnorecords(e.target.value)} style={{ width: 80, height: 30, border: '1px solid #F0F0F0', fontFamily: 'Poppins', paddingLeft: 15 }}>
-                            <option value="5">5</option>
-                            <option value="10">10</option>
-                            <option value="15">15</option>
-                            <option value="20">20</option>
-                            <option value="25">25</option>
-                            <option value="30">30</option>
-                            <option value="35">35</option>
-                            <option value="40">40</option>
-                        </select>
+                        <label style={{ fontFamily: 'Poppins', fontWeight: 600, color: '#707070' }}>Pages</label>
+                        <FormControl variant="outlined" size="small" className={classes.formControl} style={{ width: '65%', marginLeft: '20px', marginTop: -3 }} >
+                            <Select
+                                className={classes.textFieldForm}
+                                size='large'
+                                native
+                                value={norecords}
+                                onChange={(e) => setnorecords(e.target.value)}
+                                inputProps={{
+                                    name: 'doctor',
+                                    id: 'outlined-doctor-native-simple',
+                                }}
+                                style={{ width: '90%', fontSize: 14, marginTop: -25, marginLeft: 40 }}
+                            >
+                                <option value="5">5</option>
+                                <option value="10">10</option>
+                                <option value="15">15</option>
+                                <option value="20">20</option>
+                                <option value="25">25</option>
+                                <option value="30">30</option>
+                                <option value="35">35</option>
+                                <option value="40">40</option>
+                            </Select>
+                        </FormControl>
                     </div>
                     <div className='col-1'>
                         <Button
@@ -189,7 +254,7 @@ const Staff_Analysis_reports = () => {
                                 color: '#fff',
                                 fontFamily: 'Poppins',
                                 height: 30,
-                                marginLeft:5
+                                marginLeft: 5
                             }}
                             onClick={() => Show_appointmentsbydate(startdate, endDate, status)}
                         >
@@ -210,6 +275,16 @@ const Staff_Analysis_reports = () => {
                     </div> */}
                 </div>
                 <Grid item xs={12} >
+                <Box
+                        sx={{
+                            '& .super-app-theme--header': {
+                                // backgroundColor: '#78B088',
+                                // color: '#fff
+                                fontSize: 14,
+
+                            },
+                        }}
+                    >
                     <DataGrid
                         style={{ height: 350, fontSize: 13, fontFamily: 'Poppins', fontWeight: 600, color: '#2C7FB2', marginTop: 20 }}
                         rows={appointmen}
@@ -218,6 +293,7 @@ const Staff_Analysis_reports = () => {
                         columnWidth={5}
                         pageSize={20}
                     />
+                    </Box>
                 </Grid>
                 <Grid item xs={12} >
                     <Grid item xs={12} >
@@ -233,11 +309,11 @@ const Staff_Analysis_reports = () => {
                                 marginTop: 15,
                             }}
                             onClick={() => {
-                                if (appointmen.length==0) {
+                                if (appointmen.length == 0) {
                                     alert('Please find some record first')
                                     return;
                                 }
-                                else{
+                                else {
                                     setOpen(true)
                                 }
                             }}
@@ -266,7 +342,7 @@ const Staff_Analysis_reports = () => {
                         </Button>
                     </Grid>
                 </Grid>
-                {Open ? <Show_pdf_data show={Open} handleclose={()=>setOpen(false)} Type="Staff" data={appointmen} column={columnsforpdf} /> : null}
+                {Open ? <Show_pdf_data show={Open} handleclose={() => setOpen(false)} Type="Staff" data={appointmen} column={columnsforpdf} /> : null}
             </div>
         </>
     )
