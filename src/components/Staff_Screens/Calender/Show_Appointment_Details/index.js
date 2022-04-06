@@ -6,6 +6,7 @@ import CloseIcon from '@material-ui/icons/Close';
 import { transparent } from 'material-ui/styles/colors';
 import { Time, Note_for_Doctor, Edit_App_for_Dashboard } from '../../../../Apis/Dashboard/Edit_Appointment_From_PatientIn/index';
 import Cancel_Appointment from './Alert';
+import moment from 'moment';
 
 const drawerWidth = 240;
 
@@ -108,186 +109,168 @@ export const Show_Appointment_details = ({ show, data, handlemodal }) => {
                 <DialogContent>
                     <DialogContentText id="alert-dialog-description">
                         <Grid container>
-                        <Grid item xs={12} sm={6}>
-                                <center>
-                                    <Typography variant="h5" noWrap={true}
-                                        style={{
-                                            fontFamily: 'Poppins',
-                                            fontStyle: 'normal',
-                                            fontWeight: 500,
-                                            overflow: 'hidden',
-                                            whiteSpace: 'nowrap',
-                                            textOverflow: 'ellipsis',
-                                            color: '#707070',
-                                            fontSize: 16,
-                                        }}>
-                                            
-                                       Appointment With -
-                                    </Typography>
-                                </center>
-                            </Grid>
                             <Grid item xs={12} sm={6}>
-                                <center>
-                                    <Typography variant="h5" noWrap={true}
-                                        style={{
-                                            fontFamily: 'Poppins',
-                                            fontStyle: 'normal',
-                                            fontWeight: 600,
-                                            overflow: 'hidden',
-                                            whiteSpace: 'nowrap',
-                                            textOverflow: 'ellipsis',
-                                            color: '#707070',
-                                            fontSize: 16,
-                                        }}>
-                                        Dr. {data.items.DFName} {data.items.DLName}
-                                    </Typography>
-                                </center>
-                            </Grid>
-                           
-                            <Grid item xs={12} sm={6}>
-                                <center>
-                                    <Typography variant="h5" noWrap={true}
-                                        style={{
-                                            fontFamily: 'Poppins',
-                                            fontStyle: 'normal',
-                                            fontWeight: 500,
-                                            overflow: 'hidden',
-                                            whiteSpace: 'nowrap',
-                                            textOverflow: 'ellipsis',
-                                            color: '#707070',
-                                            fontSize: 16,
-                                            marginTop: 10
-                                        }}>
-                                            
-                                        {data.items.FirstName} {data.items.LastName}
-                                    </Typography>
-                                </center>
-                            </Grid>
-                            <Grid item xs={12} sm={6}>
-                                <center>
-                                    <Typography variant="h5" noWrap={true}
-                                        style={{
-                                            fontFamily: 'Poppins',
-                                            fontStyle: 'normal',
-                                            fontWeight: 500,
-                                            overflow: 'hidden',
-                                            whiteSpace: 'nowrap',
-                                            textOverflow: 'ellipsis',
-                                            color: '#707070',
-                                            fontSize: 16,
-                                            marginTop: 10
-                                        }}>
-                                        PID:- {data.items.UserId}
-                                    </Typography>
-                                </center>
-                            </Grid>
-                            <Grid item xs={12} sm={6}>
-                                <center>
-                                    <Typography variant="h5" noWrap={true}
-                                        style={{
-                                            fontFamily: 'Poppins',
-                                            fontStyle: 'normal',
-                                            fontWeight: 500,
-                                            overflow: 'hidden',
-                                            whiteSpace: 'nowrap',
-                                            textOverflow: 'ellipsis',
-                                            color: '#707070',
-                                            fontSize: 16,
-                                            marginTop: 10
-                                        }}>
-                                            
-                                       Mobile Number -
-                                    </Typography>
-                                </center>
-                            </Grid>
-                            <Grid item xs={12} sm={6}>
-                                <center>
-                                    <Typography variant="h5" noWrap={true}
-                                        style={{
-                                            fontFamily: 'Poppins',
-                                            fontStyle: 'normal',
-                                            fontWeight: 500,
-                                            overflow: 'hidden',
-                                            whiteSpace: 'nowrap',
-                                            textOverflow: 'ellipsis',
-                                            color: '#707070',
-                                            fontSize: 16,
-                                            marginTop: 10
-                                        }}>
-                                        {data.items.MobileNo}
-                                    </Typography>
-                                </center>
-                            </Grid>
-                            <Grid item xs={12} sm={6} style={{ marginTop: 10 }}>
-                                <center>
-                                    <Typography variant="h5" noWrap={true}
-                                        style={{
-                                            fontFamily: 'Poppins',
-                                            fontStyle: 'normal',
-                                            fontWeight: 600,
-                                            overflow: 'hidden',
-                                            whiteSpace: 'nowrap',
-                                            textOverflow: 'ellipsis',
-                                            color: '#707070',
-                                            fontSize: 16,
+                                <Typography variant="h5" noWrap={true}
+                                    style={{
+                                        fontFamily: 'Poppins',
+                                        fontStyle: 'normal',
+                                        fontWeight: 500,
+                                        overflow: 'hidden',
+                                        whiteSpace: 'nowrap',
+                                        textOverflow: 'ellipsis',
+                                        color: '#707070',
+                                        fontSize: 16,
+                                        marginTop: -10
+                                    }}>
 
-                                        }}>
-                                        Appointment Time
-                                    </Typography>
-                                </center>
+                                    Appointment With -
+                                </Typography>
                             </Grid>
-                            <Grid item xs={12} sm={6} style={{ marginTop: 10 }}>
-                                <center>
-                                    <Typography variant="h5" noWrap={true}
-                                        style={{
-                                            fontFamily: 'Poppins',
-                                            fontStyle: 'normal',
-                                            fontWeight: 600,
-                                            overflow: 'hidden',
-                                            whiteSpace: 'nowrap',
-                                            textOverflow: 'ellipsis',
-                                            color: '#707070',
-                                            fontSize: 16,
-                                        }}>
-                                        Appointment Date
-                                    </Typography>
-                                </center>
+                            <Grid item xs={12} sm={6}>
+                                <Typography variant="h5" noWrap={true}
+                                    style={{
+                                        fontFamily: 'Poppins',
+                                        fontStyle: 'normal',
+                                        fontWeight: 600,
+                                        overflow: 'hidden',
+                                        whiteSpace: 'nowrap',
+                                        textOverflow: 'ellipsis',
+                                        color: '#707070',
+                                        fontSize: 16,
+                                        marginTop: -10
+                                    }}>
+                                    Dr. {data.items.DFName} {data.items.DLName}
+                                </Typography>
                             </Grid>
 
-                            <Grid item xs={12} sm={6} >
-                                <center>
-                                    <Typography variant="h5" noWrap={true}
-                                        style={{
-                                            fontFamily: 'Poppins',
-                                            fontStyle: 'normal',
-                                            fontWeight: 600,
-                                            overflow: 'hidden',
-                                            whiteSpace: 'nowrap',
-                                            textOverflow: 'ellipsis',
-                                            color: '#707070',
-                                            fontSize: 16,
-                                        }}>
-                                        {appTime ? appTime : 'NA'}
-                                    </Typography>
-                                </center>
+                            <Grid item xs={12} sm={6}>
+                                <Typography variant="h5" noWrap={true}
+                                    style={{
+                                        fontFamily: 'Poppins',
+                                        fontStyle: 'normal',
+                                        fontWeight: 500,
+                                        overflow: 'hidden',
+                                        whiteSpace: 'nowrap',
+                                        textOverflow: 'ellipsis',
+                                        color: '#707070',
+                                        fontSize: 16,
+                                        marginTop: 10
+                                    }}>
+
+                                    {data.items.FirstName} {data.items.LastName}
+                                </Typography>
+                            </Grid>
+                            <Grid item xs={12} sm={6}>
+                                <Typography variant="h5" noWrap={true}
+                                    style={{
+                                        fontFamily: 'Poppins',
+                                        fontStyle: 'normal',
+                                        fontWeight: 500,
+                                        overflow: 'hidden',
+                                        whiteSpace: 'nowrap',
+                                        textOverflow: 'ellipsis',
+                                        color: '#707070',
+                                        fontSize: 16,
+                                        marginTop: 10
+                                    }}>
+                                    PID:- {data.items.UserId}
+                                </Typography>
+                            </Grid>
+                            <Grid item xs={12} sm={6}>
+                                <Typography variant="h5" noWrap={true}
+                                    style={{
+                                        fontFamily: 'Poppins',
+                                        fontStyle: 'normal',
+                                        fontWeight: 500,
+                                        overflow: 'hidden',
+                                        whiteSpace: 'nowrap',
+                                        textOverflow: 'ellipsis',
+                                        color: '#707070',
+                                        fontSize: 16,
+                                        marginTop: 10
+                                    }}>
+
+                                    Mobile Number -
+                                </Typography>
+                            </Grid>
+                            <Grid item xs={12} sm={6}>
+                                <Typography variant="h5" noWrap={true}
+                                    style={{
+                                        fontFamily: 'Poppins',
+                                        fontStyle: 'normal',
+                                        fontWeight: 500,
+                                        overflow: 'hidden',
+                                        whiteSpace: 'nowrap',
+                                        textOverflow: 'ellipsis',
+                                        color: '#707070',
+                                        fontSize: 16,
+                                        marginTop: 10
+                                    }}>
+                                    {data.items.MobileNo}
+                                </Typography>
+                            </Grid>
+                            <Grid item xs={12} sm={6} style={{ marginTop: 10 }}>
+                                <Typography variant="h5" noWrap={true}
+                                    style={{
+                                        fontFamily: 'Poppins',
+                                        fontStyle: 'normal',
+                                        fontWeight: 600,
+                                        overflow: 'hidden',
+                                        whiteSpace: 'nowrap',
+                                        textOverflow: 'ellipsis',
+                                        color: '#707070',
+                                        fontSize: 16,
+
+                                    }}>
+                                    Appointment Time: {appTime ? appTime : 'NA'}
+                                </Typography>
+                            </Grid>
+                            <Grid item xs={12} sm={6} style={{ marginTop: 10 }}>
+                                <Typography variant="h5" noWrap={true}
+                                    style={{
+                                        fontFamily: 'Poppins',
+                                        fontStyle: 'normal',
+                                        fontWeight: 600,
+                                        overflow: 'hidden',
+                                        whiteSpace: 'nowrap',
+                                        textOverflow: 'ellipsis',
+                                        color: '#707070',
+                                        fontSize: 16,
+                                    }}>
+                                    Appointment Date: {appDate ? moment(appDate).format("DD/MM/YYYY") : 'NA'}
+                                </Typography>
+                            </Grid>
+
+                            {/* <Grid item xs={12} sm={6} >
+                                <Typography variant="h5" noWrap={true}
+                                    style={{
+                                        fontFamily: 'Poppins',
+                                        fontStyle: 'normal',
+                                        fontWeight: 600,
+                                        overflow: 'hidden',
+                                        whiteSpace: 'nowrap',
+                                        textOverflow: 'ellipsis',
+                                        color: '#707070',
+                                        fontSize: 16,
+                                    }}>
+                                    {appTime ? appTime : 'NA'}
+                                </Typography>
                             </Grid>
                             <Grid item xs={12} sm={6} >
-                                <center>
-                                    <Typography variant="h5" noWrap={true}
-                                        style={{
-                                            fontFamily: 'Poppins',
-                                            fontStyle: 'normal',
-                                            fontWeight: 600,
-                                            overflow: 'hidden',
-                                            whiteSpace: 'nowrap',
-                                            textOverflow: 'ellipsis',
-                                            color: '#707070',
-                                            fontSize: 16,
-                                        }}>
-                                        {appDate ? appDate : 'NA'}
-                                    </Typography>
-                                </center>
-                            </Grid>
+                                <Typography variant="h5" noWrap={true}
+                                    style={{
+                                        fontFamily: 'Poppins',
+                                        fontStyle: 'normal',
+                                        fontWeight: 600,
+                                        overflow: 'hidden',
+                                        whiteSpace: 'nowrap',
+                                        textOverflow: 'ellipsis',
+                                        color: '#707070',
+                                        fontSize: 16,
+                                    }}>
+                                    {appDate ? appDate : 'NA'}
+                                </Typography>
+                            </Grid> */}
 
                             <Grid container>
                                 <Grid item xs={12} sm={12} style={{ marginTop: 10 }}>
@@ -309,183 +292,100 @@ export const Show_Appointment_details = ({ show, data, handlemodal }) => {
 
                             <Grid container style={{ marginTop: 10 }}>
                                 <Grid item xs={4}>
-                                    <center>
-                                        <Typography variant="h5" noWrap={true}
-                                            style={{
-                                                fontFamily: 'Poppins',
-                                                fontStyle: 'normal',
-                                                fontWeight: 500,
-                                                overflow: 'hidden',
-                                                whiteSpace: 'nowrap',
-                                                textOverflow: 'ellipsis',
-                                                color: '#707070',
-                                                fontSize: 18,
-                                            }}>
-                                            BP: {bp ? bp : 'NA'}
-                                        </Typography>
-                                    </center>
-                                    {/* <TextField
-                                        InputProps={{
-                                            className: classes.vitalinputs,
-                                            className: classes.vitaltextField
-                                        }}
-                                        label="BP"
-                                        value={bp}
-                                        id="outlined-size-small"
-                                        variant="outlined"
-                                        size="small"
-                                        onChange={(e) => {
-                                            const re = /^[0-9\b]+$/;
-                                            if (e.target.value === '' || re.test(e.target.value)) {
-                                                setBp(e.target.value)
-                                            }
-                                        }}
-                                        style={{ marginRight: 10 }}
-                                    /> */}
+                                    <Typography variant="h5" noWrap={true}
+                                        style={{
+                                            fontFamily: 'Poppins',
+                                            fontStyle: 'normal',
+                                            fontWeight: 500,
+                                            overflow: 'hidden',
+                                            whiteSpace: 'nowrap',
+                                            textOverflow: 'ellipsis',
+                                            color: '#707070',
+                                            fontSize: 18,
+                                        }}>
+                                        BP: {bp ? bp : 'NA'}
+                                    </Typography>
+
                                 </Grid>
                                 <Grid item xs={4} >
-                                    <center>
-                                        <Typography variant="h5" noWrap={true}
-                                            style={{
-                                                fontFamily: 'Poppins',
-                                                fontStyle: 'normal',
-                                                fontWeight: 500,
-                                                overflow: 'hidden',
-                                                whiteSpace: 'nowrap',
-                                                textOverflow: 'ellipsis',
-                                                color: '#707070',
-                                                fontSize: 18,
-                                            }}>
-                                            temp: {temp ? temp : 'NA'}
-                                        </Typography>
-                                    </center>
-                                    {/* <TextField
-                                        InputProps={{
-                                            className: classes.vitalinputs,
-                                            className: classes.vitaltextField
-                                        }}
-                                        label="Temp"
-                                        value={temp}
-                                        id="outlined-size-small"
-                                        variant="outlined"
-                                        size="small"
-                                        onChange={(e) => {
-                                            const re = /^[0-9\b]+$/;
-                                            if (e.target.value === '' || re.test(e.target.value)) {
-                                                setTemp(e.target.value)
-                                            }
-                                        }}
-                                        style={{ marginRight: 10 }}
-                                    /> */}
+                                    <Typography variant="h5" noWrap={true}
+                                        style={{
+                                            fontFamily: 'Poppins',
+                                            fontStyle: 'normal',
+                                            fontWeight: 500,
+                                            overflow: 'hidden',
+                                            whiteSpace: 'nowrap',
+                                            textOverflow: 'ellipsis',
+                                            color: '#707070',
+                                            fontSize: 18,
+                                        }}>
+                                        temp: {temp ? temp : 'NA'}
+                                    </Typography>
                                 </Grid>
                                 <Grid item xs={4}>
-                                    <center>
-                                        <Typography variant="h5" noWrap={true}
-                                            style={{
-                                                fontFamily: 'Poppins',
-                                                fontStyle: 'normal',
-                                                fontWeight: 500,
-                                                overflow: 'hidden',
-                                                whiteSpace: 'nowrap',
-                                                textOverflow: 'ellipsis',
-                                                color: '#707070',
-                                                fontSize: 18,
-                                            }}>
-                                            Height: {height ? height : 'NA'}
-                                        </Typography>
-                                    </center>
-                                    {/* <TextField
-                                        InputProps={{
-                                            className: classes.vitalinputs,
-                                            className: classes.vitaltextField
-                                        }}
-                                        label="Height"
-                                        value={height}
-                                        id="outlined-size-small"
-                                        variant="outlined"
-                                        size="small"
-                                        onChange={(e) => {
-                                            const re = /^[0-9\b]+$/;
-                                            if (e.target.value === '' || re.test(e.target.value)) {
-                                                setHeight(e.target.value)
-                                            }
-                                        }}
-                                    /> */}
+                                    <Typography variant="h5" noWrap={true}
+                                        style={{
+                                            fontFamily: 'Poppins',
+                                            fontStyle: 'normal',
+                                            fontWeight: 500,
+                                            overflow: 'hidden',
+                                            whiteSpace: 'nowrap',
+                                            textOverflow: 'ellipsis',
+                                            color: '#707070',
+                                            fontSize: 18,
+                                        }}>
+                                        Height: {height ? height : 'NA'}
+                                    </Typography>
+
                                 </Grid>
                             </Grid>
 
                             <Grid container style={{ marginTop: 15 }}>
                                 <Grid item xs={4} >
-                                    <center>
-                                        <Typography variant="h5" noWrap={true}
-                                            style={{
-                                                fontFamily: 'Poppins',
-                                                fontStyle: 'normal',
-                                                fontWeight: 500,
-                                                overflow: 'hidden',
-                                                whiteSpace: 'nowrap',
-                                                textOverflow: 'ellipsis',
-                                                color: '#707070',
-                                                fontSize: 18,
-                                            }}>
-                                            Weight: {weight ? weight : 'NA'}
-                                        </Typography>
-                                    </center>
-                                    {/* <TextField
-                                        InputProps={{
-                                            className: classes.vitalinputs,
-                                            className: classes.vitaltextField
-                                        }}
+                                    <Typography variant="h5" noWrap={true}
+                                        style={{
+                                            fontFamily: 'Poppins',
+                                            fontStyle: 'normal',
+                                            fontWeight: 500,
+                                            overflow: 'hidden',
+                                            whiteSpace: 'nowrap',
+                                            textOverflow: 'ellipsis',
+                                            color: '#707070',
+                                            fontSize: 18,
+                                        }}>
+                                        Weight: {weight ? weight : 'NA'}
+                                    </Typography>
 
-                                        label="Weight"
-                                        value={weight}
-                                        id="outlined-size-small"
-                                        variant="outlined"
-                                        size="small"
-                                        onChange={(e) => {
-                                            const re = /^[0-9\b]+$/;
-                                            if (e.target.value === '' || re.test(e.target.value)) {
-                                                setWeight(e.target.value)
-                                            }
-                                        }}
-                                        style={{ marginRight: 10 }}
-                                    /> */}
                                 </Grid>
                                 <Grid item xs={4}>
-                                    <center>
-                                        <Typography variant="h5" noWrap={true}
-                                            style={{
-                                                fontFamily: 'Poppins',
-                                                fontStyle: 'normal',
-                                                fontWeight: 500,
-                                                overflow: 'hidden',
-                                                whiteSpace: 'nowrap',
-                                                textOverflow: 'ellipsis',
-                                                color: '#707070',
-                                                fontSize: 18,
-                                            }}>
-                                            SPO2: {spo2 ? spo2 : 'NA'}
-                                        </Typography>
-                                    </center>
-                                   
+                                    <Typography variant="h5" noWrap={true}
+                                        style={{
+                                            fontFamily: 'Poppins',
+                                            fontStyle: 'normal',
+                                            fontWeight: 500,
+                                            overflow: 'hidden',
+                                            whiteSpace: 'nowrap',
+                                            textOverflow: 'ellipsis',
+                                            color: '#707070',
+                                            fontSize: 18,
+                                        }}>
+                                        SPO2: {spo2 ? spo2 : 'NA'}
+                                    </Typography>
                                 </Grid>
                                 <Grid item xs={4} >
-                                    <center>
-                                        <Typography variant="h5" noWrap={true}
-                                            style={{
-                                                fontFamily: 'Poppins',
-                                                fontStyle: 'normal',
-                                                fontWeight: 500,
-                                                overflow: 'hidden',
-                                                whiteSpace: 'nowrap',
-                                                textOverflow: 'ellipsis',
-                                                color: '#707070',
-                                                fontSize: 18,
-                                            }}>
-                                            Pulse Rate: {plus ? plus : 'NA'}
-                                        </Typography>
-                                    </center>
-                                    
+                                    <Typography variant="h5" noWrap={true}
+                                        style={{
+                                            fontFamily: 'Poppins',
+                                            fontStyle: 'normal',
+                                            fontWeight: 500,
+                                            overflow: 'hidden',
+                                            whiteSpace: 'nowrap',
+                                            textOverflow: 'ellipsis',
+                                            color: '#707070',
+                                            fontSize: 18,
+                                        }}>
+                                        Pulse Rate: {plus ? plus : 'NA'}
+                                    </Typography>
                                 </Grid>
                             </Grid>
 
@@ -513,7 +413,7 @@ export const Show_Appointment_details = ({ show, data, handlemodal }) => {
                                         textOverflow: 'ellipsis',
                                         color: '#707070',
                                         fontSize: 18,
-                                        marginTop: 20
+                                        marginTop: 8
                                     }}>
                                     Note For Doctor : {notefordoctor ? notefordoctor : 'NA'}
                                 </Typography>

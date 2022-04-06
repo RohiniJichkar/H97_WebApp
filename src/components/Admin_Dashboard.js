@@ -7,7 +7,7 @@ import ip from '../ipaddress/ip';
 import axios from 'axios';
 import { Appointment_Details } from '../Admin_Apis/Dashboard/index';
 
-import { Container, Typography, Button, Grid, Paper, Avatar, CssBaseline, Box } from "@material-ui/core";
+import { Typography, Button, Grid, Paper, CssBaseline, Box } from "@material-ui/core";
 
 const columns = [
     {
@@ -75,7 +75,6 @@ const columns = [
 ];
 
 
-
 export default function AdminDashboard() {
 
     const classes = useStyles();
@@ -86,13 +85,9 @@ export default function AdminDashboard() {
     const [Clinic, setClinic] = useState([]);
     const [ClinicId, setClinicId] = useState('');
     const [appointments, setappointments] = useState('');
-
     const [records, setrecords] = useState('');
     const [details, setdetails] = useState([]);
-    const [appointmentlist, setappointmentlist] = useState([]);
-    const [norecords, setnorecords] = useState('15');
-
-
+   
     const fetchDailyAppointments = async () => {
         var data = await localStorage.getItem("userdata");
         let parsed = JSON.parse(data);
@@ -130,13 +125,10 @@ export default function AdminDashboard() {
         try {
             const request = await Appointment_Details(startdate, endDate, clinicid);
             setrecords(request)
-
         }
         catch (e) {
             console.log(e);
         }
-
-
     }
 
     useEffect(() => {
@@ -148,10 +140,8 @@ export default function AdminDashboard() {
 
     return (
 
-
         <div style={{ backgroundColor: '#ffffff', marginLeft: '84px', overflow: 'hidden' }}>
             <AdminNavbar />
-
 
             {/* main grid */}
             <Grid container spacing={2} style={{ marginTop: '64px' }}
@@ -276,12 +266,12 @@ export default function AdminDashboard() {
 
                 </Grid>
             </Grid>
-            <div class="flex-container" style={{ display: 'flex', boxShadow: '10px 5px 5px gray', marginLeft: '-35px' }}>
+            <div class="flex-container" style={{ display: 'flex', boxShadow: '2px 2px 2px gray', }}>
                 <div style={{ margin: '10px', padding: '20px' }}></div>
             </div>
-            <div className='row' style={{ marginTop: '30px', marginLeft: '-39px', }}>
-                <Typography style={{ marginTop: '-3px', color: '#2C7FB2', fontWeight: 'bold', fontSize: '22px', marginLeft: '-3px', textAlign: 'center' }}>Clinic Appointments</Typography>
-                <div className='col-3' style={{ marginLeft: '43px', marginBottom: '12px' }} >
+            <div className='row' style={{ marginTop: '15px', marginLeft: '-39px', }}>
+                <Typography style={{ color: '#2C7FB2', fontWeight: 'bold', fontSize: '22px', marginLeft: '-3px', textAlign: 'center' }}>Clinic Appointments</Typography>
+                <div className='col-3' style={{ marginLeft: '43px', marginBottom: '12px', marginTop: 10 }} >
 
                     <label style={{ fontFamily: 'Poppins', fontWeight: 600, color: '#707070' }}>Startdate</label>
 
@@ -305,21 +295,20 @@ export default function AdminDashboard() {
                         }
                     />
                 </div>
-                <div className='col-3'>
+                <div className='col-3' style={{marginTop: 10}}>
                     <label style={{ fontFamily: 'Poppins', fontWeight: 600, color: '#707070' }}>Enddate</label>
                     <input id="fromdate" type="date" value={endDate} onChange={(e) => {
                         setendDate(e.target.value)
                     }} style={{ border: '1px solid #F0F0F0', marginLeft: '12px', marginRight: '34px', height: 30, fontFamily: 'Poppins', color: '#707070' }} />
                 </div>
-                <div className='col-4'>
-
+                <div className='col-4' style={{marginTop: 10}}>
                     <select id="dropdown" value={ClinicId} onChange={(e) => setClinicId(e.target.value)} style={{ height: 30, width: '193px', border: '1px solid #F0F0F0', fontFamily: 'Poppins', marginLeft: '35px', marginLeft: '1px' }}>
                         <option>SelectClinic</option>
                         {Clinic.map(v => (<option value={v.ClinicId}>{v.ClinicName}</option>))}
                     </select>
                 </div>
 
-                <div className='col-1'>
+                <div className='col-1' style={{marginTop: 10}}>
                     <Button
                         variant="contained"
                         color="#2C7FB2"

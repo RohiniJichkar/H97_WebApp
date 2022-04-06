@@ -340,7 +340,7 @@ function DoctorUploadReports() {
                         style={{
                             fontFamily: 'Poppins',
                             fontStyle: 'normal',
-                            fontWeight: 500,
+                            fontWeight: 600,
                             overflow: 'hidden',
                             whiteSpace: 'nowrap',
                             textOverflow: 'ellipsis',
@@ -364,16 +364,16 @@ function DoctorUploadReports() {
                             <div style={{ paddingTop: 20 }}>
                                 <div>
                                     <FormControl variant="outlined" className={classes.formControl}  >
-                                        <TextField className={classes.textField} onChange={(e) => settitle(e.target.value)} id="outlined-basic" label="Title" variant="outlined" size="small" />
+                                        <TextField className={classes.textField} onChange={(e) => settitle(e.target.value)} id="outlined-basic" label="Title" variant="outlined" size="small" style={{marginTop: 10}} />
                                     </FormControl>
                                 </div>
                                 <div>
                                     <FormControl variant="outlined" className={classes.formControl}  >
-                                        <TextField className={classes.textField} onChange={convertToBase64} id="outlined-basic" type='file' variant="outlined" size="small" />
+                                        <TextField className={classes.textField} onChange={convertToBase64} id="outlined-basic" type='file' variant="outlined" size="small" style={{marginTop: 13}} />
                                     </FormControl>
 
                                 </div>
-                                <div style={{ paddingTop: 130 }}>
+                                <div style={{ paddingTop: 105 }}>
                                     <Divider style={{ border: ' 1px solid #F0F0F0' }} />
                                     <Grid container spacing={2} style={{ paddingTop: 10, paddingBottom: 10 }}>
                                         <Grid item xs={12} sm={6}>

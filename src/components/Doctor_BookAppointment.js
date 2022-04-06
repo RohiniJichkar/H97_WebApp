@@ -15,6 +15,15 @@ import {
   MuiPickersUtilsProvider,
   KeyboardDatePicker,
 } from '@material-ui/pickers';
+import { createTheme, ThemeProvider } from '@material-ui/core/styles';
+
+const defaultMaterialTheme = createTheme({
+  palette: {
+    primary: {
+      main: '#1769aa',
+    },
+  },
+});
 
 
 const getClinicPatients = 'http://13.233.217.107:8080/api/Web_GetPatients';
@@ -311,7 +320,7 @@ export default function DoctorBookAppointment() {
             style={{
               fontFamily: 'Poppins',
               fontStyle: 'normal',
-              fontWeight: 500,
+              fontWeight: 600,
               overflow: 'hidden',
               whiteSpace: 'nowrap',
               textOverflow: 'ellipsis',
@@ -357,7 +366,7 @@ export default function DoctorBookAppointment() {
                     // backgroundColor: '#78B088',
                     // color: '#fff
                     fontSize: 15,
-                    
+
                   },
                 }}
               >
@@ -373,7 +382,7 @@ export default function DoctorBookAppointment() {
                   }}
                 />
               </Box>
-              
+
               <Divider style={{ padding: '5px', borderTop: '1px solid #F0F0F0', backgroundColor: '#fff', paddingBottom: 10 }} />
 
               <Typography variant="h7" noWrap={true} style={{
@@ -710,21 +719,21 @@ export default function DoctorBookAppointment() {
                       }
                     </Grid>
                     <Grid item xs={12} sm={6} >
+                      <ThemeProvider theme={defaultMaterialTheme}>
+                        <MuiPickersUtilsProvider utils={DateFnsUtils}>
 
-                      <MuiPickersUtilsProvider utils={DateFnsUtils}>
-
-                        <KeyboardDatePicker
-                          autoOk
-                          size='small'
-                          value={appDate}
-                          onChange={setappDate}
-                          inputVariant="outlined"
-                          label="Date"
-                          format='dd/MM/yyyy'
-                          style={{ marginRight: 7, marginTop: 5 }}
-                        />
-                      </MuiPickersUtilsProvider>
-
+                          <KeyboardDatePicker
+                            autoOk
+                            size='small'
+                            value={appDate}
+                            onChange={setappDate}
+                            inputVariant="outlined"
+                            label="Date"
+                            format='dd/MM/yyyy'
+                            style={{ marginRight: 7, marginTop: 5 }}
+                          />
+                        </MuiPickersUtilsProvider>
+                      </ThemeProvider>
                       {/* <FormControl variant="outlined" size="small" className={classes.formControl} style={{ paddingRight: 20, bottom: 3 }}>
                         <TextField
                           variant="outlined"

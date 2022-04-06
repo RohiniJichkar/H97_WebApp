@@ -9,7 +9,7 @@ import ChevronRightIcon from '@material-ui/icons/ChevronRight';
 import Footer from './Footer';
 import DashboardIcon from '@material-ui/icons/Dashboard';
 import SupervisorAccountIcon from '@material-ui/icons/SupervisorAccount';
-
+import EmojiObjectsIcon from '@material-ui/icons/EmojiObjects';
 import HomeIcon from '@material-ui/icons/Home';
 import DirectionsWalkIcon from '@material-ui/icons/DirectionsWalk';
 import AssignmentTurnedInIcon from '@material-ui/icons/AssignmentTurnedIn';
@@ -21,6 +21,7 @@ import SettingsIcon from '@material-ui/icons/Settings';
 import ip from '../ipaddress/ip';
 import axios from 'axios';
 import LocalHospitalIcon from '@mui/icons-material/LocalHospital'
+import AddBusinessIcon from '@mui/icons-material/AddBusiness';
 
 const drawerWidth = 240;
 
@@ -239,7 +240,7 @@ export default function AdminNavbar() {
     },
     {
       text: 'Clinics',
-      icon: HomeIcon,
+      icon: AddBusinessIcon,
       onClick: () => navigate("/AdminClinicDoctors"),
     },
     {
@@ -251,6 +252,11 @@ export default function AdminNavbar() {
       text: 'Referral Doctors',
       icon: SupervisorAccountIcon,
       onClick: () => navigate("/AdminReferralDoctors"),
+    },
+    {
+      text: 'Tips',
+      icon: EmojiObjectsIcon,
+      onClick: () => navigate("/AdminTips"),
     },
 
   ];

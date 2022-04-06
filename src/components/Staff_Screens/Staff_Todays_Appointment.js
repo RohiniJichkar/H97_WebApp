@@ -14,7 +14,15 @@ import {
     KeyboardDatePicker,
 } from '@material-ui/pickers';
 import ArrowBackIcon from '@material-ui/icons/ArrowBack';
+import { createTheme, ThemeProvider } from '@material-ui/core/styles';
 
+const defaultMaterialTheme = createTheme({
+    palette: {
+        primary: {
+            main: '#1769aa',
+        },
+    },
+});
 const drawerWidth = 240;
 
 const columns = [
@@ -532,19 +540,19 @@ export default function Staff_Todays_Appointment() {
                     <Typography variant="h8" noWrap={true} style={{ paddingLeft: 5, paddingRight: 20, fontSize: 15, color: '#707070', fontWeight: 600, fontFamily: 'Poppins' }}>
                         From
                     </Typography>
-
-                    <MuiPickersUtilsProvider utils={DateFnsUtils}>
-                        <KeyboardDatePicker
-                            autoOk
-                            size='small'
-                            value={startdate}
-                            onChange={setstartdate}
-                            inputVariant="outlined"
-                            format='dd/MM/yyyy'
-                            style={{ marginTop: -5, marginLeft: 15, width: 190 }}
-                        />
-                    </MuiPickersUtilsProvider>
-
+                    <ThemeProvider theme={defaultMaterialTheme}>
+                        <MuiPickersUtilsProvider utils={DateFnsUtils}>
+                            <KeyboardDatePicker
+                                autoOk
+                                size='small'
+                                value={startdate}
+                                onChange={setstartdate}
+                                inputVariant="outlined"
+                                format='dd/MM/yyyy'
+                                style={{ marginTop: -5, marginLeft: 15, width: 190 }}
+                            />
+                        </MuiPickersUtilsProvider>
+                    </ThemeProvider>
                     {/* <input id="fromdate" type="date" value={startdate} onChange={(e) => {
                         setstartdate(e.target.value)
                     }} style={{ border: '1px solid #F0F0F0', height: 35 }} /> */}
@@ -552,18 +560,19 @@ export default function Staff_Todays_Appointment() {
                     <Typography variant="h8" noWrap={true} style={{ paddingLeft: 40, paddingRight: 20, fontSize: 15, color: '#707070', fontWeight: 600, fontFamily: 'Poppins' }}>
                         To
                     </Typography>
-                    <MuiPickersUtilsProvider utils={DateFnsUtils}>
-                        <KeyboardDatePicker
-                            autoOk
-                            size='small'
-                            value={endDate}
-                            onChange={setendDate}
-                            inputVariant="outlined"
-                            format='dd/MM/yyyy'
-                            style={{ marginTop: -5, marginLeft: 15, width: 190 }}
-                        />
-                    </MuiPickersUtilsProvider>
-
+                    <ThemeProvider theme={defaultMaterialTheme}>
+                        <MuiPickersUtilsProvider utils={DateFnsUtils}>
+                            <KeyboardDatePicker
+                                autoOk
+                                size='small'
+                                value={endDate}
+                                onChange={setendDate}
+                                inputVariant="outlined"
+                                format='dd/MM/yyyy'
+                                style={{ marginTop: -5, marginLeft: 15, width: 190 }}
+                            />
+                        </MuiPickersUtilsProvider>
+                    </ThemeProvider>
                     <Button className={classes.btnview} onClick={() => Appointmentbydate(startdate, endDate)} >View</Button>
 
                 </Grid>

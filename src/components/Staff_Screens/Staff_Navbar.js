@@ -406,7 +406,7 @@ export default function DoctorNavbar() {
             <img src="h97 logo horizontal-01.png" alt="logo" className={classes.logo} height='40px' style={{ flex: 1 }} />
           </div>
           <div className={classes.clinicname}>
-            <Typography variant="h5" noWrap={true} style={{ color: '#2C7FB2' }}>
+            <Typography variant="h5" noWrap={true} style={{ color: '#2C7FB2', fontWeight: 600 }}>
               {ClinicDetails.ClinicName}
             </Typography>
           </div>

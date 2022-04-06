@@ -23,7 +23,15 @@ import { Add_Medicine, Search_Medicine } from '../Apis/Medicines/index';
 import Edit_Medicine from './Medicines/Edit_Medicine/index';
 import Delete_Medicine from './Medicines/Delete_Medicine/index';
 import ip from '../ipaddress/ip';
+import { createTheme, ThemeProvider } from '@material-ui/core/styles';
 
+const defaultMaterialTheme = createTheme({
+    palette: {
+        primary: {
+            main: '#1769aa',
+        },
+    },
+});
 
 const drawerWidth = 240;
 
@@ -454,9 +462,9 @@ export default function DoctorMedicines() {
                 <Grid item xs={12} >
                     <Typography variant="h5" noWrap={true}
                         style={{
-                            fontFamily: '"Poppins", san-serif;',
+                            fontFamily: 'Poppins',
                             fontStyle: 'normal',
-                            fontWeight: 500,
+                            fontWeight: 600,
                             overflow: 'hidden',
                             whiteSpace: 'nowrap',
                             textOverflow: 'ellipsis',
@@ -746,33 +754,37 @@ export default function DoctorMedicines() {
                                             </center>
                                         </Grid>
                                         <Grid item xs={6} style={{ marginTop: 10 }}>
-                                            <MuiPickersUtilsProvider utils={DateFnsUtils}>
-                                                <KeyboardDatePicker
-                                                    autoOk
-                                                    size='small'
-                                                    value={mStartDate}
-                                                    onChange={setmStartDate}
-                                                    inputVariant="outlined"
-                                                    label="Start Date"
-                                                    format='dd/MM/yyyy'
-                                                    style={{ marginTop: 5, float: 'right', width: '130px', marginRight: 15 }}
-                                                />
-                                            </MuiPickersUtilsProvider>
+                                            <ThemeProvider theme={defaultMaterialTheme}>
+                                                <MuiPickersUtilsProvider utils={DateFnsUtils}>
+                                                    <KeyboardDatePicker
+                                                        autoOk
+                                                        size='small'
+                                                        value={mStartDate}
+                                                        onChange={setmStartDate}
+                                                        inputVariant="outlined"
+                                                        label="Start Date"
+                                                        format='dd/MM/yyyy'
+                                                        style={{ marginTop: 5, float: 'right', width: '130px', marginRight: 15 }}
+                                                    />
+                                                </MuiPickersUtilsProvider>
+                                            </ThemeProvider>
                                             {/* <TextField className={classes.inputFields} onChange={(e) => setmStartDate(e.target.value)} id="outlined-basic" type='date' variant="outlined" size="small" style={{ width: '130px', float: 'right', marginRight: 15 }} /> */}
                                         </Grid>
                                         <Grid item xs={6} style={{ marginTop: 10 }}>
-                                            <MuiPickersUtilsProvider utils={DateFnsUtils}>
-                                                <KeyboardDatePicker
-                                                    autoOk
-                                                    size='small'
-                                                    value={mExpiryDate}
-                                                    onChange={setmExpiryDate}
-                                                    inputVariant="outlined"
-                                                    label="Expiry Date"
-                                                    format='dd/MM/yyyy'
-                                                    style={{ marginTop: 5, float: 'left', width: '130px', marginLeft: 15 }}
-                                                />
-                                            </MuiPickersUtilsProvider>
+                                            <ThemeProvider theme={defaultMaterialTheme}>
+                                                <MuiPickersUtilsProvider utils={DateFnsUtils}>
+                                                    <KeyboardDatePicker
+                                                        autoOk
+                                                        size='small'
+                                                        value={mExpiryDate}
+                                                        onChange={setmExpiryDate}
+                                                        inputVariant="outlined"
+                                                        label="Expiry Date"
+                                                        format='dd/MM/yyyy'
+                                                        style={{ marginTop: 5, float: 'left', width: '130px', marginLeft: 15 }}
+                                                    />
+                                                </MuiPickersUtilsProvider>
+                                            </ThemeProvider>
                                             {/* <TextField className={classes.inputFields} onChange={(e) => setmExpiryDate(e.target.value)} id="outlined-basic" type='date' variant="outlined" size="small" style={{ width: '130px', marginLeft: 15 }} /> */}
                                         </Grid>
                                     </Grid>

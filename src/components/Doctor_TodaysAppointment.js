@@ -18,6 +18,15 @@ import {
 
 import { Edit_Appointment_From_TodaysApp } from './Todays_Appointments/Slots/Edit_Appointment/index';
 import Delete_Appointment from './Todays_Appointments/Slots/Delete_Appointment/index';
+import { createTheme, ThemeProvider } from '@material-ui/core/styles';
+
+const defaultMaterialTheme = createTheme({
+    palette: {
+        primary: {
+            main: '#1769aa',
+        },
+    },
+});
 
 const drawerWidth = 240;
 
@@ -120,6 +129,7 @@ const useStyles = makeStyles((theme) => ({
     root: {
         display: 'flex',
         flexGrow: 1,
+        marginLeft: 26,
         backgroundColor: 'white',
     },
     title: {
@@ -492,19 +502,19 @@ export default function DoctorTodaysAppointment() {
                     <Typography variant="h8" noWrap={true} style={{ paddingLeft: 5, paddingRight: 20 }}>
                         From
                     </Typography>
-
-                    <MuiPickersUtilsProvider utils={DateFnsUtils}>
-                        <KeyboardDatePicker
-                            autoOk
-                            size='small'
-                            value={startdate}
-                            onChange={setstartdate}
-                            inputVariant="outlined"
-                            format='dd/MM/yyyy'
-                            style={{ marginTop: -5, marginLeft: 15, width: 190 }}
-                        />
-                    </MuiPickersUtilsProvider>
-
+                    <ThemeProvider theme={defaultMaterialTheme}>
+                        <MuiPickersUtilsProvider utils={DateFnsUtils}>
+                            <KeyboardDatePicker
+                                autoOk
+                                size='small'
+                                value={startdate}
+                                onChange={setstartdate}
+                                inputVariant="outlined"
+                                format='dd/MM/yyyy'
+                                style={{ marginTop: -5, marginLeft: 15, width: 190 }}
+                            />
+                        </MuiPickersUtilsProvider>
+                    </ThemeProvider>
                     {/* <input id="fromdate" type="date" value={startdate} onChange={(e) => {
                         setstartdate(e.target.value)
                     }} style={{ border: '1px solid #F0F0F0', height: 35 }} /> */}
@@ -512,17 +522,19 @@ export default function DoctorTodaysAppointment() {
                     <Typography variant="h8" noWrap={true} style={{ paddingLeft: 40, paddingRight: 20 }}>
                         To
                     </Typography>
-                    <MuiPickersUtilsProvider utils={DateFnsUtils}>
-                        <KeyboardDatePicker
-                            autoOk
-                            size='small'
-                            value={endDate}
-                            onChange={setendDate}
-                            inputVariant="outlined"
-                            format='dd/MM/yyyy'
-                            style={{ marginTop: -5, marginLeft: 15, width: 190 }}
-                        />
-                    </MuiPickersUtilsProvider>
+                    <ThemeProvider theme={defaultMaterialTheme}>
+                        <MuiPickersUtilsProvider utils={DateFnsUtils}>
+                            <KeyboardDatePicker
+                                autoOk
+                                size='small'
+                                value={endDate}
+                                onChange={setendDate}
+                                inputVariant="outlined"
+                                format='dd/MM/yyyy'
+                                style={{ marginTop: -5, marginLeft: 15, width: 190 }}
+                            />
+                        </MuiPickersUtilsProvider>
+                    </ThemeProvider>
                     {/* <input id="fromdate" type="date" value={endDate} onChange={(e) => {
                         setendDate(e.target.value)
                     }} style={{ border: '1px solid #F0F0F0', height: 35 }} /> */}
@@ -539,7 +551,7 @@ export default function DoctorTodaysAppointment() {
                                 // backgroundColor: '#78B088',
                                 // color: '#fff
                                 fontSize: 14,
-                               
+
                             },
                         }}
                     >

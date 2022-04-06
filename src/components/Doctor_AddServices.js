@@ -391,7 +391,7 @@ export default function DoctorAddServices() {
                         style={{
                             fontFamily: 'Poppins',
                             fontStyle: 'normal',
-                            fontWeight: 500,
+                            fontWeight: 600,
                             overflow: 'hidden',
                             whiteSpace: 'nowrap',
                             textOverflow: 'ellipsis',

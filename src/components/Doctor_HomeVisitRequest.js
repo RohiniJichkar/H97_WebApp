@@ -17,7 +17,7 @@ import Delete_HV_Request from './HomeVisitor_Request/Delete_Request/index';
 import Add_HV_Request from './HomeVisitor_Request/Add_HV_Request/index';
 import DeleteIcon from '@material-ui/icons/Delete';
 import axios from 'axios';
-
+import moment from 'moment';
 
 const getHomeVisitorRequestSearchApi = 'http://13.233.217.107:8080/api/Web_SearchHomeVisitorRequest';
 
@@ -381,7 +381,7 @@ export default function DoctorHomeVisitRequest() {
                         style={{
                             fontFamily: 'Poppins',
                             fontStyle: 'normal',
-                            fontWeight: 500,
+                            fontWeight: 600,
                             overflow: 'hidden',
                             whiteSpace: 'nowrap',
                             textOverflow: 'ellipsis',
@@ -497,7 +497,7 @@ export default function DoctorHomeVisitRequest() {
                                             Prefered Date
                                         </Typography>
                                         <Typography variant="h6" noWrap={true} style={{ paddingTop: 5, fontSize: 14, color: '#707070', fontFamily: 'Poppins' }}>
-                                            {requestorDetails.PreferedTime ? `${(requestorDetails.PreferedTime).split(' ')[0]}` : "NA"}
+                                            {requestorDetails.PreferedTime ? `${moment((requestorDetails.PreferedTime).split(' ')[0]).format("DD/MM/YYYY")}` : "NA"}
                                         </Typography>
                                     </Grid>
                                     <Grid item xs={3} style={{ border: '1px solid #F0F0F0', borderLeft: '0px', paddingBottom: 20 }}>

@@ -14,8 +14,6 @@ const Transition = React.forwardRef(function Transition(props, ref) {
 });
 
 
-
-
 export default function Edit_staff({ show, data, handleCloseEditmodal }) {
     const classes = useStyles();
     const theme = useTheme();

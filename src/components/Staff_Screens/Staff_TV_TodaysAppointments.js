@@ -310,7 +310,7 @@ export default function Staff_TV_TodaysAppointments() {
                     </div>
 
                     <div className={classes.clinicname}>
-                        <Typography variant="h5" noWrap={true} style={{ color: '#2C7FB2' }}>
+                        <Typography variant="h5" noWrap={true} style={{ color: '#2C7FB2', fontWeight: 600 }}>
                             {ClinicDetails.ClinicName}
                         </Typography>
                     </div>

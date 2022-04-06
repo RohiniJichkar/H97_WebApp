@@ -224,7 +224,7 @@ export default function Doctor_TV_TodaysAppointments() {
         }, 10000);
         const secondinterval = setInterval(() => {
             setSendInModal(false);
-        }, 20000);
+        }, 10000);
         FetchSend_In();
         fetchDoctorProfile();
         fetchPatientIn();
@@ -325,7 +325,7 @@ export default function Doctor_TV_TodaysAppointments() {
                     </div>
 
                     <div className={classes.clinicname}>
-                        <Typography variant="h5" noWrap={true} style={{ color: '#2C7FB2' }}>
+                        <Typography variant="h5" noWrap={true} style={{ color: '#2C7FB2', fontWeight: 600 }}>
                             {doctordata.ClinicName}
                         </Typography>
                     </div>

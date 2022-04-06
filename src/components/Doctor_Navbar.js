@@ -480,7 +480,7 @@ export default function DoctorNavbar() {
           </div>
           <div className={classes.clinicname}>
             {/* {sessionRole == 'Doctor' ? */}
-            <Typography variant="h5" noWrap={true} style={{ color: '#2C7FB2' }}>
+            <Typography variant="h5" noWrap={true} style={{ color: '#2C7FB2', fontWeight: 600 }}>
               {doctordata.ClinicName}
             </Typography>
             {/* : <Typography variant="h5" noWrap={true} style={{ color: '#2C7FB2' }}>

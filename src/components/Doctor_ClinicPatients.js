@@ -13,6 +13,8 @@ import Edit_Patient from './Clinic_Patients/Edit_Patient/index';
 import Delete_Patient from './Clinic_Patients/Delete_Patient/index';
 import Add_Patinet from './Clinic_Patients/Add_Patient/index';
 import Add_Family_Member from './Clinic_Patients/Add_Family_Member/index';
+import moment from 'moment';
+
 
 const getPatientDataApi = 'http://13.233.217.107:8080/api/Web_GetPatients';
 const getPatientDetailsApi = 'http://13.233.217.107:8080/api/ShowPatientDetailUsingId';
@@ -191,9 +193,9 @@ export default function DoctorClinicPatients() {
                 <Grid item xs={12}>
                     <Typography variant="h5" noWrap={true}
                         style={{
-                            fontFamily: '"Poppins", san-serif;',
+                            fontFamily: 'Poppins',
                             fontStyle: 'normal',
-                            fontWeight: 500,
+                            fontWeight: 600,
                             overflow: 'hidden',
                             whiteSpace: 'nowrap',
                             textOverflow: 'ellipsis',
@@ -253,7 +255,7 @@ export default function DoctorClinicPatients() {
                                 }}
                             />
                         </Box>
-                        
+
                         <Typography variant="h6" noWrap={true} style={{
                             fontSize: 12, color: '#2C7FB2', fontFamily: 'Poppins',
                             fontStyle: 'normal',
@@ -291,7 +293,7 @@ export default function DoctorClinicPatients() {
                                 color: '#707070',
                                 fontWeight: 600
                             }}>
-                              {patientDetails.NmTitle ? patientDetails.NmTitle : ''} {patientDetails.FirstName ? patientDetails.FirstName : "NA"}   {patientDetails.LastName ? patientDetails.LastName : ""}
+                                {patientDetails.NmTitle ? patientDetails.NmTitle : ''} {patientDetails.FirstName ? patientDetails.FirstName : "NA"}   {patientDetails.LastName ? patientDetails.LastName : ""}
 
                             </Typography>
                             <Typography variant="h6" noWrap={true} style={{
@@ -325,7 +327,7 @@ export default function DoctorClinicPatients() {
                                         Date Of Birth
                                     </Typography>
                                     <Typography variant="h6" noWrap={true} style={{ paddingTop: 5, fontSize: 14, color: '#707070', fontFamily: 'Poppins', }}>
-                                        {patientDetails.DOB ? patientDetails.DOB : 'NA'}
+                                        {patientDetails.DOB ? moment(patientDetails.DOB).format("DD/MM/YYYY") : 'NA'}
                                     </Typography>
                                 </Grid>
                                 <Grid item xs={3} style={{ border: '1px solid #F0F0F0', borderLeft: '0px', paddingBottom: 20 }}>

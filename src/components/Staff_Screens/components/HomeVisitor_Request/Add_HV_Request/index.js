@@ -12,8 +12,18 @@ import {
     MuiPickersUtilsProvider,
     KeyboardDatePicker,
 } from '@material-ui/pickers';
-
 import axios from 'axios';
+
+import { createTheme, ThemeProvider } from '@material-ui/core/styles';
+
+const defaultMaterialTheme = createTheme({
+    palette: {
+        primary: {
+            main: '#1769aa',
+        },
+    },
+});
+
 const drawerWidth = 240;
 
 const Add_HV_Request = ({ show, data, handleclose }) => {
@@ -225,21 +235,21 @@ const Add_HV_Request = ({ show, data, handleclose }) => {
 
                             </FormControl>  <span style={{ position: 'relative', bottom: 8, fontSize: 20, color: 'red' }}> *</span>
 
-                            <MuiPickersUtilsProvider utils={DateFnsUtils}>
-
-                                <KeyboardDatePicker
-                                    autoOk
-                                    className={classes.inputFields}
-                                    size='small'
-                                    value={date}
-                                    onChange={setdate}
-                                    inputVariant="outlined"
-                                    label="Date"
-                                    format='dd/MM/yyyy'
-                                    style={{ marginTop: 20 }}
-                                />
-                            </MuiPickersUtilsProvider><span style={{ position: 'relative', top: 10, fontSize: 20, color: 'red' }}> *</span>
-
+                            <ThemeProvider theme={defaultMaterialTheme}>
+                                <MuiPickersUtilsProvider utils={DateFnsUtils}>
+                                    <KeyboardDatePicker
+                                        autoOk
+                                        className={classes.inputFields}
+                                        size='small'
+                                        value={date}
+                                        onChange={setdate}
+                                        inputVariant="outlined"
+                                        label="Date"
+                                        format='dd/MM/yyyy'
+                                        style={{ marginTop: 20 }}
+                                    />
+                                </MuiPickersUtilsProvider><span style={{ position: 'relative', top: 10, fontSize: 20, color: 'red' }}> *</span>
+                            </ThemeProvider>
                             {/* <TextField
                                 className={classes.inputFields}
                                 id="outlined-basic"

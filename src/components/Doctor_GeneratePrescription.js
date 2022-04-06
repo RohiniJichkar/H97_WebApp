@@ -247,9 +247,9 @@ function DoctorGeneratePrescription() {
                 <Grid item xs={12}>
                     <Typography variant="h5" noWrap={true}
                         style={{
-                            fontFamily: '"Poppins", san-serif;',
+                            fontFamily: 'Poppins',
                             fontStyle: 'normal',
-                            fontWeight: 500,
+                            fontWeight: 600,
                             overflow: 'hidden',
                             whiteSpace: 'nowrap',
                             textOverflow: 'ellipsis',

@@ -8,7 +8,7 @@ import DoctorNavbar from './Staff_Navbar';
 import SearchIcon from '@material-ui/icons/Search';
 import PropTypes from 'prop-types';
 import ArrowBackIcon from '@material-ui/icons/ArrowBack';
-
+import moment from 'moment';
 import axios from 'axios';
 import { DataGrid } from '@material-ui/data-grid';
 import { Register_Patient } from '../../Apis/Staff/Clinic_Patients/Patient_Registration';
@@ -253,9 +253,9 @@ export default function Staff_ClinicPatients() {
                 <Grid item xs={12}>
                     <Typography variant="h5" noWrap={true}
                         style={{
-                            fontFamily: '"Poppins", san-serif;',
+                            fontFamily: 'Poppins',
                             fontStyle: 'normal',
-                            fontWeight: 500,
+                            fontWeight: 600,
                             overflow: 'hidden',
                             whiteSpace: 'nowrap',
                             textOverflow: 'ellipsis',
@@ -385,7 +385,7 @@ export default function Staff_ClinicPatients() {
                                         Date Of Birth
                                     </Typography>
                                     <Typography variant="h6" noWrap={true} style={{ paddingTop: 5, fontSize: 14, color: '#707070', fontFamily: 'Poppins', }}>
-                                        {patientDetails.DOB ? patientDetails.DOB : 'NA'}
+                                        {patientDetails.DOB ? moment(patientDetails.DOB).format("DD/MM/YYYY") : 'NA'}
                                     </Typography>
                                 </Grid>
                                 <Grid item xs={3} style={{ border: '1px solid #F0F0F0', borderLeft: '0px', paddingBottom: 20 }}>

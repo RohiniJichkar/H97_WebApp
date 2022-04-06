@@ -206,7 +206,7 @@ const useStyles = makeStyles((theme) => ({
         textAlign: 'center',
         borderRadius: 28,
         width: 120,
-        marginTop: 160,
+        marginTop: 170,
         fontSize: '12px'
     },
     textField: {
@@ -332,7 +332,7 @@ function Staff_Upload_Reports() {
                         style={{
                             fontFamily: 'Poppins',
                             fontStyle: 'normal',
-                            fontWeight: 500,
+                            fontWeight: 600,
                             overflow: 'hidden',
                             whiteSpace: 'nowrap',
                             textOverflow: 'ellipsis',
@@ -356,16 +356,16 @@ function Staff_Upload_Reports() {
                             <div style={{ paddingTop: 20 }}>
                                 <div>
                                     <FormControl variant="outlined" className={classes.formControl}  >
-                                        <TextField className={classes.textField} onChange={(e) => settitle(e.target.value)} id="outlined-basic" label="Title" variant="outlined" size="small" />
+                                        <TextField className={classes.textField} onChange={(e) => settitle(e.target.value)} id="outlined-basic" label="Title" variant="outlined" size="small" style={{marginTop: 10}} />
                                     </FormControl>
                                 </div>
                                 <div>
                                     <FormControl variant="outlined" className={classes.formControl}  >
-                                        <TextField className={classes.textField} onChange={convertToBase64} id="outlined-basic" type='file' variant="outlined" size="small" />
+                                        <TextField className={classes.textField} onChange={convertToBase64} id="outlined-basic" type='file' variant="outlined" size="small"  style={{marginTop: 13}}/>
                                     </FormControl>
 
                                 </div>
-                                <div style={{ paddingTop: 100 }}>
+                                <div style={{ paddingTop: 80 }}>
                                     <Divider style={{ border: ' 1px solid #F0F0F0' }} />
                                     <Grid container spacing={2} style={{ paddingTop: 10, paddingBottom: 10 }}>
                                         <Grid item xs={12} sm={6}>

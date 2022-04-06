@@ -16,6 +16,15 @@ import {
     MuiPickersUtilsProvider,
     KeyboardDatePicker,
 } from '@material-ui/pickers';
+import { createTheme, ThemeProvider } from '@material-ui/core/styles';
+
+const defaultMaterialTheme = createTheme({
+    palette: {
+        primary: {
+          main: '#1769aa',
+        },     
+      },
+});
 
 const drawerWidth = 240;
 
@@ -62,7 +71,7 @@ var columns = [
         headerClassName: 'super-app-theme--header',
         editable: true,
         align: 'center',
-        
+
     },
     {
         field: 'HomeVisitReason',
@@ -178,7 +187,7 @@ export default function DoctorHomeVisitHistory() {
     const [view, setview] = useState(false);
 
     console.log(appointmentlist)
-   
+
     const handleGoBack = () => {
         navigate("/DoctorHomeVisitors");
     };
@@ -227,7 +236,7 @@ export default function DoctorHomeVisitHistory() {
                             style={{
                                 fontFamily: 'Poppins',
                                 fontStyle: 'normal',
-                                fontWeight: 500,
+                                fontWeight: 600,
                                 overflow: 'hidden',
                                 whiteSpace: 'nowrap',
                                 textOverflow: 'ellipsis',
@@ -242,17 +251,19 @@ export default function DoctorHomeVisitHistory() {
                         <div className='row' style={{ display: 'flex', marginTop: 20 }}>
                             <div className='col-3'>
                                 <label style={{ fontFamily: 'Poppins', fontWeight: 600, color: '#707070' }}>From</label>
-                                <MuiPickersUtilsProvider utils={DateFnsUtils}>
-                                    <KeyboardDatePicker
-                                        autoOk
-                                        size='small'
-                                        value={startdate}
-                                        onChange={setstartdate}
-                                        inputVariant="outlined"
-                                        format='dd/MM/yyyy'
-                                        style={{ marginTop: -5, marginLeft: 15, width: 190 }}
-                                    />
-                                </MuiPickersUtilsProvider>
+                                <ThemeProvider theme={defaultMaterialTheme}>
+                                    <MuiPickersUtilsProvider utils={DateFnsUtils}>
+                                        <KeyboardDatePicker
+                                            autoOk
+                                            size='small'
+                                            value={startdate}
+                                            onChange={setstartdate}
+                                            inputVariant="outlined"
+                                            format='dd/MM/yyyy'
+                                            style={{ marginTop: -5, marginLeft: 15, width: 190 }}
+                                        />
+                                    </MuiPickersUtilsProvider>
+                                </ThemeProvider>
                                 {/* <input
                                     id="fromdate"
                                     type="date"
@@ -273,17 +284,19 @@ export default function DoctorHomeVisitHistory() {
                             </div>
                             <div className='col-3'>
                                 <label style={{ fontFamily: 'Poppins', fontWeight: 600, color: '#707070' }}>To</label>
-                                <MuiPickersUtilsProvider utils={DateFnsUtils}>
-                                    <KeyboardDatePicker
-                                        autoOk
-                                        size='small'
-                                        value={endDate}
-                                        onChange={setendDate}
-                                        inputVariant="outlined"
-                                        format='dd/MM/yyyy'
-                                        style={{ marginTop: -5, marginLeft: 15, width: 190 }}
-                                    />
-                                </MuiPickersUtilsProvider>
+                                <ThemeProvider theme={defaultMaterialTheme}>
+                                    <MuiPickersUtilsProvider utils={DateFnsUtils}>
+                                        <KeyboardDatePicker
+                                            autoOk
+                                            size='small'
+                                            value={endDate}
+                                            onChange={setendDate}
+                                            inputVariant="outlined"
+                                            format='dd/MM/yyyy'
+                                            style={{ marginTop: -5, marginLeft: 15, width: 190 }}
+                                        />
+                                    </MuiPickersUtilsProvider>
+                                </ThemeProvider>
                                 {/* <input id="fromdate" type="date" value={endDate} onChange={(e) => {
                                     setendDate(e.target.value)
                                 }} style={{ border: '1px solid #F0F0F0', height: 30, fontFamily: 'Poppins', color: '#707070', paddingLeft: 15 }} /> */}
@@ -368,23 +381,23 @@ export default function DoctorHomeVisitHistory() {
 
                         <Grid item xs={12} >
 
-                        <Box
-                            sx={{
-                                '& .super-app-theme--header': {
-                                    // backgroundColor: '#78B088',
-                                    // color: '#fff
-                                    fontSize: 14,
-                                },
-                            }}
-                        >
-                            <DataGrid
-                                style={{ height: 350, fontSize: 13, fontFamily: 'Poppins', fontWeight: 600, color: '#2C7FB2', marginTop: 20, marginRight: 20 }}
-                                rows={appointmentlist}
-                                rowHeight={30}
-                                columns={columns}
-                                columnWidth={5}
-                                pageSize={norecords}
-                            />
+                            <Box
+                                sx={{
+                                    '& .super-app-theme--header': {
+                                        // backgroundColor: '#78B088',
+                                        // color: '#fff
+                                        fontSize: 14,
+                                    },
+                                }}
+                            >
+                                <DataGrid
+                                    style={{ height: 350, fontSize: 13, fontFamily: 'Poppins', fontWeight: 600, color: '#2C7FB2', marginTop: 20, marginRight: 20 }}
+                                    rows={appointmentlist}
+                                    rowHeight={30}
+                                    columns={columns}
+                                    columnWidth={5}
+                                    pageSize={norecords}
+                                />
                             </Box>
                         </Grid>
                         <Grid item xs={12} style={{ marginRight: 20 }} >

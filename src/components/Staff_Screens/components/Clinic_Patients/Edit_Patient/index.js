@@ -10,6 +10,15 @@ import {
     MuiPickersUtilsProvider,
     KeyboardDatePicker,
 } from '@material-ui/pickers';
+import { createTheme, ThemeProvider } from '@material-ui/core/styles';
+
+const defaultMaterialTheme = createTheme({
+    palette: {
+        primary: {
+            main: '#1769aa',
+        },
+    },
+});
 
 const drawerWidth = 240;
 
@@ -211,21 +220,21 @@ export default function Edit_Patient({ show, data, handleCloseEditmodal }) {
                                         }} id="outlined-basic" type="number" size="small" label="Mobile Number" variant="outlined" />
 
                                         <TextField className={classes.inputFields} value={email} onChange={(e) => setemail(e.target.value)} id="outlined-basic" type="email" size="small" label="Email Id" variant="outlined" />
+                                        <ThemeProvider theme={defaultMaterialTheme}>
+                                            <MuiPickersUtilsProvider utils={DateFnsUtils}>
+                                                <KeyboardDatePicker
+                                                    autoOk
+                                                    className={classes.inputFields}
+                                                    size='small'
+                                                    value={dob}
+                                                    onChange={setdob}
+                                                    inputVariant="outlined"
+                                                    label="DOB"
+                                                    format='dd/MM/yyyy'
 
-                                        <MuiPickersUtilsProvider utils={DateFnsUtils}>
-                                            <KeyboardDatePicker
-                                                autoOk
-                                                className={classes.inputFields}
-                                                size='small'
-                                                value={dob}
-                                                onChange={setdob}
-                                                inputVariant="outlined"
-                                                label="DOB"
-                                                format='dd/MM/yyyy'
-
-                                            />
-                                        </MuiPickersUtilsProvider>
-
+                                                />
+                                            </MuiPickersUtilsProvider>
+                                        </ThemeProvider>
                                         {/* <span style={{ position: 'relative', top: 50, right: 290, fontSize: 13 }}>DOB</span>
                                         <TextField className={classes.inputFields} value={dob} onChange={(e) => setdob(e.target.value)} id="outlined-basic" type="date" size="small" variant="outlined" /> */}
                                         <FormControl variant="outlined" size='small' className={classes.formControl}  >
@@ -240,7 +249,7 @@ export default function Edit_Patient({ show, data, handleCloseEditmodal }) {
                                                     name: 'gender',
                                                     id: 'outlined-gender-native-simple',
                                                 }}
-                                                style={{marginTop: -10}}
+                                                style={{ marginTop: -10 }}
 
                                             >
                                                 <option aria-label="None" value="" >Gender</option>

@@ -8,7 +8,7 @@ import SearchIcon from '@material-ui/icons/Search';
 import ArrowBackIcon from '@material-ui/icons/ArrowBack';
 import axios from 'axios';
 import { DataGrid } from '@material-ui/data-grid';
-
+import Delete_Clinics from './Admin_components/Delete_Clinic/index';
 import { Clinic_Doctors } from '../Admin_Apis/Clinic_Details/index';
 
 const loginapi = 'http://13.233.217.107:8080/api/Login';
@@ -43,6 +43,7 @@ export default function Admin_Doctor_Clinics() {
     const [clinicData, setclinicData] = useState([]);
     const [doctordetails, setdoctordetails] = useState('');
     const [searchterm, setsearchterm] = useState('');
+    const [opendeletemodal, setopendeletemodal] = useState(false);
 
     const fetchClinicData = async () => {
         try {
@@ -102,7 +103,7 @@ export default function Admin_Doctor_Clinics() {
     }, []);
 
     const handleGoBack = () => {
-        navigate("/AdminAddClinic");
+        navigate("/AdminDashboard");
     };
 
     return (
@@ -121,7 +122,7 @@ export default function Admin_Doctor_Clinics() {
                         style={{
                             fontFamily: 'Poppins',
                             fontStyle: 'normal',
-                            fontWeight: 500,
+                            fontWeight: 600,
                             overflow: 'hidden',
                             whiteSpace: 'nowrap',
                             textOverflow: 'ellipsis',
@@ -271,17 +272,27 @@ export default function Admin_Doctor_Clinics() {
                             </Grid>
 
 
-                            <Grid xs={12} style={{ marginTop: 15 }}>
+                            <Grid container xs={12} style={{ marginTop: 15 }}>
+                                <Grid item sm={6} >
+                                    <Button onClick={() => setopendeletemodal(true)} className={classes.btnregister} style={{ float: 'right', marginRight: 20 }}>Delete</Button>
+                                </Grid>
+                                <Grid item sm={6} >
+                                    <Button className={classes.btnregister} onClick={() => handleLogin()} style={{ float: 'left', marginLeft: 20 }}>Login As {doctordetails.FirstName ? doctordetails.FirstName : null}</Button>
+                                </Grid>
+                            </Grid>
+
+                            {/* <Grid xs={12} style={{ marginTop: 15 }}>
                                 <center>
                                     <Button onClick={() => handleLogin()} className={classes.btnregister}>Login As {doctordetails.FirstName ? doctordetails.FirstName : null}</Button>
                                 </center>
-                            </Grid>
+                            </Grid> */}
 
                         </center>
                     </Paper>
 
                 </Grid>
 
+                {opendeletemodal ? <Delete_Clinics show={opendeletemodal} data={doctordetails} handleclose={() => setopendeletemodal(false)} /> : null}
 
             </Grid> {/* main grid */}
 

@@ -10,6 +10,20 @@ import ArrowBackIcon from '@material-ui/icons/ArrowBack';
 import axios from 'axios';
 import { DataGrid } from '@material-ui/data-grid';
 import { Time, App_Channels, App_Types, Doctors, Book_Appointment, Note_for_Doctor } from '../../Apis/Staff/Book_Appointment/index';
+import DateFnsUtils from '@date-io/date-fns';
+import {
+    MuiPickersUtilsProvider,
+    KeyboardDatePicker,
+} from '@material-ui/pickers';
+import { createTheme, ThemeProvider } from '@material-ui/core/styles';
+
+const defaultMaterialTheme = createTheme({
+    palette: {
+        primary: {
+            main: '#1769aa',
+        },
+    },
+});
 
 const getClinicPatients = 'http://13.233.217.107:8080/api/Web_GetPatients';
 const getPatientDetails = 'http://13.233.217.107:8080/api/ShowPatientDetailUsingId';
@@ -68,7 +82,7 @@ export default function Staff_Book_Appointment() {
     const [weight, setWeight] = useState('');
     const [plus, setPlus] = useState('');
     const [spo2, setSpo2] = useState('');
-    const [appDate, setappDate] = useState('');
+    const [appDate, setappDate] = useState(new Date());
     const [notefordoctor, setnotefordoctor] = useState([]);
     const [patientsearch, setpatientsearch] = useState([]);
 
@@ -289,7 +303,7 @@ export default function Staff_Book_Appointment() {
                         style={{
                             fontFamily: 'Poppins',
                             fontStyle: 'normal',
-                            fontWeight: 500,
+                            fontWeight: 600,
                             overflow: 'hidden',
                             whiteSpace: 'nowrap',
                             textOverflow: 'ellipsis',
@@ -689,17 +703,21 @@ export default function Staff_Book_Appointment() {
                                             }
                                         </Grid>
                                         <Grid item xs={12} sm={6} >
-                                            <FormControl variant="outlined" size="small" className={classes.formControl} style={{ paddingRight: 20, position: 'relative', bottom: 3 }}>
-                                                <TextField
-                                                    variant="outlined"
-                                                    onChange={(e) => setappDate(e.target.value)}
-                                                    id="date"
-                                                    label=""
-                                                    type="date"
-                                                    size="small"
-                                                    style={{ width: '85%', fontSize: 12 }}
-                                                />
-                                            </FormControl>
+                                            <ThemeProvider theme={defaultMaterialTheme}>
+                                                <MuiPickersUtilsProvider utils={DateFnsUtils}>
+
+                                                    <KeyboardDatePicker
+                                                        autoOk
+                                                        size='small'
+                                                        value={appDate}
+                                                        onChange={setappDate}
+                                                        inputVariant="outlined"
+                                                        label="Date"
+                                                        format='dd/MM/yyyy'
+                                                        style={{ marginRight: 7, marginTop: 5 }}
+                                                    />
+                                                </MuiPickersUtilsProvider>
+                                            </ThemeProvider>
                                         </Grid>
                                     </Grid>
 

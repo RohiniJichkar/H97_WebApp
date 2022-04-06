@@ -11,6 +11,15 @@ import {
     MuiPickersUtilsProvider,
     KeyboardDatePicker,
 } from '@material-ui/pickers';
+import { createTheme, ThemeProvider } from '@material-ui/core/styles';
+
+const defaultMaterialTheme = createTheme({
+    palette: {
+        primary: {
+            main: '#1769aa',
+        },
+    },
+});
 
 const drawerWidth = 240;
 
@@ -130,7 +139,7 @@ export default function Edit_Medicine({ show, data, handleEditModal }) {
                                                 inputProps: { min: 0 }
                                             }}
                                             value={mQuantity} onChange={(e) => setmQuantity(e.target.value)} id="outlined-basic" type="number" size="small" label="Quantity" variant="outlined" />
-                                        <Grid container style={{marginTop: -10}}>
+                                        <Grid container style={{ marginTop: -10 }}>
                                             <Grid item xs={6}>
                                                 <center>
                                                     <Typography variant="h6" noWrap={true} style={{ fontSize: 14, color: '#707070', fontWeight: 600, fontFamily: 'Poppins', marginLeft: 80 }}>
@@ -146,34 +155,37 @@ export default function Edit_Medicine({ show, data, handleEditModal }) {
                                                 </center>
                                             </Grid>
                                             <Grid item xs={6} style={{ marginTop: 10 }}>
-                                                <MuiPickersUtilsProvider utils={DateFnsUtils}>
-                                                    <KeyboardDatePicker
-                                                        autoOk
-                                                        size='small'
-                                                        value={mStartDate}
-                                                        onChange={setmStartDate}
-                                                        inputVariant="outlined"
-                                                        label="Start Date"
-                                                        format='dd/MM/yyyy'
-                                                        style={{float: 'right', width: '130px', marginRight: 20 }}
-                                                    />
-                                                </MuiPickersUtilsProvider>
-
+                                                <ThemeProvider theme={defaultMaterialTheme}>
+                                                    <MuiPickersUtilsProvider utils={DateFnsUtils}>
+                                                        <KeyboardDatePicker
+                                                            autoOk
+                                                            size='small'
+                                                            value={mStartDate}
+                                                            onChange={setmStartDate}
+                                                            inputVariant="outlined"
+                                                            label="Start Date"
+                                                            format='dd/MM/yyyy'
+                                                            style={{ float: 'right', width: '130px', marginRight: 20 }}
+                                                        />
+                                                    </MuiPickersUtilsProvider>
+                                                </ThemeProvider>
                                                 {/* <TextField className={classes.inputFields} value={mStartDate} onChange={(e) => setmStartDate(e.target.value)} id="outlined-basic" type='date' variant="outlined" size="small" style={{ width: '130px', float: 'right', marginRight: 20 }} /> */}
                                             </Grid>
                                             <Grid item xs={6} style={{ marginTop: 5 }}>
-                                                <MuiPickersUtilsProvider utils={DateFnsUtils}>
-                                                    <KeyboardDatePicker
-                                                        autoOk
-                                                        size='small'
-                                                        value={mExpiryDate}
-                                                        onChange={setmExpiryDate}
-                                                        inputVariant="outlined"
-                                                        label="Expiry Date"
-                                                        format='dd/MM/yyyy'
-                                                        style={{  float: 'left', width: '130px', marginLeft: 20 }}
-                                                    />
-                                                </MuiPickersUtilsProvider>
+                                                <ThemeProvider theme={defaultMaterialTheme}>
+                                                    <MuiPickersUtilsProvider utils={DateFnsUtils}>
+                                                        <KeyboardDatePicker
+                                                            autoOk
+                                                            size='small'
+                                                            value={mExpiryDate}
+                                                            onChange={setmExpiryDate}
+                                                            inputVariant="outlined"
+                                                            label="Expiry Date"
+                                                            format='dd/MM/yyyy'
+                                                            style={{ float: 'left', width: '130px', marginLeft: 20 }}
+                                                        />
+                                                    </MuiPickersUtilsProvider>
+                                                </ThemeProvider>
                                                 {/* <TextField className={classes.inputFields} value={mExpiryDate} onChange={(e) => setmExpiryDate(e.target.value)} id="outlined-basic" type='date' variant="outlined" size="small" style={{ width: '130px', float: 'left', marginLeft: 20 }} /> */}
                                             </Grid>
                                         </Grid>

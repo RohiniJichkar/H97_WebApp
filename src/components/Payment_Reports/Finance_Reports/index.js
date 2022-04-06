@@ -14,6 +14,15 @@ import {
 //apis
 import { Finance_Analysis_Details_by_date } from '../../../Apis/payment_reports_apis/index';
 import { Doctors } from '../../../Apis/Book_Appointment/index';
+import { createTheme, ThemeProvider } from '@material-ui/core/styles';
+
+const defaultMaterialTheme = createTheme({
+    palette: {
+        primary: {
+            main: '#1769aa',
+        },
+    },
+});
 
 const columns = [
     {
@@ -160,17 +169,19 @@ const Finance_Analysis_reports = () => {
                 <div className='row' style={{ display: 'flex' }}>
                     <div className='col-3'>
                         <label style={{ fontFamily: 'Poppins', fontWeight: 600, color: '#707070' }}>From</label>
-                        <MuiPickersUtilsProvider utils={DateFnsUtils}>
-                            <KeyboardDatePicker
-                                autoOk
-                                size='small'
-                                value={startdate}
-                                onChange={setstartdate}
-                                inputVariant="outlined"
-                                format='dd/MM/yyyy'
-                                style={{ marginTop: -5, marginLeft: 15, width: 190 }}
-                            />
-                        </MuiPickersUtilsProvider>
+                        <ThemeProvider theme={defaultMaterialTheme}>
+                            <MuiPickersUtilsProvider utils={DateFnsUtils}>
+                                <KeyboardDatePicker
+                                    autoOk
+                                    size='small'
+                                    value={startdate}
+                                    onChange={setstartdate}
+                                    inputVariant="outlined"
+                                    format='dd/MM/yyyy'
+                                    style={{ marginTop: -5, marginLeft: 15, width: 190 }}
+                                />
+                            </MuiPickersUtilsProvider>
+                        </ThemeProvider>
                         {/* <input
                             id="fromdate"
                             type="date"
@@ -191,17 +202,19 @@ const Finance_Analysis_reports = () => {
                     </div>
                     <div className='col-3'>
                         <label style={{ fontFamily: 'Poppins', fontWeight: 600, color: '#707070', marginLeft: 20 }}>To</label>
-                        <MuiPickersUtilsProvider utils={DateFnsUtils}>
-                            <KeyboardDatePicker
-                                autoOk
-                                size='small'
-                                value={endDate}
-                                onChange={setendDate}
-                                inputVariant="outlined"
-                                format='dd/MM/yyyy'
-                                style={{ marginTop: -5, marginLeft: 15, width: 190 }}
-                            />
-                        </MuiPickersUtilsProvider>
+                        <ThemeProvider theme={defaultMaterialTheme}>
+                            <MuiPickersUtilsProvider utils={DateFnsUtils}>
+                                <KeyboardDatePicker
+                                    autoOk
+                                    size='small'
+                                    value={endDate}
+                                    onChange={setendDate}
+                                    inputVariant="outlined"
+                                    format='dd/MM/yyyy'
+                                    style={{ marginTop: -5, marginLeft: 15, width: 190 }}
+                                />
+                            </MuiPickersUtilsProvider>
+                        </ThemeProvider>
                         {/* <input id="fromdate" type="date" value={endDate} onChange={(e) => {
                             setendDate(e.target.value)
                         }} style={{ border: '1px solid #F0F0F0', height: 30, fontFamily: 'Poppins', color: '#707070', paddingLeft: 15 }} /> */}
@@ -286,7 +299,7 @@ const Finance_Analysis_reports = () => {
                     </div> */}
                 </div>
                 <Grid item xs={12} >
-                <Box
+                    <Box
                         sx={{
                             '& .super-app-theme--header': {
                                 // backgroundColor: '#78B088',
@@ -296,14 +309,14 @@ const Finance_Analysis_reports = () => {
                             },
                         }}
                     >
-                    <DataGrid
-                        style={{ height: 350, fontSize: 13, fontFamily: 'Poppins', fontWeight: 600, color: '#2C7FB2', marginTop: 20 }}
-                        rows={appointmen}
-                        rowHeight={30}
-                        columns={columns}
-                        columnWidth={5}
-                        pageSize={20}
-                    />
+                        <DataGrid
+                            style={{ height: 350, fontSize: 13, fontFamily: 'Poppins', fontWeight: 600, color: '#2C7FB2', marginTop: 20 }}
+                            rows={appointmen}
+                            rowHeight={30}
+                            columns={columns}
+                            columnWidth={5}
+                            pageSize={20}
+                        />
                     </Box>
                 </Grid>
                 <Grid item xs={12} >

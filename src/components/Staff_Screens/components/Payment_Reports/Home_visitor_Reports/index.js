@@ -10,6 +10,15 @@ import EditIcon from '@material-ui/icons/Edit';
 import Show_pdf_data from '../../Pdf_Viewer/Modal';
 //apis
 import { GetAppointmentStatus, Home_Visitor_Details_by_date } from '../../../Apis/payment_reports_apis/index';
+import { createTheme, ThemeProvider } from '@material-ui/core/styles';
+
+const defaultMaterialTheme = createTheme({
+    palette: {
+        primary: {
+            main: '#1769aa',
+        },
+    },
+});
 
 const columns = [
     {

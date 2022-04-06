@@ -276,8 +276,9 @@ export default function AdminAddClinic() {
 
 
     const handleGoBack = () => {
-        navigate("/DoctorProfile");
+        navigate("/AdminDashboard");
     };
+
 
 
     return (
@@ -296,13 +297,14 @@ export default function AdminAddClinic() {
                         style={{
                             fontFamily: 'Poppins',
                             fontStyle: 'normal',
-                            fontWeight: 500,
+                            fontWeight: 600,
                             overflow: 'hidden',
                             whiteSpace: 'nowrap',
                             textOverflow: 'ellipsis',
                             color: '#2C7FB2',
 
                         }}>
+                        <Button style={{ marginLeft: '-20px', backgroundColor: 'white', color: '#2C7FB2', borderRadius: 105, fontSize: '12px' }}> <ArrowBackIcon onClick={handleGoBack} />  </Button>
                         {/* <Button style={{ marginLeft: '-20px', backgroundColor: 'white', color: '#2C7FB2', borderRadius: 105, fontSize: '12px' }}> <ArrowBackIcon onClick={handleGoBack} />  </Button> */}
                         Add Clinic
                     </Typography>
@@ -338,7 +340,7 @@ export default function AdminAddClinic() {
                                 </Grid>
                                 <Grid item xs={4}>
                                     <center>
-                                        <FormControl variant="outlined" className={classes.formControlForm} style={{marginLeft: 12}} >
+                                        <FormControl variant="outlined" className={classes.formControlForm} style={{ marginLeft: 12 }} >
                                             <TextField className={classes.textFieldForm}
                                                 onChange={(e) => {
                                                     const re = /^[A-Za-z]+$/;
@@ -346,7 +348,7 @@ export default function AdminAddClinic() {
                                                     if (e.target.value === '' || re.test(e.target.value)) {
                                                         setclinicName(e.target.value)
                                                     }
-                                                }} id="outlined-basic" size="small" label="Clinic Name" variant="outlined" style={{ width: '150%',  }} />
+                                                }} id="outlined-basic" size="small" label="Clinic Name" variant="outlined" style={{ width: '150%', }} />
                                         </FormControl><span style={{ position: 'relative', fontSize: 20, color: 'red', left: 55 }}> *</span>
                                     </center>
                                 </Grid>
@@ -450,7 +452,7 @@ export default function AdminAddClinic() {
                                 </Grid>
                                 <Grid item xs={4}>
                                     <center>
-                                        <FormControl variant="outlined" className={classes.formControlForm} style={{marginLeft: 12}} >
+                                        <FormControl variant="outlined" className={classes.formControlForm} style={{ marginLeft: 12 }} >
                                             <TextField className={classes.textFieldForm}
                                                 onChange={(e) => setclinicMobile(e.target.value)}
                                                 type='number'
@@ -475,7 +477,7 @@ export default function AdminAddClinic() {
                                 </Grid>
                                 <Grid item xs={4}>
                                     <center>
-                                        <FormControl variant="outlined" className={classes.formControlForm} style={{marginLeft: 15}}  >
+                                        <FormControl variant="outlined" className={classes.formControlForm} style={{ marginLeft: 15 }}  >
                                             <TextField className={classes.textFieldForm}
                                                 onChange={(e) => {
                                                     const re = /^[A-Za-z]+$/;
@@ -504,7 +506,7 @@ export default function AdminAddClinic() {
                                 </Grid>
                                 <Grid item xs={4}>
                                     <center>
-                                        <FormControl variant="outlined" className={classes.formControlForm} style={{marginLeft: 12}} >
+                                        <FormControl variant="outlined" className={classes.formControlForm} style={{ marginLeft: 12 }} >
                                             <TextField className={classes.textFieldForm} onChange={(e) => setclinicEmail(e.target.value)} id="outlined-basic" size="small" label="Email Id" variant="outlined" style={{ width: '150%' }} />
                                         </FormControl><span style={{ position: 'relative', fontSize: 20, color: 'red', left: 55 }}> *</span>
                                     </center>
@@ -522,7 +524,7 @@ export default function AdminAddClinic() {
                                 </Grid>
                                 <Grid item xs={4}>
                                     <center>
-                                        <FormControl variant="outlined" className={classes.formControlForm}  style={{marginLeft: 15}}>
+                                        <FormControl variant="outlined" className={classes.formControlForm} style={{ marginLeft: 15 }}>
                                             <TextField className={classes.textFieldForm} onChange={(e) => setclinicRegNo(e.target.value)} id="outlined-basic" size="small" label="Registration Number" variant="outlined" style={{ width: '150%' }} />
                                         </FormControl><span style={{ position: 'relative', fontSize: 20, color: 'red', left: 55 }}> *</span>
                                     </center>
@@ -543,7 +545,7 @@ export default function AdminAddClinic() {
                                 </Grid>
                                 <Grid item xs={4}>
                                     <center>
-                                        <FormControl variant="outlined" className={classes.formControlForm} style={{marginLeft: 12}}  >
+                                        <FormControl variant="outlined" className={classes.formControlForm} style={{ marginLeft: 12 }}  >
                                             <TextField className={classes.textFieldForm} onChange={(e) => setclinicAddress(e.target.value)} id="outlined-basic" size="small" label="Address" variant="outlined" style={{ width: '150%' }} />
                                         </FormControl><span style={{ position: 'relative', fontSize: 20, color: 'red', left: 55 }}> *</span>
                                     </center>
@@ -561,7 +563,7 @@ export default function AdminAddClinic() {
                                 </Grid>
                                 <Grid item xs={4}>
                                     <center>
-                                        <FormControl variant="outlined" className={classes.formControlForm} style={{marginLeft: 15}} >
+                                        <FormControl variant="outlined" className={classes.formControlForm} style={{ marginLeft: 15 }} >
                                             <TextField
                                                 className={classes.textFieldForm}
                                                 type='number'
@@ -706,14 +708,14 @@ export default function AdminAddClinic() {
                                 <Grid item xs={4}>
                                     <center>
                                         {/* <input type='file' /> */}
-                                        <FormControl variant="outlined" className={classes.formControlForm} style={{marginLeft: 15}} >
-                                            <TextField 
-                                            className={classes.textFieldForm} 
-                                            onChange={(e) => setclinicLogo(e.target.files[0])} 
-                                            id="outlined-basic" type="file" 
-                                            size="small" label="" 
-                                            variant="outlined" 
-                                            style={{ width: '100%' }} />
+                                        <FormControl variant="outlined" className={classes.formControlForm} style={{ marginLeft: 15 }} >
+                                            <TextField
+                                                className={classes.textFieldForm}
+                                                onChange={(e) => setclinicLogo(e.target.files[0])}
+                                                id="outlined-basic" type="file"
+                                                size="small" label=""
+                                                variant="outlined"
+                                                style={{ width: '100%' }} />
                                         </FormControl><span style={{ position: 'relative', fontSize: 20, color: 'red' }}> *</span>
                                     </center>
                                 </Grid>
@@ -754,7 +756,7 @@ export default function AdminAddClinic() {
                                 </Grid>
                                 <Grid item xs={4}>
                                     <center>
-                                        <FormControl variant="outlined" className={classes.formControlForm} style={{marginLeft: 12}} >
+                                        <FormControl variant="outlined" className={classes.formControlForm} style={{ marginLeft: 12 }} >
                                             <TextField className={classes.textFieldForm} onChange={(e) => {
                                                 const re = /^[A-Za-z]+$/;
 
@@ -821,7 +823,7 @@ export default function AdminAddClinic() {
                                                             )
                                                         })}
                                                     </Select>
-                                                </FormControl><span style={{ position: 'relative', fontSize: 20, color: 'red', right: 10  }}> *</span>
+                                                </FormControl><span style={{ position: 'relative', fontSize: 20, color: 'red', right: 10 }}> *</span>
                                             </center>
                                         </Grid>
 
@@ -849,7 +851,7 @@ export default function AdminAddClinic() {
                                                             )
                                                         })}
                                                     </Select>
-                                                </FormControl><span style={{ position: 'relative', fontSize: 20, color: 'red', right: 10  }}> *</span>
+                                                </FormControl><span style={{ position: 'relative', fontSize: 20, color: 'red', right: 10 }}> *</span>
                                             </center>
                                         </Grid>
                                     </Grid>
@@ -868,7 +870,7 @@ export default function AdminAddClinic() {
                                 </Grid>
                                 <Grid item xs={4}>
                                     <center>
-                                        <FormControl variant="outlined" className={classes.formControlForm} style={{marginLeft: 12}} >
+                                        <FormControl variant="outlined" className={classes.formControlForm} style={{ marginLeft: 12 }} >
                                             <TextField className={classes.textFieldForm} onChange={(e) => {
                                                 const re = /^[A-Za-z]+$/;
                                                 if (e.target.value === '' || re.test(e.target.value)) {
@@ -939,7 +941,7 @@ export default function AdminAddClinic() {
 
                                         <Grid item xs={6}>
                                             <center>
-                                                <FormControl variant="outlined" size="small" className={classes.formControl} style={{marginLeft: 10, width: '80%', fontWeight: 600 }} >
+                                                <FormControl variant="outlined" size="small" className={classes.formControl} style={{ marginLeft: 10, width: '80%', fontWeight: 600 }} >
                                                     <Select
                                                         className={classes.textFieldForm}
                                                         size='large'
@@ -997,7 +999,7 @@ export default function AdminAddClinic() {
                                 </Grid>
                                 <Grid item xs={4}>
                                     <center>
-                                        <FormControl variant="outlined" className={classes.formControlForm} style={{marginLeft: 12}}  >
+                                        <FormControl variant="outlined" className={classes.formControlForm} style={{ marginLeft: 12 }}  >
                                             <TextField multiline rows={1.2} maxRows={2} className={classes.textFieldForm} onChange={(e) => {
                                                 const re = /^[A-Za-z]+$/;
                                                 if (e.target.value === '' || re.test(e.target.value)) {
@@ -1023,7 +1025,7 @@ export default function AdminAddClinic() {
                                 </Grid>
                                 <Grid item xs={4} style={{ marginTop: '-7px' }}>
                                     <center>
-                                        <FormControl variant="outlined" className={classes.formControlForm} style={{marginLeft: 12}}  >
+                                        <FormControl variant="outlined" className={classes.formControlForm} style={{ marginLeft: 12 }}  >
                                             <TextField className={classes.textFieldForm} onChange={(e) => {
                                                 const re = /^[0-9\b]+$/;
                                                 if (e.target.value === '' || re.test(e.target.value)) {
@@ -1033,8 +1035,8 @@ export default function AdminAddClinic() {
                                                 onInput={(e) => {
                                                     e.target.value = Math.max(0, parseInt(e.target.value)).toString().slice(0, 10)
                                                 }}
-                                            />                                       
-                                             </FormControl><span style={{ position: 'relative', fontSize: 20, color: 'red', left: 55 }}> *</span>
+                                            />
+                                        </FormControl><span style={{ position: 'relative', fontSize: 20, color: 'red', left: 55 }}> *</span>
                                     </center>
                                 </Grid>
                                 <Grid item xs={2}>
@@ -1091,7 +1093,7 @@ export default function AdminAddClinic() {
                                 </Grid>
                                 <Grid item xs={4} style={{ marginTop: '-10px' }}>
                                     <center>
-                                        <FormControl variant="outlined" className={classes.formControlForm} style={{marginLeft: 12}} >
+                                        <FormControl variant="outlined" className={classes.formControlForm} style={{ marginLeft: 12 }} >
                                             <TextField className={classes.textFieldForm} onChange={(e) => seteducation(e.target.value)} id="outlined-basic" size="small" label="Degree" variant="outlined" style={{ width: '150%' }} />
                                         </FormControl><span style={{ position: 'relative', fontSize: 20, color: 'red', left: 55 }}> *</span>
                                     </center>
@@ -1362,7 +1364,7 @@ export default function AdminAddClinic() {
                                 </Grid>
                                 <Grid item xs={4}>
                                     <center>
-                                        <FormControl variant="outlined" className={classes.formControlForm}  style={{marginLeft: 12}}>
+                                        <FormControl variant="outlined" className={classes.formControlForm} style={{ marginLeft: 12 }}>
                                             <TextField
                                                 className={classes.textFieldForm}
                                                 InputProps={{
@@ -1373,7 +1375,7 @@ export default function AdminAddClinic() {
                                                 type='number' label="Amount"
                                                 variant="outlined"
                                                 style={{ width: '150%' }} />
-                                        </FormControl><span style={{ position: 'relative', fontSize: 20, color: 'red', left: 55}}> *</span>
+                                        </FormControl><span style={{ position: 'relative', fontSize: 20, color: 'red', left: 55 }}> *</span>
                                     </center>
                                 </Grid>
                                 <Grid item xs={2}>
@@ -1454,7 +1456,7 @@ export default function AdminAddClinic() {
                                 </Grid>
                                 <Grid item xs={4}>
                                     <center>
-                                        <FormControl variant="outlined" className={classes.formControlForm} style={{marginLeft: 12}} >
+                                        <FormControl variant="outlined" className={classes.formControlForm} style={{ marginLeft: 12 }} >
                                             <TextField className={classes.textFieldForm}
                                                 onChange={(e) => setsubscriptionTotalAmount(e.target.value)}
                                                 id="outlined-basic"

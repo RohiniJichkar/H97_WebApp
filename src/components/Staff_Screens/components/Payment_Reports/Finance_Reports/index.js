@@ -6,6 +6,15 @@ import Button from '@material-ui/core/Button';
 import Box from '@material-ui/core/Box';
 import { DataGrid } from '@material-ui/data-grid';
 import Show_pdf_data from '../../Pdf_Viewer/Modal';
+import { createTheme, ThemeProvider } from '@material-ui/core/styles';
+
+const defaultMaterialTheme = createTheme({
+    palette: {
+        primary: {
+            main: '#1769aa',
+        },
+    },
+});
 
 //apis
 import { Finance_Analysis_Details_by_date } from '../../../Apis/payment_reports_apis/index';

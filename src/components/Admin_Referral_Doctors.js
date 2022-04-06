@@ -2,16 +2,19 @@ import React, { useEffect, useState } from 'react';
 import clsx from 'clsx';
 import { makeStyles, useTheme, alpha } from '@material-ui/core/styles';
 import { useNavigate } from 'react-router-dom';
-import { Container, Switch, Avatar, Typography, Button, Table, TableContainer, TableBody, TableCell, TableHead, InputBase, TableRow, TablePagination, Grid, Paper, Link, Slide } from "@material-ui/core";
+import { Avatar, Typography, Button, InputBase, Grid, Paper, } from "@material-ui/core";
 import AdminNavbar from './Admin_Navbar';
 import SearchIcon from '@material-ui/icons/Search';
 import ArrowBackIcon from '@material-ui/icons/ArrowBack';
 import axios from 'axios';
-import { DataGrid } from '@material-ui/data-grid';
-import { Referral_Doctors } from '../Admin_Apis/Referral_Doctors/index';
+import { DataGrid, gridColumnLookupSelector } from '@material-ui/data-grid';
+import { Referral_Doctors, Edit_ReferralDoctors_Status } from '../Admin_Apis/Referral_Doctors/index';
+import Delete_Referrals from './Admin_components/Delete_Referrals';
+
 
 const loginapi = 'http://13.233.217.107:8080/api/Login';
-const searchapi = 'http://13.233.217.107:8080/api/Web_Admin_SearchDoctor';
+const searchapi = 'http://13.233.217.107:8080/api/Web_Admin_SearchReferrals';
+const getReferralapi = 'http://13.233.217.107:8080/api/Web_Admin_ReferralDoctors';
 
 const drawerWidth = 240;
 
@@ -27,7 +30,7 @@ const columns = [
     },
     {
         field: 'MobileNo',
-        headerName: 'Mobile No',
+        headerName: 'Contact No',
         width: 160,
         editable: true,
     },
@@ -39,44 +42,94 @@ export default function Admin_Referral_Doctors() {
     const theme = useTheme();
     const navigate = useNavigate();
     const [open, setOpen] = React.useState(false);
-    const [doctorData, setdoctorData] = useState([]);
-
+    const [clinicData, setclinicData] = useState([]);
     const [doctordetails, setdoctordetails] = useState('');
-    // const [searchterm, setsearchterm] = useState('');
+    const [searchterm, setsearchterm] = useState('');
+    const [opendeletemodal, setopendeletemodal] = React.useState(false);
 
-    const fetchDoctorData = async () => {
+
+    const fetchReferralData = async () => {
         try {
-            const requestInfo = await Referral_Doctors();
-            setdoctorData(requestInfo);
+            const referralInfo = await axios.post(getReferralapi);
+            setclinicData(referralInfo?.data?.Doctor);
+        } catch (e) {
+            console.log(e);
+        }
+    }
+
+    // const fetchClinicData = async () => {
+    //     try {
+    //         const clinicInfo = await Referral_Doctors();
+    //         setclinicData(clinicInfo);
+    //     } catch (error) {
+    //         console.log(error);
+    //     }
+    // }
+
+    const handleCellClick = async (id) => {
+        setdoctordetails(id);
+    }
+
+    const searchDoctor = async (searchterm) => {
+        try {
+            const DoctorInfo = await axios.post(searchapi, { searchText: searchterm });
+            setclinicData(DoctorInfo?.data?.Referrals);
+        }
+        catch (e) {
+            console.log(e)
+        }
+    }
+
+
+    const handleOnboard = async (id) => {
+        const obj = {
+            ClaimStatus: 'Subscribed',
+            id: id
+        }
+
+        try {
+            const request = await Edit_ReferralDoctors_Status(obj);
+            let parse = JSON.parse(request);
+            if (parse.success === "200") {
+                alert('Doctor has Subscribed');
+            } else {
+                alert(parse.message);
+            }
         } catch (error) {
             console.log(error);
         }
     }
 
 
-    const handleCellClick = async (id) => {
-        setdoctordetails(id);
+    const handleRejected = async (id) => {
+        const obj = {
+            ClaimStatus: 'Unsubscribed',
+            id: id
+        }
+
+        try {
+            const request = await Edit_ReferralDoctors_Status(obj);
+            let parse = JSON.parse(request);
+            if (parse.success === "200") {
+                alert('Doctor has Unsubscribed');
+            } else {
+                alert(parse.message);
+            }
+        } catch (error) {
+            console.log(error);
+        }
     }
-
-    // const searchDoctor = async (searchterm) => {
-    //     try {
-    //         const DoctorInfo = await axios.post(searchapi, { Name: searchterm });
-    //         setclinicData(DoctorInfo?.data?.Doctor);
-    //     }
-    //     catch (e) {
-    //         console.log(e)
-    //     }
-    // }
-
 
 
     useEffect(() => {
-        // fetchClinicData();
-        fetchDoctorData();
+        const interval = setInterval(() => {
+            fetchReferralData();
+        }, 100);
+        return () => clearInterval(interval);
     }, []);
 
     const handleGoBack = () => {
-        navigate("/AdminAddClinic");
+        navigate("/AdminDashboard");
     };
 
     return (
@@ -95,7 +148,7 @@ export default function Admin_Referral_Doctors() {
                         style={{
                             fontFamily: 'Poppins',
                             fontStyle: 'normal',
-                            fontWeight: 500,
+                            fontWeight: 600,
                             overflow: 'hidden',
                             whiteSpace: 'nowrap',
                             textOverflow: 'ellipsis',
@@ -112,9 +165,9 @@ export default function Admin_Referral_Doctors() {
                             <Grid item xs={12} sm={6}>
                                 <SearchIcon className={classes.searchIcon} />
                                 <InputBase
-                                    placeholder="Search by Name"
-                                    // onChange={(e) => setsearchterm(e.target.value)}
-                                    // value={searchterm}
+                                    placeholder="Search by Doctor Name/Mobile No"
+                                    onChange={(e) => setsearchterm(e.target.value)}
+                                    value={searchterm}
                                     classes={{
                                         root: classes.inputRoot,
                                         input: classes.inputInput,
@@ -126,15 +179,13 @@ export default function Admin_Referral_Doctors() {
                             </Grid>
 
                             <Grid item xs={12} sm={6}>
-                                <Button className={classes.btnview} size="small" style={{ fontSize: 12 }}>View</Button>
+                                <Button onClick={() => searchDoctor(searchterm)} className={classes.btnview} size="small" style={{ fontSize: 12 }}>View</Button>
                             </Grid>
-
                         </Grid>
-
 
                         <DataGrid
                             style={{ height: 340, marginTop: 20, fontSize: 13, fontFamily: 'Poppins', fontWeight: 600, color: '#2C7FB2', cursor: 'pointer' }}
-                            rows={doctorData}
+                            rows={clinicData}
                             rowHeight={30}
                             columns={columns}
                             columnWidth={10}
@@ -143,13 +194,25 @@ export default function Admin_Referral_Doctors() {
                                 handleCellClick(newSelection.row)
                             }}
                         />
+
+                        {/* <DataGrid
+                            style={{ height: 340, marginTop: 20, fontSize: 13, fontFamily: 'Poppins', fontWeight: 600, color: '#2C7FB2', cursor: 'pointer' }}
+                            rows={clinicData}
+                            rowHeight={30}
+                            columns={columns}
+                            columnWidth={10}
+                            pageSize={10}
+                            onRowClick={(newSelection) => {
+                                handleCellClick(newSelection.row)
+                            }}
+                        /> */}
                     </Paper>
 
                 </Grid>
 
 
                 <Grid item xs={12} sm={8} >
-                    <Paper className={classes.paper} elevation={6} style={{ marginLeft: 25, marginRight: 20, height: 432 }}>
+                    <Paper className={classes.paper} elevation={6} style={{ marginLeft: 25, marginRight: 20 }}>
                         <Typography variant="h6" noWrap={true} style={{
                             fontSize: 18, color: '#2C7FB2', fontFamily: 'Poppins', textDecorationLine: 'underline', textUnderlineOffset: '1px', textDecorationThickness: '1px',
                             fontStyle: 'normal',
@@ -184,7 +247,7 @@ export default function Admin_Referral_Doctors() {
                             <Grid container xs={12} style={{ paddingTop: 15 }}>
                                 <Grid item xs={3} style={{ border: '1px solid #F0F0F0', paddingBottom: 20 }}>
                                     <Typography variant="h6" noWrap={true} style={{ paddingTop: 10, fontSize: 14, color: '#707070', fontWeight: 600, fontFamily: 'Poppins', }}>
-                                        Mobile Number
+                                        Doctor Mobile Number
                                     </Typography>
                                     <Typography variant="h6" noWrap={true} style={{ paddingTop: 5, fontSize: 14, color: '#707070', fontFamily: 'Poppins', }}>
                                         {doctordetails ? doctordetails.MobileNo : "NA"}
@@ -217,12 +280,20 @@ export default function Admin_Referral_Doctors() {
                             </Grid>
 
                             <Grid container xs={12}>
-                                <Grid item xs={3} style={{ border: '1px solid #F0F0F0', borderTop: '0px', paddingBottom: 20 }}>
+                                <Grid item xs={3} style={{ border: '1px solid #F0F0F0', borderLeft: '0px', borderTop: '0px', paddingBottom: 20 }}>
                                     <Typography variant="h6" noWrap={true} style={{ paddingTop: 10, fontSize: 14, color: '#707070', fontWeight: 600, fontFamily: 'Poppins', }}>
-                                        Gender
+                                        Claim Status
                                     </Typography>
-                                    <Typography variant="h6" noWrap={true} style={{ paddingTop: 5, fontSize: 14, color: '#707070', fontFamily: 'Poppins', }}>
-                                        {doctordetails ? doctordetails.Gender ? doctordetails.Gender : doctordetails.StfGender : "NA"}
+                                    <Typography variant="h6" noWrap={true} style={{ paddingTop: 5, fontSize: 14, fontWeight: 600, color: '#2C7FB2', fontFamily: 'Poppins', marginLeft: 10, marginRight: 10 }}>
+                                        {doctordetails ? doctordetails.ClaimStatus : 'NA'}
+                                    </Typography>
+                                </Grid>
+                                <Grid item xs={3} style={{ border: '1px solid #F0F0F0', borderLeft: '0px', borderTop: '0px', paddingBottom: 20 }}>
+                                    <Typography variant="h6" noWrap={true} style={{ paddingTop: 10, fontSize: 14, color: '#707070', fontWeight: 600, fontFamily: 'Poppins', }}>
+                                        Refered By
+                                    </Typography>
+                                    <Typography variant="h6" noWrap={true} style={{ paddingTop: 5, fontSize: 14, color: '#707070', fontFamily: 'Poppins', marginLeft: 10, marginRight: 10 }}>
+                                        {doctordetails ? doctordetails.PFName : 'NA'} {doctordetails ? doctordetails.PLName : ''}
                                     </Typography>
                                 </Grid>
                                 <Grid item xs={3} style={{ border: '1px solid #F0F0F0', borderLeft: '0px', borderTop: '0px', paddingBottom: 20 }}>
@@ -235,17 +306,10 @@ export default function Admin_Referral_Doctors() {
                                         {/* {doctordetails ? doctordetails.Address ? doctordetails.Address : doctordetails.StfAddress : "NA"} {doctordetails ? doctordetails.City : null} {doctordetails ? doctordetails.State : null} {doctordetails ? doctordetails.Pincode : null} {doctordetails ? doctordetails.Country : null} */}
                                     </Typography>
                                 </Grid>
+
                                 <Grid item xs={3} style={{ border: '1px solid #F0F0F0', borderLeft: '0px', borderTop: '0px', paddingBottom: 20 }}>
                                     <Typography variant="h6" noWrap={true} style={{ paddingTop: 10, fontSize: 14, color: '#707070', fontWeight: 600, fontFamily: 'Poppins', }}>
-                                        Refered By
-                                    </Typography>
-                                    <Typography variant="h6" noWrap={true} style={{ paddingTop: 5, fontSize: 14, color: '#707070', fontFamily: 'Poppins', marginLeft: 10, marginRight: 10 }}>
-                                        {doctordetails ? doctordetails.PFName : 'NA'} {doctordetails ? doctordetails.PLName : 'NA'}
-                                    </Typography>
-                                </Grid>
-                                <Grid item xs={3} style={{ border: '1px solid #F0F0F0', borderLeft: '0px', borderTop: '0px', paddingBottom: 20 }}>
-                                    <Typography variant="h6" noWrap={true} style={{ paddingTop: 10, fontSize: 14, color: '#707070', fontWeight: 600, fontFamily: 'Poppins', }}>
-                                        Referance Mobile No
+                                        User Mobile Number
                                     </Typography>
                                     <Typography variant="h6" noWrap={true} style={{ paddingTop: 5, fontSize: 14, color: '#707070', fontFamily: 'Poppins', marginLeft: 10, marginRight: 10 }}>
                                         {doctordetails ? doctordetails.PMobileNo : 'NA'}
@@ -254,14 +318,30 @@ export default function Admin_Referral_Doctors() {
                             </Grid>
 
 
-                            {/* <Grid xs={12} style={{ marginTop: 15 }}>
-                                <center>
-                                    <Button onClick={() => handleLogin()} className={classes.btnregister}>Login As {doctordetails.FirstName ? doctordetails.FirstName : null}</Button>
-                                </center>
-                            </Grid> */}
+                            <Grid container style={{ marginTop: 10 }}>
+                                <Grid xs={12} sm={4}>
+                                    <Button onClick={() => setopendeletemodal(true)} className={classes.btnregister} style={{ float: 'right', }}>
+                                        Delete
+                                    </Button>
+                                </Grid>
+                                <Grid xs={12} sm={4}>
+                                    <center>
+                                        <Button onClick={() => handleRejected(doctordetails.id)} className={classes.btnregister} style={{ alignSelf: 'center' }}>
+                                            Reject
+                                        </Button>
+                                    </center>
+                                </Grid>
+                                <Grid xs={12} sm={4}>
+                                    <Button onClick={() => handleOnboard(doctordetails.id)} className={classes.btnregister} style={{ float: 'left', }}>
+                                        Onboard
+                                    </Button>
+                                </Grid>
+                            </Grid>
 
                         </center>
                     </Paper>
+
+                    {opendeletemodal ? <Delete_Referrals show={opendeletemodal} data={doctordetails} handleclose={() => setopendeletemodal(false)} /> : null}
 
                 </Grid>
 
@@ -450,14 +530,14 @@ const useStyles = makeStyles((theme) => ({
     btnregister: {
         backgroundColor: '#2C7FB2 !important',
         color: '#fff !important',
-        fontFamily: '"Poppins", san-serif;',
+        fontFamily: 'Poppins',
         fontStyle: 'normal',
-        fontWeight: 400,
+        fontWeight: 500,
         textAlign: 'center',
         borderRadius: 28,
-        width: 160,
+        width: 150,
         marginTop: 10,
-        fontSize: '11px'
+        fontSize: '12px'
     },
     formControlForm: {
         paddingBottom: theme.spacing(2.5),

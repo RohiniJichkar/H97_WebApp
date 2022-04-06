@@ -13,6 +13,15 @@ import { useDispatch, connect, useSelector } from 'react-redux';
 //apis
 import { GetAppointmentStatus, Appointment_Details_by_date } from '../../../Apis/payment_reports_apis/index';
 import Show_pdf_data from '../../Pdf_Viewer/Modal/index';
+import { createTheme, ThemeProvider } from '@material-ui/core/styles';
+
+const defaultMaterialTheme = createTheme({
+    palette: {
+        primary: {
+            main: '#1769aa',
+        },
+    },
+});
 
 var columns = [
     {

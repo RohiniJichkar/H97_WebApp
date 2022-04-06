@@ -15,6 +15,15 @@ import {
     MuiPickersUtilsProvider,
     KeyboardDatePicker,
 } from '@material-ui/pickers';
+import { createTheme, ThemeProvider } from '@material-ui/core/styles';
+
+const defaultMaterialTheme = createTheme({
+    palette: {
+        primary: {
+          main: '#1769aa',
+        },     
+      },
+});
 
 const drawerWidth = 240;
 
@@ -263,19 +272,21 @@ const Add_Patinet = ({ show, handleclose }) => {
 
                                         <TextField className={classes.inputFields} value={email} onChange={(e) => setemail(e.target.value)} id="outlined-basic" type="email" size="small" placeholder="Email Id" variant="outlined" style={{ marginLeft: -5 }} />
 
-                                        <MuiPickersUtilsProvider utils={DateFnsUtils}>
-                                            <KeyboardDatePicker
-                                                autoOk
-                                                className={classes.inputFields}
-                                                size='small'
-                                                value={dob}
-                                                onChange={setdob}
-                                                inputVariant="outlined"
-                                                label="DOB"
-                                                format='dd/MM/yyyy'
-                                                style={{ marginLeft: 10 }}
-                                            />
-                                        </MuiPickersUtilsProvider>
+                                        <ThemeProvider theme={defaultMaterialTheme}>
+                                            <MuiPickersUtilsProvider theme={defaultMaterialTheme} utils={DateFnsUtils}>
+                                                <KeyboardDatePicker
+                                                    autoOk
+                                                    className={classes.inputFields}
+                                                    size='small'
+                                                    value={dob}
+                                                    onChange={setdob}
+                                                    inputVariant="outlined"
+                                                    label="DOB"
+                                                    format='dd/MM/yyyy'
+                                                    style={{ marginLeft: 10 }}
+                                                />
+                                            </MuiPickersUtilsProvider>
+                                        </ThemeProvider>
                                         {/* <span style={{ position: 'relative', top: 50, right: 290, fontSize: 13 }}>DOB</span>
                                         <TextField className={classes.inputFields} style={{ marginLeft: 13 }} format='dd/MM/yyyy' defaultValue={new Date()} value={dob} onChange={(e) => setdob(e.target.value)} id="outlined-basic" type="date" size="small" variant="outlined" /> */}
                                         <span style={{ position: 'relative', bottom: 8, fontSize: 20, color: 'red' }}> *</span>
