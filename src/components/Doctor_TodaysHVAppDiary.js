@@ -116,16 +116,7 @@ const useStyles = makeStyles((theme) => ({
         display: 'flex',
         flexGrow: 1,
         backgroundColor: 'white',
-    },
-    title: {
-        flexGrow: 1,
-    },
-    hide: {
-        display: 'none',
-    },
-    content: {
-        flexGrow: 1,
-        padding: theme.spacing(2),
+        
     },
     paper: {
         padding: theme.spacing(3),
@@ -142,8 +133,9 @@ const useStyles = makeStyles((theme) => ({
         whiteSpace: 'nowrap',
         textOverflow: 'ellipsis',
         marginTop: 70,
-        marginLeft: 25,
-        marginRight: 1
+        marginLeft: 20,
+        marginRight: 1, 
+        
     },
     gridShift: {
         marginLeft: drawerWidth,
@@ -323,46 +315,6 @@ export default function DoctorTodaysHVAppDiary() {
     let currentDate = new Date();
     let t_date = currentDate.toISOString().split('T')[0];
 
-    // function currentlySelected(params: GridCellParams) {
-    //     const value = params.colDef.field;
-    //     const api: GridApi = params.api;
-
-    //     { openeditmodal ? <Edit_Appointment_From_TodaysApp show={openeditmodal} data={params.getValue(params.row)} handlemodal={() => setopeneditmodal(false)} /> : null }
-    //     {
-    //         params.row.AppointmentDate >= t_date ? <IconButton onClick={() => setopeneditmodal(true)} style={{ color: '#2C7FB2' }}>
-    //             <EditIcon />
-    //         </IconButton> : null
-    //     }
-    //     { opendeletemodal ? <Delete_Appointment show={opendeletemodal} data={params.getValue(params.row.id)} handleclose={() => setOpenDeletemodal(false)} /> : null }
-    //     {
-    //         params.row.AppointmentDate >= t_date ? < IconButton color="secondary" onClick={() => setOpenDeletemodal(true)} style={{ color: '#707070' }}>
-    //             <DeleteIcon />
-    //         </IconButton> : null
-    //     }
-
-
-    //     // if (!(value === "edit" || value === "delete")) {
-    //     //     return;
-    //     // }
-    //     // const fields = api
-    //     //     .getAllColumns()
-    //     //     .map((c) => c.field)
-    //     //     .filter((c) => c !== "__check__" && !!c);
-    //     // const thisRow: Record<string, GridCellValue> = {};
-
-    //     // fields.forEach((f) => {
-    //     //     thisRow[f] = params.getValue(params.id, f);
-    //     // });
-
-    //     // setSelectedUser(user);
-    //     // setOpenDialog(true);
-    // }
-
-    // const handleClose = () => {
-    //     setOpenDialog(false);
-    // };
-
-
     const fetchAppointments = async () => {
         const appointments = await Todays_Appointment();
         setappointmentlist(appointments);
@@ -408,7 +360,7 @@ export default function DoctorTodaysHVAppDiary() {
                 })}
                 direction="row"
             >
-                <Grid item xs={12} >
+                <Grid item xs={12} style={{marginLeft: 20}}>
                     <Typography variant="h5" noWrap={true}
                         style={{
                             fontFamily: 'Poppins',
@@ -418,10 +370,12 @@ export default function DoctorTodaysHVAppDiary() {
                             whiteSpace: 'nowrap',
                             textOverflow: 'ellipsis',
                             color: '#2C7FB2',
-
+                            paddingLeft: 40,
+                            marginLeft: -40
                         }}>
-                        <Button style={{ marginLeft: '-20px', backgroundColor: 'white', color: '#2C7FB2', borderRadius: 105, fontSize: '12px' }}> <ArrowBackIcon onClick={handleGoBack} />  </Button>
                         Morning Slots
+                        <Button style={{ marginLeft: '-210px', color: '#2C7FB2', borderRadius: 105, fontSize: '12px' }}> <ArrowBackIcon onClick={handleGoBack} />  </Button>
+
                     </Typography>
 
                     {morningcount.map((item) => {
@@ -445,7 +399,7 @@ export default function DoctorTodaysHVAppDiary() {
                     })}
                 </Grid>
 
-                <Grid item xs={12} >
+                <Grid item xs={12} style={{marginLeft: 20}}>
                     <Typography variant="h5" noWrap={true}
                         style={{
                             fontFamily: 'Poppins',
@@ -485,8 +439,7 @@ export default function DoctorTodaysHVAppDiary() {
                 </Grid>
 
 
-
-                <Grid item xs={12} >
+                <Grid item xs={12} style={{marginLeft: 20}}>
 
                     <DataGrid
                         style={{ height: 300, fontSize: 13, fontFamily: 'Poppins', fontWeight: 600, color: '#2C7FB2' }}

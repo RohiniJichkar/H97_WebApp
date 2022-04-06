@@ -271,9 +271,9 @@ export default function AdminDashboard() {
             </div>
             <div className='row' style={{ marginTop: '15px', marginLeft: '-39px', }}>
                 <Typography style={{ color: '#2C7FB2', fontWeight: 'bold', fontSize: '22px', marginLeft: '-3px', textAlign: 'center' }}>Clinic Appointments</Typography>
-                <div className='col-3' style={{ marginLeft: '43px', marginBottom: '12px', marginTop: 10 }} >
+                <div className='col-3' style={{ marginLeft: '53px', marginBottom: '12px', marginTop: 10 }} >
 
-                    <label style={{ fontFamily: 'Poppins', fontWeight: 600, color: '#707070' }}>Startdate</label>
+                    <label style={{ fontFamily: 'Poppins', fontWeight: 600, color: '#707070', marginLeft: 20 }}>Startdate</label>
 
                     <input
                         id="fromdate"
@@ -462,7 +462,7 @@ export default function AdminDashboard() {
                 }}
             >
                 <DataGrid
-                    style={{ height: 205, width: 1260, marginTop: 40, fontSize: 12, fontFamily: 'Poppins', fontWeight: 600, color: '#2C7FB2', cursor: 'pointer' }}
+                    style={{ height: 205, width: '98%', marginTop: 40, fontSize: 12, fontFamily: 'Poppins', fontWeight: 600, color: '#2C7FB2', cursor: 'pointer', marginLeft: 40 }}
                     rows={details ? details : fetchAppointments}
                     rowHeight={20}
                     columns={columns}

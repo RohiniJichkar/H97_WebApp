@@ -46,7 +46,7 @@ export function BookedAppointment_List({ data }) {
                                     <Grid item xs={12} style={{
                                         color: '#2C7FB2', textAlign: 'center', paddingTop: 40, fontWeight: 600, fontSize: '13px', overflow: 'hidden',
                                         whiteSpace: 'nowrap',
-                                        textOverflow: 'ellipsis', width: 120,
+                                        textOverflow: 'ellipsis', 
                                         marginTop: '-5px'
                                     }}>
                                         {item.FirstName} {item.LastName}

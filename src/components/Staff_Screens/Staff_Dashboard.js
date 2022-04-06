@@ -136,7 +136,7 @@ export default function Staff_Dashboard() {
                                     whiteSpace: 'nowrap',
                                     textOverflow: 'ellipsis',
                                     color: '#78B088',
-                                    fontSize: 16
+                                    fontSize: 16,
                                 }}
                             >
                                 <Button style={{ marginLeft: '-30px', backgroundColor: 'white', color: '#2C7FB2', borderRadius: 105, fontSize: '12px' }}> <ArrowBackIcon onClick={handleGoBack} />  </Button>
@@ -277,7 +277,7 @@ export default function Staff_Dashboard() {
                                         textOverflow: 'ellipsis',
                                         color: '#78B088',
                                         fontSize: 19,
-
+                                        marginLeft: 20
                                     }}>
                                     Booked Appointments
                                 </Typography>
@@ -285,8 +285,8 @@ export default function Staff_Dashboard() {
                         </Paper>
                     </Grid>
 
-                    <Container style={{ paddingBottom: 20, }}>
-                        <Grid container spacing={2} direction="row" wrap="nowrap" style={{ overflowX: 'scroll' }}>
+                  
+                        <Grid container spacing={2} direction="row" wrap="nowrap" style={{ overflowX: 'scroll', marginLeft: 20 }}>
                             {bookedAppointments ? <BookedAppointment_List data={bookedAppointments} /> :
                                 <>
                                     <Grid item xs={2} style={{ paddingTop: 10, marginLeft: '-30px' }}>
@@ -304,7 +304,7 @@ export default function Staff_Dashboard() {
                                 </>
                             }
                         </Grid>
-                    </Container>
+                 
                 </Grid>
 
                 {/* Patient In queue grid start */}
@@ -322,6 +322,7 @@ export default function Staff_Dashboard() {
                                         textOverflow: 'ellipsis',
                                         color: '#78B088',
                                         fontSize: 19,
+                                        marginLeft: 20
                                     }}>
                                     Patient In Queue
                                 </Typography>
@@ -329,8 +330,7 @@ export default function Staff_Dashboard() {
                         </Paper>
                     </Grid>
 
-                    <Container style={{ paddingBottom: 50, }}>
-                        <Grid container spacing={2} direction="row" wrap="nowrap" style={{ overflowX: 'scroll' }}>
+                        <Grid container spacing={2} direction="row" wrap="nowrap" style={{ overflowX: 'scroll', marginLeft: 20 }}>
                             {patientInQueue ? <PatientInueue_List data={patientInQueue} /> :
                                 <>
                                     <Grid item xs={2} style={{ paddingTop: 10, marginLeft: '-30px' }}>
@@ -347,7 +347,7 @@ export default function Staff_Dashboard() {
                                 </>
                             }
                         </Grid>
-                    </Container>
+            
 
                 </Grid>
             </Grid> {/* main grid */}
