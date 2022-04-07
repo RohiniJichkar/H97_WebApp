@@ -13,7 +13,7 @@ export function PatientInueue_List({ data }) {
     const theme = useTheme();
     const [sendIn, setsendIn] = useState([]);
     const [patientIn, setpatientIn] = useState([]);
-    console.log(data)
+  
     const fetchSendIn = async (id, UserId, FirstName) => {
         try {
             const data = await SendIn(id, UserId, FirstName);
@@ -39,30 +39,30 @@ export function PatientInueue_List({ data }) {
                         return (
                             <>
                                 {item.ShortNote == 'Emergency' ? <>
-                                    <Grid item xs={2} style={{ paddingTop: 10, marginLeft: '-30px' }}>
+                                    <Grid item xs={12} sm={2} style={{ paddingTop: 10, marginLeft: '-30px' }}>
                                         <div>
                                             <center>
-                                                {item.ProfileImage ? <Avatar style={{ borderRadius: 50, height: 55, width: 55, }} src={item.ProfileImage} /> : item.Gender == 'Female' ? <Avatar style={{ borderRadius: 50, height: 55, width: 55, border: '1px solid lightgray' }} src='femaleicon.png' /> :
-                                                    <Avatar style={{ borderRadius: 50, height: 55, width: 55, border: '1px solid lightgray' }} src='maleicon.png' />}
+                                                {item.ProfileImage ?
+                                                    <Avatar style={{ borderRadius: 50, height: 55, width: 55 }} src={item.ProfileImage} /> :
+                                                    <Avatar style={{ borderRadius: 50, height: 55, width: 55 }} />}
                                             </center>
                                         </div>
-                                        <Paper className={classes.paper2} elevation={4} style={{ marginRight: 25, marginLeft: 25, justifyContent: 'center', alignItems: 'center', marginTop: '-40px', borderRadius: 20, fontFamily: '"Poppins", san-serif;', fontStyle: 'normal', fontWeight: 400, }}>
+                                        <Paper className={classes.paper2} elevation={4} style={{ marginRight: 25, marginLeft: 25, justifyContent: 'center', alignItems: 'center', marginTop: '-40px', borderRadius: 20, fontFamily: 'Poppins', fontStyle: 'normal', fontWeight: 400, }}>
                                             <Grid item xs={12} style={{
-                                                color: '#707070', textAlign: 'center', paddingTop: 40, fontWeight: 600, fontSize: '13px', overflow: 'hidden',
+                                                color: '#2C7FB2', textAlign: 'center', paddingTop: 40, fontWeight: 600, fontSize: '13px', overflow: 'hidden',
                                                 whiteSpace: 'nowrap',
-                                                textOverflow: 'ellipsis', width: 120,
-                                                marginTop: '-5px'
+                                                textOverflow: 'ellipsis',
+                                                marginTop: '-5px',
+                                                
                                             }}>
                                                 {item.FirstName} {item.LastName}
                                             </Grid>
-                                            <Grid item xs={12} style={{ textAlign: 'center', color: '#707070' }}>
+                                            <Grid item xs={12} style={{ textAlign: 'center', color: '#2C7FB2' }}>
                                                 {item.AppointmentTime}
                                             </Grid>
-                                            <Grid item xs={12} style={{ textAlign: 'center', color: '#707070', paddingBottom: 10 }}>
+                                            <Grid item xs={12} style={{ textAlign: 'center', color: '#2C7FB2', paddingBottom: 10 }}>
                                                 {item.AppointmentStatus}
-                                            </Grid>
-                                            <Grid item xs={12} style={{ textAlign: 'center', color: '#707070', paddingBottom: 10, marginTop: -10 }}>
-                                                {item.FName ? item.FName : item.HFName} {item.LName ? item.LName : item.HLName}
+
                                             </Grid>
                                         </Paper>
                                         <div>
@@ -74,19 +74,21 @@ export function PatientInueue_List({ data }) {
                                     </Grid>
                                 </> :
                                     <>
-                                        <Grid item xs={2} style={{ paddingTop: 10, marginLeft: '-30px' }}>
+                                        <Grid item xs={12} sm={2} style={{ paddingTop: 10, marginLeft: '-30px' }}>
                                             <div>
                                                 <center>
-                                                    {item.ProfileImage ? <Avatar style={{ borderRadius: 50, height: 55, width: 55, }} src={item.ProfileImage} /> : item.Gender == 'Female' ? <Avatar style={{ borderRadius: 50, height: 55, width: 55, border: '1px solid lightgray' }} src='femaleicon.png' /> :
-                                                        <Avatar style={{ borderRadius: 50, height: 55, width: 55, border: '1px solid lightgray' }} src='maleicon.png' />}
+                                                    {item.ProfileImage ?
+                                                        <Avatar style={{ borderRadius: 50, height: 55, width: 55 }} src={item.ProfileImage} /> :
+                                                        <Avatar style={{ borderRadius: 50, height: 55, width: 55 }} />}
                                                 </center>
                                             </div>
-                                            <Paper className={classes.paper} elevation={4} style={{ marginRight: 25, marginLeft: 25, justifyContent: 'center', alignItems: 'center', marginTop: '-40px', borderRadius: 20, fontFamily: '"Poppins", san-serif;', fontStyle: 'normal', fontWeight: 400, }}>
+                                            <Paper className={classes.paper} elevation={4} style={{ marginRight: 25, marginLeft: 25, justifyContent: 'center', alignItems: 'center', marginTop: '-40px', borderRadius: 20, fontFamily: 'Poppins', fontStyle: 'normal', fontWeight: 400, }}>
                                                 <Grid item xs={12} style={{
                                                     color: '#2C7FB2', textAlign: 'center', paddingTop: 40, fontWeight: 600, fontSize: '13px', overflow: 'hidden',
                                                     whiteSpace: 'nowrap',
-                                                    textOverflow: 'ellipsis', width: 120,
-                                                    marginTop: '-5px'
+                                                    textOverflow: 'ellipsis',
+                                                    marginTop: '-5px',
+                                                    
                                                 }}>
                                                     {item.FirstName} {item.LastName}
                                                 </Grid>
@@ -95,9 +97,6 @@ export function PatientInueue_List({ data }) {
                                                 </Grid>
                                                 <Grid item xs={12} style={{ textAlign: 'center', color: '#2C7FB2', paddingBottom: 10 }}>
                                                     {item.AppointmentStatus}
-                                                </Grid>
-                                                <Grid item xs={12} style={{ textAlign: 'center', color: '#2C7FB2', paddingBottom: 10, marginTop: -10 }}>
-                                                    {item.FName ? item.FName : item.HFName} {item.LName ? item.LName : item.HLName}
                                                 </Grid>
                                             </Paper>
                                             <div>
@@ -115,19 +114,18 @@ export function PatientInueue_List({ data }) {
                     else if (item.AppointmentStatus == 'Send In') {
                         return (
                             <>
-                                <Grid item xs={2} style={{ marginTop: 5, marginLeft: '-30px', cursor: 'pointer', marginBottom: 0, paddingBottom: 0 }} onClick={() => fetchTreatNow(item)}>
-                                    <Grid item xs={6} sm={12} style={{ flex: 1, justifyContent: 'center', textAlign: 'center' }}>
-                                        <center>
-                                            {item.ProfileImage ? <Avatar style={{ borderRadius: 50, height: 55, width: 55, }} src={item.ProfileImage} /> : item.Gender == 'Female' ? <Avatar style={{ borderRadius: 50, height: 55, width: 55, border: '1px solid lightgray' }} src='femaleicon.png' /> :
-                                                <Avatar style={{ borderRadius: 50, height: 55, width: 55, border: '1px solid lightgray' }} src='maleicon.png' />}
-                                        </center>
+                                <Grid item xs={12} sm={2} style={{ marginTop: 5, marginLeft: '-30px', cursor: 'pointer', marginBottom: 0, paddingBottom: 0 }} onClick={() => fetchTreatNow(item)}>
+                                    <Grid item xs={12} sm={12} style={{ flex: 1, justifyContent: 'center', textAlign: 'center' }}>
+                                        <center> {item.ProfileImage ?
+                                            <Avatar style={{ borderRadius: 50, height: 55, width: 55 }} src={item.ProfileImage} /> :
+                                            <Avatar style={{ borderRadius: 50, height: 55, width: 55 }} />} </center>
                                     </Grid>
                                     <Paper className={classes.paper} elevation={4} style={{ marginRight: 25, marginLeft: 25, flex: 1, justifyContent: 'center', alignItems: 'center', marginTop: '-40px', borderRadius: 20, fontFamily: '"Poppins", san-serif;', fontStyle: 'normal', fontWeight: 400, backgroundColor: '#78B088' }}>
                                         <Grid item xs={12} style={{
                                             color: '#fff', textAlign: 'center', paddingTop: 40, overflow: 'hidden', fontSize: '13px',
                                             whiteSpace: 'nowrap',
-                                            textOverflow: 'ellipsis', width: 120,
-                                            marginTop: '-5px'
+                                            textOverflow: 'ellipsis',
+                                            marginTop: '-5px', 
                                         }}>
                                             {item.FirstName} {item.LastName}
                                         </Grid>
@@ -135,24 +133,21 @@ export function PatientInueue_List({ data }) {
                                             {item.AppointmentTime}
                                         </Grid>
                                         <Grid item xs={12} style={{ textAlign: 'center', color: '#fff', paddingBottom: 10 }}>
-                                            {item.AppointmentStatus}
+                                            {/* {item.AppointmentStatus} */}<br />
                                         </Grid>
-                                        {/* <Grid item xs={12} style={{ marginTop: 5 }}>
-                                            <Typography style={{ textAlign: 'center', color: '#fff', fontWeight: 600, fontSize: 18 }}> Treat Now </Typography>
-                                        </Grid> */}
 
                                     </Paper>
+                                    <div>
+                                        <center>
+                                            <Button size='small' onClick={() => fetchTreatNow(item)}
+                                                style={{ fontSize: '10px', color: 'white', marginTop: '-15px', backgroundColor: '#2C7FB2', borderRadius: 5, paddingLeft: 20, paddingRight: 20, }}>Treat Now</Button>
+                                        </center>
+                                    </div>
                                 </Grid>
                             </>
                         ); //return close
                     }
-                    // else if (item.ShortNote == 'Emergency') {
-                    //     return (
-                    //         <>
 
-                    //         </>
-                    //     );
-                    // }
                     else {
                         return (
                             <>
@@ -165,7 +160,6 @@ export function PatientInueue_List({ data }) {
                                         <Grid item xs={12} style={{ textAlign: 'center', paddingTop: 40, paddingBottom: 40, fontSize: 14, fontFamily: 'Poppins', color: '#000' }}>
                                             No Patients
                                         </Grid>
-
                                     </Paper>
                                 </Grid>
                             </>

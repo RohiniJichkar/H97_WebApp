@@ -301,6 +301,9 @@ const useStyles = makeStyles((theme) => ({
 
 }));
 
+
+
+
 const localizer = momentLocalizer(moment);
 
 export default function Appointments_On_Calender() {
@@ -332,6 +335,7 @@ export default function Appointments_On_Calender() {
 
     }, []);
 
+
     const now = new Date();
     const events = appointmentlist.map((items) => {
         return {
@@ -345,8 +349,6 @@ export default function Appointments_On_Calender() {
             //description: "sdsdsdsdsdsdsdsd"
         }
     })
-
-    console.log(appointmentlist)
 
     const fetchAppointments = async () => {
         var data = await localStorage.getItem("userdata");
@@ -573,22 +575,22 @@ export default function Appointments_On_Calender() {
                     dateFormat="h t"
                     components={{
                         month: {
-                          dateHeader: ({ date, label }) => {
-                            let highlightDate =
-                              events.find(event =>
-                                moment(date).isBetween(
-                                  moment(event.startDate),
-                                  moment(event.endDate),
-                                  null,
-                                  "[]"
-                                )
-                              ) != undefined;
-                            return (
-                              <h1 style={highlightDate ? { color: "red" } : null}>{label}</h1>
-                            );
-                          }
+                            dateHeader: ({ date, label }) => {
+                                let highlightDate =
+                                    events.find(event =>
+                                        moment(date).isBetween(
+                                            moment(event.startDate),
+                                            moment(event.endDate),
+                                            null,
+                                            "[]"
+                                        )
+                                    ) != undefined;
+                                return (
+                                    <h1 style={highlightDate ? { color: "red" } : null}>{label}</h1>
+                                );
+                            }
                         }
-                      }}
+                    }}
                     min={new Date(2008, 0, 1, 8, 0)} // 8.00 AM
                     max={new Date(2008, 0, 1, 17, 0)}
                     onSelectEvent={(val) => {
@@ -597,6 +599,7 @@ export default function Appointments_On_Calender() {
                         console.log(val)
                     }}
                     views={['month', 'week', 'day']}
+                    
                 />
                 {openmodal ? <Show_Appointment_details show={openmodal} data={apoointmentdetails} handlemodal={() => setopenmodal(false)} /> : null}
             </div>

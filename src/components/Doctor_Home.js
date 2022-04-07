@@ -312,7 +312,7 @@ export default function DoctorHome() {
                 <Grid item xs={12} sm={2} onClick={handleAddServices}>
                     <Paper elevation={6} className={classes.paper} style={{ marginTop: 20 }}>
                         <center>
-                            <img src="services-01.png" style={{ height: 60, width: 60 }}></img>
+                            <img src="clinicservice-01.png" style={{ height: 60, width: 60 }}></img>
                             <Typography variant="h5" noWrap={true}
                                 style={{
                                     fontFamily: '"Poppins", san-serif;',

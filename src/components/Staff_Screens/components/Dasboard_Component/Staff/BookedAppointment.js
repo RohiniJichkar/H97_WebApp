@@ -17,13 +17,10 @@ export function BookedAppointment_List({ data }) {
     const [patientdetails, setpatientdetails] = useState([]);
 
     const fetchPatientIn = async (item) => {
-        // const data = await PatientIn(id, FirstName);
-        // setpatientIn(data);
         setpatientIn(item)
         setopenmodal(true);
     }
 
-    console.log(data)
 
     if (data.length !== 0) {
         return (
@@ -32,7 +29,7 @@ export function BookedAppointment_List({ data }) {
 
                     return (
                         <>
-                            <Grid item xs={2} style={{ paddingTop: 10, marginLeft: '-30px' }}>
+                            <Grid item xs={12} sm={2} style={{ paddingTop: 10, marginLeft: '-30px' }}>
                                 <div>
                                     <center>
                                         {item.ProfileImage ? <Avatar style={{ borderRadius: 50, height: 55, width: 55, }} src={item.ProfileImage} /> : item.Gender == 'Female' ? <Avatar style={{ borderRadius: 50, height: 55, width: 55, border: '1px solid lightgray' }} src='femaleicon.png' /> :
@@ -44,7 +41,7 @@ export function BookedAppointment_List({ data }) {
                                     <Grid item xs={12} style={{
                                         color: '#2C7FB2', textAlign: 'center', paddingTop: 40, fontWeight: 600, fontSize: '13px', overflow: 'hidden',
                                         whiteSpace: 'nowrap',
-                                        textOverflow: 'ellipsis', width: 120,
+                                        textOverflow: 'ellipsis', 
                                         marginTop: '-5px'
                                     }}>
                                         {item.FirstName} {item.LastName}

@@ -22,6 +22,8 @@ import ip from '../ipaddress/ip';
 import axios from 'axios';
 import LocalHospitalIcon from '@mui/icons-material/LocalHospital'
 import AddBusinessIcon from '@mui/icons-material/AddBusiness';
+import VpnKeyIcon from '@material-ui/icons/VpnKey';
+
 
 const drawerWidth = 240;
 
@@ -247,6 +249,11 @@ export default function AdminNavbar() {
       text: 'AddClinic',
       icon: LocalHospitalIcon,
       onClick: () => navigate("/AdminAddClinic"),
+    },
+    {
+      text: 'Clinic Subscriptions',
+      icon: VpnKeyIcon,
+      onClick: () => navigate("/AdminClinicSubscription"),
     },
     {
       text: 'Referral Doctors',

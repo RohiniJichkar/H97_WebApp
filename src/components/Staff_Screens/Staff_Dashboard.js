@@ -121,10 +121,11 @@ export default function Staff_Dashboard() {
                 direction="row"
                 alignItems="center"
                 justify="center"
+                style={{marginLeft: 5}}
             >
 
                 {/* Reports Grid Start */}
-                <Grid item className={classes.griditem} xs={12} sm={3} style={{ borderRight: '1px solid gray' }}>
+                <Grid item className={classes.griditem} xs={12} sm={3} style={{ marginLeft: -15, borderRight: '1px solid gray' }}>
                     <Paper className={classes.paper} elevation={0} >
                         <div className="row" style={{ padding: theme.spacing(0), color: '#78B088' }}>
                             <Typography variant="h7" noWrap={true}
@@ -289,7 +290,7 @@ export default function Staff_Dashboard() {
                         <Grid container spacing={2} direction="row" wrap="nowrap" style={{ overflowX: 'scroll', marginLeft: 20 }}>
                             {bookedAppointments ? <BookedAppointment_List data={bookedAppointments} /> :
                                 <>
-                                    <Grid item xs={2} style={{ paddingTop: 10, marginLeft: '-30px' }}>
+                                    <Grid item xs={12} style={{ paddingTop: 10, marginLeft: '-30px' }}>
                                         <Grid item xs={6} sm={12} style={{ flex: 1, justifyContent: 'center', textAlign: 'center' }}>
                                             <center>
                                                 <Avatar style={{ borderRadius: 50, height: 50, width: 50 }} /> </center>
@@ -330,11 +331,11 @@ export default function Staff_Dashboard() {
                         </Paper>
                     </Grid>
 
-                        <Grid container spacing={2} direction="row" wrap="nowrap" style={{ overflowX: 'scroll', marginLeft: 20 }}>
+                        <Grid container spacing={2} direction="row" wrap="nowrap" style={{ overflowX: 'scroll', marginLeft: 20, paddingBottom: 30 }}>
                             {patientInQueue ? <PatientInueue_List data={patientInQueue} /> :
                                 <>
-                                    <Grid item xs={2} style={{ paddingTop: 10, marginLeft: '-30px' }}>
-                                        <Grid item xs={6} sm={12} style={{ flex: 1, justifyContent: 'center', textAlign: 'center' }}>
+                                    <Grid item xs={12} style={{ paddingTop: 10, marginLeft: '-30px' }}>
+                                        <Grid item xs={12} sm={12} style={{ flex: 1, justifyContent: 'center', textAlign: 'center' }}>
                                             <center>
                                                 <Avatar style={{ borderRadius: 50, height: 50, width: 50 }} /> </center>
                                         </Grid>
@@ -388,7 +389,6 @@ const useStyles = makeStyles((theme) => ({
         whiteSpace: 'nowrap',
         textOverflow: 'ellipsis',
         marginTop: 70,
-        marginLeft: 30,
         marginRight: 1
     },
     gridShift: {

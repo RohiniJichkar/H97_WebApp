@@ -84,6 +84,7 @@ import store from './Redux/Store/index';
 import DoctorMedicines from './components/Doctor_Medicines';
 import DoctorEditAppointment from './components/Doctor_EditAppointment';
 import Staff_EditAppointment from './components/Staff_Screens/Staff_EditAppointment';
+import Admin_Clinic_Subscription from './components/Admin_Clinic_Subscription';
 
 const App = () => {
   const navigate = useNavigate();
@@ -177,6 +178,7 @@ const App = () => {
             <Route exact path="/AdminClinicDoctors" element={<AdminClinicDoctors />}></Route>
             <Route exact path="/AdminReferralDoctors" element={<Admin_Referral_Doctors />}></Route>
             <Route exact path="/AdminTips" element={<Admin_Tips />}></Route>
+            <Route exact path="/AdminClinicSubscription" element={<Admin_Clinic_Subscription />}></Route>
 
 
             <Route exact path="/Staff_Home" element={<Staff_Home />}></Route>

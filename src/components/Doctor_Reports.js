@@ -61,11 +61,18 @@ export default function DoctorReports() {
         fetchPatientData();
     }, []);
 
-    const handleRowClick = async (UserId) => {
-        setpuserid(UserId)
-        const report = await Reports(puserid);
+    
+    const handleRowClick = async (id) => {
+        const report = await Reports(id.UserId);
         setreportsData(report);
+        setpuserid(id.UserId)
     }
+
+    // const handleRowClick = async (UserId) => {
+    //     setpuserid(UserId)
+    //     const report = await Reports(puserid);
+    //     setreportsData(report);
+    // }
 
     const handleSubmit = async () => {
         if (puserid == '') {
@@ -172,7 +179,7 @@ export default function DoctorReports() {
                                 columns={columns}
                                 columnWidth={10}
                                 pageSize={6}
-                                onRowClick={(newSelection) => handleRowClick(newSelection.row.UserId)}
+                                onRowClick={(newSelection) => handleRowClick(newSelection.row)}
                             />
                         </Box>
                         <Divider />
