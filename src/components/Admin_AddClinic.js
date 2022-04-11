@@ -2,12 +2,15 @@ import React, { useState, useEffect } from 'react';
 import clsx from 'clsx';
 import { makeStyles, useTheme, alpha } from '@material-ui/core/styles';
 import { useNavigate } from 'react-router-dom';
-import { Container, FormControlLabel, Select, InputLabel, FormControl, TextField, Typography, Button, Grid, Paper } from "@material-ui/core";
+import { Container, FormControlLabel, Select, IconButton, InputLabel, FormControl, TextField, Typography, Button, Grid, Paper } from "@material-ui/core";
 import { Redirect } from 'react-router-dom';
 import AdminNavbar from './Admin_Navbar';
 import CreateIcon from '@material-ui/icons/Create';
 import ArrowBackIcon from '@material-ui/icons/ArrowBack';
 import { Add_Clinic, Times, Doctor_Category } from '../Admin_Apis/Add_Clinic/index';
+import Visibility from '@material-ui/icons/Visibility';
+import VisibilityOff from '@material-ui/icons/VisibilityOff';
+import InputAdornment from '@material-ui/core/InputAdornment';
 
 const drawerWidth = 240;
 
@@ -16,6 +19,19 @@ const useStyles = makeStyles((theme) => ({
         display: 'flex',
         flexGrow: 1,
         backgroundColor: 'white',
+    },
+    notchedOutline: {
+        borderWidth: "1.5px",
+        borderColor: "black !important",
+        color: 'black'
+    },
+    input: {
+        fontFamily: 'Poppins;',
+        fontStyle: 'normal',
+        fontWeight: 500,
+        fontSize: 14,
+        color: '#000',
+        height: 25,
     },
     title: {
         flexGrow: 1,
@@ -138,6 +154,7 @@ export default function AdminAddClinic() {
     const [dob, setdob] = useState('');
     const [gender, setgender] = useState('');
     const [email, setemail] = useState('');
+    const [password, setpassword] = useState('');
     const [address, setaddress] = useState('');
     const [city, setcity] = useState('');
     const [state, setstate] = useState('');
@@ -175,6 +192,7 @@ export default function AdminAddClinic() {
     const [clinicLogo, setclinicLogo] = useState(null);
     const [doctorCategory, setdoctorCategory] = useState([]);
     const [times, settimes] = useState([]);
+    const [showPassword, setshowPassword] = useState(false);
 
 
     const fetchDoctorCategory = async () => {
@@ -187,7 +205,13 @@ export default function AdminAddClinic() {
         settimes(times);
     }
 
+    const handleClickShowPassword = () => {
+        setshowPassword(!showPassword);
+    };
 
+    const handleMouseDownPassword = (event) => {
+        event.preventDefault();
+    };
 
     // const convertToBase64 = (file) => {
     //     return new Promise((resolve, reject) => {
@@ -212,6 +236,148 @@ export default function AdminAddClinic() {
         var now = new Date();
         var date = now.toISOString().split('T')[0];
 
+        if (clinicName == '') {
+            alert('Please Enter ClinicName');
+            return;
+        }
+        else if (clinicMobile == '') {
+            alert("Please Enter Clinic Mobile Number");
+            return;
+        }
+        else if (clinicEmail == '') {
+            alert("Please Enter Clinic Mail Id");
+            return;
+        }
+        else if (clinicAddress == '') {
+            alert("Please Enter Clinic Address");
+            return;
+        }
+        else if (clinicCity == '') {
+            alert("Please Enter Clinic City");
+            return;
+        }
+        else if (clinicState == '') {
+            alert("Please Enter Clinic State");
+            return;
+        }
+        else if (clinicCountry == '') {
+            alert("Please Enter Clinic Country");
+            return;
+        }
+        else if (clinicPincode == '') {
+            alert("Please Enter Clinic Pincode");
+            return;
+        }
+        else if (clinicStartTime == '') {
+            alert("Please Enter Clinic Start Time");
+            return;
+        }
+        else if (clinicEndTime == '') {
+            alert("Please Enter Clinic End Time");
+            return;
+        }
+        else if (clinicGSTNo == '') {
+            alert("Please Enter Clinic GST Number");
+            return;
+        }
+        else if (clinicRegNo == '') {
+            alert("Please Enter Clinic Registration Number");
+            return;
+        }
+        else if (noofStaff == '') {
+            alert("Please Enter Number of Staff");
+            return;
+        }
+        // else if (firstName == '') {
+        //     alert("Please Enter First Name");
+        //     return;
+        // }
+        // else if (lastName == '') {
+        //     alert("Please Enter Last Name");
+        //     return;
+        // }
+        // else if (education == '') {
+        //     alert("Please Enter Education");
+        //     return;
+        // }
+        // else if (mobile == '') {
+        //     alert("Please Enter Mobile Number");
+        //     return;
+        // }
+        // else if (email == '') {
+        //     alert("Please Enter Email Id");
+        //     return;
+        // }
+        // else if (category == '') {
+        //     alert("Please Enter Category");
+        //     return;
+        // }
+        // else if (morningStartTime == '') {
+        //     alert("Please Enter Morning Start Time");
+        //     return;
+        // }
+        // else if (morningEndTime == '') {
+        //     alert("Please Enter Morning End Time");
+        //     return;
+        // }
+        // else if (eveningStartTime == '') {
+        //     alert("Please Enter Evening Start Time");
+        //     return;
+        // }
+        // else if (eveningEndTime == '') {
+        //     alert("Please Enter Evening End Time");
+        //     return;
+        // }
+        // else if (address == '') {
+        //     alert("Please Enter Address");
+        //     return;
+        // }
+        // else if (city == '') {
+        //     alert("Please Enter City");
+        //     return;
+        // }
+        // else if (state == '') {
+        //     alert("Please Enter State");
+        //     return;
+        // }
+        // else if (country == '') {
+        //     alert("Please Enter Country");
+        //     return;
+        // }
+        // else if (pincode == '') {
+        //     alert("Please Enter Pincode");
+        //     return;
+        // }
+        // else if (password == '') {
+        //     alert("Please Enter Password");
+        //     return;
+        // }
+        // else if (subscriptionType == '') {
+        //     alert("Please Enter Subscription Type");
+        //     return;
+        // }
+        // else if (subscriptionStartDate == '') {
+        //     alert("Please Enter Subscription Start Date");
+        //     return;
+        // }
+        // else if (subscriptionEndDate == '') {
+        //     alert("Please Enter Subscription End Date");
+        //     return;
+        // }
+        // else if (subscriptionAmount == '') {
+        //     alert("Please Enter Subscription Amount");
+        //     return;
+        // }
+        // else if (subscriptionPaymentMode == '') {
+        //     alert("Please Enter Subscription Payment Mode");
+        //     return;
+        // }
+        // else if (subscriptionTotalAmount == '') {
+        //     alert("Please Enter Subscription Total Amount");
+        //     return;
+        // }
+
+
 
         const formData = new FormData();
         formData.append('file', clinicLogo);
@@ -221,6 +387,7 @@ export default function AdminAddClinic() {
         formData.append('ClinicAddress', clinicAddress);
         formData.append('ClinicCity', clinicCity);
         formData.append('ClinicState', clinicState);
+        formData.append('ClinicCountry', clinicCountry);
         formData.append('ClinicPincode', clinicPincode);
         formData.append('ClinicGstNumber', clinicGSTNo);
         formData.append('ClinicRegistrationNumber', clinicRegNo);
@@ -239,12 +406,14 @@ export default function AdminAddClinic() {
         formData.append('Pincode', pincode);
         formData.append('State', state);
         formData.append('Country', country);
+        formData.append('Password', password);
         formData.append('MorningStartTime', morningStartTime);
         formData.append('MorningEndTime', morningEndTime);
         formData.append('EveningStartTime', eveningStartTime);
         formData.append('EveningEndTime', eveningEndTime);
         formData.append('Category', category);
         formData.append('Gender', gender);
+        formData.append('DOB', dob);
         formData.append('Education', education);
         formData.append('ClinicTime', clinicStartTime + '-' + clinicEndTime);
         formData.append('SubscriptionStartDate', subscriptionStartDate);
@@ -258,6 +427,8 @@ export default function AdminAddClinic() {
         try {
             const clinicdetails = await Add_Clinic(formData);
             let parse = JSON.parse(clinicdetails);
+        console.log(clinicdetails)
+
             if (parse.success == "200") {
                 alert(parse.message);
                 window.location.reload()
@@ -479,15 +650,7 @@ export default function AdminAddClinic() {
                                     <center>
                                         <FormControl variant="outlined" className={classes.formControlForm} style={{ marginLeft: 15 }}  >
                                             <TextField className={classes.textFieldForm}
-                                                onChange={(e) => {
-                                                    const re = /^[A-Za-z]+$/;
-
-                                                    // if value is not blank, then test the regex
-
-                                                    if (e.target.value === '' || re.test(e.target.value)) {
-                                                        setclinicGSTNo(e.target.value)
-                                                    }
-                                                }}
+                                                onChange={(e) => setclinicGSTNo(e.target.value)}
                                                 id="outlined-basic" size="small" label="Gst Number" variant="outlined" style={{ width: '150%' }} />
                                         </FormControl><span style={{ position: 'relative', fontSize: 20, color: 'red', left: 55 }}> *</span>
                                     </center>
@@ -1000,12 +1163,7 @@ export default function AdminAddClinic() {
                                 <Grid item xs={4}>
                                     <center>
                                         <FormControl variant="outlined" className={classes.formControlForm} style={{ marginLeft: 12 }}  >
-                                            <TextField multiline rows={1.2} maxRows={2} className={classes.textFieldForm} onChange={(e) => {
-                                                const re = /^[A-Za-z]+$/;
-                                                if (e.target.value === '' || re.test(e.target.value)) {
-                                                    setaddress(e.target.value)
-                                                }
-                                            }} id="outlined-basic" size="small" label="Address" variant="outlined" style={{ width: '165%' }} />
+                                            <TextField multiline rows={1.2} maxRows={2} className={classes.textFieldForm} onChange={(e) => setaddress(e.target.value)} id="outlined-basic" size="small" label="Address" variant="outlined" style={{ width: '165%' }} />
                                         </FormControl><span style={{ position: 'relative', fontSize: 20, color: 'red', left: 65 }}> *</span>
                                     </center>
                                 </Grid>
@@ -1236,14 +1394,44 @@ export default function AdminAddClinic() {
                                         color: '#707070',
                                         fontWeight: 600
                                     }}>
-                                        Upload Profile Image:
+                                        Password:
                                     </Typography>
                                 </Grid>
                                 <Grid item xs={4} >
                                     <center>
-                                        <FormControl variant="outlined" className={classes.formControlForm}  >
-                                            <TextField className={classes.textFieldForm} id="outlined-basic" size="small" type='file' variant="outlined" style={{ width: '100%' }} />
-                                        </FormControl>
+                                        <FormControl variant="outlined" className={classes.formControlForm} style={{ marginLeft: 15 }} >
+                                            <TextField
+                                                style={{ width: '128%', marginTop: -5, color: '#707070', fontSize: 16, }}
+                                                variant="outlined"
+                                                margin="normal"
+                                                color='primary'
+                                                id="password"
+                                                required
+                                                label="Password"
+                                                value={password}
+                                                type={showPassword ? 'text' : 'password'}
+                                                size='small'
+                                                onChange={(e) => setpassword(e.target.value)}
+                                                InputProps={{
+                                                    classes: {
+                                                        input: classes.input,
+
+                                                    },
+                                                    endAdornment: (
+                                                        <InputAdornment position="end">
+                                                            <IconButton
+                                                                aria-label="toggle password visibility"
+                                                                onClick={handleClickShowPassword}
+                                                                onMouseDown={handleMouseDownPassword}
+
+                                                            >
+                                                                {showPassword ? <Visibility /> : <VisibilityOff />}
+                                                            </IconButton>
+                                                        </InputAdornment>
+                                                    ),
+                                                }}
+                                            />
+                                        </FormControl><span style={{ position: 'relative', fontSize: 20, color: 'red', left: 40 }}> *</span>
                                     </center>
                                 </Grid>
 

@@ -13,6 +13,20 @@ import { connect } from 'react-redux';
 import { Times, Doctor_Category } from '../Apis/Home_Visitors/index';
 import EditImage from './Profile/Edit_Profile/Doctor_EditProfileImage';
 import ArrowBackIcon from '@material-ui/icons/ArrowBack';
+import DateFnsUtils from '@date-io/date-fns';
+import {
+    MuiPickersUtilsProvider,
+    KeyboardDatePicker,
+} from '@material-ui/pickers';
+import { createTheme, ThemeProvider } from '@material-ui/core/styles';
+
+const defaultMaterialTheme = createTheme({
+    palette: {
+        primary: {
+          main: '#1769aa',
+        },     
+      },
+});
 
 const getDoctorsdata = 'http://13.233.217.107:8080/api/Web_AddStaff'
 
@@ -35,7 +49,7 @@ export default function DoctorEditProfile() {
     const [MobileNo, setMobileNo] = useState(doctordata[0].MobileNo);
     const [Email, setEmail] = useState(doctordata[0].Email);
     const [Education, setEducation] = useState(doctordata[0].Education);
-    const [DOB, setDOB] = useState(doctordata[0].DOB);
+    const [DOB, setDOB] = useState(doctordata[0].DOB ? doctordata[0].DOB : new Date());
     const [Category, setCategory] = useState(doctordata[0].Category);
     const [Address, setAddress] = useState(doctordata[0].Address);
     const [City, setCity] = useState(doctordata[0].City);
@@ -57,6 +71,29 @@ export default function DoctorEditProfile() {
         let parsed = JSON.parse(cdata);
         let DoctorId = parsed.userid;
         let clinicid = parsed.ClinicId;
+        
+        // const obj={
+        //     DoctorId: DoctorId,
+        //     ClinicId: clinicid,
+        //     NmTitle: NmTitle,
+        //     FirstName: FirstName,
+        //     LastName: LastName,
+        //     Email: Email,
+        //     MobileNo: MobileNo,
+        //     Address: Address,
+        //     City: City,
+        //     State: State,
+        //     Pincode: Pincode,
+        //     Country: Country,
+        //     Education: Education,
+        //     DOB: DOB,
+        //     MorningStartTime: MorningStartTime,
+        //     MorningEndTime: MorningEndTime,
+        //     EveningStartTime: EveningStartTime,
+        //     EveningEndTime: EveningEndTime,
+        //     Experience: Experience,
+        //     Gender: Gender
+        // }
         try {
             const editDoctorRequest = await EditDoctordata(DoctorId, clinicid, NmTitle, FirstName, LastName, MobileNo, Email, Address, Category, City, Pincode, State, Country, Education, DOB, MorningStartTime, MorningEndTime, EveningStartTime, EveningEndTime, Experience, Gender);
             let response = JSON.parse(editDoctorRequest);
@@ -354,7 +391,22 @@ export default function DoctorEditProfile() {
                                 </div>
                                 <div>
                                     <FormControl variant="outlined" className={classes.formControlForm}  >
-                                        <TextField className={classes.textFieldForm} id="outlined-basic" value={DOB} onChange={(e) => setDOB(e.target.value)} type="date" variant="outlined" size="small" style={{ width: '150%' }} />
+                                    <ThemeProvider theme={defaultMaterialTheme}>
+                                            <MuiPickersUtilsProvider theme={defaultMaterialTheme} utils={DateFnsUtils}>
+                                                <KeyboardDatePicker
+                                                    autoOk
+                                                    className={classes.inputFields}
+                                                    size='small'
+                                                    value={DOB}
+                                                    onChange={setDOB}
+                                                    inputVariant="outlined"
+                                                    label="DOB"
+                                                    format='dd/MM/yyyy'
+                                                    style={{ width: '102%', marginRight: 5 }}
+                                                />
+                                            </MuiPickersUtilsProvider>
+                                        </ThemeProvider>
+                                        {/* <TextField className={classes.textFieldForm} id="outlined-basic" value={DOB} onChange={(e) => setDOB(e.target.value)} type="date" variant="outlined" size="small" style={{ width: '150%' }} /> */}
                                     </FormControl>
 
                                 </div>

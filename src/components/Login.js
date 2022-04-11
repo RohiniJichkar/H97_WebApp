@@ -93,8 +93,9 @@ const useStyles = makeStyles((theme) => ({
     backgroundColor: theme.palette.secondary.main,
   },
   form: {
-    width: '100%', // Fix IE 11 issue.
+    // width: '100%', // Fix IE 11 issue.
     marginTop: theme.spacing(1),
+    textAlign:'center'
   },
   icon: {
     lineHeight: 2,
@@ -347,10 +348,10 @@ function Login(props) {
       </Grid>
      
 
-        <Grid  item xs={12} sm={12} component={Paper} elevation={0} square style={{  backgroundColor: 'transparent', marginLeft: -80, height: 360, marginTop: 90 }} >
+        <Grid  item xs={11} sm={3} component={Paper} elevation={0} square style={{  backgroundColor: 'transparent', marginLeft: -80, height: 360, marginTop: 90 }} >
           <div className={classes.paper} >
          
-            <form  className={classes.form} noValidate style={{ position: 'relative', color: 'black'}}>
+          <form  className={classes.form} noValidate style={{ position: 'relative',width:'330px',borderColor:'linear-gradient(90deg, rgba(15,106,162,1) 1%, rgba(44,127,178,1) 38%, rgba(120,176,136,1) 76%)', border: '3px solid ',height:'320px',paddingTop:'10px',marginLeft:'190px'}}>
             <Grid item xs={12} sm={12} >
               <TextField
                 variant="outlined"
@@ -444,12 +445,12 @@ function Login(props) {
               </div>
 
               <Grid container style={{ paddingTop: '15px' }}>
-                <Grid item sm={2} align="left" style={{ marginTop: '-10px' }}>
+                <Grid item xs={6} sm={6} align="left" style={{ marginTop: '-10px' }}>
                   <FormGroup  >
                     <FormControlLabel
                       control={<GreenCheckbox checked={state.checked} onChange={handleChangeCheckBox} />}
                       label="Remember Me"
-                      style={{ fontSize: '10px' }}
+                      style={{  fontSize: '10px',marginLeft:'15px'}}
 
                     />
                   </FormGroup>
@@ -461,8 +462,8 @@ function Login(props) {
                   inputProps={{ 'aria-label': 'primary checkbox' }}
                 /> */}
                 </Grid>
-                <Grid item sm={3} style={{ marginLeft: -15 }} >
-                  <Link onClick={() => handleClickForgotPass()} variant="body2" style={{ color: 'black', cursor: 'pointer', }}>
+                <Grid item xs={6} sm={6} style={{ paddingBootom:'25px'}} >
+                  <Link onClick={() => handleClickForgotPass()} variant="body2" style={{ color: 'black', cursor: 'pointer',marginTop:'-15px' }}>
                     Forgot password?
                   </Link>
                 </Grid>

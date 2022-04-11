@@ -9,6 +9,7 @@ import DateRangeIcon from '@material-ui/icons/DateRange';
 import LocalHospitalIcon from '@material-ui/icons/LocalHospital';
 import axios from 'axios';
 import ip from '../ipaddress/ip';
+import moment from 'moment';
 import { Change_Password } from './Profile/Change_Password/index';
 
 
@@ -184,7 +185,7 @@ export default function DoctorProfile() {
                                                 fontSize: 14, color: '#707070', fontFamily: 'Poppins',
                                                 fontStyle: 'normal', fontWeight: 400, marginTop: 5
                                             }}>
-                                                {doctordata.DOB ? doctordata.DOB : 'Not Provided'}
+                                                {doctordata.DOB ? moment(doctordata.DOB).format("DD/MM/YYYY")  : 'Not Provided'}
                                             </Typography>
                                         </Grid>
 
@@ -344,7 +345,7 @@ export default function DoctorProfile() {
                                                 marginLeft: 20,
                                                 marginRight: 20
                                             }}>
-                                                {doctordata.ClinicAddress != '' ? doctordata.ClinicAddress : 'Not Provided'} <br /> {doctordata.ClinicCity != '' ? doctordata.ClinicCity : 'Not Provided'} {doctordata.ClinicState != '' ? doctordata.ClinicState : 'Not Provided'} {doctordata.ClinicCountry != '' ? doctordata.ClinicCountry : 'Not Provided'} {doctordata.ClinicPincode}
+                                                {doctordata.ClinicAddress ? `${doctordata.ClinicAddress}`  : 'Not Provided'} <br /> {doctordata.ClinicCity ? `${doctordata.ClinicCity}` : ''} {doctordata.ClinicState ? `, ${doctordata.ClinicState}` : ''} {doctordata.ClinicCountry != '' ?  `, ${doctordata.ClinicCountry}`: ''} {doctordata.ClinicPincode ? `, ${doctordata.ClinicPincode}` : ''}
                                             </Typography>
                                         </center>
                                     </Grid>

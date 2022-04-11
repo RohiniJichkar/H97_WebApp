@@ -36,38 +36,41 @@ const columns = [
     {
         field: 'Title',
         headerName: 'Appointment Reason',
-        width: 240,
+        width: 230,
         editable: true,
     },
     {
         field: 'AppointmentDate',
         headerName: 'Date',
-        width: 170,
+        width: 140,
         editable: true,
     },
     {
         field: 'AppointmentTime',
         headerName: 'Time',
-        width: 170,
+        width: 140,
         editable: true,
     },
     {
         field: 'AppointmentType',
         headerName: 'Type',
-        width: 160,
+        width: 140,
         editable: true,
     },
     {
         field: 'AppointmentChannel',
         headerName: 'Channel',
-        width: 180,
+        width: 140,
         editable: true,
     },
     {
-        field: 'AppointmentTime',
-        headerName: 'Time',
-        width: 160,
-        editable: true,
+        field: 'doctorName',
+        headerName: 'Doctor name',
+        sortable: false,
+        width: 220,
+        valueGetter: (params) =>
+            `${params.getValue(params.id, 'HFName') || ''} ${params.getValue(params.id, 'HLName') || ''
+            }`,
     },
     // {
     //     field: "Action",

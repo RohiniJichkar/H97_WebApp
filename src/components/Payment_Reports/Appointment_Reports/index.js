@@ -47,6 +47,21 @@ var columns = [
             }`,
     },
     {
+        field: 'doctorName',
+        headerName: 'Doctor',
+        width: 150,
+        editable: false,
+        headerClassName: 'super-app-theme--header',
+        valueGetter: (params) =>
+            params.row.DFName ?
+                `${params.getValue(params.id, 'DFName') || ''} ${params.getValue(params.id, 'DLName') || ''
+                }`
+                :
+                `${params.getValue(params.id, 'HFName') || ''} ${params.getValue(params.id, 'HLName') || ''
+                }`
+        ,
+    },
+    {
         field: 'AppointmentDate',
         headerName: 'Date',
         width: 160,
@@ -60,12 +75,6 @@ var columns = [
         headerClassName: 'super-app-theme--header',
         editable: true,
     },
-    // {
-    //     field: 'AppointmentReason',
-    //     headerName: 'Appointment Reason',
-    //     width: 220,
-    //     editable: true,
-    // },
     {
         field: 'AppointmentStatus',
         headerName: 'Status',

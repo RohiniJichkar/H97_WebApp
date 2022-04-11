@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import clsx from 'clsx';
 import { makeStyles, useTheme } from '@material-ui/core/styles';
 import { useNavigate } from 'react-router-dom';
-import { AppBar, Toolbar, CssBaseline, Typography, Button, TextField, FormControl, Grid, Drawer, Divider, MenuItem, Menu, Tooltip, ListItem, ListItemIcon, ListItemText, List, IconButton, Avatar, Dialog, DialogTitle, DialogContent, DialogContentText } from "@material-ui/core";
+import { AppBar, Toolbar, CssBaseline, Typography, Button, TextField, FormControl, Grid, Drawer, Divider, MenuItem, Menu, Tooltip, Collapse, ListItem, ListItemIcon, ListItemText, List, IconButton, Avatar, Dialog, DialogTitle, DialogContent, DialogContentText } from "@material-ui/core";
 import MenuIcon from '@material-ui/icons/Menu';
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
 import ChevronRightIcon from '@material-ui/icons/ChevronRight';
@@ -23,9 +23,12 @@ import FeaturedVideoIcon from '@material-ui/icons/FeaturedVideo';
 import ip from '../ipaddress/ip';
 import axios from 'axios';
 import CloseIcon from '@material-ui/icons/Close';
+import ExpandLess from '@material-ui/icons/ExpandLess';
+import ExpandMore from '@material-ui/icons/ExpandMore';
+import StarBorder from '@material-ui/icons/StarBorder';
 import MedicalServicesIcon from '@mui/icons-material/MedicalServices';
 
-const drawerWidth = 240;
+const drawerWidth = 250;
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -72,6 +75,11 @@ const useStyles = makeStyles((theme) => ({
       easing: theme.transitions.easing.sharp,
       duration: theme.transitions.duration.enteringScreen,
     }),
+    overflowX: 'hidden',
+    '&::-webkit-scrollbar': {
+      display: 'none',
+    },
+    scrollbarWidth: 'none',
     backgroundColor: '#2C7FB2',
     fontFamily: '"Poppins", san-serif;',
     fontStyle: 'normal',
@@ -84,6 +92,9 @@ const useStyles = makeStyles((theme) => ({
       duration: theme.transitions.duration.leavingScreen,
     }),
     overflowX: 'hidden',
+    '&::-webkit-scrollbar': {
+      display: 'none',
+    },
     width: theme.spacing(7) + 1,
     [theme.breakpoints.up('sm')]: {
       width: theme.spacing(7) + 1,
@@ -209,6 +220,9 @@ const useStyles = makeStyles((theme) => ({
     marginTop: 10,
     fontSize: 12
   },
+  nested: {
+    paddingLeft: theme.spacing(4),
+  },
 }));
 
 
@@ -236,6 +250,10 @@ export default function DoctorNavbar() {
   // const openprofile = Boolean(anchorElProfile);
   const navigate = useNavigate();
 
+
+  const handleClick = () => {
+    setOpen(!open);
+  };
 
   const fetchDoctorProfile = async () => {
     var data = await localStorage.getItem("userdata");
@@ -377,6 +395,23 @@ export default function DoctorNavbar() {
     navigate('/DoctorDashboard')
   };
 
+  const handleCurrentPlan = () => {
+    navigate('/DoctorCurrentPlan');
+  }
+
+  const handleRenewPlans = () => {
+    navigate('/DoctorRenewSubscription');
+  }
+
+  const handleAboutUs = () => {
+    navigate('/DoctorAboutUs');
+  }
+
+
+  const handleTrainingVideo = () => {
+    navigate('/DoctorTrainingVideo');
+  }
+
   const menuItems = [
     {
       text: 'Home',
@@ -432,6 +467,7 @@ export default function DoctorNavbar() {
       text: 'Upload Advertisements',
       icon: FeaturedVideoIcon,
       onClick: () => navigate("/DoctorAdvertisements"),
+
     },
 
   ];
@@ -588,6 +624,41 @@ export default function DoctorNavbar() {
               <ListItemText primary={text} />
             </ListItem>
           ))}
+          <ListItem button onClick={handleClick}>
+            <ListItemIcon style={{ color: '#fff' }}>
+              <SettingsIcon />
+            </ListItemIcon>
+            <ListItemText primary="Setting" />
+            {open ? <ExpandLess /> : <ExpandMore />}
+          </ListItem>
+          <Collapse in={open} timeout="auto" unmountOnExit>
+            <List component="div" disablePadding>
+              <ListItem button className={classes.nested} onClick={handleCurrentPlan}>
+                <ListItemIcon style={{ color: '#fff' }}>
+                  <StarBorder />
+                </ListItemIcon>
+                <ListItemText primary="Current Plan" />
+              </ListItem>
+              <ListItem button className={classes.nested} onClick={handleRenewPlans}>
+                <ListItemIcon style={{ color: '#fff' }}>
+                  <StarBorder />
+                </ListItemIcon>
+                <ListItemText primary="Subscription Plan" />
+              </ListItem>
+              <ListItem button className={classes.nested} onClick={handleAboutUs}>
+                <ListItemIcon style={{ color: '#fff' }}>
+                  <StarBorder />
+                </ListItemIcon>
+                <ListItemText primary="About Us" />
+              </ListItem>
+              <ListItem button className={classes.nested} onClick={handleTrainingVideo}>
+                <ListItemIcon style={{ color: '#fff' }}>
+                  <StarBorder />
+                </ListItemIcon>
+                <ListItemText primary="Training Video" />
+              </ListItem>
+            </List>
+          </Collapse>
         </List>
 
       </Drawer>

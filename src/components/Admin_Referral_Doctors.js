@@ -124,7 +124,7 @@ export default function Admin_Referral_Doctors() {
     useEffect(() => {
         const interval = setInterval(() => {
             fetchReferralData();
-        }, 100);
+        }, 1000);
         return () => clearInterval(interval);
     }, []);
 

@@ -85,6 +85,10 @@ import DoctorMedicines from './components/Doctor_Medicines';
 import DoctorEditAppointment from './components/Doctor_EditAppointment';
 import Staff_EditAppointment from './components/Staff_Screens/Staff_EditAppointment';
 import Admin_Clinic_Subscription from './components/Admin_Clinic_Subscription';
+import DoctorCurrentPlan from './components/Doctor_CurrentPlan';
+import DoctorRenewSubscription from './components/Doctor_RenewSubscription';
+import DoctorAboutUs from './components/Doctor_AboutUs';
+import DoctorTrainingVideo from './components/Doctor_TrainingVideo';
 
 const App = () => {
   const navigate = useNavigate();
@@ -168,6 +172,10 @@ const App = () => {
 
             <Route exact path="/DoctorTodaysHVAppDiary" element={<DoctorTodaysHVAppDiary />}></Route>
             <Route exact path="/DoctorEditAppointment" element={<DoctorEditAppointment />}></Route>
+            <Route exact path="/DoctorCurrentPlan" element={<DoctorCurrentPlan />}></Route>
+            <Route exact path="/DoctorRenewSubscription" element={<DoctorRenewSubscription />}></Route>
+            <Route exact path="/DoctorAboutUs" element={<DoctorAboutUs />}></Route>
+            <Route exact path="/DoctorTrainingVideo" element={<DoctorTrainingVideo />}></Route>
 
 
             <Route exact path="/AdminHome" element={<AdminHome />}></Route>

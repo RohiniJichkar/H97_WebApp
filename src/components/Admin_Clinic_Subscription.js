@@ -22,13 +22,11 @@ const columns = [
         headerName: 'Clinic Name',
         sortable: false,
         width: 200,
-        headerClassName: 'super-app-theme--header',
 
     },
     {
         field: 'ClinicMobileNo',
         headerName: 'Contact No',
-        headerClassName: 'super-app-theme--header',
         width: 160,
         editable: true,
     },
@@ -75,7 +73,7 @@ export default function Admin_Clinic_Subscription() {
     useEffect(() => {
         const interval = setInterval(() => {
             fetchClinicData();
-        }, 100);
+        }, 2000);
         return () => clearInterval(interval);
 
     }, []);
