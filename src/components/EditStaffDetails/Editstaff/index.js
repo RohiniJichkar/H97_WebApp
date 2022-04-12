@@ -3,7 +3,6 @@ import { makeStyles, useTheme, alpha } from '@material-ui/core/styles';
 import { useNavigate } from 'react-router-dom';
 import { Dialog, DialogContent, DialogContentText, DialogTitle, TextField, Slide, Select, FormControl, Button, IconButton, Grid, InputLabel, Radio, Typography, Paper, Link } from "@material-ui/core";
 import CloseIcon from '@material-ui/icons/Close';
-import { EditPatient } from '../../../Apis/Clinic_Patients/Edit_Patient';
 import { EditStaffdata } from '../../../Apis/Clinic_Staff/index';
 import { Doctor_Category } from '../../../Apis/Clinic_Staff/index';
 import { Times } from '../../../Apis/Clinic_Staff/index';
