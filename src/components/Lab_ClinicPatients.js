@@ -407,7 +407,7 @@ export default function LabClinicPatients() {
 
                 {/* for Family Member */}
 
-                {openFamilyMemberModal ? <Add_Family_Member show={openFamilyMemberModal} data={patientDetails} handleclose={() => setopenFamilyMemberModal(false)} /> : null}
+                {/* {openFamilyMemberModal ? <Add_Family_Member show={openFamilyMemberModal} data={patientDetails} handleclose={() => setopenFamilyMemberModal(false)} /> : null} */}
 
 
             </Grid> {/* main grid */}
