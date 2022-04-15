@@ -14,3 +14,14 @@ export const Get_Plans = async () => {
     const plan = await axios.post(ip + 'GetPaymentPackages');
     return plan?.data?.Package;
 }
+
+
+export const Renew_Subscription = async (obj) => {
+    try {
+        const renew = await axios.post(ip + 'Web_RenewSubscriptionEmail', obj)
+        return renew?.data;
+    }
+    catch (error) {
+        return error.response.data;
+    }
+}

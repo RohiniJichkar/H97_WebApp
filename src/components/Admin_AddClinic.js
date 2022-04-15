@@ -513,13 +513,7 @@ export default function AdminAddClinic() {
                                     <center>
                                         <FormControl variant="outlined" className={classes.formControlForm} style={{ marginLeft: 12 }} >
                                             <TextField className={classes.textFieldForm}
-                                                onChange={(e) => {
-                                                    const re = /^[A-Za-z]+$/;
-                                                    // if value is not blank, then test the regex
-                                                    if (e.target.value === '' || re.test(e.target.value)) {
-                                                        setclinicName(e.target.value)
-                                                    }
-                                                }} id="outlined-basic" size="small" label="Clinic Name" variant="outlined" style={{ width: '150%', }} />
+                                                onChange={(e) => setclinicName(e.target.value)} id="outlined-basic" size="small" label="Clinic Name" variant="outlined" style={{ width: '150%', }} />
                                         </FormControl><span style={{ position: 'relative', fontSize: 20, color: 'red', left: 55 }}> *</span>
                                     </center>
                                 </Grid>
@@ -1486,11 +1480,9 @@ export default function AdminAddClinic() {
                                                 style={{ width: '100%', fontSize: 14, fontWeight: 600 }}
                                             >
                                                 <option aria-label="None" value="">Subscription Type</option>
-                                                <option value='Free 15 days'>Free 15 days</option>
-                                                <option value='30 days'>30 days</option>
-                                                <option value='45 days'>45 days</option>
-                                                <option value='90 days'>90 days</option>
-                                                <option value='1 year'>1 year</option>
+                                                <option value='Basic'>Basic</option>
+                                                <option value='Standard'>Standard</option>
+                                                <option value='Premium'>Premium</option>
                                             </Select>
                                         </FormControl><span style={{ position: 'relative', fontSize: 20, color: 'red', }}> *</span>
                                     </center>

@@ -224,7 +224,7 @@ export default function Doctor_TV_TodaysAppointments() {
         }, 10000);
         const secondinterval = setInterval(() => {
             setSendInModal(false);
-        }, 10000);
+        }, 20000);
         FetchSend_In();
         fetchDoctorProfile();
         fetchPatientIn();

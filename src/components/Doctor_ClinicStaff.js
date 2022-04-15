@@ -184,8 +184,6 @@ export default function DoctorClinicStaff() {
         document.getElementById("mybtn9").hidden = true;
         document.getElementById("mybtn10").hidden = true;
         document.getElementById("mybtn11").hidden = true;
-
-
     }
 
     function enableBtn() {

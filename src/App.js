@@ -90,6 +90,15 @@ import DoctorRenewSubscription from './components/Doctor_RenewSubscription';
 import DoctorAboutUs from './components/Doctor_AboutUs';
 import DoctorTrainingVideo from './components/Doctor_TrainingVideo';
 
+
+
+//Lab
+import LabHome from './components/Lab_Home';
+import LabClinicPatients from './components/Lab_ClinicPatients';
+import LabReports from './components/Lab_Reports';
+import LabUploadReports from './components/Lab_UploadReports';
+
+
 const App = () => {
   const navigate = useNavigate();
 
@@ -206,6 +215,17 @@ const App = () => {
             <Route exact path="/Staff_payment" element={<Staff_payment />}></Route>
             <Route exact path="/Staff_EditAppointment" element={<Staff_EditAppointment />}></Route>
             <Route exact path="/Staff_Monthly_Appointment" element={<Staff_Monthly_Appointment />}></Route>
+
+
+
+            <Route exact path="/LabHome" element={<LabHome />}></Route>
+            {/* <Route exact path="/LabNavbar" element={<LabNavbar />}></Route> */}
+            <Route exact path="/LabClinicPatients" element={<LabClinicPatients />}> </Route>
+            <Route exact path="/LabReports" element={<LabReports />}></Route>
+            <Route exact path="/LabUploadReports" element={<LabUploadReports />}></Route>
+
+
+
 
 
           </Routes>

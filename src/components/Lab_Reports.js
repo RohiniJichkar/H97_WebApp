@@ -7,14 +7,18 @@ import DoctorNavbar from './Doctor_Navbar';
 import SearchIcon from '@material-ui/icons/Search';
 import ArrowBackIcon from '@material-ui/icons/ArrowBack';
 import { DataGrid } from '@material-ui/data-grid';
-import { Patients_Data, Reports, getReportsByTitle } from '../Apis/Patient_Reports/index';
-import { PatientReportImages } from './Patient_Reports_Image_Comp/index';
-import { DeletePatientReports } from './Patient_Reports_Image_Comp/DeletePatient_Report';
+import { Patients_Data, Reports, getReportsByTitle } from '../Lab_Apis/Patient_Reports/index';
+import { PatientReportImages } from './Labs/Upload_Reports/Patient_Reports_Image/index';
+import { DeletePatientReports } from './Labs/Upload_Reports/DeletePatient_Reports';
 import DeleteIcon from '@material-ui/icons/Delete';
-import DeleteForeverOutlinedIcon from '@mui/icons-material/DeleteForeverOutlined';
+import LabNavbar from './Lab_Navbar';
 import axios from 'axios';
+import IosShareIcon from '@mui/icons-material/IosShare';
+import DeleteForeverOutlinedIcon from '@mui/icons-material/DeleteForeverOutlined';
+// import Get_Lab_Clinics from './Labs/Upload_Reports/Clinic_List';
 
-const getPatientSearchApi = 'http://13.233.217.107:8080/api/Web_SearchPatients';
+const getPatientSearchApi = 'http://13.233.217.107:8080/api/Web_SearchPatientsForLab';
+const getPatientDataApi = 'http://13.233.217.107:8080/api/Web_GetPatientsforLab';
 
 const drawerWidth = 240;
 
@@ -39,7 +43,7 @@ const columns = [
 ];
 
 
-export default function DoctorReports() {
+export default function LabReports() {
     const classes = useStyles();
     const theme = useTheme();
     const navigate = useNavigate();
@@ -52,17 +56,26 @@ export default function DoctorReports() {
     const [opendeletemodal, setopendeletemodal] = React.useState(false);
     const [deletemodalData, setdeletemodalData] = React.useState([]);
     const [patientsearch, setpatientsearch] = useState([]);
+    const [docData, setdocData] = useState([]);
+    const [openclinicmodal, setopenclinicmodal] = React.useState(false);
 
     const fetchPatientData = async () => {
-        const patientInfo = await Patients_Data();
-        setpatientData(patientInfo);
+        var data = await localStorage.getItem("userdata");
+        let parsed = JSON.parse(data);
+        let labid = parsed.UserProfile.LabId;
+        try {
+            const patientInfo = await axios.post(getPatientDataApi, { LabId: labid });
+            setpatientData(patientInfo?.data?.Patients);
+        } catch (e) {
+            console.log(e);
+        }
     }
 
     useEffect(() => {
         fetchPatientData();
     }, []);
 
-    
+
     const handleRowClick = async (id) => {
         const report = await Reports(id.UserId);
         setreportsData(report);
@@ -80,7 +93,7 @@ export default function DoctorReports() {
             alert('Please Select Patient');
             return;
         }
-        navigate('/DoctorUploadReports', {
+        navigate('/LabUploadReports', {
             state: { detail: puserid }
         });
     }
@@ -95,12 +108,19 @@ export default function DoctorReports() {
         setopendeletemodal(true);
     }
 
+    const getClinicModalData = async (item) => {
+        setdocData(item);
+        setopenclinicmodal(true);
+    }
+
+
     const searchPatient = async (patientsearch) => {
         var data = await localStorage.getItem("userdata");
         let parsed = JSON.parse(data);
-        let clinicid = parsed.ClinicId;
+        let labid = parsed.UserProfile.LabId;
+
         try {
-            const patientsInfo = await axios.post(getPatientSearchApi, { ClinicId: clinicid, Name: patientsearch });
+            const patientsInfo = await axios.post(getPatientSearchApi, { LabId: labid, Name: patientsearch });
             setpatientData(patientsInfo?.data?.Patients);
         }
         catch (e) {
@@ -109,12 +129,21 @@ export default function DoctorReports() {
     }
 
     const handleGoBack = () => {
-        navigate("/DoctorHome");
+        navigate("/LabHome");
     };
+    // const handleSubmit = async () => {
+    //     if (puserid == '') {
+    //         alert('Please Select Patient');
+    //         return;
+    //     }
+    //     navigate('/DoctorUploadReports', {
+    //         state: { detail: puserid }
+    //     });
+    // }
 
     return (
         <div className={classes.root} style={{ backgroundColor: '#ffffff' }}>
-            <DoctorNavbar />
+            <LabNavbar />
 
             {/* main grid */}
             <Grid container spacing={2}
@@ -220,6 +249,9 @@ export default function DoctorReports() {
                                                     <IconButton edge="start" size='small' aria-label="close" style={{ marginTop: '-15px', float: 'right', color: '#da3d3d' }}>
                                                         <DeleteForeverOutlinedIcon size='small' onClick={() => getDeleteModalData(item)} />
                                                     </IconButton>
+                                                    {/* <IconButton edge="start" size='small' aria-label="close" style={{ marginTop: '-15px', float: 'right', color: 'black', marginRight: 40 }}>
+                                                        <IosShareIcon size='small' onClick={() => getClinicModalData(item)} />
+                                                    </IconButton> */}
                                                     {item.ReportImage ? <img src={item.ReportImage} onClick={() => getImageData(item)} style={{ height: '120px', width: '100%', borderRadius: 10, cursor: 'pointer' }} onError={({ currentTarget }) => {
                                                         currentTarget.onerror = null; // prevents looping
                                                         currentTarget.src = "default-pdf-image.jpg";
@@ -279,6 +311,7 @@ export default function DoctorReports() {
 
                 {openmodal ? <PatientReportImages show={openmodal} data={modalData} handleClosemodal={() => setopenmodal(false)} /> : null}
                 {opendeletemodal ? <DeletePatientReports show={opendeletemodal} data={deletemodalData} handleCloseDeletemodal={() => setopendeletemodal(false)} /> : null}
+                {/* {openclinicmodal ? <Get_Lab_Clinics show={openclinicmodal} data={reportsData} handleclose={() => setopenclinicmodal(false)} /> : null} */}
 
             </Grid> {/* main grid */}
 

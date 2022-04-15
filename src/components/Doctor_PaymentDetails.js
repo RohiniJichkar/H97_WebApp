@@ -64,10 +64,10 @@ function DoctorPaymentDetails() {
     let clinicid = parsed.ClinicId;
     let doctorid = parsed.userid;
 
-    if (fees == '') {
-      alert('Please Enter Fees');
-      return;
-    }
+    // if (fees == '') {
+    //   alert('Please Enter Fees');
+    //   return;
+    // }
 
     const obj = {
       ClinicId: clinicid,
@@ -93,10 +93,10 @@ function DoctorPaymentDetails() {
 
 
   const handlePrintFinish = async () => {
-    if (fees == '') {
-      alert('Please Enter Fees');
-      return;
-    }
+    // if (fees == '') {
+    //   alert('Please Enter Fees');
+    //   return;
+    // }
 
     await handlePaymentDetails().then(data => {
       window.open(pdf, "PRINT", "height=400,width=600");
@@ -152,8 +152,8 @@ function DoctorPaymentDetails() {
               <Grid container>
                 <Grid item xs={12} sm={4} style={{ border: '1px solid lightgray', borderLeft: '0px', borderTop: '0px' }}>
                   <center>
-                  {details.ProfileImage ? <Avatar style={{ borderRadius: 50, height: 90, width: 90, marginTop: 20 }} src={details.ProfileImage} /> : details.Gender == 'Female' ? <Avatar style={{ borderRadius: 50, height: 90, width: 90, marginTop: 20,  }} src='femaleicon.png' /> :
-                                        <Avatar style={{ borderRadius: 50, height: 90, width: 90, marginTop: 20 }} src='maleicon.png' />}
+                    {details.ProfileImage ? <Avatar style={{ borderRadius: 50, height: 90, width: 90, marginTop: 20 }} src={details.ProfileImage} /> : details.Gender == 'Female' ? <Avatar style={{ borderRadius: 50, height: 90, width: 90, marginTop: 20, }} src='femaleicon.png' /> :
+                      <Avatar style={{ borderRadius: 50, height: 90, width: 90, marginTop: 20 }} src='maleicon.png' />}
                     {/* {details.ProfileImage ?
                       <Avatar style={{ borderRadius: 200, height: 90, width: 90, marginTop: 20 }} src={details.ProfileImage} /> :
                       <Avatar style={{ borderRadius: 200, height: 90, width: 90, marginTop: 20 }} />} */}

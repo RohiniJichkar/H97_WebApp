@@ -12,6 +12,7 @@ import { Patients_Data, Reports, getReportsByTitle } from '../../Apis/Staff/Pati
 import { PatientReportImages } from './components/Patient_Reports_Image_Comp/index';
 import { DeletePatientReports } from './components/Patient_Reports_Image_Comp/DeletePatient_Report';
 import DeleteIcon from '@material-ui/icons/Delete';
+import DeleteForeverOutlinedIcon from '@mui/icons-material/DeleteForeverOutlined';
 import axios from 'axios';
 
 const getPatientSearchApi = 'http://13.233.217.107:8080/api/Web_SearchPatients';
@@ -217,8 +218,8 @@ export default function Staff_Reports() {
                                         <Grid item sm={2} >
                                             <Paper elevation={3} className={classes.groupreports} >
                                                 <center>
-                                                    <IconButton edge="start" size='small' aria-label="close" style={{ marginTop: '-15px', float: 'right', color: 'gray' }}>
-                                                        <DeleteIcon size='small' onClick={() => getDeleteModalData(item)} />
+                                                    <IconButton edge="start" size='small' aria-label="close" style={{ marginTop: '-15px', float: 'right', color: '#da3d3d' }}>
+                                                        <DeleteForeverOutlinedIcon size='small' onClick={() => getDeleteModalData(item)} />
                                                     </IconButton>
                                                     {item.ReportImage ? <img src={item.ReportImage} onClick={() => getImageData(item)} style={{ height: '120px', width: '100%', borderRadius: 10, cursor: 'pointer' }} onError={({ currentTarget }) => {
                                                         currentTarget.onerror = null; // prevents looping

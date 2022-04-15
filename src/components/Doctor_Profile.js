@@ -7,6 +7,7 @@ import { Redirect } from 'react-router-dom';
 import DoctorNavbar from './Doctor_Navbar';
 import DateRangeIcon from '@material-ui/icons/DateRange';
 import LocalHospitalIcon from '@material-ui/icons/LocalHospital';
+import ArrowBackIcon from '@material-ui/icons/ArrowBack';
 import axios from 'axios';
 import ip from '../ipaddress/ip';
 import moment from 'moment';
@@ -50,6 +51,11 @@ export default function DoctorProfile() {
     }
 
 
+    const handleGoBack = () => {
+        navigate("/DoctorHome");
+    };
+
+
     return (
         <div className={classes.root} style={{ backgroundColor: '#ffffff' }}>
             <DoctorNavbar />
@@ -74,6 +80,7 @@ export default function DoctorProfile() {
                             color: '#2C7FB2',
 
                         }}>
+                        <Button style={{ marginLeft: '-20px', backgroundColor: 'white', color: '#2C7FB2', fontSize: '12px' }}> <ArrowBackIcon onClick={handleGoBack} />  </Button>
                         Profile
                     </Typography>
                 </Grid>
@@ -185,7 +192,7 @@ export default function DoctorProfile() {
                                                 fontSize: 14, color: '#707070', fontFamily: 'Poppins',
                                                 fontStyle: 'normal', fontWeight: 400, marginTop: 5
                                             }}>
-                                                {doctordata.DOB ? moment(doctordata.DOB).format("DD/MM/YYYY")  : 'Not Provided'}
+                                                {doctordata.DOB ? moment(doctordata.DOB).format("DD/MM/YYYY") : 'Not Provided'}
                                             </Typography>
                                         </Grid>
 
@@ -248,13 +255,13 @@ export default function DoctorProfile() {
                                         </Grid>
                                         <Grid item xs={6} >
                                             <center>
-                                                <LocalHospitalIcon style={{ fontSize: 40, color: '#2C7FB2',  marginTop: 10 }} />
+                                                <LocalHospitalIcon style={{ fontSize: 40, color: '#2C7FB2', marginTop: 10 }} />
                                                 <Typography variant="h6" noWrap={true} style={{
                                                     fontSize: 18,
                                                     fontFamily: 'Poppins',
                                                     fontStyle: 'normal',
                                                     color: '#707070',
-                                                    fontWeight: 600,                                                  
+                                                    fontWeight: 600,
 
                                                 }}>
                                                     {doctordata.ClinicName}
@@ -345,7 +352,7 @@ export default function DoctorProfile() {
                                                 marginLeft: 20,
                                                 marginRight: 20
                                             }}>
-                                                {doctordata.ClinicAddress ? `${doctordata.ClinicAddress}`  : 'Not Provided'} <br /> {doctordata.ClinicCity ? `${doctordata.ClinicCity}` : ''} {doctordata.ClinicState ? `, ${doctordata.ClinicState}` : ''} {doctordata.ClinicCountry != '' ?  `, ${doctordata.ClinicCountry}`: ''} {doctordata.ClinicPincode ? `, ${doctordata.ClinicPincode}` : ''}
+                                                {doctordata.ClinicAddress ? `${doctordata.ClinicAddress}` : 'Not Provided'} <br /> {doctordata.ClinicCity ? `${doctordata.ClinicCity}` : ''} {doctordata.ClinicState ? `, ${doctordata.ClinicState}` : ''} {doctordata.ClinicCountry != '' ? `, ${doctordata.ClinicCountry}` : ''} {doctordata.ClinicPincode ? `, ${doctordata.ClinicPincode}` : ''}
                                             </Typography>
                                         </center>
                                     </Grid>

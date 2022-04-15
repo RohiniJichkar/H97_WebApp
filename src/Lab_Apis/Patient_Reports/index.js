@@ -1,6 +1,6 @@
 import React from 'react';
 import axios from 'axios';
-import ip from '../../../ipaddress/ip';
+import ip from '../../ipaddress/ip';
 
 
 export const Patients_Data = async () => {
@@ -15,10 +15,9 @@ export const Patients_Data = async () => {
 export const Reports = async (userid) => {
     var data = localStorage.getItem("userdata");
     let parsed = JSON.parse(data);
-    let clinicid = parsed.ClinicId;
-    let doctorid = parsed.userid;
+    let labid = parsed.UserProfile.LabId;
     try {
-        const reports = await axios.post(ip + 'Web_GetGroupPatientReportsbyTitleForStaff', { UserId: userid, ClinicId: clinicid });
+        const reports = await axios.post(ip + 'Web_GetGroupPatientReportsbyTitleForLab', { UserId: userid, ClinicId: labid });
         return reports?.data?.PatientReports;
     } catch (error) {
         return (error.response.data.message);
@@ -28,7 +27,7 @@ export const Reports = async (userid) => {
 
 export const Upload_Reports = async (obj) => {
     try {
-        const addReports = await axios.post(ip + 'Web_AddPatientReports', { reportsdata: obj })
+        const addReports = await axios.post(ip + 'Web_ShareSingleReport', obj)
         return JSON.stringify(addReports?.data);
     }
     catch (error) {
@@ -40,15 +39,16 @@ export const Upload_Reports = async (obj) => {
 export const getReportsByTitle = async (userid, reportitle) => {
     var data = localStorage.getItem("userdata");
     let parsed = JSON.parse(data);
-    let clinicid = parsed.ClinicId;
+    let labid = parsed.UserProfile.LabId;
     let doctorid = parsed.userid;
+
     let body = {
         UserId: userid,
-        ReportTitle: reportitle,
-        ClinicId: clinicid
+        ClinicId: labid,
+        ReportTitle: reportitle
     }
     try {
-        const getPatientReports = await axios.post(ip + 'Web_GetPatientReportsForStaff', body);
+        const getPatientReports = await axios.post(ip + 'Web_GetPatientReportsForLab', body);
         return getPatientReports?.data?.PatientReports
     } catch (error) {
         return (error.response.data.message);
@@ -59,10 +59,10 @@ export const getReportsByTitle = async (userid, reportitle) => {
 export const DeleteReportsByTitle = async (userid, reporttitle) => {
     var data = localStorage.getItem("userdata");
     let parsed = JSON.parse(data);
-    let clinicid = parsed.ClinicId;
+    let labid = parsed.UserProfile.LabId;
     let doctorid = parsed.userid;
     try {
-        const deletereports = await axios.delete(ip + 'Web_DeletePatientReportsByTitleForStaff', { data: { UserId: userid, ReportTitle: reporttitle, ClinicId: clinicid } });
+        const deletereports = await axios.delete(ip + 'Web_DeletePatientReportsByTitleForLab', { data: { UserId: userid, ReportTitle: reporttitle, ClinicId: labid } });
         return JSON.stringify(deletereports?.data);
     } catch (error) {
         return (error.response.data.message);
@@ -73,8 +73,16 @@ export const DeleteReportsByTitle = async (userid, reporttitle) => {
 export const DeleteReportsById = async (id) => {
     try {
         const deletereports = await axios.delete(ip + 'Web_DeletePatientReportById', { data: { id: id } });
+        console.log("Delete Reports : ", deletereports?.data);
         return JSON.stringify(deletereports?.data);
     } catch (error) {
         return (error.response.data.message);
     }
+}
+
+
+
+export const Doctor_Data = async () => {
+    const doctorInfo = await axios.post(ip + 'GetDoctorsListForWeb');
+    return doctorInfo?.data?.Data;
 }

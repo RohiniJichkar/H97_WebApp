@@ -6,6 +6,9 @@ import CloseIcon from '@material-ui/icons/Close';
 import { getReportsByTitle, DeleteReportsByTitle, DeleteReportsById } from '../../Apis/Patient_Reports/index';
 import { transparent } from 'material-ui/styles/colors';
 import DeleteIcon from '@material-ui/icons/Delete';
+import IosShareIcon from '@mui/icons-material/IosShare';
+import Get_Lab_Clinics from '../Labs/Upload_Reports/Clinic_List';
+import DeleteForeverOutlinedIcon from '@mui/icons-material/DeleteForeverOutlined';
 
 const drawerWidth = 240;
 
@@ -15,6 +18,8 @@ export const PatientReportImages = ({ show, data, handleClosemodal }) => {
     const [Data, setData] = useState([]);
     const [maxWidth, setMaxWidth] = useState('sm');
     const [fullWidth, setFullWidth] = React.useState(true);
+    const [docData, setdocData] = useState([]);
+    const [openclinicmodal, setopenclinicmodal] = React.useState(false);
 
     useEffect(() => {
         FetchData();
@@ -34,6 +39,12 @@ export const PatientReportImages = ({ show, data, handleClosemodal }) => {
             // window.location.reload();
         }
     }
+
+    const getClinicModalData = async (item) => {
+        setdocData(item);
+        setopenclinicmodal(true);
+    }
+
 
     return (
         <>
@@ -79,9 +90,12 @@ export const PatientReportImages = ({ show, data, handleClosemodal }) => {
                                                 </div>
                                                 <Paper spacing={2} elevation={2} className={classes.groupreports} >
                                                     <center>
-                                                        <IconButton edge="start" size='small' aria-label="close" style={{ marginTop: '-15px', float: 'right', color: 'gray' }}>
-                                                            <DeleteIcon size='small' onClick={() => DeleteReport(item.id)} />
+                                                        <IconButton edge="start" size='small' aria-label="close" style={{ marginTop: '-15px', float: 'right', color: '#da3d3d' }}>
+                                                            <DeleteForeverOutlinedIcon size='small' onClick={() => DeleteReport(item.id)} />
                                                         </IconButton>
+                                                        {/* <IconButton edge="start" size='small' aria-label="close" style={{ marginTop: '-15px', float: 'right', color: 'black', marginRight: 30 }}>
+                                                            <IosShareIcon size='small' onClick={() => getClinicModalData(item)} />
+                                                        </IconButton> */}
                                                         {item.ReportImage ?
                                                             <img onClick={() => window.open(item.ReportImage, '_blank')} style={{ height: 120, width: '100%' }} src={item.ReportImage} onError={({ currentTarget }) => {
                                                                 currentTarget.onerror = null; // prevents looping
@@ -124,6 +138,7 @@ export const PatientReportImages = ({ show, data, handleClosemodal }) => {
                                 </Grid>
                             </Grid>
                         </>}
+                        {openclinicmodal ? <Get_Lab_Clinics show={openclinicmodal} data={data} handleclose={() => setopenclinicmodal(false)} /> : null}
 
                 </DialogContent>
             </Dialog>

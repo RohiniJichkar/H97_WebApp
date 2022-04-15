@@ -2,11 +2,12 @@ import React, { useState, useEffect } from 'react';
 import clsx from 'clsx';
 import { makeStyles, useTheme, alpha } from '@material-ui/core/styles';
 import { useNavigate } from 'react-router-dom';
-import { Container, TextField, Avatar, Typography, IconButton, Button, Grid, Paper, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle } from "@material-ui/core";
+import { Container, TextField, Avatar, Typography, IconButton, Button, Grid, Paper } from "@material-ui/core";
 import { Redirect } from 'react-router-dom';
 import DoctorNavbar from './Staff_Navbar';
 import DateRangeIcon from '@material-ui/icons/DateRange';
 import LocalHospitalIcon from '@material-ui/icons/LocalHospital';
+import ArrowBackIcon from '@material-ui/icons/ArrowBack';
 import axios from 'axios';
 import ip from '../../ipaddress/ip';
 import { Change_Password } from './components/Profile/Change_Password/index';
@@ -56,6 +57,10 @@ export default function Staff_Profile() {
         }
     }
 
+    const handleGoBack = () => {
+        navigate("/Staff_Home");
+    };
+
 
     return (
         <div className={classes.root} style={{ backgroundColor: '#ffffff' }}>
@@ -81,6 +86,7 @@ export default function Staff_Profile() {
                             color: '#2C7FB2',
 
                         }}>
+                        <Button style={{ marginLeft: '-20px', backgroundColor: 'white', color: '#2C7FB2', fontSize: '12px' }}> <ArrowBackIcon onClick={handleGoBack} />  </Button>
                         Profile
                     </Typography>
                 </Grid>

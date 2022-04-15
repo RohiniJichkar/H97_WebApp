@@ -13,8 +13,11 @@ export const Patients_Data = async () => {
 
 
 export const Reports = async (userid) => {
+    var data = localStorage.getItem("userdata");
+    let parsed = JSON.parse(data);
+    let doctorid = parsed.userid;
     try {
-        const reports = await axios.post(ip + 'Web_GetGroupPatientReportsbyTitle', { UserId: userid });
+        const reports = await axios.post(ip + 'Web_GetGroupPatientReportsbyTitle', { UserId: userid, DoctorId: doctorid });
         return reports?.data?.PatientReports;
     } catch (error) {
         return (error.response.data.message);
@@ -34,8 +37,14 @@ export const Upload_Reports = async (obj) => {
 
 
 export const getReportsByTitle = async (userid, reportitle) => {
+    var data = localStorage.getItem("userdata");
+    let parsed = JSON.parse(data);
+    let clinicid = parsed.ClinicId;
+    let doctorid = parsed.userid;
+
     let body = {
         UserId: userid,
+        DoctorId: doctorid,
         ReportTitle: reportitle
     }
     try {
@@ -48,8 +57,12 @@ export const getReportsByTitle = async (userid, reportitle) => {
 
 
 export const DeleteReportsByTitle = async (userid, reporttitle) => {
+    var data = localStorage.getItem("userdata");
+    let parsed = JSON.parse(data);
+    let clinicid = parsed.ClinicId;
+    let doctorid = parsed.userid;
     try {
-        const deletereports = await axios.delete(ip + 'Web_DeletePatientReportsByTitle', { data: { UserId: userid, ReportTitle: reporttitle } });
+        const deletereports = await axios.delete(ip + 'Web_DeletePatientReportsByTitle', { data: { UserId: userid, ReportTitle: reporttitle, DoctorId: doctorid } });
         return JSON.stringify(deletereports?.data);
     } catch (error) {
         return (error.response.data.message);

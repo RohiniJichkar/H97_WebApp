@@ -4,9 +4,10 @@ import { makeStyles, useTheme } from '@material-ui/core/styles';
 import { useNavigate } from 'react-router-dom';
 import { Typography, IconButton, Button, Grid, Paper, Divider, List, ListItem, ListItemIcon, ListItemText } from "@material-ui/core";
 import DoctorNavbar from './Doctor_Navbar';
-import { Get_Plans } from '../Apis/Settings/index';
+import { Get_Plans, Renew_Subscription } from '../Apis/Settings/index';
 import ArrowBackIcon from '@material-ui/icons/ArrowBack';
 import CheckIcon from '@material-ui/icons/Check';
+
 
 const drawerWidth = 240;
 
@@ -15,8 +16,7 @@ export default function DoctorRenewSubscription() {
     const theme = useTheme();
     const navigate = useNavigate();
     const [open, setOpen] = React.useState(false);
-    const [plansData, setplansData] = useState({});
-
+    const [plansData, setplansData] = useState([]);
 
     const fetchPlanData = async () => {
         try {
@@ -26,6 +26,27 @@ export default function DoctorRenewSubscription() {
             console.log(e);
         }
     }
+
+
+    const renewSubscription = async (title, cost) => {
+        var data = await localStorage.getItem("userdata");
+        let parsed = JSON.parse(data);
+        let clinicid = parsed.ClinicId;
+
+        const obj = {
+            ClinicId: clinicid,
+            Title: title,
+            RenewAmount: cost
+        }
+
+        try {
+            const renew = await Renew_Subscription(obj);
+            alert('Renew mail send successfully');
+        } catch (error) {
+            console.log(error);
+        }
+    }
+
 
     useEffect(() => {
         fetchPlanData();
@@ -63,246 +84,123 @@ export default function DoctorRenewSubscription() {
                         Subscription Plans
                     </Typography>
                 </Grid>
-                <Grid xs={12} style={{ marginTop: -15 }}>
-                    <Paper elevation={6} className={classes.paper} style={{ marginLeft: 10, marginRight: 25, marginBottom: 10, borderRadius: 20, marginTop: 20 }}>
+                <Grid xs={12} style={{ marginTop: -20 }}>
+                    <Paper elevation={6} className={classes.paper} style={{ marginLeft: 10, marginRight: 25, marginBottom: 10, borderRadius: 20, marginTop: 20, paddingRight: 25 }}>
                         <Grid container style={{ marginTop: 10 }}>
-                            <Grid spacing={2} item xs={4}>
-                                <Paper elevation={4} className={classes.paper} style={{ marginLeft: 30, borderRadius: 20, marginTop: 20, marginBottom: 10 }}>
-                                    <Typography style={{
-                                        fontFamily: 'Poppins',
-                                        fontStyle: 'normal',
-                                        fontWeight: 600,
-                                        textAlign: 'center',
-                                        color: '#fff',
-                                        backgroundColor: '#2C7FB2',
-                                        fontSize: 18,
-                                        textDecorationLine: 'underline',
-                                        textUnderlineOffset: '1px',
-                                        textDecorationThickness: '1px',
-                                        paddingTop: 10,
-                                        paddingBottom: 10
-                                    }}>
-                                        Basic
-                                    </Typography>
 
-                                    <Typography style={{
-                                        fontFamily: 'Poppins',
-                                        fontStyle: 'normal',
-                                        fontWeight: 600,
-                                        fontSize: 35,
-                                        textAlign: 'center',
-                                        color: '#fff',
-                                        backgroundColor: '#2C7FB2',
+                            {plansData.length != 0 ?
 
-                                    }}>
-                                        Rs. 999 /-
-                                    </Typography>
-                                    <Typography style={{
-                                        fontFamily: 'Poppins',
-                                        fontStyle: 'normal',
-                                        fontWeight: 600,
-                                        fontSize: 14,
-                                        textAlign: 'center',
-                                        color: '#fff',
-                                        backgroundColor: '#2C7FB2',
-                                        paddingBottom: 10
-                                    }}>
-                                        (1 Month)
-                                    </Typography>
-                                    <List>
-                                        <ListItem >
-                                            <ListItemIcon style={{ color: '#2C7FB2' }}>
-                                                <CheckIcon />
-                                            </ListItemIcon>
-                                            <ListItemText primary="2 Doctors" />
-                                        </ListItem>
-                                        <ListItem>
-                                            <ListItemIcon style={{ color: '#2C7FB2' }}>
-                                                <CheckIcon />
-                                            </ListItemIcon>
-                                            <ListItemText primary="3 Staff" />
-                                        </ListItem>
-                                        <ListItem>
-                                            <ListItemIcon style={{ color: '#2C7FB2' }}>
-                                                <CheckIcon />
-                                            </ListItemIcon>
-                                            <ListItemText primary="5 Services" />
-                                        </ListItem>
-                                        <ListItem>
-                                            <ListItemIcon style={{ color: '#2C7FB2' }}>
-                                                <CheckIcon />
-                                            </ListItemIcon>
-                                            <ListItemText primary="-" />
-                                        </ListItem>
-                                    </List>
-                                    <Grid xs={12} style={{ borderTop: '1px solid lightgray' }}>
-                                        <center>
-                                            <Button className={classes.btnregister}>Renew Subscription</Button>
+                                <Grid container style={{ marginTop: 10 }}>
+                                    {plansData.map((item) => {
+                                        return (
+                                            <Grid spacing={2} item xs={4}>
+                                                <Paper elevation={4} className={classes.paper} style={{ marginLeft: 30, borderRadius: 20, marginTop: 20, marginBottom: 10 }}>
+                                                    <Typography style={{
+                                                        fontFamily: 'Poppins',
+                                                        fontStyle: 'normal',
+                                                        fontWeight: 600,
+                                                        textAlign: 'center',
+                                                        color: '#fff',
+                                                        backgroundColor: '#2C7FB2',
+                                                        fontSize: 18,
+                                                        textDecorationLine: 'underline',
+                                                        textUnderlineOffset: '1px',
+                                                        textDecorationThickness: '1px',
+                                                        paddingTop: 10,
+                                                        paddingBottom: 10
+                                                    }}>
+                                                        {item.Title}
+                                                    </Typography>
 
-                                        </center>
-                                    </Grid>
-                                </Paper>
-                            </Grid>
-                            <Grid spacing={2} item xs={4}>
-                                <Paper elevation={4} className={classes.paper} style={{ marginLeft: 15, marginRight: 15, borderRadius: 20, marginTop: 20, marginBottom: 10 }}>
-                                    <Typography style={{
-                                        fontFamily: 'Poppins',
-                                        fontStyle: 'normal',
-                                        fontWeight: 600,
-                                        textAlign: 'center',
-                                        color: '#fff',
-                                        backgroundColor: '#2C7FB2',
-                                        fontSize: 18,
-                                        textDecorationLine: 'underline',
-                                        textUnderlineOffset: '1px',
-                                        textDecorationThickness: '1px',
-                                        paddingTop: 10,
-                                        paddingBottom: 10
-                                    }}>
-                                        Standard
-                                    </Typography>
+                                                    <Typography style={{
+                                                        fontFamily: 'Poppins',
+                                                        fontStyle: 'normal',
+                                                        fontWeight: 600,
+                                                        fontSize: 35,
+                                                        textAlign: 'center',
+                                                        color: '#fff',
+                                                        backgroundColor: '#2C7FB2',
 
-                                    <Typography style={{
-                                        fontFamily: 'Poppins',
-                                        fontStyle: 'normal',
-                                        fontWeight: 600,
-                                        fontSize: 35,
-                                        textAlign: 'center',
-                                        color: '#fff',
-                                        backgroundColor: '#2C7FB2',
+                                                    }}>
+                                                        Rs. {item.Cost} /-
+                                                    </Typography>
+                                                    <Typography style={{
+                                                        fontFamily: 'Poppins',
+                                                        fontStyle: 'normal',
+                                                        fontWeight: 600,
+                                                        fontSize: 14,
+                                                        textAlign: 'center',
+                                                        color: '#fff',
+                                                        backgroundColor: '#2C7FB2',
+                                                        paddingBottom: 10
+                                                    }}>
+                                                        ({item.Days} Days)
+                                                    </Typography>
+                                                    <List>
+                                                        <ListItem >
+                                                            <ListItemIcon style={{ color: '#2C7FB2' }}>
+                                                                <CheckIcon />
+                                                            </ListItemIcon>
+                                                            <ListItemText primary={<Typography type="body2" style={{
+                                                                fontFamily: 'Poppins',
+                                                                fontStyle: 'normal',
+                                                                fontWeight: 600,
+                                                                fontSize: 15,
+                                                            }}>{item.Doctors} Doctors</Typography>} />
+                                                        </ListItem>
+                                                        <ListItem>
+                                                            <ListItemIcon style={{ color: '#2C7FB2' }}>
+                                                                <CheckIcon />
+                                                            </ListItemIcon>
+                                                            <ListItemText primary={<Typography type="body2" style={{
+                                                                fontFamily: 'Poppins',
+                                                                fontStyle: 'normal',
+                                                                fontWeight: 600,
+                                                                fontSize: 15,
+                                                            }}>{item.Staff} Staffs</Typography>} />
+                                                        </ListItem>
+                                                        <ListItem>
+                                                            <ListItemIcon style={{ color: '#2C7FB2' }}>
+                                                                <CheckIcon />
+                                                            </ListItemIcon>
+                                                            <ListItemText primary={<Typography type="body2" style={{
+                                                                fontFamily: 'Poppins',
+                                                                fontStyle: 'normal',
+                                                                fontWeight: 600,
+                                                                fontSize: 15,
+                                                            }}>{item.Services} Services</Typography>} />
+                                                        </ListItem>
+                                                        <ListItem>
+                                                            <ListItemIcon style={{ color: '#2C7FB2' }}>
+                                                                <CheckIcon />
+                                                            </ListItemIcon>
+                                                            <ListItemText primary={<Typography type="body2" style={{
+                                                                fontFamily: 'Poppins',
+                                                                fontStyle: 'normal',
+                                                                fontWeight: 600,
+                                                                fontSize: 15,
+                                                            }}>{item.Websites} Page Website</Typography>} />
+                                                        </ListItem>
+                                                    </List>
+                                                    <Grid xs={12} style={{ borderTop: '1px solid lightgray' }}>
+                                                        <center>
+                                                            <Button className={classes.btnregister} onClick={() => renewSubscription(item.Title, item.Cost)}>Renew Subscription</Button>
+                                                        </center>
+                                                    </Grid>
 
-                                    }}>
-                                        Rs. 1499 /-
-                                    </Typography>
-                                    <Typography style={{
-                                        fontFamily: 'Poppins',
-                                        fontStyle: 'normal',
-                                        fontWeight: 600,
-                                        fontSize: 14,
-                                        textAlign: 'center',
-                                        color: '#fff',
-                                        backgroundColor: '#2C7FB2',
-                                        paddingBottom: 10
-                                    }}>
-                                        (6 Month)
-                                    </Typography>
-                                    <List>
-                                        <ListItem >
-                                            <ListItemIcon style={{ color: '#2C7FB2' }}>
-                                                <CheckIcon />
-                                            </ListItemIcon>
-                                            <ListItemText primary="5 Doctors" />
-                                        </ListItem>
-                                        <ListItem>
-                                            <ListItemIcon style={{ color: '#2C7FB2' }}>
-                                                <CheckIcon />
-                                            </ListItemIcon>
-                                            <ListItemText primary="5 Staff" />
-                                        </ListItem>
-                                        <ListItem>
-                                            <ListItemIcon style={{ color: '#2C7FB2' }}>
-                                                <CheckIcon />
-                                            </ListItemIcon>
-                                            <ListItemText primary="10 Services" />
-                                        </ListItem>
-                                        <ListItem>
-                                            <ListItemIcon style={{ color: '#2C7FB2' }}>
-                                                <CheckIcon />
-                                            </ListItemIcon>
-                                            <ListItemText primary="1 Pager Website" />
-                                        </ListItem>
-                                       
-                                    </List>
-                                    <Grid xs={12} style={{ borderTop: '1px solid lightgray' }}>
-                                        <center>
-                                            <Button className={classes.btnregister}>Renew Subscription</Button>
-                                        </center>
-                                    </Grid>
-                                </Paper>
-                            </Grid>
+                                                </Paper>
+                                            </Grid>
+                                        );
+                                    })}
 
-                            <Grid item xs={4}>
-                                <Paper elevation={4} className={classes.paper} style={{ marginRight: 30, borderRadius: 20, marginTop: 20, marginBottom: 10 }}>
-                                    <Typography style={{
-                                        fontFamily: 'Poppins',
-                                        fontStyle: 'normal',
-                                        fontWeight: 600,
-                                        textAlign: 'center',
-                                        color: '#fff',
-                                        backgroundColor: '#2C7FB2',
-                                        fontSize: 18,
-                                        textDecorationLine: 'underline',
-                                        textUnderlineOffset: '1px',
-                                        textDecorationThickness: '1px',
-                                        paddingTop: 10,
-                                        paddingBottom: 10
-                                    }}>
-                                        Premium
-                                    </Typography>
-
-                                    <Typography style={{
-                                        fontFamily: 'Poppins',
-                                        fontStyle: 'normal',
-                                        fontWeight: 600,
-                                        fontSize: 35,
-                                        textAlign: 'center',
-                                        color: '#fff',
-                                        backgroundColor: '#2C7FB2',
-
-                                    }}>
-                                        Rs. 1999 /-
-                                    </Typography>
-                                    <Typography style={{
-                                        fontFamily: 'Poppins',
-                                        fontStyle: 'normal',
-                                        fontWeight: 600,
-                                        fontSize: 14,
-                                        textAlign: 'center',
-                                        color: '#fff',
-                                        backgroundColor: '#2C7FB2',
-                                        paddingBottom: 10
-                                    }}>
-                                        (1 Year)
-                                    </Typography>
-                                    <List>
-                                        <ListItem >
-                                            <ListItemIcon style={{ color: '#2C7FB2' }}>
-                                                <CheckIcon />
-                                            </ListItemIcon>
-                                            <ListItemText primary="10 Doctors" />
-                                        </ListItem>
-                                        <ListItem>
-                                            <ListItemIcon style={{ color: '#2C7FB2' }}>
-                                                <CheckIcon />
-                                            </ListItemIcon>
-                                            <ListItemText primary="10 Staff" />
-                                        </ListItem>
-                                        <ListItem>
-                                            <ListItemIcon style={{ color: '#2C7FB2' }}>
-                                                <CheckIcon />
-                                            </ListItemIcon>
-                                            <ListItemText primary="20 Services" />
-                                        </ListItem>
-                                        <ListItem>
-                                            <ListItemIcon style={{ color: '#2C7FB2' }}>
-                                                <CheckIcon />
-                                            </ListItemIcon>
-                                            <ListItemText primary="10 Pager Website" />
-                                        </ListItem>
-                                    </List>
-                                    <Grid xs={12} style={{ borderTop: '1px solid lightgray' }}>
-                                        <center>
-                                            <Button className={classes.btnregister}>Renew Subscription</Button>
-
-                                        </center>
-                                    </Grid>
-                                </Paper>
-                            </Grid>
+                                </Grid>
+                                : null
+                            }
 
                         </Grid>
- <Typography style={{textAlign: 'center', fontSize: 13}}>
-     Note: You will get Health97-OPD Mobile Application with Every Package
- </Typography>
+                        <Typography style={{ textAlign: 'center', fontSize: 13 }}>
+                            Note: You will get Health97-OPD Mobile Application with Every Package
+                        </Typography>
                     </Paper>
 
 

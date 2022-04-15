@@ -72,11 +72,22 @@ export default function DoctorAdvertisements() {
 
         try {
             const addAdvertisements = await axios.post(ip + 'Web_AddTVAdvertisement', formdata, { headers: { "Content-Type": "multipart/form-data" } })
-            if (addAdvertisements) {
-                alert('Advertisement Added Successfully');
+            let stringify = JSON.stringify(addAdvertisements?.data);
+            // console.log(stringify)
+            let parse = JSON.parse(stringify);
+            // console.log(parse.success)
+            if (parse.success === "200") {
+                alert(parse.message);
                 setopenmodal(false);
-                window.location.reload();
+                window.location.reload()
+            } else {
+                alert(parse.message);
             }
+            // if (addAdvertisements) {
+            //     alert('Advertisement Added Successfully');
+            //     setopenmodal(false);
+            //     window.location.reload();
+            // }
         } catch (e) {
             console.log(e);
         }

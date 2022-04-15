@@ -21,9 +21,9 @@ import { createTheme, ThemeProvider } from '@material-ui/core/styles';
 const defaultMaterialTheme = createTheme({
     palette: {
         primary: {
-          main: '#1769aa',
-        },     
-      },
+            main: '#1769aa',
+        },
+    },
 });
 
 const drawerWidth = 240;
@@ -314,7 +314,7 @@ export default function DoctorHomeVisitHistory() {
                                             name: 'doctor',
                                             id: 'outlined-doctor-native-simple',
                                         }}
-                                        style={{ width: '120%', fontSize: 14, marginTop: -3 }}
+                                        style={{ width: '150%', fontSize: 14, marginTop: -3 }}
                                     >
                                         <option aria-label="None" value="" >Select Doctor</option>
                                         {doctorData.map(v => (<option value={v.UserId}>Dr. {v.FirstName} {v.LastName}</option>))}
@@ -325,24 +325,9 @@ export default function DoctorHomeVisitHistory() {
                                     {doctorData.map(v => (<option value={v.UserId}>Dr. {v.FirstName} {v.LastName}</option>))}
                                 </select> */}
                             </div>
+
                             <div className='col-1'>
-                                <Button
-                                    variant="contained"
-                                    color="#2C7FB2"
-                                    style={{
-                                        backgroundColor: '#2C7FB2',
-                                        color: '#fff',
-                                        fontFamily: 'Poppins',
-                                        height: 30,
-                                        marginLeft: 50
-                                    }}
-                                    onClick={() => Show_appointmentsbydate(startdate, endDate, doctor)}
-                                >
-                                    Show
-                                </Button>
-                            </div>
-                            <div className='col-1'>
-                                <FormControl variant="outlined" size="small" className={classes.formControl} style={{ width: '65%', marginLeft: '20px' }} >
+                                <FormControl variant="outlined" size="small" className={classes.formControl} style={{ width: '65%', marginLeft: 60, }} >
                                     <Select
                                         className={classes.textFieldForm}
                                         size='large'
@@ -353,7 +338,7 @@ export default function DoctorHomeVisitHistory() {
                                             name: 'doctor',
                                             id: 'outlined-doctor-native-simple',
                                         }}
-                                        style={{ width: '115%', fontSize: 14, marginTop: -3, marginLeft: 15 }}
+                                        style={{ width: '200%', fontSize: 14, marginTop: -3, marginLeft: 15 }}
                                     >
                                         <option value="5">5</option>
                                         <option value="10">10</option>
@@ -375,6 +360,22 @@ export default function DoctorHomeVisitHistory() {
                                     <option value="35">35</option>
                                     <option value="40">40</option>
                                 </select> */}
+                            </div>
+                            <div className='col-1'>
+                                <Button
+                                    variant="contained"
+                                    color="#2C7FB2"
+                                    style={{
+                                        backgroundColor: '#2C7FB2',
+                                        color: '#fff',
+                                        fontFamily: 'Poppins',
+                                        height: 30,
+                                        marginLeft: 200
+                                    }}
+                                    onClick={() => Show_appointmentsbydate(startdate, endDate, doctor)}
+                                >
+                                    Show
+                                </Button>
                             </div>
                         </div>
 

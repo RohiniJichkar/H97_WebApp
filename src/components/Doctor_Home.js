@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import clsx from 'clsx';
 import { makeStyles, useTheme } from '@material-ui/core/styles';
 import { useNavigate } from 'react-router-dom';
@@ -6,6 +6,11 @@ import { Typography, Grid, Paper } from "@material-ui/core";
 import { Redirect } from 'react-router-dom';
 import DoctorNavbar from './Doctor_Navbar';
 import { BroadcastMessage } from './Broadcast_Messages/index';
+import axios from 'axios';
+import moment from 'moment';
+
+const getSubscription = 'http://13.233.217.107:8080/api/Web_SubscriptionEndDate';
+
 
 const drawerWidth = 240;
 
@@ -15,6 +20,7 @@ export default function DoctorHome() {
     const navigate = useNavigate();
     const [open, setOpen] = React.useState(false);
     const [openmodal, setOpenmodal] = React.useState(false);
+    const [subscriptionenddate, setsubscriptionenddate] = React.useState([]);
 
     const handleDashboard = () => {
         navigate("/DoctorDashboard");
@@ -72,6 +78,23 @@ export default function DoctorHome() {
         navigate("/DoctorClinicServices");
     };
 
+    const fetchSubscriptioEndDate = async () => {
+        var data = await localStorage.getItem("userdata");
+        let parsed = JSON.parse(data);
+        let clinicid = parsed.ClinicId;
+        try {
+            const subscription = await axios.post(getSubscription, { ClinicId: clinicid });
+            setsubscriptionenddate(subscription?.data?.Subscription);
+        } catch (e) {
+            console.log(e);
+        }
+    }
+
+    console.log(subscriptionenddate);
+    useEffect(() => {
+        fetchSubscriptioEndDate();
+    }, [])
+
     return (
         <div className={classes.root} style={{ backgroundColor: '#ffffff' }}>
             <DoctorNavbar />
@@ -100,7 +123,25 @@ export default function DoctorHome() {
 
                         }}>
                         Home
+
                     </Typography>
+                    {subscriptionenddate[0] ? subscriptionenddate[0].Subexpire == 1 ?
+                        <Typography variant="h5" noWrap={true}
+                            style={{
+                                fontFamily: 'Poppins',
+                                fontStyle: 'normal',
+                                fontWeight: 600,
+                                textAlign: 'center',
+                                color: '#2C7FB2',
+                                fontSize: 14,
+                                marginTop: -25
+                            }}>
+                            Your Subscription will expired on {moment(subscriptionenddate[0].SubscriptionEndDate).format("DD/MM/YYYY")}
+                        </Typography> :
+                        null
+                        : null
+                    }
+
                 </Grid>
 
                 <Grid item xs={12} sm={2} onClick={handleDashboard} >
@@ -127,7 +168,7 @@ export default function DoctorHome() {
                 </Grid>
 
                 <Grid item xs={12} sm={2} onClick={handleTodaysAppointment} >
-                    <Paper elevation={6} className={classes.paper} >
+                    <Paper elevation={6} className={classes.paper}>
                         <center>
                             <img src="today's Appointment-01.png" style={{ height: 60, width: 60 }}></img>
                             <Typography variant="h5" noWrap={true}
@@ -150,7 +191,7 @@ export default function DoctorHome() {
                 </Grid>
 
                 <Grid item xs={12} sm={2} onClick={() => window.open('/Doctor_TV_TodaysAppointments', '_blank')} >
-                    <Paper elevation={6} className={classes.paper} >
+                    <Paper elevation={6} className={classes.paper}>
                         <center>
                             <img src="todays appointment for tv-01.png" style={{ height: 60, width: 60 }}></img>
                             <Typography variant="h5" noWrap={true}
@@ -219,7 +260,7 @@ export default function DoctorHome() {
                 </Grid>
 
                 <Grid item xs={12} sm={2} onClick={handleUploadReports}>
-                    <Paper elevation={6} className={classes.paper} >
+                    <Paper elevation={6} className={classes.paper}>
                         <center>
                             <img src="reports-01.png" style={{ height: 60, width: 60 }}></img>
                             <Typography variant="h5" noWrap={true}

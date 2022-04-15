@@ -162,6 +162,8 @@ export default function Staff_Book_Appointment() {
         let systemTime = currentTime.toTimeString();
         let tdate = currentTime.toISOString().split('T')[0];
 
+        let AppDate = appDate.toISOString().split('T')[0];
+
         if (patientDetails == '') {
             alert("Please select patient from list")
             return;
@@ -205,7 +207,7 @@ export default function Staff_Book_Appointment() {
             LastName: patientDetails.LastName,
             DoctorId: doctor,
             ClinicId: clinicid,
-            AppointmentDate: appDate,
+            AppointmentDate: AppDate,
             BookedDate: date,
             AppointmentTime: timeselected,
             AppointmentType: apptypeselected,
