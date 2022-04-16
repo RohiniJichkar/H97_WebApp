@@ -76,28 +76,28 @@ const ClinicsForMultipleReportsSharing = ({ show, data, handleclose }) => {
     }
 
     const handleUploadReports = async () => {
-        const date = new Date();
-        const now = date.toISOString().split('T')[0];
+        // const date = new Date();
+        // const now = date.toISOString().split('T')[0];
 
-        // for (var i = 0; i < data.length; i++) {
+        // // for (var i = 0; i < data.length; i++) {
 
-        //     const obj = {
-        //         UserId: data[i].UserId,
-        //         DoctorId: doctorid,
-        //         ClinicId: clinicid,
-        //         ReportImage: data[i].ReportImage,
-        //         ReportTitle: data[i].ReportTitle,
-        //         Date: now
-        //     }
+        // //     const obj = {
+        // //         UserId: data[i].UserId,
+        // //         DoctorId: doctorid,
+        // //         ClinicId: clinicid,
+        // //         ReportImage: data[i].ReportImage,
+        // //         ReportTitle: data[i].ReportTitle,
+        // //         Date: now
+        // //     }
             
-            console.log('object', obj)
-            const requestReports = await Upload_MultipleReports(obj);
-            let parse = JSON.parse(requestReports);
-        // }
+        //     console.log('object', obj)
+        //     const requestReports = await Upload_MultipleReports(obj);
+        //     let parse = JSON.parse(requestReports);
+        // // }
 
 
-        // if (parse.success === "200") {
-        //     alert('Reports Shared Successfully');
+        // // if (parse.success === "200") {
+        // //     alert('Reports Shared Successfully');
         // handleclose();
         // window.location.reload();
         // }
