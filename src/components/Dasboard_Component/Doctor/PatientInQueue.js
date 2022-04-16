@@ -34,7 +34,7 @@ export function PatientInueue_List({ data }) {
                         return (
                             <>
                                 {item.ShortNote == 'Emergency' ? <>
-                                    <Grid item xs={2} style={{ paddingTop: 10, marginLeft: '-30px' }}>
+                                    <Grid item xs={2} style={{ paddingTop: 10, marginLeft: '-30px', paddingBottom: 20 }}>
                                         <div>
                                             <center>
                                                 {item.ProfileImage ? <Avatar style={{ borderRadius: 50, height: 55, width: 55, }} src={item.ProfileImage} /> : item.Gender == 'Female' ? <Avatar style={{ borderRadius: 50, height: 55, width: 55, border: '1px solid lightgray' }} src='femaleicon.png' /> :
@@ -70,7 +70,7 @@ export function PatientInueue_List({ data }) {
                                     </Grid>
                                 </> :
                                     <>
-                                        <Grid item xs={2} style={{ paddingTop: 10, marginLeft: '-30px' }}>
+                                        <Grid item xs={2} style={{ paddingTop: 10, marginLeft: '-30px', paddingBottom: 20 }}>
                                             <div>
                                                 <center>
                                                     {item.ProfileImage ? <Avatar style={{ borderRadius: 50, height: 55, width: 55, }} src={item.ProfileImage} /> : item.Gender == 'Female' ? <Avatar style={{ borderRadius: 50, height: 55, width: 55, border: '1px solid lightgray' }} src='femaleicon.png' /> :
@@ -111,7 +111,7 @@ export function PatientInueue_List({ data }) {
                     else if (item.AppointmentStatus == 'Send In') {
                         return (
                             <>
-                                <Grid item xs={2} style={{ marginTop: 5, marginLeft: '-30px', cursor: 'pointer', marginBottom: 0, paddingBottom: 0 }} onClick={() => fetchTreatNow(item)}>
+                                <Grid item xs={2} style={{ marginTop: 5, marginLeft: '-30px', cursor: 'pointer', marginBottom: 0, paddingBottom: 20 }} onClick={() => fetchTreatNow(item)}>
                                     <Grid item xs={6} sm={12} style={{ flex: 1, justifyContent: 'center', textAlign: 'center' }}>
                                         <center>
                                             {item.ProfileImage ? <Avatar style={{ borderRadius: 50, height: 55, width: 55, }} src={item.ProfileImage} /> : item.Gender == 'Female' ? <Avatar style={{ borderRadius: 50, height: 55, width: 55, border: '1px solid lightgray' }} src='femaleicon.png' /> :

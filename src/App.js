@@ -97,6 +97,8 @@ import LabHome from './components/Lab_Home';
 import LabClinicPatients from './components/Lab_ClinicPatients';
 import LabReports from './components/Lab_Reports';
 import LabUploadReports from './components/Lab_UploadReports';
+import DoctorHomeLogin from './components/Doctor_Home_Login';
+import DoctorIPDHome from './components/Doctor_IPD_Home';
 
 
 const App = () => {
@@ -147,6 +149,8 @@ const App = () => {
             <Route exact path="/patientDetails_sendIn" element={<PatientDetails_SendIn />}></Route>
             <Route exact path="/SignUp" element={<SignUp />}></Route>
 
+            <Route exact path="/DoctorHomeLogin" element={<DoctorHomeLogin />}></Route>
+            <Route exact path="/DoctorIPDHome" element={<DoctorIPDHome />}></Route>
             <Route exact path="/DoctorMedicines" element={<DoctorMedicines />}> </Route>
             <Route exact path="/DoctorAddMedicine" element={<DoctorAddMedicine />}> </Route>
             <Route exact path="/DoctorReports" element={<DoctorReports />}></Route>

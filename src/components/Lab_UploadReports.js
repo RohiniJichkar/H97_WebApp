@@ -300,6 +300,9 @@ function LabUploadReports() {
             dispatch({ type: 'RESET_REPORTS_ITEM' });
             navigate('/LabReports')
         }
+        else{
+            alert(parse.message);
+        }
 
     }
 

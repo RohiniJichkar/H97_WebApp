@@ -71,7 +71,7 @@ export const PatientReportImages = ({ show, data, handleClosemodal }) => {
                                     return (
                                         <>
                                             <Grid item sm={2} >
-                                                <div style={{ marginTop: 10 }}>
+                                                {/* <div style={{ marginTop: 10 }}>
                                                     <center>
                                                         <Typography variant="h6" noWrap={true}
                                                             style={{
@@ -87,7 +87,7 @@ export const PatientReportImages = ({ show, data, handleClosemodal }) => {
                                                             {item.ReportTitle}
                                                         </Typography>
                                                     </center>
-                                                </div>
+                                                </div> */}
                                                 <Paper spacing={2} elevation={2} className={classes.groupreports} >
                                                     <center>
                                                         <IconButton edge="start" size='small' aria-label="close" style={{ marginTop: '-15px', float: 'right', color: '#da3d3d' }}>

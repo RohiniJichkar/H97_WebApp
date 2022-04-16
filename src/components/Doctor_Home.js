@@ -2,7 +2,8 @@ import React, { useState, useEffect } from 'react';
 import clsx from 'clsx';
 import { makeStyles, useTheme } from '@material-ui/core/styles';
 import { useNavigate } from 'react-router-dom';
-import { Typography, Grid, Paper } from "@material-ui/core";
+import { Typography, Grid, Paper, Button, IconButton } from "@material-ui/core";
+import ArrowBackIcon from '@material-ui/icons/ArrowBack';
 import { Redirect } from 'react-router-dom';
 import DoctorNavbar from './Doctor_Navbar';
 import { BroadcastMessage } from './Broadcast_Messages/index';
@@ -95,6 +96,11 @@ export default function DoctorHome() {
         fetchSubscriptioEndDate();
     }, [])
 
+    const handleGoBack = () => {
+        navigate('/DoctorHomeLogin');
+    };
+
+
     return (
         <div className={classes.root} style={{ backgroundColor: '#ffffff' }}>
             <DoctorNavbar />
@@ -122,6 +128,7 @@ export default function DoctorHome() {
                             marginLeft: 10,
 
                         }}>
+                        <Button style={{ marginLeft: '-20px', backgroundColor: 'white', color: '#2C7FB2', borderRadius: 105, fontSize: '12px' }}> <ArrowBackIcon onClick={handleGoBack} />  </Button>
                         Home
 
                     </Typography>

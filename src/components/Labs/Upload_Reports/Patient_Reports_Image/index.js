@@ -71,7 +71,7 @@ export const PatientReportImages = ({ show, data, handleClosemodal }) => {
                                     return (
                                         <>
                                             <Grid item sm={2} >
-                                                <div style={{ marginTop: 10 }}>
+                                                {/* <div style={{ marginTop: 10 }}>
                                                     <center>
                                                         <Typography variant="h6" noWrap={true}
                                                             style={{
@@ -87,15 +87,15 @@ export const PatientReportImages = ({ show, data, handleClosemodal }) => {
                                                             {item.ReportTitle}
                                                         </Typography>
                                                     </center>
-                                                </div>
+                                                </div> */}
                                                 <Paper spacing={2} elevation={2} className={classes.groupreports} >
                                                     <center>
                                                         <IconButton edge="start" size='small' aria-label="close" style={{ marginTop: '-15px', float: 'right', color: '#da3d3d' }}>
                                                             <DeleteForeverOutlinedIcon size='small' onClick={() => DeleteReport(item.id)} />
                                                         </IconButton>
-                                                        <IconButton edge="start" size='small' aria-label="close" style={{ marginTop: '-15px', float: 'right', color: 'black', marginRight: 30 }}>
+                                                        {/* <IconButton edge="start" size='small' aria-label="close" style={{ marginTop: '-15px', float: 'right', color: 'black', marginRight: 30 }}>
                                                             <IosShareIcon size='small' onClick={() => getClinicModalData(item)} />
-                                                        </IconButton>
+                                                        </IconButton> */}
                                                         {item.ReportImage ?
                                                             <img onClick={() => window.open(item.ReportImage, '_blank')} style={{ height: 120, width: '100%' }} src={item.ReportImage} onError={({ currentTarget }) => {
                                                                 currentTarget.onerror = null; // prevents looping
@@ -138,7 +138,7 @@ export const PatientReportImages = ({ show, data, handleClosemodal }) => {
                                 </Grid>
                             </Grid>
                         </>}
-                        {openclinicmodal ? <Get_Lab_Clinics show={openclinicmodal} data={data} handleclose={() => setopenclinicmodal(false)} /> : null}
+                        {/* {openclinicmodal ? <Get_Lab_Clinics show={openclinicmodal} data={data} handleclose={() => setopenclinicmodal(false)} /> : null} */}
 
                 </DialogContent>
             </Dialog>

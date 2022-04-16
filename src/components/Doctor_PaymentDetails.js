@@ -65,7 +65,7 @@ function DoctorPaymentDetails() {
     let doctorid = parsed.userid;
 
     // if (fees == '') {
-    //   alert('Please Enter Fees');
+    //   setfees('0');
     //   return;
     // }
 
@@ -75,8 +75,8 @@ function DoctorPaymentDetails() {
       PatientId: details.UserId,
       AppointmentId: details.id,
       CostCode: costcode,
-      PaymentAmount: fees,
-      PaymentMode: paymentmode,
+      PaymentAmount: fees ? fees : '0',
+      PaymentMode: paymentmode ? paymentmode : 'NA',
     }
     try {
       const request = await paymentDetails(obj);
@@ -352,7 +352,7 @@ function DoctorPaymentDetails() {
                         paddingTop: 10,
                         paddingBottom: 10,
                       }}>
-                        Total Fee*
+                        Total Fee
                       </Typography>
                     </center>
                   </Grid>

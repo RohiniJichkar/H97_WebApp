@@ -412,7 +412,7 @@ export default function DoctorNavbar() {
           </div>
           <div className={classes.drname}>
             <Typography variant="h8" noWrap={true} style={{ color: '#2C7FB2' }}   >
-              {doctordata.FirstName} {doctordata.LastName}
+            {doctordata.NmTitle} {doctordata.FirstName} {doctordata.LastName}
             </Typography>
           </div>
           {auth && (

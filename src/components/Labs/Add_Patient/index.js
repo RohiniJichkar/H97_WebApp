@@ -19,9 +19,9 @@ import { createTheme, ThemeProvider } from '@material-ui/core/styles';
 const defaultMaterialTheme = createTheme({
     palette: {
         primary: {
-          main: '#1769aa',
-        },     
-      },
+            main: '#1769aa',
+        },
+    },
 });
 
 const drawerWidth = 240;
@@ -89,10 +89,43 @@ const Add_Lab_Patinet = ({ show, handleclose }) => {
         // let Dob = dob.toISOString().split('T')[0];
         // console.log(Dob)
 
-        if (title.trim() == '' || firstnm.trim() == '' || lastnm.trim() == '' || mobile.trim() == '' || password.trim() == '' || dob == '' || gender.trim() == '') {
-            alert('Please Enter Mandatory fields')
+        if (title == '') {
+            alert('Please Select Title');
             return;
         }
+        if (firstnm == '') {
+            alert('Please Enter First Name');
+            return;
+        }
+        else if (lastnm == '') {
+            alert('Please Enter Last Name');
+            return;
+        }
+        else if (mobile == '') {
+            alert('Please Enter Mobile No');
+            return;
+        }
+        else if (password == '') {
+            alert('Please Enter Password');
+            return;
+        }
+        else if (email == '') {
+            alert('Please Enter Email');
+            return;
+        }
+        else if (dob == '') {
+            alert('Please Enter DOB');
+            return;
+        }
+        else if (gender == '') {
+            alert('Please Enter Gender');
+            return;
+        }
+
+        // if (title.trim() == '' || firstnm.trim() == '' || lastnm.trim() == '' || mobile.trim() == '' || password.trim() == '' || dob == '' || gender.trim() == '') {
+        //     alert('Please Enter Mandatory fields')
+        //     return;
+        // }
         // else if (dob > now) {
         //     alert('Invalid Date of Birth');
         //     return;

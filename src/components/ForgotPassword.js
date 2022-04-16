@@ -117,6 +117,14 @@ export default function ForgotPassword() {
                 name="radio-button-demo"
                 inputProps={{ 'aria-label': 'Admin' }}
               />Admin
+              <Radio
+                checked={selectedValue === 'Lab'}
+                color='primary'
+                onChange={handleChange}
+                value="Lab"
+                name="radio-button-demo"
+                inputProps={{ 'aria-label': 'Lab' }}
+              />Lab
             </div>
 
             <Grid container style={{ paddingTop: '10px' }}>
@@ -140,8 +148,8 @@ export default function ForgotPassword() {
             </Typography>
             <center>
               <Typography component="h1">
-                <Box mt={2}>             
-                  <a href="/" style={{ color: '#78B088' }}> Go Back </a>  
+                <Box mt={2}>
+                  <a href="/" style={{ color: '#78B088' }}> Go Back </a>
                 </Box>
               </Typography>
             </center>

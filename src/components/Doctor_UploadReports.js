@@ -205,7 +205,7 @@ const useStyles = makeStyles((theme) => ({
         textAlign: 'center',
         borderRadius: 28,
         width: 120,
-        marginTop:150,
+        marginTop: 150,
         fontSize: '12px'
     },
     textField: {
@@ -300,6 +300,9 @@ function DoctorUploadReports() {
             dispatch({ type: 'RESET_REPORTS_ITEM' });
             navigate('/DoctorReports')
         }
+        else {
+            alert(parse.message);
+        }
 
     }
     const handlesContinue = () => {
@@ -364,12 +367,12 @@ function DoctorUploadReports() {
                             <div style={{ paddingTop: 20 }}>
                                 <div>
                                     <FormControl variant="outlined" className={classes.formControl}  >
-                                        <TextField className={classes.textField} onChange={(e) => settitle(e.target.value)} id="outlined-basic" label="Title" variant="outlined" size="small" style={{marginTop: 10}} />
+                                        <TextField className={classes.textField} onChange={(e) => settitle(e.target.value)} id="outlined-basic" label="Title" variant="outlined" size="small" style={{ marginTop: 10 }} />
                                     </FormControl>
                                 </div>
                                 <div>
                                     <FormControl variant="outlined" className={classes.formControl}  >
-                                        <TextField className={classes.textField} onChange={convertToBase64} id="outlined-basic" type='file' variant="outlined" size="small" style={{marginTop: 13}} />
+                                        <TextField className={classes.textField} onChange={convertToBase64} id="outlined-basic" type='file' variant="outlined" size="small" style={{ marginTop: 13 }} />
                                     </FormControl>
 
                                 </div>

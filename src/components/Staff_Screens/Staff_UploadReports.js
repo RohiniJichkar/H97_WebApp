@@ -302,6 +302,9 @@ function Staff_Upload_Reports() {
                 dispatch({ type: 'RESET_REPORTS_ITEM' });
                 navigate('/Staff_Reports')
             }
+            else{
+                alert(parse.message);
+            }
         } catch (error) {
             console.log(error)
         }

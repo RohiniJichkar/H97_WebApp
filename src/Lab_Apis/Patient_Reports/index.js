@@ -13,11 +13,9 @@ export const Patients_Data = async () => {
 
 
 export const Reports = async (userid) => {
-    var data = localStorage.getItem("userdata");
-    let parsed = JSON.parse(data);
-    let labid = parsed.UserProfile.LabId;
+
     try {
-        const reports = await axios.post(ip + 'Web_GetGroupPatientReportsbyTitleForLab', { UserId: userid, ClinicId: labid });
+        const reports = await axios.post(ip + 'Web_GetGroupPatientReportsbyTitleForLab', { UserId: userid});
         return reports?.data?.PatientReports;
     } catch (error) {
         return (error.response.data.message);
@@ -37,14 +35,8 @@ export const Upload_Reports = async (obj) => {
 
 
 export const getReportsByTitle = async (userid, reportitle) => {
-    var data = localStorage.getItem("userdata");
-    let parsed = JSON.parse(data);
-    let labid = parsed.UserProfile.LabId;
-    let doctorid = parsed.userid;
-
     let body = {
         UserId: userid,
-        ClinicId: labid,
         ReportTitle: reportitle
     }
     try {
@@ -57,12 +49,8 @@ export const getReportsByTitle = async (userid, reportitle) => {
 
 
 export const DeleteReportsByTitle = async (userid, reporttitle) => {
-    var data = localStorage.getItem("userdata");
-    let parsed = JSON.parse(data);
-    let labid = parsed.UserProfile.LabId;
-    let doctorid = parsed.userid;
     try {
-        const deletereports = await axios.delete(ip + 'Web_DeletePatientReportsByTitleForLab', { data: { UserId: userid, ReportTitle: reporttitle, ClinicId: labid } });
+        const deletereports = await axios.delete(ip + 'Web_DeletePatientReportsByTitleForLab', { data: { UserId: userid, ReportTitle: reporttitle } });
         return JSON.stringify(deletereports?.data);
     } catch (error) {
         return (error.response.data.message);
@@ -85,4 +73,15 @@ export const DeleteReportsById = async (id) => {
 export const Doctor_Data = async () => {
     const doctorInfo = await axios.post(ip + 'GetDoctorsListForWeb');
     return doctorInfo?.data?.Data;
+}
+
+
+export const Upload_MultipleReports = async (data) => {
+    try {
+        const addReports = await axios.post(ip + 'Web_ShareMultipleReports', {reportsdata : data })
+        return JSON.stringify(addReports?.data);
+    }
+    catch (error) {
+        return (error.response.data.message);
+    }
 }

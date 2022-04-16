@@ -16,6 +16,7 @@ import axios from 'axios';
 import IosShareIcon from '@mui/icons-material/IosShare';
 import DeleteForeverOutlinedIcon from '@mui/icons-material/DeleteForeverOutlined';
 // import Get_Lab_Clinics from './Labs/Upload_Reports/Clinic_List';
+import ClinicsForMultipleReportsSharing from './Labs/Upload_Reports/Clinic_List_Multiple_Reports/index';
 
 const getPatientSearchApi = 'http://13.233.217.107:8080/api/Web_SearchPatientsForLab';
 const getPatientDataApi = 'http://13.233.217.107:8080/api/Web_GetPatientsforLab';
@@ -59,6 +60,8 @@ export default function LabReports() {
     const [docData, setdocData] = useState([]);
     const [openclinicmodal, setopenclinicmodal] = React.useState(false);
 
+    console.log('modal data', modalData);
+
     const fetchPatientData = async () => {
         var data = await localStorage.getItem("userdata");
         let parsed = JSON.parse(data);
@@ -75,6 +78,7 @@ export default function LabReports() {
         fetchPatientData();
     }, []);
 
+    console.log(reportsData)
 
     const handleRowClick = async (id) => {
         const report = await Reports(id.UserId);
@@ -250,7 +254,7 @@ export default function LabReports() {
                                                         <DeleteForeverOutlinedIcon size='small' onClick={() => getDeleteModalData(item)} />
                                                     </IconButton>
                                                     {/* <IconButton edge="start" size='small' aria-label="close" style={{ marginTop: '-15px', float: 'right', color: 'black', marginRight: 40 }}>
-                                                        <IosShareIcon size='small' onClick={() => getClinicModalData(item)} />
+                                                        <IosShareIcon size='small' onClick={() => {getClinicModalData(item), getMultipleSharing(item)}} />
                                                     </IconButton> */}
                                                     {item.ReportImage ? <img src={item.ReportImage} onClick={() => getImageData(item)} style={{ height: '120px', width: '100%', borderRadius: 10, cursor: 'pointer' }} onError={({ currentTarget }) => {
                                                         currentTarget.onerror = null; // prevents looping
@@ -311,7 +315,7 @@ export default function LabReports() {
 
                 {openmodal ? <PatientReportImages show={openmodal} data={modalData} handleClosemodal={() => setopenmodal(false)} /> : null}
                 {opendeletemodal ? <DeletePatientReports show={opendeletemodal} data={deletemodalData} handleCloseDeletemodal={() => setopendeletemodal(false)} /> : null}
-                {/* {openclinicmodal ? <Get_Lab_Clinics show={openclinicmodal} data={reportsData} handleclose={() => setopenclinicmodal(false)} /> : null} */}
+                {/* {openclinicmodal ? <ClinicsForMultipleReportsSharing show={openclinicmodal} data={modalData} handleclose={() => setopenclinicmodal(false)} /> : null} */}
 
             </Grid> {/* main grid */}
 

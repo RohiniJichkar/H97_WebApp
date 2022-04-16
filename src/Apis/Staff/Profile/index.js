@@ -22,10 +22,11 @@ export const forgot_password = async (obj) => {
 }
 
 
-export const EditDoctordata = async (DoctorId,clinicid,FirstName,LastName,MobileNo,Email,Address,Category,City,Pincode,State,Country,Education,DOB,MorningStartTime,MorningEndTime,EveningStartTime,EveningEndTime,Experience,Gender) => {
+export const EditDoctordata = async (DoctorId, clinicid, NmTitle, FirstName, LastName, MobileNo, Email, Address, Category, City, Pincode, State, Country, Education, DOB, MorningStartTime, MorningEndTime, EveningStartTime, EveningEndTime, Experience, Gender) => {
     const body = {
         UserId: DoctorId,
         ClinicId: clinicid,
+        NmTitle: NmTitle,
         FirstName: FirstName,
         LastName: LastName,
         MobileNo: MobileNo,

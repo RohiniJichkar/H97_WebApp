@@ -261,6 +261,7 @@ export default function Edit_Patient({ show, data, handleCloseEditmodal }) {
     useEffect(() => {
         fetchCountry();
         fetchState();
+        fetchCity();
     }, []);
 
 
@@ -362,7 +363,7 @@ export default function Edit_Patient({ show, data, handleCloseEditmodal }) {
                                                                 name: 'title',
                                                                 id: 'outlined-title-native-simple',
                                                             }}
-                                                            style={{ marginLeft: 68, width: 78, }}
+                                                            style={{ marginLeft: 68, width: 78, fontWeight: 500 }}
                                                         >
                                                             <option aria-label="None" value="" >Title</option>
                                                             <option value='Mr.'>Mr.</option>

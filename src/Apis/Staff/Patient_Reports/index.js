@@ -13,12 +13,9 @@ export const Patients_Data = async () => {
 
 
 export const Reports = async (userid) => {
-    var data = localStorage.getItem("userdata");
-    let parsed = JSON.parse(data);
-    let clinicid = parsed.ClinicId;
-    let doctorid = parsed.userid;
+  
     try {
-        const reports = await axios.post(ip + 'Web_GetGroupPatientReportsbyTitleForStaff', { UserId: userid, ClinicId: clinicid });
+        const reports = await axios.post(ip + 'Web_GetGroupPatientReportsbyTitleForStaff', { UserId: userid});
         return reports?.data?.PatientReports;
     } catch (error) {
         return (error.response.data.message);
@@ -32,20 +29,15 @@ export const Upload_Reports = async (obj) => {
         return JSON.stringify(addReports?.data);
     }
     catch (error) {
-        return (error.response.data.message);
+        return JSON.stringify(error.response.data);
     }
 }
 
 
 export const getReportsByTitle = async (userid, reportitle) => {
-    var data = localStorage.getItem("userdata");
-    let parsed = JSON.parse(data);
-    let clinicid = parsed.ClinicId;
-    let doctorid = parsed.userid;
     let body = {
         UserId: userid,
         ReportTitle: reportitle,
-        ClinicId: clinicid
     }
     try {
         const getPatientReports = await axios.post(ip + 'Web_GetPatientReportsForStaff', body);
@@ -57,12 +49,8 @@ export const getReportsByTitle = async (userid, reportitle) => {
 
 
 export const DeleteReportsByTitle = async (userid, reporttitle) => {
-    var data = localStorage.getItem("userdata");
-    let parsed = JSON.parse(data);
-    let clinicid = parsed.ClinicId;
-    let doctorid = parsed.userid;
     try {
-        const deletereports = await axios.delete(ip + 'Web_DeletePatientReportsByTitleForStaff', { data: { UserId: userid, ReportTitle: reporttitle, ClinicId: clinicid } });
+        const deletereports = await axios.delete(ip + 'Web_DeletePatientReportsByTitleForStaff', { data: { UserId: userid, ReportTitle: reporttitle } });
         return JSON.stringify(deletereports?.data);
     } catch (error) {
         return (error.response.data.message);

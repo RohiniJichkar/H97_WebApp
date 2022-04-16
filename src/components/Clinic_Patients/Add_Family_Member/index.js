@@ -83,7 +83,7 @@ export default function Add_Family_Member({ show, data, handleclose }) {
         let Dob = dob.toISOString().split('T')[0];
 
         if (title == '') {
-            alert('Please Enter First Name');
+            alert('Please Enter Title');
             return;
         }
         else if (firstnm == '') {
@@ -143,6 +143,7 @@ export default function Add_Family_Member({ show, data, handleclose }) {
     useEffect(() => {
         fetchCountry();
         fetchState();
+        fetchCity();
     }, []);
 
     return (
@@ -183,7 +184,7 @@ export default function Add_Family_Member({ show, data, handleclose }) {
                                                                 name: 'title',
                                                                 id: 'outlined-title-native-simple',
                                                             }}
-                                                            style={{ marginLeft: 68, width: 78, marginTop: -9 }}
+                                                            style={{ marginLeft: 68, width: 78, marginTop: -9, fontWeight: 500 }}
                                                         >
                                                             <option aria-label="None" value="" >Title</option>
                                                             <option value='Mr.'>Mr.</option>

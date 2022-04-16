@@ -120,7 +120,7 @@ export default function Staff_Profile() {
                                         color: '#707070',
                                         fontWeight: 600
                                     }}>
-                                        {doctordata.FirstName} {doctordata.LastName}
+                                        {doctordata.NmTitle} {doctordata.FirstName} {doctordata.LastName}
                                     </Typography>
 
                                     <Grid item xs={12} >

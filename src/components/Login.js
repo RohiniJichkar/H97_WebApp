@@ -303,7 +303,7 @@ function Login(props) {
             let responseData = Json.data
             if (responseData.success == '200') {
               if (responseData.Role === "Doctor") {
-                navigate('/DoctorHome')
+                navigate('/DoctorHomeLogin')
               }
               else {
                 navigate('/Staff_Home')
@@ -467,9 +467,16 @@ function Login(props) {
                       value={selectedValue}
                       onChange={(e) => setSelectedValue(e.target.value)}
                       className={classes.select}
-                      style={{ width: '89%', fontSize: 14, fontWeight: 600, }}
+                      style={{
+                        width: '89%', fontSize: 14,
+                        fontFamily: 'Poppins',
+                        fontStyle: 'normal',
+                        fontWeight: 600,
+                        // color: '#2C7FB2'
+
+                      }}
                     >
-                      <option value=''>Select Role</option>
+                      <option value=''>Select Role*</option>
                       {roleData.map((item) => {
                         return (
                           <option value={item.Role}>{item.Role}</option>
