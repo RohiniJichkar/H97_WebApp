@@ -352,22 +352,37 @@ export default function DoctorMedicines() {
     }
 
     const handleCellClick = async (id) => {
-        try {
-            const medicineDetailedInfo = await axios.post(ip + 'Web_GetMedicineById', { id: id });
-            setmedicineDetails(medicineDetailedInfo?.data?.Medicine);
-        } catch (e) {
-            console.log(e);
-        }
+        // try {
+        //     const medicineDetailedInfo = await axios.post(ip + 'Web_GetMedicineById', { id: id });
+        setmedicineDetails(id);
+        // } catch (e) {
+        //     console.log(e);
+        // }
     }
 
+
+
     const SearchMedicine = async (searchterm) => {
+        var data = await localStorage.getItem("userdata");
+        let parsed = JSON.parse(data);
+        let clinicid = parsed.ClinicId;
         try {
-            const request = await Search_Medicine(searchterm);
-            setmedicines(request)
-        } catch (e) {
+            const medicineInfo = await axios.post(ip + 'Web_SearchMedicines', { ClinicId: clinicid, MedicineName: searchterm });
+            setmedicines(medicineInfo?.data?.MedicineInfo);
+        }
+        catch (e) {
             console.log(e)
         }
     }
+
+    // const SearchMedicine = async (searchterm) => {
+    //     try {
+    //         const request = await Search_Medicine(searchterm);
+    //         setmedicines(request)
+    //     } catch (e) {
+    //         console.log(e)
+    //     }
+    // }
 
 
     const fetchmedicinetypes = async () => {
@@ -521,7 +536,7 @@ export default function DoctorMedicines() {
                                     columnWidth={10}
                                     pageSize={10}
                                     onRowClick={(newSelection) => {
-                                        handleCellClick(newSelection.row.id);
+                                        handleCellClick(newSelection.row);
                                     }}
                                 />
                             </Box>

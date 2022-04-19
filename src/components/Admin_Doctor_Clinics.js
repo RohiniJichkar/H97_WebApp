@@ -258,7 +258,7 @@ export default function Admin_Doctor_Clinics() {
                                         Address
                                     </Typography>
                                     <Typography variant="h6" noWrap={true} style={{ paddingTop: 5, fontSize: 14, color: '#707070', fontFamily: 'Poppins', marginLeft: 10, marginRight: 10 }}>
-                                        {doctordetails ? doctordetails.Address ? `${doctordetails.Address}` : `${doctordetails.StfAddress}` : "NA"} {doctordetails ? `, ${doctordetails.City}` : ''} {doctordetails ? `, ${doctordetails.State}` : ''} {doctordetails ? `, ${doctordetails.Pincode}` : ''} {doctordetails ? `, ${doctordetails.Country}` : ''}
+                                        {doctordetails ? doctordetails.Address ? `${doctordetails.Address}` : `${doctordetails.StfAddress}` : "NA"} {doctordetails ? doctordetails.City ? `, ${doctordetails.City}` : '' : ''} {doctordetails ? doctordetails.State ?  `, ${doctordetails.State}` : '' : ''} {doctordetails ? doctordetails.Country ? `, ${doctordetails.Country}` : '' : ''} {doctordetails ? doctordetails.Pincode ?  `, ${doctordetails.Pincode}` : '' : ''}
                                     </Typography>
                                 </Grid>
                                 <Grid item xs={3} style={{ border: '1px solid #F0F0F0', borderLeft: '0px', borderTop: '0px', paddingBottom: 20 }}>

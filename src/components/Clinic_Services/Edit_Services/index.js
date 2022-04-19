@@ -100,7 +100,7 @@ const Edit_Service_Details = ({ show, data, handleclose }) => {
                                 </Grid>
                                 <Grid xs={12} sm={6}>
                                     <Button className={classes.btnregister} onClick={() => Edit(data.id, data.DoctorId, data.ClinicId, ServiceName, Category, cost, Discount, Description)} autoFocus style={{ float: 'left', marginLeft: 20 }}>
-                                        Submit
+                                        Save
                                     </Button>
                                 </Grid>
                             </Grid>

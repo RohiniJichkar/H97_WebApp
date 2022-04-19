@@ -910,7 +910,7 @@ export default function EditHomeVisitors({ show, data, handleCloseEditmodal }) {
                                     <Button className={classes.btnregister} onClick={handleCloseEditmodal} style={{ float: 'right', marginRight: 20 }}>Cancel</Button>
                                 </Grid>
                                 <Grid item sm={6} >
-                                    <Button className={classes.btnregister} onClick={EditHomeVisitor} style={{ float: 'left', marginLeft: 20 }}>Submit</Button>
+                                    <Button className={classes.btnregister} onClick={EditHomeVisitor} style={{ float: 'left', marginLeft: 20 }}>Save</Button>
                                 </Grid>
                             </Grid>
                         </Grid>

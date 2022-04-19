@@ -182,7 +182,8 @@ export default function DoctorIPDHome() {
                             textOverflow: 'ellipsis',
                             color: '#2C7FB2',
                             textAlign: 'center',
-                            marginTop: 70
+                            marginTop: 150,
+                            fontSize: 35
 
                         }}>
                             

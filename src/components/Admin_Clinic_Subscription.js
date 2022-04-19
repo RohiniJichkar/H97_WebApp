@@ -73,7 +73,7 @@ export default function Admin_Clinic_Subscription() {
     useEffect(() => {
         const interval = setInterval(() => {
             fetchClinicData();
-        }, 2000);
+        }, 1000);
         return () => clearInterval(interval);
 
     }, []);

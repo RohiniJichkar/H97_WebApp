@@ -507,7 +507,7 @@ export default function DoctorEditClinicDetails() {
                                     </Grid>
                                     <Grid xs={12} sm={6}>
                                         <Button className={classes.btnCancle} onClick={fetchclinicdetails} style={{ float: 'left', marginLeft: 20 }}>
-                                            Submit
+                                            Save
                                         </Button>
                                     </Grid>
                                 </Grid>

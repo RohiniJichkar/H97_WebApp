@@ -785,7 +785,7 @@ export default function AdminDoctorDetails() {
                                     </Grid>
                                     <Grid xs={12} sm={6}>
                                         <Button className={classes.btnregister} onClick={handleCloseEditmodal} autoFocus style={{ float: 'left', marginLeft: 20 }}>
-                                            Edit
+                                            Save
                                         </Button>
                                     </Grid>
                                 </Grid>

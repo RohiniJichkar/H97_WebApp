@@ -507,8 +507,8 @@ const useStyles = makeStyles((theme) => ({
         width: 120,
         marginTop: 10,
         fontSize: 12
-      },
-      btnCancle: {
+    },
+    btnCancle: {
         backgroundColor: '#2C7FB2 !important',
         color: '#fff !important',
         fontFamily: 'Poppins',
@@ -519,6 +519,6 @@ const useStyles = makeStyles((theme) => ({
         width: 120,
         marginTop: 10,
         fontSize: 12
-      },
+    },
 }));
 

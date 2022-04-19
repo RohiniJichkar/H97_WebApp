@@ -400,7 +400,7 @@ export const Edit_Appointment_From_PatientIn_Queue = ({ show, data, handlemodal 
                                     <Button className={classes.btnregister} onClick={handlemodal} style={{ float: 'right', marginRight: 20 }}>Cancel</Button>
                                 </Grid>
                                 <Grid item sm={6} >
-                                    <Button onClick={() => EditAppointmentDetails()} className={classes.btnregister} style={{ float: 'left', marginLeft: 20 }}>Submit</Button>
+                                    <Button onClick={() => EditAppointmentDetails()} className={classes.btnregister} style={{ float: 'left', marginLeft: 20 }}>Save</Button>
                                 </Grid>
                             </Grid>
                         </Grid>

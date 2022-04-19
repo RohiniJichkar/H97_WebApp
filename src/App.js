@@ -99,6 +99,7 @@ import LabReports from './components/Lab_Reports';
 import LabUploadReports from './components/Lab_UploadReports';
 import DoctorHomeLogin from './components/Doctor_Home_Login';
 import DoctorIPDHome from './components/Doctor_IPD_Home';
+import LabProfile from './components/Lab_Profile';
 
 
 const App = () => {
@@ -227,6 +228,7 @@ const App = () => {
             <Route exact path="/LabClinicPatients" element={<LabClinicPatients />}> </Route>
             <Route exact path="/LabReports" element={<LabReports />}></Route>
             <Route exact path="/LabUploadReports" element={<LabUploadReports />}></Route>
+            <Route exact path="/LabProfile" element={<LabProfile />}></Route>
 
 
 

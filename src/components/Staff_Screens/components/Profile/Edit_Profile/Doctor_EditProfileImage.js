@@ -86,7 +86,7 @@ export default function EditImage({ show,  handleCloseEditmodal }) {
                                 </Grid>
                                 <Grid xs={12} sm={6}>
                                     <Button className={classes.btnregister} onClick={fetchDoctorImage} autoFocus style={{ float: 'left', marginLeft: 20, marginTop: 40 }}>
-                                        Submit
+                                        Save
                                     </Button>
                                 </Grid>
                             </Grid>

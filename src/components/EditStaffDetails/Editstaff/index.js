@@ -526,7 +526,7 @@ export default function Edit_staff({ show, data, handleCloseEditmodal }) {
                                 </Grid>
                                 <Grid xs={12} sm={6}>
                                     <Button className={classes.btnCancle} onClick={fetchClinicStaffData} autoFocus style={{ float: 'left', marginLeft: 20 }}>
-                                        Submit
+                                        Save
                                     </Button>
                                 </Grid>
                             </Grid>

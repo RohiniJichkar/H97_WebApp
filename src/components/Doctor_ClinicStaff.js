@@ -646,8 +646,8 @@ export default function DoctorClinicStaff() {
                                                 }}
                                                 label="Education" variant="outlined" size="small" />
                                             {/* <TextField className={classes.inputFields} id="outlined-basic" label="Category" variant="outlined" size="small" />  */}
-                                            <Grid xs={12} >
-                                                <FormControl id='mybtn' variant="outlined" size="small" className={classes.formControlForm} style={{ width: '73%' }} >
+                                            <Grid xs={12} id='mybtn'>
+                                                <FormControl  variant="outlined" size="small" className={classes.formControlForm} style={{ width: '73%' }} >
 
                                                     <Select
                                                         className={classes.textFieldForm}

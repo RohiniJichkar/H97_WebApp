@@ -16,6 +16,18 @@ export const get_advertisments = async () => {
 }
 
 
+export const get_slider_advertisments = async () => {
+    var data = await localStorage.getItem("userdata");
+    let parsed = JSON.parse(data);
+    let clinicid = parsed.ClinicId;
+    try {
+        const getadvertisements = await axios.post(ip + 'Web_GetAllTVAdvertisementsForSlider', { ClinicId: clinicid });
+        return (getadvertisements?.data?.Advetisements);
+    } catch (error) {
+        return (error.response.data.message);
+    }
+}
+
 export const get_patientinqueue = async () => {
     var data = await localStorage.getItem("userdata");
     let parsed = JSON.parse(data);

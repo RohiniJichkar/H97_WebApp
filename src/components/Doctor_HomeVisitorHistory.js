@@ -283,7 +283,7 @@ export default function DoctorHomeVisitHistory() {
                                 /> */}
                             </div>
                             <div className='col-3'>
-                                <label style={{ fontFamily: 'Poppins', fontWeight: 600, color: '#707070' }}>To</label>
+                                <label style={{ fontFamily: 'Poppins', fontWeight: 600, color: '#707070', marginLeft: '-20px' }}>To</label>
                                 <ThemeProvider theme={defaultMaterialTheme}>
                                     <MuiPickersUtilsProvider utils={DateFnsUtils}>
                                         <KeyboardDatePicker
@@ -302,7 +302,7 @@ export default function DoctorHomeVisitHistory() {
                                 }} style={{ border: '1px solid #F0F0F0', height: 30, fontFamily: 'Poppins', color: '#707070', paddingLeft: 15 }} /> */}
                             </div>
                             <div className='col-2'>
-                                <label style={{ fontFamily: 'Poppins', fontWeight: 600, color: '#707070' }}>Doctor</label>
+                                <label style={{ fontFamily: 'Poppins', fontWeight: 600, color: '#707070', marginLeft: '-50px' }}>Doctor</label>
                                 <FormControl variant="outlined" size="small" className={classes.formControl} style={{ width: '65%', marginLeft: '20px', marginTop: -2 }} >
                                     <Select
                                         className={classes.textFieldForm}
@@ -326,8 +326,9 @@ export default function DoctorHomeVisitHistory() {
                                 </select> */}
                             </div>
 
-                            <div className='col-1'>
-                                <FormControl variant="outlined" size="small" className={classes.formControl} style={{ width: '65%', marginLeft: 60, }} >
+                            <div className='col-2'>
+                                <label style={{ fontFamily: 'Poppins', fontWeight: 600, color: '#707070', marginLeft: 70, }}>Pages</label>
+                                <FormControl variant="outlined" size="small" className={classes.formControl} style={{ width: '25%', marginLeft: 30, }} >
                                     <Select
                                         className={classes.textFieldForm}
                                         size='large'
@@ -338,7 +339,7 @@ export default function DoctorHomeVisitHistory() {
                                             name: 'doctor',
                                             id: 'outlined-doctor-native-simple',
                                         }}
-                                        style={{ width: '200%', fontSize: 14, marginTop: -3, marginLeft: 15 }}
+                                        style={{ width: '200%', fontSize: 14, marginTop: -3, marginLeft: -10 }}
                                     >
                                         <option value="5">5</option>
                                         <option value="10">10</option>
@@ -370,7 +371,7 @@ export default function DoctorHomeVisitHistory() {
                                         color: '#fff',
                                         fontFamily: 'Poppins',
                                         height: 30,
-                                        marginLeft: 200
+                                        marginLeft: 80
                                     }}
                                     onClick={() => Show_appointmentsbydate(startdate, endDate, doctor)}
                                 >

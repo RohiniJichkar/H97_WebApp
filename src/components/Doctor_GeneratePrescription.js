@@ -387,13 +387,13 @@ function DoctorGeneratePrescription() {
                             </Grid>
                             <Grid item xs={12} sm={2} >
 
-                                <Paper elevation={2} className={classes.paper} style={{ width: 70, height: 35, color: '#707070' }}>
+                                <Paper elevation={2} className={classes.paper} style={{ width: 70, height: 40, color: '#707070' }}>
                                     <div style={{ marginTop: 1 }}> {counterbtn} </div>
                                     <div>
-                                        <ArrowDropUpIcon size='small' onClick={handleIncrement} style={{ marginTop: '-60px', marginLeft: 30, color: '#707070', cursor: 'pointer', fontSize: 30 }} />
+                                        <ArrowDropUpIcon size='small' onClick={handleIncrement} style={{ marginTop: '-60px', marginLeft: 30, color: '#707070', cursor: 'pointer', fontSize: 35 }} />
                                     </div>
                                     <div>
-                                        <ArrowDropDownIcon size='small' onClick={handleDecrement} style={{ marginTop: '-65px', marginLeft: 30, color: '#707070', cursor: 'pointer', fontSize: 30 }} />
+                                        <ArrowDropDownIcon size='small' onClick={handleDecrement} style={{ marginTop: '-60px', marginLeft: 30, color: '#707070', cursor: 'pointer', fontSize: 35 }} />
                                     </div>
                                 </Paper>
 
@@ -407,13 +407,13 @@ function DoctorGeneratePrescription() {
 
                             <Grid item xs={12} sm={2} style={{ marginLeft: '-20px' }}>
 
-                                <Paper elevation={2} className={classes.paper} style={{ width: 70, height: 35, color: '#707070' }}>
+                                <Paper elevation={2} className={classes.paper} style={{ width: 70, height: 40, color: '#707070' }}>
                                     <div style={{ marginTop: 1 }}> {counterbtn2} </div>
                                     <div>
-                                        <ArrowDropUpIcon size='small' onClick={handleIncrement2} style={{ marginTop: '-60px', marginLeft: 30, color: '#707070', cursor: 'pointer', fontSize: 30 }} />
+                                        <ArrowDropUpIcon size='small' onClick={handleIncrement2} style={{ marginTop: '-60px', marginLeft: 30, color: '#707070', cursor: 'pointer', fontSize: 35 }} />
                                     </div>
                                     <div>
-                                        <ArrowDropDownIcon size='small' onClick={handleDecrement2} style={{ marginTop: '-65px', marginLeft: 30, color: '#707070', cursor: 'pointer', fontSize: 30 }} />
+                                        <ArrowDropDownIcon size='small' onClick={handleDecrement2} style={{ marginTop: '-60px', marginLeft: 30, color: '#707070', cursor: 'pointer', fontSize: 35 }} />
                                     </div>
                                 </Paper>
                             </Grid>

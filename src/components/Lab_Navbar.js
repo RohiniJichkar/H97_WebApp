@@ -214,7 +214,7 @@ export default function LabNavbar() {
 
   const handleClose = () => {
     setAnchorElProfile(true);
-    // navigate("/DoctorProfile");
+    navigate("/LabProfile");
   };
 
   const handlelogout = () => {

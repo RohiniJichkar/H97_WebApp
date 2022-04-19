@@ -246,7 +246,7 @@ const Edit_Subscription = ({ show, data, handleclose }) => {
                                 </Grid>
                                 <Grid xs={12} sm={6}>
                                     <Button className={classes.btnregister} onClick={() => api_edit_subscription(data.ClinicId)} style={{ float: 'left', marginLeft: 20 }}>
-                                        Edit
+                                        Save
                                     </Button>
                                 </Grid>
                             </Grid>

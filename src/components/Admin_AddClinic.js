@@ -236,58 +236,63 @@ export default function AdminAddClinic() {
         var now = new Date();
         var date = now.toISOString().split('T')[0];
 
-        if (clinicName == '') {
-            alert('Please Enter ClinicName');
+        if (clinicName.trim() == '' || clinicMobile.trim() == '' || clinicEmail.trim() == '' || clinicAddress.trim() == '' || clinicCity.trim() == '' || clinicState.trim() == '' || clinicCountry.trim() == '' || clinicPincode.trim() == '' || clinicStartTime == '' || clinicEndTime == '' || clinicGSTNo == '' || clinicRegNo == '' || noofStaff == '' || firstName.trim() == '' || lastName.trim() == '' || education.trim() == '' || mobile == '' || email.trim() == '' || category == '' || morningStartTime == '' || morningEndTime == '' || eveningStartTime == '' || eveningEndTime == '' || address.trim() == '' || city.trim() == '' || state.trim() == '' || country.trim == '' || pincode == '' || password.trim() == '' || subscriptionType == '' || subscriptionStartDate == '' || subscriptionEndDate == '' || subscriptionAmount == '' || subscriptionPaymentMode == '' || subscriptionTotalAmount == '') {
+            alert('Please Enter Mandatory fields')
             return;
         }
-        else if (clinicMobile == '') {
-            alert("Please Enter Clinic Mobile Number");
-            return;
-        }
-        else if (clinicEmail == '') {
-            alert("Please Enter Clinic Mail Id");
-            return;
-        }
-        else if (clinicAddress == '') {
-            alert("Please Enter Clinic Address");
-            return;
-        }
-        else if (clinicCity == '') {
-            alert("Please Enter Clinic City");
-            return;
-        }
-        else if (clinicState == '') {
-            alert("Please Enter Clinic State");
-            return;
-        }
-        else if (clinicCountry == '') {
-            alert("Please Enter Clinic Country");
-            return;
-        }
-        else if (clinicPincode == '') {
-            alert("Please Enter Clinic Pincode");
-            return;
-        }
-        else if (clinicStartTime == '') {
-            alert("Please Enter Clinic Start Time");
-            return;
-        }
-        else if (clinicEndTime == '') {
-            alert("Please Enter Clinic End Time");
-            return;
-        }
-        else if (clinicGSTNo == '') {
-            alert("Please Enter Clinic GST Number");
-            return;
-        }
-        else if (clinicRegNo == '') {
-            alert("Please Enter Clinic Registration Number");
-            return;
-        }
-        else if (noofStaff == '') {
-            alert("Please Enter Number of Staff");
-            return;
-        }
+
+        // if (clinicName == '') {
+        //     alert('Please Enter ClinicName');
+        //     return;
+        // }
+        // else if (clinicMobile == '') {
+        //     alert("Please Enter Clinic Mobile Number");
+        //     return;
+        // }
+        // else if (clinicEmail == '') {
+        //     alert("Please Enter Clinic Mail Id");
+        //     return;
+        // }
+        // else if (clinicAddress == '') {
+        //     alert("Please Enter Clinic Address");
+        //     return;
+        // }
+        // else if (clinicCity == '') {
+        //     alert("Please Enter Clinic City");
+        //     return;
+        // }
+        // else if (clinicState == '') {
+        //     alert("Please Enter Clinic State");
+        //     return;
+        // }
+        // else if (clinicCountry == '') {
+        //     alert("Please Enter Clinic Country");
+        //     return;
+        // }
+        // else if (clinicPincode == '') {
+        //     alert("Please Enter Clinic Pincode");
+        //     return;
+        // }
+        // else if (clinicStartTime == '') {
+        //     alert("Please Enter Clinic Start Time");
+        //     return;
+        // }
+        // else if (clinicEndTime == '') {
+        //     alert("Please Enter Clinic End Time");
+        //     return;
+        // }
+        // else if (clinicGSTNo == '') {
+        //     alert("Please Enter Clinic GST Number");
+        //     return;
+        // }
+        // else if (clinicRegNo == '') {
+        //     alert("Please Enter Clinic Registration Number");
+        //     return;
+        // }
+        // else if (noofStaff == '') {
+        //     alert("Please Enter Number of Staff");
+        //     return;
+        // }
         // else if (firstName == '') {
         //     alert("Please Enter First Name");
         //     return;
@@ -427,7 +432,7 @@ export default function AdminAddClinic() {
         try {
             const clinicdetails = await Add_Clinic(formData);
             let parse = JSON.parse(clinicdetails);
-        console.log(clinicdetails)
+            console.log(clinicdetails)
 
             if (parse.success == "200") {
                 alert(parse.message);

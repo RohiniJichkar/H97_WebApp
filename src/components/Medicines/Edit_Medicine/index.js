@@ -202,7 +202,7 @@ export default function Edit_Medicine({ show, data, handleEditModal }) {
                                 </Grid>
                                 <Grid xs={12} sm={6}>
                                     <Button className={classes.btnCancle} onClick={() => editMedicine()} autoFocus style={{ float: 'left', marginLeft: 20 }}>
-                                        Submit
+                                        Save
                                     </Button>
                                 </Grid>
                             </Grid>

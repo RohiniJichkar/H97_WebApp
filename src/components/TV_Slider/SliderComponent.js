@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import Slider from "react-slick";
-import { get_advertisments } from '../../Apis/TV_Advertisements/index';
+import { get_slider_advertisments } from '../../Apis/TV_Advertisements/index';
 
 
 const images = [
@@ -30,7 +30,7 @@ const TV_Slider_Component = () => {
     const [advertisement, setAdvertisement] = useState([]);
 
     const fetchAdvertisements = async () => {
-        const getrequest = await get_advertisments();
+        const getrequest = await get_slider_advertisments();
         setAdvertisement(getrequest);
     }
 

@@ -661,7 +661,7 @@ export default function DoctorHomeVisitRequest() {
                         </Grid>
                         <Grid xs={12} sm={6}>
                             <Button className={classes.btnregister} onClick={handleCloseDatemodal} autoFocus style={{ float: 'left', marginLeft: 20 }}>
-                                Submit
+                                Save
                             </Button>
                         </Grid>
                     </Grid>

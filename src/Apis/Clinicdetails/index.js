@@ -90,7 +90,7 @@ export default function ClinicDetails({ show, handleCloseEditmodal }) {
                             </Grid>
                             <Grid xs={12} sm={6}>
                                 <Button className={classes.btnregister} onClick={fetchClinic} autoFocus style={{ float: 'left', marginLeft: 20 }}>
-                                    Submit
+                                    Save
                                 </Button>
                             </Grid>
                         </Grid>

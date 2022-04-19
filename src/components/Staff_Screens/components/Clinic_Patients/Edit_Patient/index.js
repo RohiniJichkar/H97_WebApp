@@ -385,7 +385,7 @@ export default function Edit_Patient({ show, data, handleCloseEditmodal }) {
                                 </Grid>
                                 <Grid xs={12} sm={6}>
                                     <Button className={classes.btnregister} onClick={EditDetails} style={{ float: 'left', marginLeft: 20 }}>
-                                        Update
+                                        Save
                                     </Button>
                                 </Grid>
                             </Grid>

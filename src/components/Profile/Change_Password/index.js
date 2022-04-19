@@ -134,7 +134,7 @@ return (
                                         <Button className={classes.btnregister} onClick={() => handlemodal(false)} style={{ float: 'right', marginRight: 20 }}>Cancel</Button>
                                     </Grid>
                                     <Grid item sm={6} >
-                                        <Button onClick={() => changePassword()} className={classes.btnregister} style={{ float: 'left', marginLeft: 20 }}>Submit</Button>
+                                        <Button onClick={() => changePassword()} className={classes.btnregister} style={{ float: 'left', marginLeft: 20 }}>Save</Button>
                                     </Grid>
                                 </Grid>
                             </center>

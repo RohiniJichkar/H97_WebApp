@@ -146,7 +146,7 @@ export default function Staff_Reports() {
                                 <center>
                                     <SearchIcon className={classes.searchIcon} />
                                     <InputBase
-                                        placeholder="Search by Name/Email"
+                                        placeholder="Search by Name/Mobile No"
                                         onChange={(e) => setpatientsearch(e.target.value)}
                                         value={patientsearch}
                                         classes={{

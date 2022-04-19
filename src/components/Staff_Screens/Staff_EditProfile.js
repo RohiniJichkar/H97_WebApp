@@ -565,7 +565,7 @@ export default function Staff_EditProfile() {
                                 </Grid>
                                 <Grid xs={12} sm={6}>
                                     <Button className={classes.btnCancle} onClick={() => Edit_DoctorData(NmTitle, FirstName, LastName, MobileNo, Email, Address, Category, City, Pincode, State, Country, Education, DOB, MorningStartTime, MorningEndTime, EveningStartTime, EveningEndTime, Experience, Gender)} autoFocus style={{ float: 'left', marginLeft: 20 }}>
-                                        Submit
+                                        Save
                                     </Button>
                                 </Grid>
                             </Grid>

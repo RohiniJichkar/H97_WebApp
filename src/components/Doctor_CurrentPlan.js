@@ -185,7 +185,7 @@ export default function DoctorCurrentPlan() {
                                                 marginLeft: 20,
                                                 marginRight: 20
                                             }}>
-                                                {subscriptionData[0] ? subscriptionData[0].ClinicAddress : 'Not Provided'} <br /> {subscriptionData[0] ? subscriptionData[0].ClinicCity : 'Not Provided'} {subscriptionData[0] ? subscriptionData[0].ClinicState : 'Not Provided'} {subscriptionData[0] ? subscriptionData[0].ClinicCountry : 'Not Provided'} {subscriptionData[0] ? subscriptionData[0].ClinicPincode : 'NA'}
+                                                {subscriptionData[0] ? subscriptionData[0].ClinicAddress ? `${subscriptionData[0].ClinicAddress}` : '' : 'Not Provided'} <br /> {subscriptionData[0] ? subscriptionData[0].ClinicCity ? `, ${subscriptionData[0].ClinicCity}` : '' : ''} {subscriptionData[0] ? subscriptionData[0].ClinicState ? `, ${subscriptionData[0].ClinicState}` : '' : ''} {subscriptionData[0] ? subscriptionData[0].ClinicCountry ? `, ${subscriptionData[0].ClinicCountry}` : '' : ''} {subscriptionData[0] ? subscriptionData[0].ClinicPincode ? `, ${subscriptionData[0].ClinicPincode}` : '' : ''}
                                             </Typography>
                                         </center>
                                     </Grid>

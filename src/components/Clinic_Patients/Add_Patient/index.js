@@ -109,10 +109,6 @@ const Add_Patinet = ({ show, handleclose }) => {
             alert('Please Enter Password');
             return;
         }
-        else if (email == '') {
-            alert('Please Enter Email');
-            return;
-        }
         else if (dob == '') {
             alert('Please Enter DOB');
             return;

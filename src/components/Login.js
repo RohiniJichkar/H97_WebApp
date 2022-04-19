@@ -16,6 +16,7 @@ import Link from '@material-ui/core/Link';
 import Paper from '@material-ui/core/Paper';
 import Box from '@material-ui/core/Box';
 import Grid from '@material-ui/core/Grid';
+import OutlinedInput from '@material-ui/core/OutlinedInput';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles, withStyles } from '@material-ui/core/styles';
 import Radio from '@material-ui/core/Radio';
@@ -29,6 +30,8 @@ import Select from '@material-ui/core/Select';
 import FormControl from '@material-ui/core/FormControl';
 
 const drawerWidth = 0;
+
+const color = "black";
 
 
 const loginapi = 'http://13.233.217.107:8080/api/Login';
@@ -160,18 +163,51 @@ const useStyles = makeStyles((theme) => ({
     width: '280px',
     background: 'linear-gradient(90deg, rgba(15,106,162,1) 1%, rgba(44,127,178,1) 38%, rgba(120,176,136,1) 76%)'
   },
-  select: {
-    '&.Mui-focused .MuiOutlinedInput-notchedOutline': {
-      borderColor: 'black',
-      borderWidth: '1px'
+  // select: {
+  //   "&:before": {
+  //     height: '45px',
+  //     borderColor: "black !important",
+  //     border: '1px solid black !important',
+  //     borderRadius: '4px',
+  //     // textAlign: 'center'
+  //   },
+  //   "&:after": {
+  //     borderColor: "black !important"
+  //   },
+  //   icon1: 'fill'
+  // },
+  // outline: {
+  //   "&:before": {
+  //     borderColor: "red"
+  //   },
+  //   "&:after": {
+  //     borderColor: "red"
+  //   },
+  // }
+}));
+
+const useOutlinedInputStyles = makeStyles(theme => ({
+  root: {
+    "& $notchedOutline": {
+      borderColor: "black"
     },
+    "&:hover $notchedOutline": {
+      borderColor: "black"
+    },
+    "&$focused $notchedOutline": {
+      borderColor: "black"
+    }
   },
+  focused: {},
+  notchedOutline: {}
 }));
 
 
 function Login(props) {
 
   const classes = useStyles();
+  const outlinedInputClasses = useOutlinedInputStyles();
+  const inputLabel = React.useRef(null);
   const [selectedValue, setSelectedValue] = useState('');
   const [state, setState] = useState(false);
   const [mobile, setmobile] = useState('');
@@ -180,7 +216,7 @@ function Login(props) {
   const [open, setOpen] = React.useState(false);
   const [role, setrole] = useState('');
   const [roleData, setroleData] = useState([]);
-
+  const [labelWidth, setLabelWidth] = React.useState(0);
   // const handleRoles = async () => {
   //   const fetchRoles = axios.post(getroles);
   //   setroleData(fetchRoles?.data?.Role);
@@ -400,7 +436,7 @@ function Login(props) {
                     variant="outlined"
                     margin="normal"
                     id="mobile"
-                    required
+                    requiblack
                     style={{ width: '275px' }}
                     label="Phone Number"
                     type='number'
@@ -459,20 +495,28 @@ function Login(props) {
                 </Grid>
 
                 <div style={{ marginLeft: '-12px' }}>
-                  <FormControl variant="outlined" size="small"
-                    style={{ marginLeft: 38, width: '91%', color: 'black', fontWeight: 600, marginTop: '13px', }} >
+                  <FormControl variant='outlined' size='small'
+                    style={{ marginLeft: 38, width: '91%', color: 'black', marginTop: '13px', cursor: 'pointer' }} >
                     <Select
-                      size='large'
+                      size='small'
                       native
                       value={selectedValue}
                       onChange={(e) => setSelectedValue(e.target.value)}
-                      className={classes.select}
+                      input={
+                        <OutlinedInput
+                          name="age"
+                          id="outlined-age-simple"
+                          classes={outlinedInputClasses}
+                        />
+                      }
+                     
                       style={{
-                        width: '89%', fontSize: 14,
+                        width: '89%', fontSize: 15,
                         fontFamily: 'Poppins',
                         fontStyle: 'normal',
-                        fontWeight: 600,
-                        // color: '#2C7FB2'
+                        fontWeight: '-moz-initial',
+                        marginTop: 5,
+                        color: 'black'
 
                       }}
                     >

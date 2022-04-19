@@ -64,7 +64,7 @@ export default function Clinic_Service_Image({ show, handleCloseEditmodal,data }
                         </Button>
                     </Grid>
                     <Grid xs={12} sm={6}>
-                        <Button  onClick={fetchClinicservices} style={{ margin: 70, marginLeft: 25, marginBottom: 14, position: "relative", bottom: 35, color: 'white', backgroundColor: '#2C7FB2', borderRadius: 28, width: 130, textTransform: 'capitalize' }}>Submit
+                        <Button  onClick={fetchClinicservices} style={{ margin: 70, marginLeft: 25, marginBottom: 14, position: "relative", bottom: 35, color: 'white', backgroundColor: '#2C7FB2', borderRadius: 28, width: 130, textTransform: 'capitalize' }}>Save
                         </Button>
 
                     </Grid>
