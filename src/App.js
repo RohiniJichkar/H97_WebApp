@@ -59,6 +59,7 @@ import AdminDoctorDetails from './components/Admin_DoctorDetails';
 import AdminClinicDoctors from './components/Admin_Doctor_Clinics';
 import Admin_Referral_Doctors from './components/Admin_Referral_Doctors';
 import Admin_Tips from './components/Admin_Tips';
+import Admin_Lab_Details from './components/Admin_Lab_Details';
 
 
 //staff
@@ -201,6 +202,7 @@ const App = () => {
             <Route exact path="/AdminReferralDoctors" element={<Admin_Referral_Doctors />}></Route>
             <Route exact path="/AdminTips" element={<Admin_Tips />}></Route>
             <Route exact path="/AdminClinicSubscription" element={<Admin_Clinic_Subscription />}></Route>
+            <Route exact path="/Admin_Lab_Details" element={<Admin_Lab_Details />}></Route>
 
 
             <Route exact path="/Staff_Home" element={<Staff_Home />}></Route>

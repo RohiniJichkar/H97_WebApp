@@ -10,14 +10,7 @@ import Footer from './Footer';
 import DashboardIcon from '@material-ui/icons/Dashboard';
 import SupervisorAccountIcon from '@material-ui/icons/SupervisorAccount';
 import EmojiObjectsIcon from '@material-ui/icons/EmojiObjects';
-import HomeIcon from '@material-ui/icons/Home';
-import DirectionsWalkIcon from '@material-ui/icons/DirectionsWalk';
-import AssignmentTurnedInIcon from '@material-ui/icons/AssignmentTurnedIn';
-import AssignmentIcon from '@material-ui/icons/Assignment';
-import TvIcon from '@material-ui/icons/Tv';
-import PeopleOutlineIcon from '@material-ui/icons/PeopleOutline';
-import ChatIcon from '@material-ui/icons/Chat';
-import SettingsIcon from '@material-ui/icons/Settings';
+import MedicationIcon from '@mui/icons-material/Medication';
 import ip from '../ipaddress/ip';
 import axios from 'axios';
 import LocalHospitalIcon from '@mui/icons-material/LocalHospital'
@@ -265,7 +258,11 @@ export default function AdminNavbar() {
       icon: EmojiObjectsIcon,
       onClick: () => navigate("/AdminTips"),
     },
-
+    {
+      text: 'Lab',
+      icon: MedicationIcon,
+      onClick: () => navigate("/Admin_Lab_Details"),
+    },
   ];
 
   return (
