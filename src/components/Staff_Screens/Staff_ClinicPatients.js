@@ -274,7 +274,7 @@ export default function Staff_ClinicPatients() {
                             <Grid item xs={12} sm={6}>
                                 <SearchIcon className={classes.searchIcon} />
                                 <InputBase
-                                    placeholder="Search by Name"
+                                    placeholder="Search by Name/Mobile No"
                                     classes={{
                                         root: classes.inputRoot,
                                         input: classes.inputInput,

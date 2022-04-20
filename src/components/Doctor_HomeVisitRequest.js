@@ -19,7 +19,7 @@ import DeleteIcon from '@material-ui/icons/Delete';
 import axios from 'axios';
 import moment from 'moment';
 
-const getHomeVisitorRequestSearchApi = 'http://13.233.217.107:8080/api/Web_SearchHomeVisitorRequest';
+const getHomeVisitorRequestSearchApi = 'http://13.233.217.107:8080/api/Web_SearchHomeVisitorRequestForDoctor';
 
 const drawerWidth = 240;
 
@@ -278,6 +278,7 @@ export default function DoctorHomeVisitRequest() {
     const [loading, setLoading] = React.useState(false);
     const [openDeleteModal, setopenDeleteModal] = useState(false);
     const [homevisitorrequestsearch, sethomevisitorrequestsearch] = useState('');
+    const [textdata, settextdata] = useState('');
     const [openhvmodal, setopenhvmodal] = useState(false);
 
     const fetchRequestData = async () => {
@@ -285,12 +286,12 @@ export default function DoctorHomeVisitRequest() {
         setrequestData(requestInfo);
     }
 
-    const searchHomeVisitorsRequest = async (homevisitorrequestsearch) => {
+    const searchHomeVisitorsRequest = async (textdata) => {
         var data = await localStorage.getItem("userdata");
         let parsed = JSON.parse(data);
         let clinicid = parsed.ClinicId;
         try {
-            const requestInfo = await axios.post(getHomeVisitorRequestSearchApi, { ClinicId: clinicid, Name: homevisitorrequestsearch });
+            const requestInfo = await axios.post(getHomeVisitorRequestSearchApi, { ClinicId: clinicid, Name: textdata });
             setrequestData(requestInfo?.data?.HomeVisitorRequest);
         }
         catch (e) {
@@ -402,9 +403,9 @@ export default function DoctorHomeVisitRequest() {
                                     <center> <SearchIcon className={classes.searchIcon} />
                                         <InputBase
                                             label="Search by Name"
-                                            placeholder='Search by Patient Name'
-                                            onChange={(e) => sethomevisitorrequestsearch(e.target.value)}
-                                            value={homevisitorrequestsearch}
+                                            placeholder='Search by Name/Mobile No'
+                                            onChange={(e) => settextdata(e.target.value)}
+                                            value={textdata}
                                             classes={{
                                                 root: classes.inputRoot,
                                                 input: classes.inputInput,
@@ -416,7 +417,7 @@ export default function DoctorHomeVisitRequest() {
                                 </Grid>
 
                                 <Grid item xs={6} style={{ alignSelf: 'center' }}>
-                                    <Button className={classes.btnview} onClick={() => searchHomeVisitorsRequest(homevisitorrequestsearch)} size="small" style={{ float: 'right', fontSize: 11, textAlign: 'center' }}>Search</Button>
+                                    <Button className={classes.btnview} onClick={() => searchHomeVisitorsRequest(textdata)} size="small" style={{ float: 'right', fontSize: 11, textAlign: 'center' }}>Search</Button>
                                 </Grid>
 
                             </Grid>

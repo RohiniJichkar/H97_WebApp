@@ -101,6 +101,8 @@ import LabUploadReports from './components/Lab_UploadReports';
 import DoctorHomeLogin from './components/Doctor_Home_Login';
 import DoctorIPDHome from './components/Doctor_IPD_Home';
 import LabProfile from './components/Lab_Profile';
+import StaffHomeLogin from './components/Staff_Screens/Staff_Home_Login';
+import StaffIPDHome from './components/Staff_Screens/Staff_IPD_Home';
 
 
 const App = () => {
@@ -222,6 +224,8 @@ const App = () => {
             <Route exact path="/Staff_payment" element={<Staff_payment />}></Route>
             <Route exact path="/Staff_EditAppointment" element={<Staff_EditAppointment />}></Route>
             <Route exact path="/Staff_Monthly_Appointment" element={<Staff_Monthly_Appointment />}></Route>
+            <Route exact path="/StaffHomeLogin" element={<StaffHomeLogin />}></Route>
+            <Route exact path="/StaffIPDHome" element={<StaffIPDHome />}></Route>
 
 
 

@@ -272,7 +272,7 @@ export default function Staff_Home_Visitors() {
                                     <center> <SearchIcon className={classes.searchIcon} />
                                         <InputBase
                                             label="Search by Name"
-                                            placeholder='Search by Home Visitor'
+                                            placeholder='Search by Name/Mobile No'
                                             onChange={(e) => sethomevisitorsearch(e.target.value)}
                                             value={homevisitorsearch}
                                             classes={{

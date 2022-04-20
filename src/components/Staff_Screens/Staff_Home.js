@@ -2,8 +2,9 @@ import React from 'react';
 import clsx from 'clsx';
 import { makeStyles, useTheme } from '@material-ui/core/styles';
 import { useNavigate } from 'react-router-dom';
-import { Typography, Grid, Paper } from "@material-ui/core";
+import { Typography, Grid, Paper, Button } from "@material-ui/core";
 import { Redirect } from 'react-router-dom';
+import ArrowBackIcon from '@material-ui/icons/ArrowBack';
 import DoctorNavbar from './Staff_Navbar';
 import { BroadcastMessage } from './components/Broadcast_Messages/index';
 
@@ -37,7 +38,7 @@ export default function Staff_Home() {
     };
 
     const handleUploadReports = () => {
-            navigate("/Staff_Reports");
+        navigate("/Staff_Reports");
     };
 
     const handlePaymentReport = () => {
@@ -56,12 +57,8 @@ export default function Staff_Home() {
         navigate("/Staff_Home_Visitors");
     };
 
-    const handleFacilities = () => {
-        navigate("/DoctorClinicServices");
-    };
-
-    const handleAddServices = () => {
-        navigate("/DoctorClinicServices");
+    const handleGoBack = () => {
+        navigate('/StaffHomeLogin');
     };
 
     return (
@@ -91,6 +88,7 @@ export default function Staff_Home() {
                             marginLeft: 10,
 
                         }}>
+                        <Button style={{ marginLeft: '-20px', backgroundColor: 'white', color: '#2C7FB2', borderRadius: 105, fontSize: '12px' }}> <ArrowBackIcon onClick={handleGoBack} />  </Button>
                         Home
                     </Typography>
                 </Grid>
@@ -347,7 +345,7 @@ export default function Staff_Home() {
                     </Paper>
                 </Grid>
 
-            
+
                 {/* <Grid item xs={12} sm={2} onClick={handlePaymentReport}>
                     <Paper elevation={6} className={classes.paper} style={{ marginTop: 20 }}>
                         <center>

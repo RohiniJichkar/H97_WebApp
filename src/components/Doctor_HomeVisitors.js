@@ -283,8 +283,8 @@ export default function DoctorHomeVisitors() {
                                 <Grid item xs={6}>
                                     <center> <SearchIcon className={classes.searchIcon} />
                                         <InputBase
-                                            label="Search by Name"
-                                            placeholder='Search by Name'
+                                            label="Search by Name/Mobile No"
+                                            placeholder='Search by Name/Mobile No'
                                             onChange={(e) => sethomevisitorsearch(e.target.value)}
                                             value={homevisitorsearch}
                                             classes={{

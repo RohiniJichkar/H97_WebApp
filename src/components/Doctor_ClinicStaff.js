@@ -292,7 +292,7 @@ export default function DoctorClinicStaff() {
                                 <InputBase
                                     onChange={(e) => setstaffsearch(e.target.value)}
                                     value={staffsearch}
-                                    placeholder='Search by Name'
+                                    placeholder='Search by Name/Mobile No'
                                     classes={{
                                         root: classes.inputRoot,
                                         input: classes.inputInput,

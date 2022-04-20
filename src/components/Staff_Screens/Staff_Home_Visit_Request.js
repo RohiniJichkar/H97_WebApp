@@ -278,7 +278,7 @@ export default function Staff_Home_Visit_Request() {
     const [loading, setLoading] = React.useState(false);
     const [openDeleteModal, setopenDeleteModal] = useState(false);
     const [textdata, settextdata] = useState('');
-    const [homevisitorrequestsearch, sethomevisitorrequestsearch] = useState([]);
+    const [homevisitorrequestsearch, sethomevisitorrequestsearch] = useState('');
     const [openhvmodal, setopenhvmodal] = useState(false);
 
     const fetchRequestData = async () => {
@@ -290,12 +290,12 @@ export default function Staff_Home_Visit_Request() {
         }
     }
 
-    const searchHomeVisitorsRequest = async (homevisitorrequestsearch) => {
+    const searchHomeVisitorsRequest = async (textdata) => {
         var data = await localStorage.getItem("userdata");
         let parsed = JSON.parse(data);
         let clinicid = parsed.ClinicId;
         try {
-            const requestInfo = await axios.post(getHomeVisitorRequestSearchApi, { ClinicId: clinicid, Name: homevisitorrequestsearch });
+            const requestInfo = await axios.post(getHomeVisitorRequestSearchApi, { ClinicId: clinicid, Name: textdata });
             setrequestData(requestInfo?.data?.HomeVisitorRequest);
         }
         catch (e) {
@@ -407,7 +407,7 @@ export default function Staff_Home_Visit_Request() {
                                     <center> <SearchIcon className={classes.searchIcon} />
                                         <InputBase
                                             label="Search by Name"
-                                            placeholder='Search by patient'
+                                            placeholder='Search by Name/Mobile No'
                                             onChange={(e) => settextdata(e.target.value)}
                                             value={textdata}
                                             classes={{
@@ -421,7 +421,7 @@ export default function Staff_Home_Visit_Request() {
                                 </Grid>
 
                                 <Grid item xs={6} style={{ alignSelf: 'center' }}>
-                                    <Button className={classes.btnview} onClick={() => searchHomeVisitorsRequest(homevisitorrequestsearch)} size="small" style={{ float: 'right', fontSize: 11, textAlign: 'center' }}>Search</Button>
+                                    <Button className={classes.btnview} onClick={() => searchHomeVisitorsRequest(textdata)} size="small" style={{ float: 'right', fontSize: 11, textAlign: 'center' }}>Search</Button>
                                 </Grid>
 
                             </Grid>

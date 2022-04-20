@@ -103,11 +103,9 @@ const Edit_Subscription = ({ show, data, handleclose }) => {
                                                         style={{ marginLeft: -100, fontWeight: 500, width: '225%' }}
                                                     >
                                                         <option aria-label="None" value="">Subscription Type</option>
-                                                        <option value='Free 15 days'>Free 15 days</option>
-                                                        <option value='30 days'>30 days</option>
-                                                        <option value='45 days'>45 days</option>
-                                                        <option value='90 days'>90 days</option>
-                                                        <option value='1 year'>1 year</option>
+                                                        <option value='Basic'>Basic</option>
+                                                        <option value='Standard'>Standard</option>
+                                                        <option value='Premium'>Premium</option>
                                                     </Select>
                                                 </FormControl>
                                             </Grid>

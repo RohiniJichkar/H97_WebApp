@@ -342,7 +342,7 @@ function Login(props) {
                 navigate('/DoctorHomeLogin')
               }
               else {
-                navigate('/Staff_Home')
+                navigate('/StaffHomeLogin')
               }
             }
             if (state) {
