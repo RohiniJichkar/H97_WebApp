@@ -212,7 +212,7 @@ export default function Doctor_IPD_Beds() {
 
 
     const handleCellClick = async (userid, role) => {
-        const staffDetailedInfo = await axios.post(getStaffDetails, { UserId: userid, Role: role });
+        const staffDetailedInfo = await axios.post( { UserId: userid, Role: role });
         setstaffDetails(staffDetailedInfo?.data?.NewUser);
     }
 
