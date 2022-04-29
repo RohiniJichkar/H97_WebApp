@@ -13,6 +13,7 @@ import Dashboard from './components/Staff_Dashboard';
 import ClinicPatients from './components/Staff_ClinicPatients';
 import ForgotPassword from './components/ForgotPassword';
 import DoctorNavbar from './components/Doctor_Navbar';
+
 import DoctorDashboard from './components/Doctor_Dashboard';
 import DoctorHome from './components/Doctor_Home';
 import DoctorAddMedicine from './components/Doctor_AddMedicine';
@@ -48,6 +49,11 @@ import Todays_appointment_Tabs from './components/Todays_appointment_tabs';
 import Calander_appointment_tabs from './components/Calander_appointment_tabs';
 import DoctorTodaysHVAppDiary from './components/Doctor_TodaysHVAppDiary';
 import DoctorAdvertisements from './components/Doctor_Advertisements';
+
+import Doctor_IPD_Navbar from './components/Doctor_IPD_Navbar';
+import Doctor_IPD_Beds from './components/Doctor_IPD_Beds';
+import Doctor_Ipd_Dashboard from './components/Doctor_Ipd_Dashboard';
+import Doctor_IPD_Mediciens from './components/Doctor_IPD_Mediciens';
 
 import SignUp from './components/SignUp';
 
@@ -153,8 +159,8 @@ const App = () => {
             <Route exact path="/patientDetails_sendIn" element={<PatientDetails_SendIn />}></Route>
             <Route exact path="/SignUp" element={<SignUp />}></Route>
 
-            <Route exact path="/DoctorHomeLogin" element={<DoctorHomeLogin />}></Route>
-            <Route exact path="/DoctorIPDHome" element={<DoctorIPDHome />}></Route>
+         
+
             <Route exact path="/DoctorMedicines" element={<DoctorMedicines />}> </Route>
             <Route exact path="/DoctorAddMedicine" element={<DoctorAddMedicine />}> </Route>
             <Route exact path="/DoctorReports" element={<DoctorReports />}></Route>
@@ -194,6 +200,15 @@ const App = () => {
             <Route exact path="/DoctorAboutUs" element={<DoctorAboutUs />}></Route>
             <Route exact path="/DoctorTrainingVideo" element={<DoctorTrainingVideo />}></Route>
 
+
+
+            <Route exact path="/Doctor_IPD_Beds" element={< Doctor_IPD_Beds />}></Route>
+            <Route exact path="/DoctorHomeLogin" element={<DoctorHomeLogin />}></Route>
+            <Route exact path="/DoctorIPDHome" element={<DoctorIPDHome />}></Route>
+            <Route exact path="/Doctor_IPD_Navbar" element={<Doctor_IPD_Navbar />}></Route>
+            <Route exact path="/Doctor_Ipd_Dashboard" element={<Doctor_Ipd_Dashboard/>}></Route>
+            <Route exact path="/Doctor_IPD_Medicines" element={<Doctor_IPD_Mediciens/>}></Route>
+           
 
             <Route exact path="/AdminHome" element={<AdminHome />}></Route>
             <Route exact path="/AdminDashboard" element={<AdminDashboard />}></Route>

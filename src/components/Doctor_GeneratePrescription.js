@@ -16,6 +16,8 @@ import { Search_Medicine } from '../Apis/Medicines/index';
 import { useDispatch, connect, useSelector } from 'react-redux';
 import DoctorSelectedMedicineList from './Generate_Prescription/selected_medicines';
 import PaymentMode from './Generate_Prescription/Payment_Mode/index';
+import axios from 'axios';
+import ip from '../ipaddress/ip';
 
 const drawerWidth = 240;
 
@@ -70,11 +72,23 @@ function DoctorGeneratePrescription() {
         }
     }
 
+    // const SearchMedicine = async (searchterm) => {
+    //     try {
+    //         const request = await Search_Medicine(searchterm);
+    //         setmedicineData(request)
+    //     } catch (e) {
+    //         console.log(e)
+    //     }
+    // }
     const SearchMedicine = async (searchterm) => {
+        var data = await localStorage.getItem("userdata");
+        let parsed = JSON.parse(data);
+        let clinicid = parsed.ClinicId;
         try {
-            const request = await Search_Medicine(searchterm);
-            setmedicineData(request)
-        } catch (e) {
+            const medicineInfo = await axios.post(ip + 'Web_SearchMedicines', { ClinicId: clinicid, MedicineName: searchterm });
+            setmedicineData(medicineInfo?.data?.MedicineInfo);
+        }
+        catch (e) {
             console.log(e)
         }
     }
