@@ -339,7 +339,7 @@ function Login(props) {
             let responseData = Json.data
             if (responseData.success == '200') {
               if (responseData.Role === "Doctor") {
-                navigate('/DoctorHomeLogin')
+                navigate('/DoctorHome')
               }
               else {
                 navigate('/StaffHomeLogin')

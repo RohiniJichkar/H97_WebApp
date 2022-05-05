@@ -50,10 +50,7 @@ import Calander_appointment_tabs from './components/Calander_appointment_tabs';
 import DoctorTodaysHVAppDiary from './components/Doctor_TodaysHVAppDiary';
 import DoctorAdvertisements from './components/Doctor_Advertisements';
 
-import Doctor_IPD_Navbar from './components/Doctor_IPD_Navbar';
-import Doctor_IPD_Beds from './components/Doctor_IPD_Beds';
-import Doctor_Ipd_Dashboard from './components/Doctor_Ipd_Dashboard';
-import Doctor_IPD_Mediciens from './components/Doctor_IPD_Mediciens';
+
 
 import SignUp from './components/SignUp';
 
@@ -200,14 +197,15 @@ const App = () => {
             <Route exact path="/DoctorAboutUs" element={<DoctorAboutUs />}></Route>
             <Route exact path="/DoctorTrainingVideo" element={<DoctorTrainingVideo />}></Route>
 
-
-
-            <Route exact path="/Doctor_IPD_Beds" element={< Doctor_IPD_Beds />}></Route>
             <Route exact path="/DoctorHomeLogin" element={<DoctorHomeLogin />}></Route>
             <Route exact path="/DoctorIPDHome" element={<DoctorIPDHome />}></Route>
+            {/* <Route exact path="/Doctor_IPD_Beds" element={< Doctor_IPD_Beds />}></Route>
+            // 
+            //
             <Route exact path="/Doctor_IPD_Navbar" element={<Doctor_IPD_Navbar />}></Route>
             <Route exact path="/Doctor_Ipd_Dashboard" element={<Doctor_Ipd_Dashboard/>}></Route>
             <Route exact path="/Doctor_IPD_Medicines" element={<Doctor_IPD_Mediciens/>}></Route>
+            <Route exact path="/Special_IPD_Room" element={<Special_IPD_Room/>}></Route> */}
            
 
             <Route exact path="/AdminHome" element={<AdminHome />}></Route>
