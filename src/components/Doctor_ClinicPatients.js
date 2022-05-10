@@ -109,6 +109,7 @@ export default function DoctorClinicPatients() {
             console.log(e);
         }
     }
+    console.log(patientData);
 
     const fetchPatientsCount = async () => {
         var data = await localStorage.getItem("userdata");

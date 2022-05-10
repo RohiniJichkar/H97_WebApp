@@ -169,17 +169,17 @@ function DoctorGeneratePrescription() {
             let parsed = JSON.parse(data);
             let category = parsed.CodeValueCategory;
 
-            if (category == 'Gynaecologist') {
-                const request = await generatePrescription(obj);
-                if (request.success === "200") {
-                    dispatch({ type: 'RESET_MEDICINE_ITEM' });
-                }
-            } else {
+            // if (category == 'Gynaecologist') {
+            //     const request = await generatePrescription(obj);
+            //     if (request.success === "200") {
+            //         dispatch({ type: 'RESET_MEDICINE_ITEM' });
+            //     }
+            // } else {
                 const request = await generateGeneralPrescription(obj);
                 if (request.success === "200") {
                     dispatch({ type: 'RESET_MEDICINE_ITEM' });
                 }
-            }
+            // }
         } catch (e) {
             console.log(e);
         }
