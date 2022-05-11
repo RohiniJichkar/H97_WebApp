@@ -17,7 +17,7 @@ const drawerWidth = 240;
 export const Add_Patients_History = ({ show, data, handleclose }) => {
     const classes = useStyles();
     const navigate = useNavigate();
-    const [maxWidth, setMaxWidth] = useState('sm');
+    const [maxWidth, setMaxWidth] = useState('md');
     const [fullWidth, setFullWidth] = React.useState(true);
     const [title, settitle] = React.useState('');
     const [description, setdescription] = React.useState(data ? data.PatientHistoryDiscription : '');
@@ -86,6 +86,7 @@ export const Add_Patients_History = ({ show, data, handleclose }) => {
                 fullWidth={fullWidth}
                 maxWidth={maxWidth}
                 open={show}
+                style={{overflow:'hidden',height:650,marginTop:'-10px'}}
                 onClose={handleclose}
                 aria-labelledby="max-width-dialog-title"
             >
@@ -100,7 +101,7 @@ export const Add_Patients_History = ({ show, data, handleclose }) => {
                             <Grid item xs={12} sm={12}>
                                 <center>
                                     {/* <TextField className={classes.inputFields} onChange={(e) => settitle(e.target.value)} id="outlined-basic" label="Title" variant="outlined" /> */}
-                                    <TextField className={classes.inputFields} value={description} onChange={(e) => setdescription(e.target.value)} multiline rows={30} rowsMax={15} id="outlined-basic" label="Patient Details" variant="outlined" />
+                                    <TextField className={classes.inputFields} value={description} onChange={(e) => setdescription(e.target.value)} multiline rows={400} rowsMax={20} id="outlined-basic" label="Patient Details" variant="outlined" />
                                     {/* <Alert severity="warning" style={{fontsize:15, position:'relative',bottom:14,width:400}}>Note : This message will be send to all the patients in your Clinic so carefully write the message.</Alert> */}
                                     <Grid container xs={12} style={{ marginTop: 5 }}>
                                         <Grid item sm={6} >
@@ -178,12 +179,12 @@ const useStyles = makeStyles((theme) => ({
         width: 130,
     },
     inputFields: {
-        width: 400,
+        width: 800,
         fontFamily: 'Poppins',
         fontStyle: 'normal',
         fontWeight: 200,
         color:'#2C7FB2',
-        marginBottom: 20
+        marginBottom: 10
     },
     btnregister: {
         backgroundColor: '#2C7FB2 !important',
