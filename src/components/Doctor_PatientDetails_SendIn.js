@@ -125,6 +125,10 @@ export default function DoctorPatientDetails_SendIn() {
     const handleChange = (event) => {
         setSelectedValue(event.target.value);
     };
+    const handleOpenAddPatientHistoryModal = async () => {
+        // setopenAddPatientHistoryModal(true);
+        navigate('/DoctorClinicPatients')
+    };
 
     const handleTreat = () => {
         navigate('/DoctorTreatPatient', {
@@ -245,6 +249,7 @@ export default function DoctorPatientDetails_SendIn() {
                                     style={{ float: 'right', color: 'white', fontSize: '11px', fontWeight: 600, fontFamily: 'Poppins', backgroundColor: '#2C7FB2' }}  >
                                     Previous Medical History
                                 </Button>
+                                <span style={{float: 'right', marginRight: 90,  fontFamily: 'Poppins', fontSize: 12.5, fontWeight: 600, color: '#707070'}}> to see Patient Additional details</span> <a onClick={() => handleOpenAddPatientHistoryModal()} style={{ float: 'right', marginRight: 5, fontFamily: 'Poppins', fontSize: 12.5, fontWeight: 600, color: '#2C7FB2', cursor: 'pointer', textDecoration: 'underline' }}>Click here</a>
                             </Typography>
 
                             <Grid container>

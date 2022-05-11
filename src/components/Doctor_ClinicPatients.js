@@ -14,6 +14,7 @@ import Delete_Patient from './Clinic_Patients/Delete_Patient/index';
 import Add_Patinet from './Clinic_Patients/Add_Patient/index';
 import Add_Family_Member from './Clinic_Patients/Add_Family_Member/index';
 import moment from 'moment';
+import {Add_Patients_History} from './Add_Patients_History/index'; 
 
 
 const getPatientDataApi = 'http://13.233.217.107:8080/api/Web_GetPatients';
@@ -96,6 +97,7 @@ export default function DoctorClinicPatients() {
     const [opendeletemodal, setOpenDeletemodal] = React.useState(false);
     const [openFamilyMemberModal, setopenFamilyMemberModal] = React.useState(false);
     const [patientsearch, setpatientsearch] = useState([]);
+    const [openAddPatientHistoryModal, setopenAddPatientHistoryModal] = React.useState(false);
     const [patientcountData, setpatientcountData] = useState([]);
 
     const fetchPatientData = async () => {
@@ -158,7 +160,16 @@ export default function DoctorClinicPatients() {
             alert('Please Select Patient from List');
         }
     };
-
+    const handleOpenAddPatientHistoryModal =async () => {
+        if (patientDetails != '') {
+          setopenAddPatientHistoryModal(true);
+         
+     
+      } else {
+          alert('Please Select Patient Name from List');
+      }
+   
+  };
 
     const handleOpenAddFamilyMemberModal = () => {
         if (patientDetails != '') {
@@ -177,7 +188,7 @@ export default function DoctorClinicPatients() {
     };
 
     const handleGoBack = () => {
-        navigate("/DoctorHome");
+        navigate(-1);
     };
 
     return (
@@ -206,6 +217,7 @@ export default function DoctorClinicPatients() {
                         Clinic Patients
                         <Button className={classes.btnregister} onClick={() => setOpenmodal(true)} style={{ float: 'right', marginRight: 20, width: '150px', fontFamily: 'Poppins', fontSize: 12.5, fontWeight: 400 }}>New Registration</Button>
                         <Button className={classes.btnregister} onClick={() => handleOpenAddFamilyMemberModal()} style={{ float: 'right', marginRight: 20, width: '150px', fontFamily: 'Poppins', fontSize: 12.5, fontWeight: 400 }}>Add Family Member</Button>
+                        <a  onClick={() => handleOpenAddPatientHistoryModal()} style={{ float: 'right', marginRight: 20,marginTop:'1.5%',  fontFamily: 'Poppins', fontSize: 12.5, fontWeight: 600,textDecoration:'underline',cursor:'pointer' }}>Patient Additional Details</a>
                     </Typography>
                 </Grid>
 
@@ -407,7 +419,7 @@ export default function DoctorClinicPatients() {
                 {/* for Family Member */}
 
                 {openFamilyMemberModal ? <Add_Family_Member show={openFamilyMemberModal} data={patientDetails} handleclose={() => setopenFamilyMemberModal(false)} /> : null}
-
+                {openAddPatientHistoryModal ? <Add_Patients_History show={openAddPatientHistoryModal} data={patientDetails} handleclose={() => setopenAddPatientHistoryModal(false)} /> : null}
 
             </Grid> {/* main grid */}
 
