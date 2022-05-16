@@ -39,19 +39,28 @@ export const Add_Patients_History = ({ show, data, handleclose }) => {
     console.log('patient data', data.PdfPatientHistory);
 
     const handleGeneratePDF = async () => {
+
+      
        
         var data1 = await localStorage.getItem("userdata");
         let parsed = JSON.parse(data1);
         let clinicid = parsed.ClinicId;
-
+       
         const obj = {
             ClinicId: clinicid,
             UserId: data.UserId,
 
         }
+      
         try {
             const request = await Addinformationhistory(obj);
-            setopenmodal(true);
+            if(description==''){
+                alert("Pdf can not be Generated for Blank Page ");
+            }else{
+                setopenmodal(true);
+            }
+            
+          
 
             // let parse = JSON.parse(request);
             // if (parse.success === "200") {
@@ -103,20 +112,23 @@ export const Add_Patients_History = ({ show, data, handleclose }) => {
 
     console.log("patient data", data.UserId)
     const AddpatientHistory = async () => {
-
+      
         const Obje = {
             UserId: data.UserId,
             PatientHistoryDiscription: description,
+            
         }
 
         try {
             const add = await Add_PatientHistory(Obje);
             console.log(add);
+          
+            
             let parse = JSON.parse(add);
             if (parse.success === "200") {
                 alert(parse.message);
-                window.location.reload()
             }
+            
         } catch (e) {
             console.log(e);
         }
@@ -154,7 +166,7 @@ export const Add_Patients_History = ({ show, data, handleclose }) => {
                                             <Button className={classes.btnregister} onClick={() => AddpatientHistory()} style={{ float: 'left', marginLeft: '113%' }}>Save</Button>
                                         </Grid>
                                         <Grid item sm={3} >
-                                            <Button className={classes.btnregister} onClick={() => { handleGeneratePDF() }} style={{ float: 'left', marginLeft: 180 }}>Pdf Generate</Button>
+                                            <Button className={classes.btnregister} onClick={() => { handleGeneratePDF() }} style={{ float: 'left', marginLeft: 180 }}> Generate Pdf</Button>
                                         </Grid>
                                     </Grid>
                                    

@@ -85,7 +85,7 @@ export const Add_Pdf_Download = ({ show, data, handleclose }) => {
                                     <Grid container xs={3} style={{ marginTop: 5 }}>
                                        
                                         <Grid item sm={6} >
-                                            <Button className={classes.btnregister} onClick={() => { handlePrescDetails() }} style={{ float: 'left', marginLeft: 280 }}>Pdf Download</Button>
+                                            <Button className={classes.btnregister} onClick={() => { handlePrescDetails() }} style={{ float: 'left', marginLeft: 280 }}>Download Pdf</Button>
                                         </Grid>
                                     </Grid>
                                 </center>
