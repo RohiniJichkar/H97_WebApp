@@ -12,7 +12,6 @@ import ip from '../../ipaddress/ip';
 import { Add_PatientHistory } from '../../Apis/PatientHistory';
 import { Addinformationhistory } from '../../Apis/PatientInQueue/Generate_Prescription/Medicines_Table';
 import { AdditionalPrescriptionDetails } from '../../Apis/PatientInQueue/Generate_Prescription/Medicines_Table';
-import { Add_Pdf_Download } from '../Add_Pdf_Download';
 
 
 
@@ -20,108 +19,44 @@ const drawerWidth = 240;
 
 const getPatientDetailsApi = 'http://13.233.217.107:8080/api/ShowPatientDetailUsingId';
 
-export const Add_Patients_History = ({ show, data, handleclose }) => {
+
+export const Add_Pdf_Download = ({ show, data, handleclose }) => {
     const classes = useStyles();
     const navigate = useNavigate();
     const [maxWidth, setMaxWidth] = useState('md');
     const [fullWidth, setFullWidth] = React.useState(true);
     const [title, settitle] = React.useState('');
     const [pdf, setpdf] = useState('');
-    const [description, setdescription] = React.useState(data ? data.PatientHistoryDiscription : '');
+    const [description, setdescription] = React.useState('');
     const [historyTypes, sethistoryTypes] = useState([]);
     const [pdfdescription, setpdfdescription] = useState([]);
     const [patientDetails, setpatientDetails] = useState([]);
-    const [openmodal, setopenmodal] = useState(false);
+    const [openmodal, setopenmodal] = useState([]);
 
 
 
-
-    console.log('patient data', data.PdfPatientHistory);
-
-    const handleGeneratePDF = async () => {
-       
-        var data1 = await localStorage.getItem("userdata");
-        let parsed = JSON.parse(data1);
-        let clinicid = parsed.ClinicId;
-
-        const obj = {
-            ClinicId: clinicid,
-            UserId: data.UserId,
-
-        }
+    const fetchhandleCellClick = async () => {
         try {
-            const request = await Addinformationhistory(obj);
-            setopenmodal(true);
+            const patientDetailedInfo = await axios.post(getPatientDetailsApi, { UserId: data.UserId });
+            setpdfdescription(patientDetailedInfo?.data?.PatientDetails);
 
-            // let parse = JSON.parse(request);
-            // if (parse.success === "200") {
-            //     alert(parse.message);
-            //     handleclose();
-            // } else {
-            //     alert(parse.message);
-            // }
-            // setpdf(request?.data?.Patient?.PdfPatientHistory)
-        }
-        catch (e) {
-            
+        } catch (e) {
             console.log(e);
         }
-
     }
-    const handlePrescriptionDetails = async () => {
-
-        const obj = {
-            UserId: data.UserId,
-            // PdfPatientHistory: pdfdescription
-        }
-        const requestReports = await AdditionalPrescriptionDetails(obj);
-        setpdfdescription(requestReports);
-        // window.open(pdfdescription, '_blank')
-    }
-
-
+    console.log(pdfdescription);
+    useEffect(() => {
+        fetchhandleCellClick();
+    }, [])
 
     const handlePrescDetails = async () => {
         try {
-            const patientDetailedInfo = await axios.post(getPatientDetailsApi, { UserId: data.UserId });
-            setpatientDetails(patientDetailedInfo?.data?.PatientDetails);
-            window.open(patientDetails.PdfPatientHistory, '_blank')
+            window.open(pdfdescription.PdfPatientHistory, '_blank')
+         
         } catch (e) {
             console.log(e);
         }
     }
-
-
-    const handleContinue = async () => {
-        await handleGeneratePDF().then(async data => {
-            // const interval = await setInterval(() => {
-            //      handlePrescDetails();
-            // }, 100);
-            await handlePrescDetails();
-        })
-    }
-
-    console.log("patient data", data.UserId)
-    const AddpatientHistory = async () => {
-
-        const Obje = {
-            UserId: data.UserId,
-            PatientHistoryDiscription: description,
-        }
-
-        try {
-            const add = await Add_PatientHistory(Obje);
-            console.log(add);
-            let parse = JSON.parse(add);
-            if (parse.success === "200") {
-                alert(parse.message);
-                window.location.reload()
-            }
-        } catch (e) {
-            console.log(e);
-        }
-    }
-
 
     return (
         <>
@@ -130,7 +65,7 @@ export const Add_Patients_History = ({ show, data, handleclose }) => {
                 maxWidth={maxWidth}
                 open={show}
                 style={{ overflow: 'hidden', height: 650, marginTop: '-10px' }}
-               
+              onClose={handleclose}
                 aria-labelledby="max-width-dialog-title"
             >
                 <DialogTitle id="alert-dialog-title" style={{ fontFamily: 'Poppins', fontWeight: 'bold', fontSize: 12, color: '#2C7FB2' }}>{"Add More Information About Patient"}
@@ -143,30 +78,24 @@ export const Add_Patients_History = ({ show, data, handleclose }) => {
                         <Grid container>
                             <Grid item xs={12} sm={12}>
                                 <center>
-                                    {/* <TextField className={classes.inputFields} onChange={(e) => settitle(e.target.value)} id="outlined-basic" label="Title" variant="outlined" /> */}
-                                    <TextField className={classes.inputFields} value={description} onChange={(e) => setdescription(e.target.value)} multiline rows={400} rowsMax={20} id="outlined-basic" label="Patient Details" variant="outlined" />
-                                    {/* <Alert severity="warning" style={{fontsize:15, position:'relative',bottom:14,width:400}}>Note : This message will be send to all the patients in your Clinic so carefully write the message.</Alert> */}
-                                    <Grid container xs={12} style={{ marginTop: 5 }}>
-                                        <Grid item sm={3} >
-                                            <Button className={classes.btnregister} onClick={() => handleclose(false)} style={{ float: 'right', marginRight: '-100%' }}>Cancel</Button>
-                                        </Grid>
-                                        <Grid item sm={3} >
-                                            <Button className={classes.btnregister} onClick={() => AddpatientHistory()} style={{ float: 'left', marginLeft: '113%' }}>Save</Button>
-                                        </Grid>
-                                        <Grid item sm={3} >
-                                            <Button className={classes.btnregister} onClick={() => { handleGeneratePDF() }} style={{ float: 'left', marginLeft: 180 }}>Pdf Generate</Button>
+                                   
+                                  
+                                    <TextField className={classes.inputFields} value={pdfdescription.PatientHistoryDiscription}  multiline rows={400} rowsMax={20} id="outlined-basic" placeholder="Patient Details" variant="outlined" />
+                                  
+                                    <Grid container xs={3} style={{ marginTop: 5 }}>
+                                       
+                                        <Grid item sm={6} >
+                                            <Button className={classes.btnregister} onClick={() => { handlePrescDetails() }} style={{ float: 'left', marginLeft: 280 }}>Pdf Download</Button>
                                         </Grid>
                                     </Grid>
-                                   
                                 </center>
                             </Grid>
-                            {openmodal ? <Add_Pdf_Download show={openmodal} data={data}  handleclose={() => setopenmodal(false)} /> : null}
                         </Grid>
-                       
+
                     </DialogContentText>
                 </DialogContent>
             </Dialog>
-           
+
         </>
     );
 };

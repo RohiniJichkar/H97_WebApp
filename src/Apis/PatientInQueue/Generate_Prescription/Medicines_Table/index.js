@@ -69,3 +69,25 @@ export const getPrescription = async (id) => {
         return (error.response.data.message);
     }
 }
+
+
+
+export const Addinformationhistory  = async (obj) => {
+    try {
+        const generatehistoryPdf = await axios.post(ip + 'create_Addinformationhistory', obj);
+        return JSON.stringify(generatehistoryPdf?.data);
+    } catch (error) {
+        return (error.response.data.message);
+    }
+}
+
+
+
+export const AdditionalPrescriptionDetails  = async (obj) => {
+    try {
+        const generatepatienthistoryPdf = await axios.post(ip + 'ShowPatientDescriptionById', obj);
+        return JSON.stringify(generatepatienthistoryPdf?.data?.PatientDetails);
+    } catch (error) {
+        return (error.response.data.message);
+    }
+}
